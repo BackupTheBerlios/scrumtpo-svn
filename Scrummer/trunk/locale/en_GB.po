@@ -1,0 +1,77 @@
+#: src/scrummer/uicomponents/TwoButtonDialog.java:131
+msgid "OK"
+msgstr "OK"
+
+#: src/scrummer/uicomponents/TwoButtonDialog.java:137
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:61
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:45
+msgid "Login"
+msgstr "Login"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:101
+msgid "Connect to server"
+msgstr "Connect to server"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:104
+msgid "Username"
+msgstr "Username"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:108
+msgid "Password"
+msgstr "Password"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:111
+msgid "Hostname"
+msgstr "Hostname"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:115
+msgid "Port"
+msgstr "Port"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:142
+msgid "Connect"
+msgstr "Connect"
+
+#: src/scrummer/ui/dialog/AboutBoxDialog.java:21
+#: src/scrummer/ui/MainFrame.java:70
+msgid "About"
+msgstr "About"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:33
+#, fuzzy
+msgid "Create New Project"
+msgstr "Create New Project"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:40
+#, fuzzy
+msgid "Project name"
+msgstr "Project name"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:54
+msgid "Project description"
+msgstr "Project description"
+
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:36
+#: src/scrummer/ui/MainFrame.java:62
+msgid "Open Project"
+msgstr "Open Project"
+
+#: src/scrummer/ui/MainFrame.java:59
+msgid "File"
+msgstr "File"
+
+#: src/scrummer/ui/MainFrame.java:61
+#, fuzzy
+msgid "New Project"
+msgstr "Open Project"
+
+#: src/scrummer/ui/MainFrame.java:64
+msgid "Exit"
+msgstr "Exit"
+
+#: src/scrummer/ui/MainFrame.java:68
+msgid "Help"
+msgstr "Help"
