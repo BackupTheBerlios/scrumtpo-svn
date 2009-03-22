@@ -48,7 +48,6 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 		_timer.setDelay(10);
 		
 		_timer.start();
-		
 	}
 
 	@Override
