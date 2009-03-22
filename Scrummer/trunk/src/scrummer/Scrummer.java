@@ -52,10 +52,11 @@ public class Scrummer {
 		String slot = "Messages_sl_SI.class";
 		String engt = "Messages_en_GB.class";
 		
-		String outdir = IO.filepath("") + IO.separator() +
-						"bin" 			+ IO.separator() +
-						"scrummer" 		+ IO.separator() +
-						"i18n";
+		String outdir = 
+			IO.filepath("") + IO.separator() +
+			"bin" 			+ IO.separator() +
+			"scrummer" 		+ IO.separator() +
+			"i18n";
 		
 		if (!(new File(outdir).exists()))
 		{
