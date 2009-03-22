@@ -112,7 +112,6 @@ public class IO {
 	 */
 	public static void copyFile(File in, File out)  
 	{
-		System.out.println("Kopiram: " + in.toString() + ": " + out.toString());
 		LoggingModel logger = Scrummer.getModelFactory().getLoggingModel();
 		try 
 		{
