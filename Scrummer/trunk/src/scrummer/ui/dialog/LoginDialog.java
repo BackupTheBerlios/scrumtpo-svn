@@ -88,7 +88,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 	private void setupTopPanel(JPanel panel) {
 		ImageIcon icon;
 		try {
-			icon = new ImageIcon(ImageIO.read(IO.path("file://", "image/scrum.png")));
+			icon = new ImageIcon(ImageIO.read(IO.path("file://", "image" + IO.separator() + "scrum.png")));
 			JLabel label = new JLabel(icon);
 			panel.add(label);
 		} catch (MalformedURLException e) {
