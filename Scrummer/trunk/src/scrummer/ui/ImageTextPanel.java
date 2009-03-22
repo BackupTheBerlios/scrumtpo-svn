@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import scrummer.IO;
+import scrummer.Scrummer;
 import scrummer.model.LoggingModel;
 
 /**
@@ -47,6 +48,8 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 
 		super();
 		
+		_logger = Scrummer.getModelFactory().getLoggingModel();
+		
 		setLayout(new GridLayout(1,1));
 		
 		JPanel panel = new JPanel();
@@ -64,7 +67,7 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 		BufferedImage image = null;
 		// ImageIcon icon = null;
 		try {
-			image = ImageIO.read(IO.path("file://", "image/faca.png"));
+			image = ImageIO.read(IO.path("file://", "image" + IO.separator() + "faca.png"));
 			JLabel label = new GrowingLabel(image);
 			label.setText("Test");
 			_label = label;
