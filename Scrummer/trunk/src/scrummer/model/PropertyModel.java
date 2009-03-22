@@ -29,7 +29,6 @@ public class PropertyModel {
 			throw new NullPointerException("Cannot use null logger!");
 		}
 		_logger = logger;
-		
 		_property = defaults();
 		if (IO.exists(IO.filepath("bin")))
 		{
@@ -74,6 +73,20 @@ public class PropertyModel {
 	}
 	
 	/**
+	 * Save property file to it's default location
+	 */
+	public void savePropertyFile()
+	{
+		// fetch default property file name
+		String path = 
+			IO.filepath("bin") + 
+			IO.separator() + 
+			_property.getProperty("application.configFile");
+		// save it
+		savePropertyFile(path);
+	}
+	
+	/**
 	 * Save property file to given path
 	 * @param url pathname 
 	 */
@@ -83,7 +96,7 @@ public class PropertyModel {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(url.toString());
-			_property.storeToXML(fos, "");
+			_property.storeToXML(fos, "");			
 			success = true;
 		} catch (FileNotFoundException e1) {
 			_logger.warning("Could not save application property file!", e1);
@@ -97,7 +110,6 @@ public class PropertyModel {
 					fos.close();
 				} catch (IOException e) {}
 		}
-
 		
 		if (!success)
 		{
