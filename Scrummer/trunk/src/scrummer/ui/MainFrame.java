@@ -4,13 +4,16 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import org.xnap.commons.i18n.I18n;
-
 import scrummer.Scrummer;
+import scrummer.model.ModelFactory;
+import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
 import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.NewProjectDialog;
@@ -19,7 +22,7 @@ import scrummer.ui.dialog.OpenProjectDialog;
 /**
  * Main application window
  */
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
 	/**
 	 * Default constructor
@@ -27,9 +30,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	 */
 	public MainFrame() throws HeadlessException {
 		super();
+		// store local model factory instance
+		_modelFactory = Scrummer.getModelFactory();
+		// set title
 		setTitle("Scrummer");
 		// quit application on close
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// listen to window close events(to save properties)
+		addWindowListener(this);
 		// add menu bar, entries for it and event listeners
 		addMenu();
 		// add navigation grid
@@ -89,6 +97,21 @@ public class MainFrame extends JFrame implements ActionListener {
 		menu.add(item);
 	}
 
+	/**
+	 * Save application properties
+	 */
+	private void lastPropertySave()
+	{
+		if (!_saved)
+		{
+			_saved = true;
+			// save property file
+			PropertyModel pm = _modelFactory.getPropertyModel();
+			// save property file to default location
+			pm.savePropertyFile();
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
@@ -104,7 +127,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		else if (cmd.equals("Exit"))
 		{
-			this.setVisible(false);
+			dispose();
 		}
 		else if (cmd.equals("About"))
 		{
@@ -113,9 +136,41 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 	
+	@Override
+	public void setVisible(boolean b) {
+		lastPropertySave();
+		super.setVisible(b);
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {}
+
+	@Override
+	public void windowClosed(WindowEvent e) {}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		lastPropertySave();	
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {}
+
+	@Override
+	public void windowIconified(WindowEvent e) {}
+
+	@Override
+	public void windowOpened(WindowEvent e) {}
+	
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
+	/// model factory
+	private ModelFactory _modelFactory;
+	/// have properties been saved on form closing or setVisible
+	private boolean _saved = false;
 	/// serialization id
 	private static final long serialVersionUID = 6549724505081986425L;
-
 }
