@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -21,19 +23,23 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.IO;
 import scrummer.Scrummer;
 import scrummer.model.LoggingModel;
+import scrummer.model.PropertyModel;
 import scrummer.ui.Util;
+import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardButton;
 
 /**
  * Dialog shows username, password, hostname and port text fields.
  */
-public class LoginDialog extends JDialog implements ActionListener {
+public class LoginDialog extends JDialog implements ActionListener, FocusListener, ChangeListener {
 	
 	/**
 	 * Constructor
@@ -45,6 +51,7 @@ public class LoginDialog extends JDialog implements ActionListener {
 		setTitle(i18n.tr("Login"));
 		// fetch logger
 		_logger = Scrummer.getModelFactory().getLoggingModel();
+		_properties = Scrummer.getModelFactory().getPropertyModel();
 		// set size
 		setSize(new Dimension(340,280));
 		
@@ -102,18 +109,27 @@ public class LoginDialog extends JDialog implements ActionListener {
 				BorderFactory.createEmptyBorder(4, 4, 4, 4)));
 		
 		JLabel usernameLabel = new JLabel(i18n.tr("Username") + ":");
-		JTextField usernameInput = new JTextField("");
+		JTextField usernameInput = new SelectedTextField("");
+		usernameInput.setName("Username");
 		usernameInput.setText(getDefault("username"));
+		usernameInput.addFocusListener(this);
+		_usernameInput = usernameInput;
 		
 		JLabel passwordLabel = new JLabel(i18n.tr("Password") + ":");
 		JPasswordField passwordInput = new JPasswordField(10);
 		
 		JLabel hostnameLabel = new JLabel(i18n.tr("Hostname") + ":");
-		JTextField hostnameInput = new JTextField("");
+		JTextField hostnameInput = new SelectedTextField("");
 		hostnameInput.setText(getDefault("hostname"));
+		hostnameInput.setName("Hostname");
+		hostnameInput.addFocusListener(this);
+		_hostnameInput = hostnameInput;
 		
 		JLabel portLabel = new JLabel(i18n.tr("Port") + ":");
 		JSpinner portInput = new JSpinner();
+		portInput.setName("Port");
+		portInput.addChangeListener(this);
+		_portInput = portInput;
 		
 		String port = getDefault("port");
 		int iport = Integer.parseInt(port);
@@ -121,7 +137,7 @@ public class LoginDialog extends JDialog implements ActionListener {
 		 
 		panel.add(usernameLabel);
 		panel.add(usernameInput);
-		
+	
 		panel.add(hostnameLabel);
 		panel.add(hostnameInput);
 		
@@ -129,7 +145,7 @@ public class LoginDialog extends JDialog implements ActionListener {
 		panel.add(passwordInput);
 		
 		panel.add(portLabel);
-		panel.add(portInput);	
+		panel.add(portInput);
 	}
 	
 	/**
@@ -146,13 +162,24 @@ public class LoginDialog extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * Get property with key uidefault.LoginDialog. + property
+	 * Get login dialog specific property
 	 * @param property LoginDialog specific property
 	 * @return value
 	 */
 	private String getDefault(String property)
 	{
-		return Scrummer.getModelFactory().getPropertyModel().getProperty("uidefault.LoginDialog." + property);
+		return _properties.getProperty("uidefault.LoginDialog." + property);
+	}
+	
+	/**
+	 * Set login dialog specific property 
+	 * @param property
+	 * @param value
+	 * @return
+	 */
+	private void setDefault(String property, String value)
+	{
+		_properties.setProperty("uidefault.LoginDialog." + property, value);
 	}
 	
 	@Override
@@ -163,11 +190,42 @@ public class LoginDialog extends JDialog implements ActionListener {
 			setVisible(false);
 		}
 	}
+	
+	@Override
+	public void focusGained(FocusEvent e) {}
 
-	/// serialization id
-	private static final long serialVersionUID = 2696593902322011991L;
+	@Override
+	public void focusLost(FocusEvent e) {
+		if (e.getComponent() == _usernameInput)
+		{
+			setDefault("username", _usernameInput.getText());
+		}
+		else if (e.getComponent() == _hostnameInput)
+		{
+			setDefault("hostname", _hostnameInput.getText());
+		}
+	}
+	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource() == _portInput)
+		{
+			setDefault("port", _portInput.getValue().toString());
+		}
+	}
+	
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass()); 
 	/// logger
 	private LoggingModel _logger;
+	/// property container
+	private PropertyModel _properties;
+	/// username and hostname input controls
+	private JTextField _usernameInput, _hostnameInput;
+	/// port input control
+	private JSpinner _portInput;
+	/// serialization id
+	private static final long serialVersionUID = 2696593902322011991L;
+
+	
 }
