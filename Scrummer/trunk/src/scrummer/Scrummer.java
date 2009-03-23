@@ -18,14 +18,13 @@ public class Scrummer {
 
 	/**
 	 * Application entry point
-	 * @param args arguments
-	 * @throws URISyntaxException 
+	 * @param args arguments 
 	 */
 	public static void main(String [] args) {
 				
 		_modelFactory = new ModelFactory();
-		_modelFactory.createConnectionModel();
 		_logger = _modelFactory.createLoggingModel();
+		_modelFactory.createConnectionModel(_logger);
 		_modelFactory.createNavigationModel();
 		_modelFactory.createProjectModel();
 		_modelFactory.createPropertyModel(_logger);
