@@ -7,13 +7,14 @@ public class ModelFactory {
 
 	/**
 	 * Create connection model
+	 * @param logger logger
 	 * @return created model
 	 */
-	public ConnectionModel createConnectionModel()
+	public ConnectionModel createConnectionModel(LoggingModel logger)
 	{
 		if (_connectionModel == null)
 		{
-			_connectionModel = new ConnectionModel();
+			_connectionModel = new ConnectionModel(logger);
 		}
 		return _connectionModel;
 	}
