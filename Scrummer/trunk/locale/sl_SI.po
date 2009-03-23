@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-19 21:53+0000\n"
+"POT-Creation-Date: 2009-03-23 21:52+0000\n"
 "PO-Revision-Date: 2009-03-17 23:03+0000\n"
 "Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
 "Language-Team: slovenski <not@available>\n"
@@ -25,36 +25,48 @@ msgstr "Potrdi"
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:45
+#: src/scrummer/ui/dialog/LoginDialog.java:58
 msgid "Login"
 msgstr "Prijava"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:101
+#: src/scrummer/ui/dialog/LoginDialog.java:119
 msgid "Connect to server"
 msgstr "Poveži se na strežnik"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:104
+#: src/scrummer/ui/dialog/LoginDialog.java:122
 msgid "Username"
 msgstr "Uporabniško ime"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:108
+#: src/scrummer/ui/dialog/LoginDialog.java:129
 msgid "Password"
 msgstr "Geslo"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:111
+#: src/scrummer/ui/dialog/LoginDialog.java:133
 msgid "Hostname"
 msgstr "Strežnik"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:115
+#: src/scrummer/ui/dialog/LoginDialog.java:140
 msgid "Port"
 msgstr "Vrata"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:142
+#: src/scrummer/ui/dialog/LoginDialog.java:150
+msgid "Database"
+msgstr "Podatkovna zbirka"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:180
 msgid "Connect"
 msgstr "Poveži se"
 
+#: src/scrummer/ui/dialog/LoginDialog.java:277
+msgid "Error while connecting to database server"
+msgstr "Napaka pri povezavi na podatkovno zbirko"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:279
+msgid "Error"
+msgstr "Napaka"
+
 #: src/scrummer/ui/dialog/AboutBoxDialog.java:21
-#: src/scrummer/ui/MainFrame.java:70
+#: src/scrummer/ui/MainFrame.java:78
 msgid "About"
 msgstr "O programu"
 
@@ -73,23 +85,23 @@ msgid "Project description"
 msgstr "Projektni opis"
 
 #: src/scrummer/ui/dialog/OpenProjectDialog.java:36
-#: src/scrummer/ui/MainFrame.java:62
+#: src/scrummer/ui/MainFrame.java:70
 msgid "Open Project"
 msgstr "Odpri projekt"
 
-#: src/scrummer/ui/MainFrame.java:59
+#: src/scrummer/ui/MainFrame.java:67
 msgid "File"
 msgstr "Datoteka"
 
-#: src/scrummer/ui/MainFrame.java:61
+#: src/scrummer/ui/MainFrame.java:69
 #, fuzzy
 msgid "New Project"
 msgstr "Odpri projekt"
 
-#: src/scrummer/ui/MainFrame.java:64
+#: src/scrummer/ui/MainFrame.java:72
 msgid "Exit"
 msgstr "Izhod"
 
-#: src/scrummer/ui/MainFrame.java:68
+#: src/scrummer/ui/MainFrame.java:76
 msgid "Help"
 msgstr "Pomoč"
