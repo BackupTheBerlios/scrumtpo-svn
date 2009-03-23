@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -19,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
@@ -28,9 +30,14 @@ import javax.swing.event.ChangeListener;
 
 import org.xnap.commons.i18n.I18n;
 
+import com.mysql.jdbc.Connection;
+
 import scrummer.IO;
 import scrummer.Scrummer;
+import scrummer.listener.ConnectionListener;
+import scrummer.model.ConnectionModel;
 import scrummer.model.LoggingModel;
+import scrummer.model.ModelFactory;
 import scrummer.model.PropertyModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
@@ -39,7 +46,7 @@ import scrummer.uicomponents.StandardButton;
 /**
  * Dialog shows username, password, hostname and port text fields.
  */
-public class LoginDialog extends JDialog implements ActionListener, FocusListener, ChangeListener {
+public class LoginDialog extends JDialog implements ActionListener, FocusListener, ChangeListener, ConnectionListener {
 	
 	/**
 	 * Constructor
@@ -49,9 +56,13 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		super(parent, ModalityType.APPLICATION_MODAL);
 		// set translated title
 		setTitle(i18n.tr("Login"));
+		
 		// fetch logger
-		_logger = Scrummer.getModelFactory().getLoggingModel();
-		_properties = Scrummer.getModelFactory().getPropertyModel();
+		ModelFactory mf = Scrummer.getModelFactory();
+		_logger = mf.getLoggingModel();
+		_properties = mf.getPropertyModel();
+		ConnectionModel cm = mf.getConnectionModel();
+		cm.addConnectionListener(this);
 		// set size
 		setSize(new Dimension(340,280));
 		
@@ -103,7 +114,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 	 * @param panel panel to configure
 	 */
 	private void setupCentrePanel(JPanel panel) {
-		panel.setLayout(new GridLayout(2, 4, 6, 4));
+		panel.setLayout(new GridLayout(3, 4, 6, 4));
 		panel.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder(i18n.tr("Connect to server")), 
 				BorderFactory.createEmptyBorder(4, 4, 4, 4)));
@@ -117,6 +128,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		
 		JLabel passwordLabel = new JLabel(i18n.tr("Password") + ":");
 		JPasswordField passwordInput = new JPasswordField(10);
+		_passwordInput = passwordInput;
 		
 		JLabel hostnameLabel = new JLabel(i18n.tr("Hostname") + ":");
 		JTextField hostnameInput = new SelectedTextField("");
@@ -135,6 +147,13 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		int iport = Integer.parseInt(port);
 		portInput.setValue(iport);
 		 
+		JLabel databaseLabel = new JLabel(i18n.tr("Database") + ":");
+		JTextField databaseInput = new SelectedTextField("");
+		databaseInput.setText(getDefault("database"));
+		databaseInput.setName("Database");
+		databaseInput.addFocusListener(this);
+		_databaseInput = databaseInput;
+		
 		panel.add(usernameLabel);
 		panel.add(usernameInput);
 	
@@ -146,6 +165,9 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		
 		panel.add(portLabel);
 		panel.add(portInput);
+		
+		panel.add(databaseLabel);
+		panel.add(databaseInput);
 	}
 	
 	/**
@@ -158,6 +180,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		JButton connectButton = new StandardButton(i18n.tr("Connect"));
 		connectButton.setActionCommand("Connect");
 		connectButton.addActionListener(this);
+		_confirmButton = connectButton;
 		panel.add(connectButton);
 	}
 
@@ -187,7 +210,36 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		String cmd = e.getActionCommand();
 		if (cmd.equals("Connect"))
 		{
-			setVisible(false);
+			_confirmButton.setEnabled(false);
+			
+			// attempt connection
+			ConnectionModel cm = Scrummer.getModelFactory().getConnectionModel();
+			
+			cm.setUsername(_usernameInput.getText());
+			char[] c = _passwordInput.getPassword();
+			String s = new String(c);
+			cm.setPassword(s);
+			cm.setHostname(_hostnameInput.getText());
+			cm.setPort(Integer.parseInt(_portInput.getValue().toString()));
+			cm.setDatabase(_databaseInput.getText());
+			
+			boolean success = false;
+			java.sql.Connection conn = null;
+			try {
+				conn = cm.getConnection();
+				success = true;
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			finally {
+				cm.close(conn);
+			}
+			
+			if (success)
+			{
+				cm.removeConnectionListener(this);
+				setVisible(false);
+			}
 		}
 	}
 	
@@ -204,6 +256,10 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		{
 			setDefault("hostname", _hostnameInput.getText());
 		}
+		else if (e.getComponent() == _databaseInput)
+		{
+			setDefault("database", _databaseInput.getText());
+		}
 	}
 	
 	@Override
@@ -214,6 +270,17 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		}
 	}
 	
+	@Override
+	public void connectionFailed(String reason) {
+		JOptionPane.showMessageDialog(
+			this, 
+			i18n.tr("Error while connecting to database server") + 
+			": " + reason, 
+			i18n.tr("Error"), 
+			JOptionPane.ERROR_MESSAGE);
+		_confirmButton.setEnabled(true);
+	}
+	
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass()); 
 	/// logger
@@ -221,11 +288,14 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 	/// property container
 	private PropertyModel _properties;
 	/// username and hostname input controls
-	private JTextField _usernameInput, _hostnameInput;
+	private JTextField _usernameInput, _hostnameInput, _databaseInput;
+	/// password input field
+	private JPasswordField _passwordInput;
 	/// port input control
 	private JSpinner _portInput;
+	/// confirmation button
+	private JButton _confirmButton;
 	/// serialization id
 	private static final long serialVersionUID = 2696593902322011991L;
-
 	
 }
