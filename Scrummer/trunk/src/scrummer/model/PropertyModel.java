@@ -188,6 +188,8 @@ public class PropertyModel {
 		ret.setProperty("uidefault.LoginDialog.hostname", "127.0.0.1");
 		// database server port
 		ret.setProperty("uidefault.LoginDialog.port", "4500");
+		// database default database
+		ret.setProperty("uidefault.LoginDialog.database", "scrumtpo");
 		// last opened project
 		ret.setProperty("uidefault.OpenProjectDialog.lastOpened", "");
 		// slovene translation class path
