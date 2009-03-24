@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-23 21:52+0000\n"
+"POT-Creation-Date: 2009-03-24 12:55+0000\n"
 "PO-Revision-Date: 2009-03-17 23:03+0000\n"
 "Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
 "Language-Team: slovenski <not@available>\n"
@@ -24,6 +24,51 @@ msgstr "Potrdi"
 #: src/scrummer/ui/dialog/OpenProjectDialog.java:61
 msgid "Cancel"
 msgstr "Prekliči"
+
+#: src/scrummer/model/NavigationModel.java:56
+msgid "Blank"
+msgstr "Prazno"
+
+#: src/scrummer/model/NavigationModel.java:57
+msgid "Overview"
+msgstr "Pregled"
+
+#: src/scrummer/model/NavigationModel.java:58
+msgid "Product Backlog"
+msgstr "Programski dnevnik"
+
+#: src/scrummer/model/NavigationModel.java:59
+#, fuzzy
+msgid "Project"
+msgstr "Projekt"
+
+#: src/scrummer/model/NavigationModel.java:60
+msgid "Developers"
+msgstr "Razvijalci"
+
+#: src/scrummer/model/NavigationModel.java:61
+msgid "Options"
+msgstr "Lastnosti"
+
+#: src/scrummer/model/NavigationModel.java:62
+msgid "Sprint Backlog"
+msgstr "Iteracijski dnevnik"
+
+#: src/scrummer/model/NavigationModel.java:63
+msgid "Absent"
+msgstr "Odsotnost"
+
+#: src/scrummer/model/NavigationModel.java:64
+msgid "Hurdles"
+msgstr "Ovire"
+
+#: src/scrummer/model/NavigationModel.java:65
+msgid "Metrics"
+msgstr "Metrike"
+
+#: src/scrummer/model/NavigationModel.java:66
+msgid "Tasks"
+msgstr "Naloge"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:58
 msgid "Login"

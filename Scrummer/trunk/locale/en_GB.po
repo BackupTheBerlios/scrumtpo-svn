@@ -7,6 +7,51 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancel"
 
+#: src/scrummer/model/NavigationModel.java:56
+msgid "Blank"
+msgstr "Blank"
+
+#: src/scrummer/model/NavigationModel.java:57
+msgid "Overview"
+msgstr "Overview"
+
+#: src/scrummer/model/NavigationModel.java:58
+msgid "Product Backlog"
+msgstr "Product Backlog"
+
+#: src/scrummer/model/NavigationModel.java:59
+#, fuzzy
+msgid "Project"
+msgstr "Project"
+
+#: src/scrummer/model/NavigationModel.java:60
+msgid "Developers"
+msgstr "Developers"
+
+#: src/scrummer/model/NavigationModel.java:61
+msgid "Options"
+msgstr "Options"
+
+#: src/scrummer/model/NavigationModel.java:62
+msgid "Sprint Backlog"
+msgstr "Sprint Backlog"
+
+#: src/scrummer/model/NavigationModel.java:63
+msgid "Absent"
+msgstr "Absent"
+
+#: src/scrummer/model/NavigationModel.java:64
+msgid "Hurdles"
+msgstr "Hurdles"
+
+#: src/scrummer/model/NavigationModel.java:65
+msgid "Metrics"
+msgstr "Metrics"
+
+#: src/scrummer/model/NavigationModel.java:66
+msgid "Tasks"
+msgstr "Tasks"
+
 #: src/scrummer/ui/dialog/LoginDialog.java:58
 msgid "Login"
 msgstr "Login"
