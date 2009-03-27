@@ -109,7 +109,7 @@ public class NewProjectDialog extends TwoButtonDialog {
 			}
 			catch (Exception ex)
 			{
-				Scrummer.getModelFactory().getLoggingModel().warning("Could not set filter on document!", ex);
+				Scrummer.getModels().getLoggingModel().warning("Could not set filter on document!", ex);
 			}
 		}
 		
