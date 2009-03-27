@@ -29,15 +29,15 @@ import scrummer.model.LoggingModel;
 public class ImageTextPanel extends JPanel implements ActionListener, MouseListener {
 	
 	/**
-	 * Kaj se dogaja z robom
+	 * Border rising/falling state
 	 */
 	enum BorderState
 	{
-		// ne dogaja se nič
+		// no change
 		STANDSTILL,
-		// rob pada(numerično)
+		// falling border
 		DOWN,
-		/// rob narašča(numerično)
+		/// rising border
 		UP
 	}
 	
@@ -48,7 +48,7 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 
 		super();
 		
-		_logger = Scrummer.getModelFactory().getLoggingModel();
+		_logger = Scrummer.getModels().getLoggingModel();
 		
 		setLayout(new GridLayout(1,1));
 		
@@ -62,7 +62,8 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 		JPanel inner = new JPanel();
 		inner.setLayout(new GridBagLayout());
 		// inner.setBackground(Color.RED);
-		inner.setSize(new Dimension(50,50));
+		inner.setSize(new
+				Dimension(50,50));
 		
 		BufferedImage image = null;
 		// ImageIcon icon = null;
@@ -159,21 +160,21 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 	
-	/// pano, ki vpliva na razširjanje/skrčenje
+	/// outer panel
 	private JPanel _panel;
-	/// odmik od roba
+	/// border 
 	private Border _border;
 	/// label displayed on this panel
 	private JLabel _label;
-	/// animacijski časovnik
+	/// animation timer
 	private Timer _timer;
-	/// najmanjši rob
+	/// minimal edge
 	private int _minBorder = 0;
-	/// trenutni rob
+	/// current edge
 	private int _currentBorder = 1;
-	/// največji rob
+	/// peak edge
 	private int _maxBorder = 20;
-	/// stanje robne animacije
+	/// animation state
 	private BorderState _state = BorderState.STANDSTILL;
 	/// logging model
 	private LoggingModel _logger;
