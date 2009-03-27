@@ -37,9 +37,11 @@ import scrummer.Scrummer;
 import scrummer.listener.ConnectionListener;
 import scrummer.model.ConnectionModel;
 import scrummer.model.LoggingModel;
-import scrummer.model.ModelFactory;
+import scrummer.model.Models;
 import scrummer.model.PropertyModel;
+import scrummer.model.ResourceModel;
 import scrummer.ui.Util;
+import scrummer.uicomponents.SelectedPasswordField;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardButton;
 
@@ -58,7 +60,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		setTitle(i18n.tr("Login"));
 		
 		// fetch logger
-		ModelFactory mf = Scrummer.getModelFactory();
+		Models mf = Scrummer.getModels();
 		_logger = mf.getLoggingModel();
 		_properties = mf.getPropertyModel();
 		ConnectionModel cm = mf.getConnectionModel();
@@ -97,9 +99,10 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 	 * @param panel panel to configure
 	 */
 	private void setupTopPanel(JPanel panel) {
+		ResourceModel res = Scrummer.getModels().getResourceModel();
 		ImageIcon icon;
 		try {
-			icon = new ImageIcon(ImageIO.read(IO.path("file://", "image" + IO.separator() + "scrum.png")));
+			icon = new ImageIcon(res.get(ResourceModel.Image.ScrummerLogo));
 			JLabel label = new JLabel(icon);
 			panel.add(label);
 		} catch (MalformedURLException e) {
@@ -127,7 +130,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 		_usernameInput = usernameInput;
 		
 		JLabel passwordLabel = new JLabel(i18n.tr("Password") + ":");
-		JPasswordField passwordInput = new JPasswordField(10);
+		JPasswordField passwordInput = new SelectedPasswordField(10);
 		_passwordInput = passwordInput;
 		
 		JLabel hostnameLabel = new JLabel(i18n.tr("Hostname") + ":");
@@ -213,7 +216,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 			_confirmButton.setEnabled(false);
 			
 			// attempt connection
-			ConnectionModel cm = Scrummer.getModelFactory().getConnectionModel();
+			ConnectionModel cm = Scrummer.getModels().getConnectionModel();
 			
 			cm.setUsername(_usernameInput.getText());
 			char[] c = _passwordInput.getPassword();
@@ -235,7 +238,7 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 				cm.close(conn);
 			}
 			
-			if (success)
+			if (success || cm.getConnectionless())
 			{
 				cm.removeConnectionListener(this);
 				setVisible(false);
@@ -297,5 +300,4 @@ public class LoginDialog extends JDialog implements ActionListener, FocusListene
 	private JButton _confirmButton;
 	/// serialization id
 	private static final long serialVersionUID = 2696593902322011991L;
-	
 }
