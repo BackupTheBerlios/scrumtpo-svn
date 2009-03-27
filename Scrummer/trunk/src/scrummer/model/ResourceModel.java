@@ -39,7 +39,7 @@ public class ResourceModel {
 		{
 			if (image == Image.ScrummerLogo)
 			{
-				return "image/scrum.png".replace("/", IO.separator());
+				return "bin/scrum.png".replace("/", IO.separator());
 			}
 			else
 			{
@@ -69,7 +69,8 @@ public class ResourceModel {
 	{
 		if (!_images.containsKey(image))
 		{
-			BufferedImage bufImage = ImageIO.read(IO.path("file:/", ResourceModel.Image.getName(image)));
+			String url = ResourceModel.Image.getName(image); 
+			BufferedImage bufImage = ImageIO.read(IO.standardpath(url));
 			_images.put(image, bufImage);
 		}
 		System.out.println("TEST");
