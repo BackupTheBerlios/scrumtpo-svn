@@ -68,7 +68,7 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 		BufferedImage image = null;
 		// ImageIcon icon = null;
 		try {
-			image = ImageIO.read(IO.path("file://", "image" + IO.separator() + "faca.png"));
+			image = ImageIO.read(IO.standardpath("image" + IO.separator() + "faca.png"));
 			JLabel label = new GrowingLabel(image);
 			label.setText("Test");
 			_label = label;
