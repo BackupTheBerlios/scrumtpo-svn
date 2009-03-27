@@ -2,11 +2,11 @@ package scrummer;
 
 import java.awt.Dimension;
 import java.io.File;
-import java.net.URISyntaxException;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 import scrummer.model.LoggingModel;
-import scrummer.model.ModelFactory;
+import scrummer.model.Models;
+import scrummer.model.NavigationModel;
 import scrummer.model.PropertyModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
@@ -21,14 +21,18 @@ public class Scrummer {
 	 * @param args arguments 
 	 */
 	public static void main(String [] args) {
-				
-		_modelFactory = new ModelFactory();
-		_logger = _modelFactory.createLoggingModel();
-		_modelFactory.createConnectionModel(_logger);
-		_modelFactory.createNavigationModel();
-		_modelFactory.createProjectModel();
-		_modelFactory.createPropertyModel(_logger);
 		
+		try {
+            // The newInstance() call is a work around for some
+            // broken Java implementations
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (Exception ex) {
+            // handle the error
+        }		
+		
+		LoggingModel logger = getModels().getLoggingModel(); 
+		_logger = logger;
+				
 		// tale zadeva skopira prevode v ./bin imenik, zato ker toti butasti Eclipse to namenoma onemogoča
 		// (se pravi kopiranje .class datotek)
 		eclipseCopyHack();
@@ -39,6 +43,10 @@ public class Scrummer {
 		Util.centre(mf);
 		mf.showLogin();
 		mf.setVisible(true);
+		
+		// go to homepage
+		NavigationModel nm = _models.getNavigationModel();
+		nm.home();
 	}
 
 	/**
@@ -85,22 +93,35 @@ public class Scrummer {
 	 */
 	public static I18n getI18n(Class<?> clazz)
 	{
-		PropertyModel pm = _modelFactory.getPropertyModel();
-		String languageClassFile = pm.getProperty("language.default");
-		return I18nFactory.getI18n(clazz, languageClassFile);
+		return I18nFactory.getI18n(clazz, _languageClassFile);
 	}
 
 	/**
 	 * Fetch model factory
 	 * @return model factory
 	 */
-	public static ModelFactory getModelFactory()
+	public static Models getModels()
 	{
-		return _modelFactory;
+		if (_models == null)
+		{
+			_models = new Models();
+		}
+		
+		return _models;
+	}
+	
+	/**
+	 * Resolve a dependency between this class and models
+	 * @param value language string 
+	 */
+	public static void setLanguageClassFile(String value) {
+		_languageClassFile = value;
 	}
 
 	/// model factory
-	private static ModelFactory _modelFactory;
+	private static Models _models = null;
 	/// logging model
-	private static LoggingModel _logger;
+	private static LoggingModel _logger = null;
+	/// language class file
+	private static String _languageClassFile = "";
 }
