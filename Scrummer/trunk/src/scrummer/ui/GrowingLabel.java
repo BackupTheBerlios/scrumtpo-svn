@@ -18,10 +18,7 @@ import javax.swing.Timer;
  * Label that is drawn smaller than it really is. When user hoovers over it it grows
  */
 public class GrowingLabel extends JLabel  implements ActionListener, MouseListener, MouseMotionListener, ImageObserver {
-	
-	/// serialization id
-	private static final long serialVersionUID = 9036820516848673485L;
-	
+
 	/**
 	 * Kaj se dogaja z robom
 	 */
@@ -172,4 +169,6 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	private int _picside = 40;
 	/// distance of text from bottom
 	private int _textbottom = 5;
+	/// serialization id
+	private static final long serialVersionUID = 9036820516848673485L;
 }
