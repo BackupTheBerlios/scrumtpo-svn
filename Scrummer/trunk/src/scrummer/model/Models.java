@@ -12,6 +12,7 @@ public class Models {
 	 * 
 	 * Constructs all models.
 	 */
+	/*
 	public Models()
 	{
 		createLoggingModel();
@@ -24,6 +25,28 @@ public class Models {
 		createProjectModel();
 		createNavigationModel();
 		createResourceModel();	
+	}
+	*/
+	
+	/**
+	 * Constructor
+	 * 
+	 * Constructs all models.
+	 * 
+	 * @param logger logger instance
+	 */
+	public Models(LoggingModel logger)
+	{
+		_loggingModel = logger;
+		createPropertyModel(getLoggingModel());
+		
+		String languageClassFile = _propertyModel.getProperty("language.default");
+		Scrummer.setLanguageClassFile(languageClassFile);
+		
+		createConnectionModel(getPropertyModel());
+		createProjectModel();
+		createNavigationModel();
+		createResourceModel();
 	}
 	
 	/**
