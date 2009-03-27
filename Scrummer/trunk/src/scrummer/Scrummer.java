@@ -30,9 +30,11 @@ public class Scrummer {
             // handle the error
         }		
 		
-		LoggingModel logger = getModels().getLoggingModel(); 
-		_logger = logger;
-				
+        _logger = new LoggingModel();
+        IO.setLogger(_logger);
+        
+        getModels();
+        
 		// tale zadeva skopira prevode v ./bin imenik, zato ker toti butasti Eclipse to namenoma onemogoča
 		// (se pravi kopiranje .class datotek)
 		eclipseCopyHack();
@@ -104,7 +106,7 @@ public class Scrummer {
 	{
 		if (_models == null)
 		{
-			_models = new Models();
+			_models = new Models(_logger);
 		}
 		
 		return _models;
