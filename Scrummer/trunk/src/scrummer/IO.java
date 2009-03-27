@@ -99,7 +99,7 @@ public class IO {
 		try {
 			ret = new URL(prefix + f.getAbsolutePath());
 		} catch (MalformedURLException e) {
-			Scrummer.getModelFactory().getLoggingModel().severe("Wrong path.", e);
+			Scrummer.getModels().getLoggingModel().severe("Wrong path.", e);
 			ret = null;
 		}
 		return ret;
@@ -112,7 +112,7 @@ public class IO {
 	 */
 	public static void copyFile(File in, File out)  
 	{
-		LoggingModel logger = Scrummer.getModelFactory().getLoggingModel();
+		LoggingModel logger = Scrummer.getModels().getLoggingModel();
 		try 
 		{
 		    FileChannel inChannel = new FileInputStream(in).getChannel();
