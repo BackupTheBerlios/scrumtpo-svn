@@ -4,9 +4,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
-
-import com.mysql.jdbc.Connection;
-
 import scrummer.listener.ConnectionListener;
 
 /** 
@@ -19,10 +16,13 @@ public class ConnectionModel {
 	/**
 	 * Default constructor
 	 */
-	public ConnectionModel(LoggingModel logger)
+	public ConnectionModel(LoggingModel logger, PropertyModel properties)
 	{
+		
 		_logger = logger;
-		DriverManager.setLoginTimeout(5);
+		_properties = properties;
+		_connectionless = new Boolean(_properties.getProperty("application.debug.ignoreConnection"));
+		// DriverManager.setLoginTimeout(25);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class ConnectionModel {
 	public java.sql.Connection getConnection() throws SQLException
 	{
 		_lastConnectionString = createConnectionString(_username, _password, _hostname, _port, _database);
-		
+		System.out.println(_lastConnectionString);
 		String message = "";
 		java.sql.Connection ret;
 		try
@@ -45,8 +45,11 @@ public class ConnectionModel {
 			_logger.severe("Could not connect to database!", e);
 			message = e.getMessage();
 			ret = null;
-			// notify everyone that connection failed
-			connectionFailed(message);
+			if (!_connectionless)
+			{
+				// notify everyone that connection failed
+				connectionFailed(message);
+			}
 			throw e;
 		}
 		return ret; 
@@ -90,6 +93,22 @@ public class ConnectionModel {
 	public void setDatabase(String value)
 	{
 		_database = value;
+	}
+	
+	/**
+	 * @return whether model ignores connection failures
+	 */
+	public boolean getConnectionless()
+	{
+		return _connectionless;
+	}
+	
+	/**
+	 * Make model ignore connection failures
+	 */
+	public void setConnectionless(boolean value)
+	{
+		_connectionless = value;	
 	}
 	
 	/**
@@ -179,7 +198,7 @@ public class ConnectionModel {
 	private String createConnectionString(String username, String password, String hostname, int port, String database)
 	{
 		String ret = 
-			"jdbc:mysql://" + hostname + "/" + database + "?" +
+			"jdbc:mysql://" + hostname + ":" + Integer.toString(port) + "/" + database + "?" +
 			"user=" + username + "&password=" + password + "&" +
 			"useUnicode=true&" +
 			"characterEncoding=utf8&" +
@@ -203,6 +222,10 @@ public class ConnectionModel {
 	private String _lastConnectionString;
 	/// synchronize listener acces
 	private Semaphore _listenerSemaphore = new Semaphore(1);
+	/// in case this field is set, connection failures are not reported
+	private boolean _connectionless = false;
 	/// logger
 	private LoggingModel _logger;
+	/// property model
+	private PropertyModel _properties;
 }
