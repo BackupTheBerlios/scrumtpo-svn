@@ -30,6 +30,7 @@ public class PropertyModel {
 		}
 		_logger = logger;
 		_property = defaults();
+		
 		if (IO.exists(IO.filepath("bin")))
 		{
 			String configFile = "bin/" + _property.getProperty("application.configFile");
@@ -198,6 +199,8 @@ public class PropertyModel {
 		ret.setProperty("language.bundle.en_GB", "scrummer.i18n.Messages_en_GB");
 		// configuration filename
 		ret.setProperty("application.configFile", "configuration.xml");
+		/// ignore connection failures
+		ret.setProperty("application.debug.ignoreConnection", new Boolean(false).toString());
 		// default language bundle
 		ret.setProperty("language.default", ret.getProperty("language.bundle.sl_SI"));
 		return ret;
