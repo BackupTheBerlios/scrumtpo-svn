@@ -106,13 +106,22 @@ public class IO {
 	}
 	
 	/**
+	 * Convenience method to prefix some path with file:
+	 * @param path path to file
+	 * @return file url
+	 */
+	public static URL standardpath(String path)
+	{
+		return path("file:", path);
+	}
+	
+	/**
 	 * Copy source to destination file
 	 * @param in input file
 	 * @param out output file
 	 */
 	public static void copyFile(File in, File out)  
-	{
-		LoggingModel logger = Scrummer.getModels().getLoggingModel();
+	{		
 		try 
 		{
 		    FileChannel inChannel = new FileInputStream(in).getChannel();
@@ -121,24 +130,24 @@ public class IO {
 		        inChannel.transferTo(0, inChannel.size(), outChannel);
 		    } 
 		    catch (IOException e) {
-		    	logger.severe("Could not copy file!", e);
+		    	_logger.severe("Could not copy file!", e);
 		    }
 		    finally {
 		        if (inChannel != null)
 					try {
 						inChannel.close();
 					} catch (IOException e) {
-						logger.severe("Could not close input file!", e);
+						_logger.severe("Could not close input file!", e);
 					}
 		        if (outChannel != null)
 					try {
 						outChannel.close();
 					} catch (IOException e) {
-						logger.severe("Could not close output file!", e);
+						_logger.severe("Could not close output file!", e);
 					}
 		    }
 		} catch (FileNotFoundException e1) {
-			logger.severe("File not found!", e1);
+			_logger.severe("File not found!", e1);
 		}
 	}
 	
@@ -149,4 +158,15 @@ public class IO {
 	{
 		return System.getProperty("file.separator");
 	}
+	
+	/**
+	 * Set logger(break dependencies 
+	 * @param logger logger instance
+	 */
+	public static void setLogger(LoggingModel logger)
+	{
+		_logger = logger;
+	}
+	
+	private static LoggingModel _logger;
 }
