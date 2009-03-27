@@ -32,12 +32,12 @@ public class Scrummer {
 		
         _logger = new LoggingModel();
         IO.setLogger(_logger);
-        
-        getModels();
-        
+
 		// tale zadeva skopira prevode v ./bin imenik, zato ker toti butasti Eclipse to namenoma onemogoča
 		// (se pravi kopiranje .class datotek)
 		eclipseCopyHack();
+        
+        getModels();
 		
 		MainFrame mf = new MainFrame();
 		mf.pack();
