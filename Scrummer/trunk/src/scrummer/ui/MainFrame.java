@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
-import scrummer.model.ModelFactory;
+import scrummer.model.Models;
 import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
 import scrummer.ui.dialog.LoginDialog;
@@ -31,7 +31,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	public MainFrame() throws HeadlessException {
 		super();
 		// store local model factory instance
-		_modelFactory = Scrummer.getModelFactory();
+		_models = Scrummer.getModels();
 		// set title
 		setTitle("Scrummer");
 		// quit application on close
@@ -106,7 +106,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		{
 			_saved = true;
 			// save property file
-			PropertyModel pm = _modelFactory.getPropertyModel();
+			PropertyModel pm = _models.getPropertyModel();
 			// save property file to default location
 			pm.savePropertyFile();
 		}
@@ -168,7 +168,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// model factory
-	private ModelFactory _modelFactory;
+	private Models _models;
 	/// have properties been saved on form closing or setVisible
 	private boolean _saved = false;
 	/// serialization id
