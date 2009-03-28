@@ -94,13 +94,10 @@ public class TitleLabel extends JLabel {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-
 		int textHeight = 
 			Math.round(g.getFontMetrics().getLineMetrics(
 				getText(), g).getAscent());
-		
-		
-		
+
 		Color current = g.getColor();
 		
 		g.setColor(_lineColor);
