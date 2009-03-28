@@ -20,6 +20,8 @@ import javax.swing.border.Border;
 import scrummer.IO;
 import scrummer.Scrummer;
 import scrummer.model.LoggingModel;
+import scrummer.model.Models;
+import scrummer.model.NavigationModel;
 
 /**
  * A panel with image and text
@@ -48,7 +50,8 @@ public class ImageTextPanel extends JPanel implements ActionListener, MouseListe
 
 		super();
 		
-		_logger = Scrummer.getModels().getLoggingModel();
+		Models m 		 = Scrummer.getModels();
+		_logger 		 = m.getLoggingModel();
 		
 		setLayout(new GridLayout(1,1));
 		
