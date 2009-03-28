@@ -28,7 +28,14 @@ public class ResourceModel {
 	public enum Image
 	{
 		/// scrummer logo
-		ScrummerLogo;
+		ScrummerLogo,
+		/// left arrow
+		ArrowLeft,
+		/// up arrow
+		ArrowUp,
+		/// home 
+		Home
+		;
 		
 		/**
 		 * Convert enum to filename
@@ -37,14 +44,29 @@ public class ResourceModel {
 		 */
 		public static String getName(ResourceModel.Image image)
 		{
-			if (image == Image.ScrummerLogo)
+			switch (image)
 			{
-				return "bin/scrum.png".replace("/", IO.separator());
+			case ScrummerLogo: 
+				return r("scrum.png");
+			case ArrowLeft:    
+				return r("left.png");
+			case ArrowUp: 	   
+				return r("up.png");
+			case Home: 		   
+				return r("home.png");
 			}
-			else
-			{
-				throw new ValueInvalid(image.toString(), "Unknown image path!");
-			}
+			
+			throw new ValueInvalid(image.toString(), "Unknown image path!");
+		}
+		
+		/**
+		 * Return path with all / replaced with platform specific pathname separator
+		 * @param path file path
+		 * @return platform specific file path
+		 */
+		private static String r(String path)
+		{
+			return ("bin/" + path).replace("/", IO.separator());
 		}
 	}
 	
