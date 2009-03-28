@@ -128,12 +128,10 @@ public class NavigationModel {
 	 */
 	public void addConnectionListener(NavigationListener listener)
 	{
-		_navigationSemaphore.acquireUninterruptibly();
 		if (!_navigationListeners.contains(listener))
 		{
 			_navigationListeners.add(listener);
 		}
-		_navigationSemaphore.release();
 	}
 	
 	/**
@@ -150,9 +148,9 @@ public class NavigationModel {
 	/// previous navigation link
 	private Vector<Link> _previous = new Vector<Link>();
 	/// current navigation link
-	private Link _current = Link.Blank;
+	private Link _current = Link.Overview;
 	/// top navigation link
-	private Link _top = Link.Blank;
+	private Link _top = Link.Overview;
 	/// translated link names(displayed)
 	private HashMap<Link, String> _translatedLinks = new HashMap<Link, String>();
 	/// synchronization primitive for listener manipulation
