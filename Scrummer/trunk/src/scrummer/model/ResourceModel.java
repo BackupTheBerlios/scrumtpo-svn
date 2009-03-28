@@ -34,7 +34,9 @@ public class ResourceModel {
 		/// up arrow
 		ArrowUp,
 		/// home 
-		Home
+		Home,
+		/// sun debugging icon
+		Sun
 		;
 		
 		/**
@@ -54,6 +56,8 @@ public class ResourceModel {
 				return r("up.png");
 			case Home: 		   
 				return r("home.png");
+			case Sun:
+				return r("sun.png");
 			}
 			
 			throw new ValueInvalid(image.toString(), "Unknown image path!");
@@ -95,7 +99,6 @@ public class ResourceModel {
 			BufferedImage bufImage = ImageIO.read(IO.standardpath(url));
 			_images.put(image, bufImage);
 		}
-		System.out.println("TEST");
 		return _images.get(image);
 	}
 	
