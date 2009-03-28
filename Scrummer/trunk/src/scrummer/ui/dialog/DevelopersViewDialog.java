@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.BorderLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -26,6 +28,7 @@ import javax.swing.table.TableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.model.ConnectionModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
 
@@ -40,7 +43,7 @@ import javax.swing.table.*;
 
 public class DevelopersViewDialog extends JDialog implements MouseListener
 {
-	public DevelopersViewDialog(Frame owner) 
+	public DevelopersViewDialog(Frame owner) throws SQLException 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
@@ -53,18 +56,13 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		
 		setLayout(new BorderLayout());
 		
-		String[] columnNames = {"Team member ID","Name","Surname","Address"};  
+		final java.sql.Connection con = ConnectionModel.getConnection();
+		java.sql.Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
 		
-		Object[][] data = {
-			    {"1", "Katja", "Cetinski", "Brestova pot 4 Koèevje"},
-			     {"2","Simon","Mihevc","Logatec"},
-			     {"3","Matej","Klun","Obirska 23 Ljubljana"},
-			     {"4","Daša","Gelze","Loški potok"},
-			     {"5","Tadej","Èertanc","Celovška 285 Ljubljana"},
-			     {"6","Anja","Èahuk","Trata XIV/20 Koèevje"}
-			};
-		
-		TableModel model = new DefaultTableModel(data,columnNames)
+		int id;
+		String name;
+		DefaultTableModel model = new DefaultTableModel(null,new Object[]{"Team member ID","Name"})
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex) 
 			{
@@ -72,7 +70,19 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 			}
 		};
 		
+		while(rs.next())
+		{
+			id=rs.getInt("Employee_id");
+			name=rs.getString("Employee_description");
+			model.addRow(new Object[]{id,name}); 
+		}
+		
+		rs.close();    // All done with that resultset
+	    stmt.close();  // All done with that statement
+	    con.close();  // All done with that DB connection
+	    
 		JTable table = new JTable(model);
+		
 		table.setSize(250, 170);
 		table.setRowHeight(20);
 		
@@ -92,7 +102,7 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 	    };
 		
 		TableColumn column = null; 
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 2; i++) 
 		{
 		    column = table.getColumnModel().getColumn(i);
 		    column.setResizable(false);

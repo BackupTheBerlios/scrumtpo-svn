@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -15,9 +17,13 @@ import scrummer.Scrummer;
 import scrummer.model.Models;
 import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
+import scrummer.ui.dialog.DevelopersAddDialog;
+import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.NewProjectDialog;
 import scrummer.ui.dialog.OpenProjectDialog;
+import scrummer.ui.dialog.ProductBacklogAddDialog;
+import scrummer.ui.dialog.ProductBacklogViewDialog;
 
 /**
  * Main application window
@@ -68,6 +74,10 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		addMenuEntry(fileMenu, i18n.tr("New Project"), KeyEvent.VK_N, "NewProject");
 		addMenuEntry(fileMenu, i18n.tr("Open Project"), KeyEvent.VK_O, "OpenProject");
+		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_O, "ViewProductBacklog");
+		addMenuEntry(fileMenu, i18n.tr("Add product backlog"), KeyEvent.VK_0, "AddProductBacklog");
+		addMenuEntry(fileMenu, i18n.tr("View developers"), KeyEvent.VK_O, "ViewDevelopers");
+		addMenuEntry(fileMenu, i18n.tr("Add developer"), KeyEvent.VK_0, "AddDeveloper");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
@@ -124,6 +134,39 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		{
 			OpenProjectDialog dialog = new OpenProjectDialog(this);
 			dialog.setVisible(true);
+		}
+		else if (cmd.equals("ViewProductBacklog"))
+		{
+			ProductBacklogViewDialog dialog = new ProductBacklogViewDialog(this);
+			dialog.setVisible(true);
+		}
+		else if(cmd.equals("AddProductBacklog"))
+		{
+			ProductBacklogAddDialog dialog = new ProductBacklogAddDialog(this);
+			dialog.setVisible(true);
+		}
+		else if (cmd.equals("ViewDevelopers"))
+		{
+			DevelopersViewDialog dialog;
+			try {
+				dialog = new DevelopersViewDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("AddDeveloper"))
+		{
+			DevelopersAddDialog dialog;
+			try {
+				dialog = new DevelopersAddDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		}
 		else if (cmd.equals("Exit"))
 		{

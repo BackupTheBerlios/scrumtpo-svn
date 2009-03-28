@@ -30,7 +30,7 @@ public class ConnectionModel {
 	 * @return connection instance
 	 * @throws SQLException in case connection failed
 	 */
-	public java.sql.Connection getConnection() throws SQLException
+	public static java.sql.Connection getConnection() throws SQLException
 	{
 		_lastConnectionString = createConnectionString(_username, _password, _hostname, _port, _database);
 		System.out.println(_lastConnectionString);
@@ -42,6 +42,7 @@ public class ConnectionModel {
 		}
 		catch (SQLException e)
 		{
+			e.printStackTrace();
 			_logger.severe("Could not connect to database!", e);
 			message = e.getMessage();
 			ret = null;
@@ -175,7 +176,7 @@ public class ConnectionModel {
 	 * Notify listeners of connection failure
 	 * @param reason reason of failure
 	 */
-	private void connectionFailed(String reason)
+	private static void connectionFailed(String reason)
 	{
 		_listenerSemaphore.acquireUninterruptibly();
 		for (int i = 0; i < _connectionListeners.size(); i++)
@@ -195,7 +196,7 @@ public class ConnectionModel {
 	 * @param database database name
 	 * @return create database string
 	 */
-	private String createConnectionString(String username, String password, String hostname, int port, String database)
+	private static String createConnectionString(String username, String password, String hostname, int port, String database)
 	{
 		String ret = 
 			"jdbc:mysql://" + hostname + ":" + Integer.toString(port) + "/" + database + "?" +
@@ -207,25 +208,25 @@ public class ConnectionModel {
 	}
 	
 	/// listeners for connection events
-	private Vector<ConnectionListener> _connectionListeners = new Vector<ConnectionListener>();
+	private static Vector<ConnectionListener> _connectionListeners = new Vector<ConnectionListener>();
 	/// user name
-	private String _username;
+	private static String _username;
 	/// host name
-	private String _hostname;
+	private static String _hostname;
 	/// "unprotected" password
-	private String _password;
+	private static String _password;
 	/// port 
-	private int _port;
+	private static int _port;
 	/// database name
-	private String _database;
+	private static String _database;
 	/// last set connection string
-	private String _lastConnectionString;
+	private static String _lastConnectionString;
 	/// synchronize listener acces
-	private Semaphore _listenerSemaphore = new Semaphore(1);
+	private static Semaphore _listenerSemaphore = new Semaphore(1);
 	/// in case this field is set, connection failures are not reported
-	private boolean _connectionless = false;
+	private static boolean _connectionless = false;
 	/// logger
-	private LoggingModel _logger;
+	private static LoggingModel _logger;
 	/// property model
 	private PropertyModel _properties;
 }

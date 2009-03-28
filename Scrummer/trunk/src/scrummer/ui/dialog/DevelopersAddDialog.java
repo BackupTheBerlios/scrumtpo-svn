@@ -21,17 +21,26 @@ import javax.swing.table.TableModel;
 
 import org.xnap.commons.i18n.I18n;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
 import scrummer.Scrummer;
+import scrummer.model.ConnectionModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
 
 import java.awt.*;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+
 import javax.swing.*;
 import javax.swing.table.*;
 
 public class DevelopersAddDialog extends JDialog implements MouseListener
 {
-	public DevelopersAddDialog(Frame owner) 
+	public DevelopersAddDialog(Frame owner) throws SQLException 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
@@ -44,7 +53,7 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		
 		setLayout(new BorderLayout());
 		
-		String[] columnNames = {"Team member ID","Name","Surname","Address"};  
+		/*String[] columnNames = {"Team member ID","Name","Surname","Address"};  
 		
 		Object[][] data = {
 			    {"1", "Katja", "Cetinski", "Brestova pot 4 Koèevje"},
@@ -54,8 +63,38 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 			     {"5","Tadej","Èertanc","Celovška 285 Ljubljana"},
 			     {"6","Anja","Èahuk","Trata XIV/20 Koèevje"}
 			};
+		final java.sql.Connection con = ConnectionModel.getConnection();
+		java.sql.Statement stmt = con.createStatement();
 		
-		TableModel model = new DefaultTableModel(data,columnNames);
+		int j = 0;
+	    while (rs.next()) 
+	    {
+	        int x = rs.getInt("Employee_id");
+	        String s = rs.getString("Employee_description");
+	        System.out.println("ROW " + ++j + ": " +
+	          x + "; " + s + "; " + ".");
+	      }
+
+		
+		TableModel model1 = new DefaultTableModel(data,columnNames);*/
+		
+		final java.sql.Connection con = ConnectionModel.getConnection();
+		java.sql.Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
+		
+		int id;
+		String name;
+		DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Team member ID", "Name"});
+		while(rs.next())
+		{
+			id=rs.getInt("Employee_id");
+			name=rs.getString("Employee_description");
+			model.addRow(new Object[]{id,name}); 
+		}
+		
+		rs.close();    // All done with that resultset
+	    stmt.close();  // All done with that statement
+	    con.close();  // All done with that DB connection
 		
 		JTable table = new JTable(model);
 		
@@ -78,7 +117,7 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 	    };
 		
 		TableColumn column = null; 
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 2; i++) 
 		{
 		    column = table.getColumnModel().getColumn(i);
 		    column.setResizable(false);
