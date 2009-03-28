@@ -6,6 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -14,6 +17,7 @@ import javax.swing.JPanel;
 import scrummer.Scrummer;
 import scrummer.listener.NavigationListener;
 import scrummer.model.NavigationModel;
+import scrummer.model.ResourceModel;
 import scrummer.model.NavigationModel.Link;
 
 /**
@@ -69,21 +73,16 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	public void pageChanged(NavigationModel.Link newLink) {
 		// remove all components from panel
 		_panel.removeAll();
-		// add header
-		// _panel.setLayout();
 		
 		Box header = createHeader("Test");
-		// GridBagConstraints headerC = Util.constraint(GridBagConstraints.BOTH, 1.0, 1.0);
-		header.setPreferredSize(new Dimension(1600, 150));
-		header.setMaximumSize(new Dimension(1600, 150));
-		_panel.add(header); // , headerC);
+		header.setPreferredSize(new Dimension(1600, 110));
+		header.setMaximumSize(new Dimension(1600, 110));
+		_panel.add(header);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(Color.PINK);		
 		
-		// GridBagConstraints bottomC = Util.constraint(GridBagConstraints.BOTH, 1.0, 3.0);
-		// bottomC.gridy = 1;
-		_panel.add(bottomPanel); // ), bottomC);
+		_panel.add(bottomPanel);
 		
 		if (newLink == Link.Blank)
 		{
@@ -170,46 +169,57 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		Box header = new Box(BoxLayout.Y_AXIS);
 		
 		JPanel linkPanel = new JPanel();
-		linkPanel.setBackground(Color.BLUE);
+		linkPanel.setBackground(Color.WHITE);
 		linkPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 		linkPanel.setMinimumSize(new Dimension(500, 50));
 		linkPanel.setPreferredSize(new Dimension(200, 50));
 		
-		// add back, up, home connection
-		// GrowingLabel backLabel = new GrowingLabel(new Image());
-		
-		
-		/*
-		GridBagConstraints linkPanelC = Util.constraint(GridBagConstraints.BOTH, 1.0, 1.0);
-		linkPanelC.gridy = 0;
-		*/
-		
+		addLabel(linkPanel, ResourceModel.Image.ArrowLeft, "Left", 2);
+		addLabel(linkPanel, ResourceModel.Image.ArrowUp, "Up", 2);
+		addLabel(linkPanel, ResourceModel.Image.Home, "Home", 0);
+				
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		titlePanel.setBackground(Color.YELLOW);
-		titlePanel.setMinimumSize(new Dimension(500, 50));
-		
-		/*
-		GridBagConstraints titlePanelC = Util.constraint(GridBagConstraints.BOTH, 1.0, 1.0);
-		titlePanelC.gridy = 1;
-		*/
+		titlePanel.setBackground(Color.WHITE);
+		titlePanel.setMinimumSize(new Dimension(500, 30));
+		titlePanel.setPreferredSize(new Dimension(500, 30));
+		titlePanel.setMaximumSize(new Dimension(1600, 30));
 		
 		JLabel titleLabel = new TitleLabel(title);
-		titleLabel.setSize(200, 30);
-		titleLabel.setPreferredSize(new Dimension(200, 30));
+		titleLabel.setSize(200, 10);
+		titleLabel.setPreferredSize(new Dimension(200, 20));
 		
-		/*
-		GridBagConstraints titleLabelC = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 1.0);
-		titleLabelC.anchor = GridBagConstraints.WEST;
-		titleLabelC.gridy = 0;
-		*/
+		titlePanel.add(titleLabel);
 		
-		titlePanel.add(titleLabel); // , titleLabelC);
-		
-		header.add(linkPanel);  // ,  linkPanelC);
-		header.add(titlePanel); // , titlePanelC);
+		header.add(linkPanel);
+		header.add(titlePanel);
 		
 		return header;
+	}
+	
+	/**
+	 * Add label to panel
+	 * @param panel panel to which to add
+	 * @param image image that will be displayed on label
+	 * @param text text to be written on label
+	 * @param addBottomText additional value to add to bottom text offset
+	 */
+	private void addLabel(JPanel panel, ResourceModel.Image image, String text, int addBottomText)
+	{
+		ResourceModel res = Scrummer.getModels().getResourceModel();	
+		// add back, up, home connection
+		try {
+			GrowingLabel label = new GrowingLabel(res.get(image));
+			label.setBorderGrowth(0, 4, 8);
+			label.setPictureSideOffset(5);
+			label.setPictureTopOffset(5);
+			label.setTextBottomOffset(4 + addBottomText);
+			label.setPreferredSize(new Dimension(64,76));
+			label.setText(text);
+			panel.add(label);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
