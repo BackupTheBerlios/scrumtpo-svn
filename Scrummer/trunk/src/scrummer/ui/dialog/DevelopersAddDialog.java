@@ -26,6 +26,7 @@ import com.mysql.jdbc.Statement;
 
 import scrummer.Scrummer;
 import scrummer.model.ConnectionModel;
+import scrummer.model.Models;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
 
@@ -56,12 +57,12 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		/*String[] columnNames = {"Team member ID","Name","Surname","Address"};  
 		
 		Object[][] data = {
-			    {"1", "Katja", "Cetinski", "Brestova pot 4 Koèevje"},
+			    {"1", "Katja", "Cetinski", "Brestova pot 4 Koï¿½evje"},
 			     {"2","Simon","Mihevc","Logatec"},
 			     {"3","Matej","Klun","Obirska 23 Ljubljana"},
-			     {"4","Daša","Gelze","Loški potok"},
-			     {"5","Tadej","Èertanc","Celovška 285 Ljubljana"},
-			     {"6","Anja","Èahuk","Trata XIV/20 Koèevje"}
+			     {"4","Daï¿½a","Gelze","Loï¿½ki potok"},
+			     {"5","Tadej","ï¿½ertanc","Celovï¿½ka 285 Ljubljana"},
+			     {"6","Anja","ï¿½ahuk","Trata XIV/20 Koï¿½evje"}
 			};
 		final java.sql.Connection con = ConnectionModel.getConnection();
 		java.sql.Statement stmt = con.createStatement();
@@ -78,7 +79,8 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		
 		TableModel model1 = new DefaultTableModel(data,columnNames);*/
 		
-		final java.sql.Connection con = ConnectionModel.getConnection();
+		Models m = Scrummer.getModels();
+		final java.sql.Connection con = m.getConnectionModel().getConnection();
 		java.sql.Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
 		
