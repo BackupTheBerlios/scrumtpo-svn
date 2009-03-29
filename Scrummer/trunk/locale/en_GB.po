@@ -7,88 +7,112 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/scrummer/model/NavigationModel.java:56
+#: src/scrummer/model/NavigationModel.java:53
 msgid "Blank"
 msgstr "Blank"
 
-#: src/scrummer/model/NavigationModel.java:57
+#: src/scrummer/model/NavigationModel.java:54
 msgid "Overview"
 msgstr "Overview"
 
-#: src/scrummer/model/NavigationModel.java:58
+#: src/scrummer/model/NavigationModel.java:55
 msgid "Product Backlog"
 msgstr "Product Backlog"
 
-#: src/scrummer/model/NavigationModel.java:59
-#, fuzzy
+#: src/scrummer/model/NavigationModel.java:56
 msgid "Project"
 msgstr "Project"
 
-#: src/scrummer/model/NavigationModel.java:60
+#: src/scrummer/model/NavigationModel.java:57
 msgid "Developers"
 msgstr "Developers"
 
-#: src/scrummer/model/NavigationModel.java:61
+#: src/scrummer/model/NavigationModel.java:58
 msgid "Options"
 msgstr "Options"
 
-#: src/scrummer/model/NavigationModel.java:62
+#: src/scrummer/model/NavigationModel.java:59
 msgid "Sprint Backlog"
 msgstr "Sprint Backlog"
 
-#: src/scrummer/model/NavigationModel.java:63
+#: src/scrummer/model/NavigationModel.java:60
 msgid "Absent"
 msgstr "Absent"
 
-#: src/scrummer/model/NavigationModel.java:64
+#: src/scrummer/model/NavigationModel.java:61
 msgid "Hurdles"
 msgstr "Hurdles"
 
-#: src/scrummer/model/NavigationModel.java:65
+#: src/scrummer/model/NavigationModel.java:62
 msgid "Metrics"
 msgstr "Metrics"
 
-#: src/scrummer/model/NavigationModel.java:66
+#: src/scrummer/model/NavigationModel.java:63
 msgid "Tasks"
 msgstr "Tasks"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:58
+#: src/scrummer/ui/TitleLink.java:48
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:106
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:116
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:121
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:120
+msgid "Back"
+msgstr "Back"
+
+#: src/scrummer/ui/TitleLink.java:50
+msgid "Home"
+msgstr "Home"
+
+#: src/scrummer/ui/TitleLink.java:52
+msgid "Up"
+msgstr "Up"
+
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:38
+msgid "Add developers"
+msgstr "Add developers"
+
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:107
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:117
+msgid "Add row"
+msgstr "Add row"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:60
 msgid "Login"
 msgstr "Login"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:119
+#: src/scrummer/ui/dialog/LoginDialog.java:122
 msgid "Connect to server"
 msgstr "Connect to server"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:122
+#: src/scrummer/ui/dialog/LoginDialog.java:125
 msgid "Username"
 msgstr "Username"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:129
+#: src/scrummer/ui/dialog/LoginDialog.java:132
 msgid "Password"
 msgstr "Password"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:133
+#: src/scrummer/ui/dialog/LoginDialog.java:136
 msgid "Hostname"
 msgstr "Hostname"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:140
+#: src/scrummer/ui/dialog/LoginDialog.java:143
 msgid "Port"
 msgstr "Port"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:150
+#: src/scrummer/ui/dialog/LoginDialog.java:153
 msgid "Database"
 msgstr "Database"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:180
+#: src/scrummer/ui/dialog/LoginDialog.java:183
 msgid "Connect"
 msgstr "Connect"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:277
+#: src/scrummer/ui/dialog/LoginDialog.java:280
 msgid "Error while connecting to database server"
 msgstr "Error while connecting to database server"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:279
+#: src/scrummer/ui/dialog/LoginDialog.java:282
 msgid "Error"
 msgstr "Error"
 
@@ -97,13 +121,15 @@ msgstr "Error"
 msgid "About"
 msgstr "About"
 
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:47
+msgid "Add Product Backlog"
+msgstr "Add Product Backlog"
+
 #: src/scrummer/ui/dialog/NewProjectDialog.java:33
-#, fuzzy
 msgid "Create New Project"
 msgstr "Create New Project"
 
 #: src/scrummer/ui/dialog/NewProjectDialog.java:40
-#, fuzzy
 msgid "Project name"
 msgstr "Project name"
 
@@ -111,19 +137,31 @@ msgstr "Project name"
 msgid "Project description"
 msgstr "Project description"
 
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:47
+msgid "View Product Backlog"
+msgstr "View Product Backlog"
+
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:122
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:121
+msgid "Edit"
+msgstr "Edit"
+
 #: src/scrummer/ui/dialog/OpenProjectDialog.java:36
 #: src/scrummer/ui/MainFrame.java:70
 msgid "Open Project"
 msgstr "Open Project"
+
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:47
+msgid "View developers"
+msgstr "View Developers"
 
 #: src/scrummer/ui/MainFrame.java:67
 msgid "File"
 msgstr "File"
 
 #: src/scrummer/ui/MainFrame.java:69
-#, fuzzy
 msgid "New Project"
-msgstr "Open Project"
+msgstr "New Project"
 
 #: src/scrummer/ui/MainFrame.java:72
 msgid "Exit"

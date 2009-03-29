@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-24 12:55+0000\n"
+"POT-Creation-Date: 2009-03-29 11:07+0000\n"
 "PO-Revision-Date: 2009-03-17 23:03+0000\n"
 "Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
 "Language-Team: slovenski <not@available>\n"
@@ -25,88 +25,112 @@ msgstr "Potrdi"
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: src/scrummer/model/NavigationModel.java:56
+#: src/scrummer/model/NavigationModel.java:53
 msgid "Blank"
 msgstr "Prazno"
 
-#: src/scrummer/model/NavigationModel.java:57
+#: src/scrummer/model/NavigationModel.java:54
 msgid "Overview"
 msgstr "Pregled"
 
-#: src/scrummer/model/NavigationModel.java:58
+#: src/scrummer/model/NavigationModel.java:55
 msgid "Product Backlog"
 msgstr "Programski dnevnik"
 
-#: src/scrummer/model/NavigationModel.java:59
-#, fuzzy
+#: src/scrummer/model/NavigationModel.java:56
 msgid "Project"
 msgstr "Projekt"
 
-#: src/scrummer/model/NavigationModel.java:60
+#: src/scrummer/model/NavigationModel.java:57
 msgid "Developers"
 msgstr "Razvijalci"
 
-#: src/scrummer/model/NavigationModel.java:61
+#: src/scrummer/model/NavigationModel.java:58
 msgid "Options"
 msgstr "Lastnosti"
 
-#: src/scrummer/model/NavigationModel.java:62
+#: src/scrummer/model/NavigationModel.java:59
 msgid "Sprint Backlog"
 msgstr "Iteracijski dnevnik"
 
-#: src/scrummer/model/NavigationModel.java:63
+#: src/scrummer/model/NavigationModel.java:60
 msgid "Absent"
 msgstr "Odsotnost"
 
-#: src/scrummer/model/NavigationModel.java:64
+#: src/scrummer/model/NavigationModel.java:61
 msgid "Hurdles"
 msgstr "Ovire"
 
-#: src/scrummer/model/NavigationModel.java:65
+#: src/scrummer/model/NavigationModel.java:62
 msgid "Metrics"
 msgstr "Metrike"
 
-#: src/scrummer/model/NavigationModel.java:66
+#: src/scrummer/model/NavigationModel.java:63
 msgid "Tasks"
 msgstr "Naloge"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:58
+#: src/scrummer/ui/TitleLink.java:48
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:106
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:116
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:121
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:120
+msgid "Back"
+msgstr "Nazaj"
+
+#: src/scrummer/ui/TitleLink.java:50
+msgid "Home"
+msgstr "Domov"
+
+#: src/scrummer/ui/TitleLink.java:52
+msgid "Up"
+msgstr "Gor"
+
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:38
+msgid "Add developers"
+msgstr "Dodaj razvijalce"
+
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:107
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:117
+msgid "Add row"
+msgstr "Dodaj vrstico"
+
+#: src/scrummer/ui/dialog/LoginDialog.java:60
 msgid "Login"
 msgstr "Prijava"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:119
+#: src/scrummer/ui/dialog/LoginDialog.java:122
 msgid "Connect to server"
 msgstr "Poveži se na strežnik"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:122
+#: src/scrummer/ui/dialog/LoginDialog.java:125
 msgid "Username"
 msgstr "Uporabniško ime"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:129
+#: src/scrummer/ui/dialog/LoginDialog.java:132
 msgid "Password"
 msgstr "Geslo"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:133
+#: src/scrummer/ui/dialog/LoginDialog.java:136
 msgid "Hostname"
 msgstr "Strežnik"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:140
+#: src/scrummer/ui/dialog/LoginDialog.java:143
 msgid "Port"
 msgstr "Vrata"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:150
+#: src/scrummer/ui/dialog/LoginDialog.java:153
 msgid "Database"
 msgstr "Podatkovna zbirka"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:180
+#: src/scrummer/ui/dialog/LoginDialog.java:183
 msgid "Connect"
 msgstr "Poveži se"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:277
+#: src/scrummer/ui/dialog/LoginDialog.java:280
 msgid "Error while connecting to database server"
 msgstr "Napaka pri povezavi na podatkovno zbirko"
 
-#: src/scrummer/ui/dialog/LoginDialog.java:279
+#: src/scrummer/ui/dialog/LoginDialog.java:282
 msgid "Error"
 msgstr "Napaka"
 
@@ -115,33 +139,47 @@ msgstr "Napaka"
 msgid "About"
 msgstr "O programu"
 
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:47
+msgid "Add Product Backlog"
+msgstr "Dodaj programski dnevnik"
+
 #: src/scrummer/ui/dialog/NewProjectDialog.java:33
-#, fuzzy
 msgid "Create New Project"
-msgstr "Odpri projekt"
+msgstr "Ustvari nov projekt"
 
 #: src/scrummer/ui/dialog/NewProjectDialog.java:40
-#, fuzzy
 msgid "Project name"
-msgstr "Strežnik"
+msgstr "Projektno ime"
 
 #: src/scrummer/ui/dialog/NewProjectDialog.java:54
 msgid "Project description"
 msgstr "Projektni opis"
+
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:47
+msgid "View Product Backlog"
+msgstr "Poglej programski dnevnik"
+
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:122
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:121
+msgid "Edit"
+msgstr "Uredi"
 
 #: src/scrummer/ui/dialog/OpenProjectDialog.java:36
 #: src/scrummer/ui/MainFrame.java:70
 msgid "Open Project"
 msgstr "Odpri projekt"
 
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:47
+msgid "View developers"
+msgstr "Poglej razvijalce"
+
 #: src/scrummer/ui/MainFrame.java:67
 msgid "File"
 msgstr "Datoteka"
 
 #: src/scrummer/ui/MainFrame.java:69
-#, fuzzy
 msgid "New Project"
-msgstr "Odpri projekt"
+msgstr "Ustvari projekt"
 
 #: src/scrummer/ui/MainFrame.java:72
 msgid "Exit"
