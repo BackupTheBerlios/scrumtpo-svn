@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.BorderLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -26,6 +28,7 @@ import javax.swing.table.TableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.model.ConnectionModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
 
@@ -40,7 +43,7 @@ import javax.swing.table.*;
 
 public class ProductBacklogViewDialog extends JDialog implements MouseListener
 {
-	public ProductBacklogViewDialog(Frame owner) 
+	public ProductBacklogViewDialog(Frame owner) throws SQLException 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
@@ -53,25 +56,39 @@ public class ProductBacklogViewDialog extends JDialog implements MouseListener
 		
 		setLayout(new BorderLayout());
 		
-		String[] columnNames = {"ID","Description","Priority","Initial estimate","Adjustment factor","Adjusted estimate"};  
+		final java.sql.Connection con = ConnectionModel.getConnection();
+		java.sql.Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT * FROM PBI");
 		
-		Object[][] data = {
-			    {"1-1", "Vzdrževanje podatkov o projektih",
-			     "1", "20", "1.5", "30"},
-			     {"1-2","Vzdrževanje podatkov o razvijalcih","1","15","1","15"},
-			     {"1-3","Vzdrževanje Product Backlog-a","1","60","2","120"},
-			     {"1-4","Vzdrževanje Sprint Backlog-a","1","60","2","120"},
-			     {"1-5","Vzdrževanje tabele metrik","1","15","1","15"},
-			     {"1-6","Vzdrževanje podatkov o ovirah","2","15","1.2","18"}
-			};
+		int id;
+		String description;
+		String priority;
+		String initial_estimate;
+		String adjustment_factor;
+		String adjusted_estimate;
 		
-		TableModel model = new DefaultTableModel(data,columnNames)
+		DefaultTableModel model = new DefaultTableModel(null,new Object[]{"PBI id","Description","Priority","Initial estimate","Adjustment factor","Adjusted estimate"})
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex) 
 			{
 				return false;
 			}
 		};
+		
+		while(rs.next())
+		{
+			id=rs.getInt("PBI_id");
+			description=rs.getString("PBI_description");
+			priority = rs.getString("PBI_priority");
+			initial_estimate = rs.getString("PBI_initial_estimate");
+			adjustment_factor = rs.getString("PBI_adjustment_factor");
+			adjusted_estimate = rs.getString("PBI_adjusted_estimate");
+			model.addRow(new Object[]{id,description,priority,initial_estimate,adjustment_factor,adjusted_estimate}); 
+		}
+		
+		rs.close();    // All done with that resultset
+	    stmt.close();  // All done with that statement
+	    con.close();  // All done with that DB connection
 		
 		JTable table = new JTable(model);
 		table.setSize(250, 170);

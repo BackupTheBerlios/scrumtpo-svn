@@ -62,6 +62,8 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		
 		int id;
 		String name;
+		String surname;
+		String address;
 		DefaultTableModel model = new DefaultTableModel(null,new Object[]{"Team member ID","Name"})
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex) 
@@ -73,8 +75,10 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		while(rs.next())
 		{
 			id=rs.getInt("Employee_id");
-			name=rs.getString("Employee_description");
-			model.addRow(new Object[]{id,name}); 
+			name=rs.getString("Employee_name");
+			surname = rs.getString("Employee_surname");
+			address = rs.getString("Employee_address");
+			model.addRow(new Object[]{id,name,surname,address}); 
 		}
 		
 		rs.close();    // All done with that resultset
@@ -102,7 +106,7 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 	    };
 		
 		TableColumn column = null; 
-		for (int i = 0; i < 2; i++) 
+		for (int i = 0; i < 4; i++) 
 		{
 		    column = table.getColumnModel().getColumn(i);
 		    column.setResizable(false);
