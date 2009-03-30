@@ -377,7 +377,8 @@ create table Measure
 create table PBI 
 (
    PBI_id               integer	AUTO_INCREMENT	not null,
-   Project_id           integer                        null,
+   Project_id           integer	not null,
+   Sprint_id	integer	not null,
    PBI_description      text                           null,
    PBI_priority         text                           null,
    PBI_initial_estimate	text	null,
@@ -447,8 +448,8 @@ create table Release_measurement_result
 create table Sprint 
 (
    Sprint_id            integer	AUTO_INCREMENT                        not null,
-   Project_id           integer                        null,
-   Team_id              integer                        null,
+   Project_id           integer                        not null,
+   Team_id              integer                        not null,
    Sprint_description   text                           null,
    Sprint_begin_date    text                           null,
    Sprint_end_date      text                           null,
@@ -595,6 +596,12 @@ alter table Impediment
 alter table PBI
    add constraint FK_PBI_RELATIONS_PROJECT foreign key (Project_id)
       references Project (Project_id)
+      on update restrict
+      on delete restrict;
+	  
+alter table PBI
+   add constraint FK_PBI_RELATIONS_SPRINT foreign key (Sprint_id)
+      references Sprint (Sprint_id)
       on update restrict
       on delete restrict;
 
