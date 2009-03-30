@@ -17,6 +17,7 @@ import scrummer.Scrummer;
 import scrummer.model.Models;
 import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
+import scrummer.ui.dialog.AddDeveloperDialog;
 import scrummer.ui.dialog.DevelopersAddDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.LoginDialog;
@@ -72,16 +73,22 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		
 		JMenu fileMenu = new JMenu(i18n.tr("File"));
 		fileMenu.setMnemonic(KeyEvent.VK_F);
-		addMenuEntry(fileMenu, i18n.tr("New Project"), KeyEvent.VK_N, "NewProject");
-		addMenuEntry(fileMenu, i18n.tr("Open Project"), KeyEvent.VK_O, "OpenProject");
-		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_O, "ViewProductBacklog");
-		addMenuEntry(fileMenu, i18n.tr("Add product backlog"), KeyEvent.VK_0, "AddProductBacklog");
-		addMenuEntry(fileMenu, i18n.tr("View developers"), KeyEvent.VK_O, "ViewDevelopers");
-		addMenuEntry(fileMenu, i18n.tr("Add developer"), KeyEvent.VK_0, "AddDeveloper");
+		addMenuEntry(fileMenu, i18n.tr("New Project"), 			KeyEvent.VK_N, "NewProject");
+		addMenuEntry(fileMenu, i18n.tr("Open Project"), 		KeyEvent.VK_O, "OpenProject");
+		fileMenu.addSeparator();
+		addMenuEntry(fileMenu, i18n.tr("Add product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
+		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
+		
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
+		JMenu developerMenu = new JMenu(i18n.tr("Developer"));
+		
+		addMenuEntry(developerMenu, i18n.tr("Add"), KeyEvent.VK_D, "AddDeveloper");
+		addMenuEntry(developerMenu, i18n.tr("View"), KeyEvent.VK_V, "ViewDevelopers");
+		
 		bar.add(fileMenu);
+		bar.add(developerMenu);
 		
 		JMenu helpMenu = new JMenu(i18n.tr("Help"));
 		helpMenu.setMnemonic(KeyEvent.VK_H);
@@ -164,6 +171,10 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(cmd.equals("AddDeveloper"))
 		{
+			AddDeveloperDialog dialog = new AddDeveloperDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
+			/*
 			DevelopersAddDialog dialog;
 			try {
 				dialog = new DevelopersAddDialog(this);
@@ -172,6 +183,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			*/
 			
 		}
 		else if (cmd.equals("Exit"))
