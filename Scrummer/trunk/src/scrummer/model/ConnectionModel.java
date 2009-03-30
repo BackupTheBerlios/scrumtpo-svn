@@ -30,7 +30,7 @@ public class ConnectionModel {
 	 * @return connection instance
 	 * @throws SQLException in case connection failed
 	 */
-	public static java.sql.Connection getConnection() throws SQLException
+	public java.sql.Connection getConnection() throws SQLException
 	{
 		_lastConnectionString = createConnectionString(_username, _password, _hostname, _port, _database);
 		System.out.println(_lastConnectionString);
@@ -113,10 +113,76 @@ public class ConnectionModel {
 	}
 	
 	/**
-	 * Ne naredi nič in vrne null(za skladnost)
+	 * Close result set
 	 * 
-	 * @param conn primerek povezave
-	 * @return vedno vrne null
+	 * @param statement prepared statement
+	 * @return always returns null
+	 */
+	public java.sql.ResultSet close(java.sql.ResultSet resultSet)
+	{
+		if (resultSet != null)
+		{
+			try
+			{
+				resultSet.close();
+			}
+			catch (SQLException ex)
+			{
+				logSqlException(ex);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * close statement
+	 * 
+	 * @param statement prepared statement
+	 * @return always returns null
+	 */
+	public java.sql.Statement close(java.sql.Statement statement)
+	{
+		if (statement != null)
+		{
+			try
+			{
+				statement.close();
+			}
+			catch (SQLException ex)
+			{
+				logSqlException(ex);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Close statement
+	 * 
+	 * @param statement prepared statement
+	 * @return always returns null
+	 */
+	public java.sql.PreparedStatement close(java.sql.PreparedStatement statement)
+	{
+		if (statement != null)
+		{
+			try
+			{
+				statement.close();
+			}
+			catch (SQLException ex)
+			{
+				logSqlException(ex);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Close connection
+	 * 
+	 * @param conn connection
+	 * @return always null
 	 */
 	public java.sql.Connection close(java.sql.Connection conn)
 	{
