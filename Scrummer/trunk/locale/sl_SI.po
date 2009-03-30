@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 11:07+0000\n"
+"POT-Creation-Date: 2009-03-30 12:23+0000\n"
 "PO-Revision-Date: 2009-03-17 23:03+0000\n"
 "Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
 "Language-Team: slovenski <not@available>\n"
@@ -70,10 +70,10 @@ msgid "Tasks"
 msgstr "Naloge"
 
 #: src/scrummer/ui/TitleLink.java:48
-#: src/scrummer/ui/dialog/DevelopersAddDialog.java:106
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:136
 #: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:116
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:121
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:120
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:131
 msgid "Back"
 msgstr "Nazaj"
 
@@ -85,11 +85,11 @@ msgstr "Domov"
 msgid "Up"
 msgstr "Gor"
 
-#: src/scrummer/ui/dialog/DevelopersAddDialog.java:38
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:34
 msgid "Add developers"
 msgstr "Dodaj razvijalce"
 
-#: src/scrummer/ui/dialog/DevelopersAddDialog.java:107
+#: src/scrummer/ui/dialog/DevelopersAddDialog.java:137
 #: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:117
 msgid "Add row"
 msgstr "Dodaj vrstico"
@@ -135,9 +135,26 @@ msgid "Error"
 msgstr "Napaka"
 
 #: src/scrummer/ui/dialog/AboutBoxDialog.java:21
-#: src/scrummer/ui/MainFrame.java:78
+#: src/scrummer/ui/MainFrame.java:94
 msgid "About"
 msgstr "O programu"
+
+#: src/scrummer/ui/dialog/AddDeveloperDialog.java:34
+#: src/scrummer/ui/dialog/AddDeveloperDialog.java:46
+msgid "Add Developer"
+msgstr "Dodaj razvijalca"
+
+#: src/scrummer/ui/dialog/AddDeveloperDialog.java:38
+msgid "Name"
+msgstr "Ime"
+
+#: src/scrummer/ui/dialog/AddDeveloperDialog.java:39
+msgid "Surname"
+msgstr "Priimek"
+
+#: src/scrummer/ui/dialog/AddDeveloperDialog.java:40
+msgid "Address"
+msgstr "Naslov"
 
 #: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:47
 msgid "Add Product Backlog"
@@ -147,11 +164,15 @@ msgstr "Dodaj programski dnevnik"
 msgid "Create New Project"
 msgstr "Ustvari nov projekt"
 
-#: src/scrummer/ui/dialog/NewProjectDialog.java:40
+#: src/scrummer/ui/dialog/NewProjectDialog.java:41
+msgid "Create Project"
+msgstr "Ustvari projekt"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:45
 msgid "Project name"
 msgstr "Projektno ime"
 
-#: src/scrummer/ui/dialog/NewProjectDialog.java:54
+#: src/scrummer/ui/dialog/NewProjectDialog.java:59
 msgid "Project description"
 msgstr "Projektni opis"
 
@@ -160,31 +181,55 @@ msgid "View Product Backlog"
 msgstr "Poglej programski dnevnik"
 
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:122
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:121
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:132
 msgid "Edit"
 msgstr "Uredi"
 
 #: src/scrummer/ui/dialog/OpenProjectDialog.java:36
-#: src/scrummer/ui/MainFrame.java:70
+#: src/scrummer/ui/MainFrame.java:77
 msgid "Open Project"
 msgstr "Odpri projekt"
 
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:47
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:50
 msgid "View developers"
 msgstr "Poglej razvijalce"
 
-#: src/scrummer/ui/MainFrame.java:67
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:77
+msgid "Employee_description"
+msgstr "Opis uslužbenca"
+
+#: src/scrummer/ui/MainFrame.java:74
 msgid "File"
 msgstr "Datoteka"
 
-#: src/scrummer/ui/MainFrame.java:69
+#: src/scrummer/ui/MainFrame.java:76
 msgid "New Project"
 msgstr "Ustvari projekt"
 
-#: src/scrummer/ui/MainFrame.java:72
+#: src/scrummer/ui/MainFrame.java:78
+msgid "Add product backlog"
+msgstr "Dodaj programski dnevnik"
+
+#: src/scrummer/ui/MainFrame.java:79
+msgid "View product backlog"
+msgstr "Poglej programski dnevnik"
+
+#: src/scrummer/ui/MainFrame.java:82
 msgid "Exit"
 msgstr "Izhod"
 
-#: src/scrummer/ui/MainFrame.java:76
+#: src/scrummer/ui/MainFrame.java:84
+msgid "Developer"
+msgstr "Razvijalec"
+
+#: src/scrummer/ui/MainFrame.java:86
+msgid "Add"
+msgstr "Dodaj"
+
+#: src/scrummer/ui/MainFrame.java:87
+msgid "View"
+msgstr "Pregled"
+
+#: src/scrummer/ui/MainFrame.java:92
 msgid "Help"
 msgstr "Pomoč"
