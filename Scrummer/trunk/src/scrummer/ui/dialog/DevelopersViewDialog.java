@@ -56,7 +56,8 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		
 		setLayout(new BorderLayout());
 		
-		final java.sql.Connection con = ConnectionModel.getConnection();
+		ConnectionModel cm = Scrummer.getModels().getConnectionModel();
+		final java.sql.Connection con = cm.getConnection();
 		java.sql.Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
 		
