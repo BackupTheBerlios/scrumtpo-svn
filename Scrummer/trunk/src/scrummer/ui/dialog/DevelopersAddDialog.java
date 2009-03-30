@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.BorderLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,25 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
 import org.xnap.commons.i18n.I18n;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-
 import scrummer.Scrummer;
-import scrummer.model.ConnectionModel;
-import scrummer.model.Models;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
-
 import java.awt.*;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
-
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -79,6 +65,7 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		
 		TableModel model1 = new DefaultTableModel(data,columnNames);*/
 		
+		/*
 		Models m = Scrummer.getModels();
 		final java.sql.Connection con = m.getConnectionModel().getConnection();
 		java.sql.Statement stmt = con.createStatement();
@@ -86,9 +73,11 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		
 		int id;
 		String name;
+		*/
 		String surname;
 		String address;
 		DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Team member ID", "Name", "Surname", "Address"});
+		/*
 		while(rs.next())
 		{
 			id = rs.getInt("Employee_id");
@@ -101,7 +90,7 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		rs.close();    // All done with that resultset
 	    stmt.close();  // All done with that statement
 	    con.close();  // All done with that DB connection
-		
+		*/
 		JTable table = new JTable(model);
 		
 		table.setSize(250, 170);
