@@ -1,5 +1,6 @@
 package scrummer.ui.dialog;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,18 +13,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
+import scrummer.uicomponents.TwoButtonDialog;
 
 /**
  * Open project dialog
  */
-public class OpenProjectDialog extends JDialog implements MouseListener {
+public class OpenProjectDialog extends TwoButtonDialog implements MouseListener {
 
 	/**
 	 * Constructor
@@ -34,42 +37,42 @@ public class OpenProjectDialog extends JDialog implements MouseListener {
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
 		setTitle(i18n.tr("Open Project"));
-		setSize(new Dimension(320,240));
 		
-		JPanel parentPanel = new JPanel();
-		parentPanel.setLayout(new GridBagLayout());
-		parentPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		
-		setLayout(new GridLayout(1,1));
+		Panel.setLayout(new GridLayout(1,1));
+		int outerk = 10;
+		Panel.setBorder(
+			Util.createSpacedTitleBorder(
+				outerk, outerk, outerk, outerk,
+				i18n.tr("Select Project"),
+				0, outerk, outerk, outerk));
 		
 		String [] st = new String[] { "A", "B", "C", "Č", "D", "E", "F", "G", "H", "I", "J" };
 				
 		JList list = new JList(st);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setLayoutOrientation(JList.VERTICAL_WRAP);
+		list.setBorder(
+			BorderFactory.createCompoundBorder(				
+				BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)
+			)
+		);
+
 		list.setFixedCellWidth(100);
 		list.setFixedCellHeight(20);
+		list.setVisibleRowCount(5);
 		list.addMouseListener(this);
-		// _projectList = list;
 		
-		GridBagConstraints listGc = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 1.0);
-		parentPanel.add(list, listGc);
+		Panel.add(list);
 		
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
-		bottomPanel.setAlignmentX(RIGHT_ALIGNMENT);
+		int bottomk = 5;
+		BottomPanel.setBorder(
+			BorderFactory.createEmptyBorder(
+				bottomk - 6, bottomk, bottomk + 5, bottomk + 2));
 		
-		JButton cancelButton = new StandardButton(i18n.tr("Cancel"));
-		bottomPanel.add(cancelButton);
-		
-		GridBagConstraints bottomGc = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 0.3);
-		bottomGc.gridy = 1;
-		parentPanel.add(bottomPanel, bottomGc);
-		add(parentPanel);
-		
+		setSize(new Dimension(320,235));
 		Util.centre(this);
 	}
 	
-
 	public void actionPerformed(ActionEvent e) {}
 
 	@Override
