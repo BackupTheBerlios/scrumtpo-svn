@@ -9,7 +9,10 @@ import java.awt.Window;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.swing.BorderFactory;
 import javax.swing.KeyStroke;
+import javax.swing.border.Border;
 
 /**
  * Various useful user interface utility functions
@@ -63,6 +66,35 @@ public class Util {
 		ret.weighty = weighty;
 		return ret;
 	}
+		
+	/**
+	 * Create title border with spaced borders engulfing it
+	 * @param topOuter top spacing for outer spaced border
+	 * @param leftOuter left spacing for outer spaced border
+	 * @param bottomOuter bottom spacing for outer spaced border
+	 * @param rightOuter right spacing for outer spaced border
+	 * @param text text on title border
+	 * @param topInner top spacing for inner spaced border
+	 * @param leftInner left spacing for inner spaced border
+	 * @param bottomInner bottom spacing for inner spaced border
+	 * @param rightInner right spacing for inner spaced border
+	 * @return created compound border
+	 */
+	public static Border createSpacedTitleBorder(
+			int topOuter, int leftOuter, int bottomOuter, int rightOuter,
+			String text,
+			int topInner, int leftInner, int bottomInner, int rightInner)
+	{
+		return 
+		BorderFactory.createCompoundBorder (
+			BorderFactory.createEmptyBorder(topOuter, leftOuter, bottomOuter, rightOuter),
+			BorderFactory.createCompoundBorder(
+				BorderFactory.createTitledBorder(text),
+				BorderFactory.createEmptyBorder(topInner, leftInner, bottomInner, rightInner)
+			)
+		);
+	}
+
 	/**
      * Patch the behaviour of a component. This works for JTextArea.
      * TAB transfers focus to the next focusable component,
