@@ -31,11 +31,16 @@ public class NewProjectDialog extends TwoButtonDialog {
 	public NewProjectDialog(JFrame parent) {
 		super(parent,ModalityType.APPLICATION_MODAL);
 		setTitle(i18n.tr("Create New Project"));
-		setSize(new Dimension(340,270));
 		
+		int outk = 10;
+		int ink = 10;
 		Panel.setLayout(new GridBagLayout());
-		Panel.setBorder(BorderFactory.createEmptyBorder(6, 10, 10, 10));
-		BottomPanel.setBorder(BorderFactory.createEmptyBorder(4, 0, 6, 6));
+		Panel.setBorder (	
+			Util.createSpacedTitleBorder(
+				6, outk, outk, outk, 
+				i18n.tr("Create Project"), 
+				2, ink, ink, ink)	
+			);
 		
 		JLabel nameLbl = new JLabel(i18n.tr("Project name") + ":");
 		GridBagConstraints nameLblC = Util.constraint(GridBagConstraints.WEST, 0.5, 0.7);
@@ -46,7 +51,7 @@ public class NewProjectDialog extends TwoButtonDialog {
 		nameTextInput.setColumns(14);
 		nameTextInput.setDocument(new DescriptionDocument(256));
 		
-		GridBagConstraints nameInputC = Util.constraint(GridBagConstraints.EAST, 0.3, 0.3); nameInputC.gridx = 1;
+		GridBagConstraints nameInputC = Util.constraint(GridBagConstraints.EAST, 0.3, 0.7); nameInputC.gridx = 1;
 		nameInputC.anchor = GridBagConstraints.EAST;
 		
 		Panel.add(nameTextInput, nameInputC);
@@ -76,6 +81,10 @@ public class NewProjectDialog extends TwoButtonDialog {
 		OK.setName("Create");
 		Cancel.setName("Cancel");
 		
+		int k = 6;
+		BottomPanel.setBorder(BorderFactory.createEmptyBorder(k, k, k + 4, k));
+		
+		setSize(new Dimension(380,290));
 		Util.centre(this);
 	}
 
