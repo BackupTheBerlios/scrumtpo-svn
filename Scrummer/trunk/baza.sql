@@ -312,7 +312,7 @@ end if;
 /*==============================================================*/
 create table Absence_type 
 (
-   Absence_type_id      integer                        not null,
+   Absence_type_id      integer	AUTO_INCREMENT                       not null,
    Absence_type_description text                           null,
    constraint PK_ABSENCE_TYPE primary key (Absence_type_id)
 );
@@ -346,13 +346,17 @@ create table Employee
 /*==============================================================*/
 create table Impediment 
 (
-   Impediment_id        integer                        not null,
-   Team_id              integer                        null,
-   Sprint_id            integer                        null,
-   Employee_id          integer                        null,
+   Impediment_id        integer	AUTO_INCREMENT not null,
+   Team_id              integer                        not null,
+   Sprint_id            integer                        not null,
+   Employee_id          integer                        not null,
+   Task_id	integer	not null,
    Impediment_description text                           null,
-   Impediment_occurrence_date text                           null,
-   Impediment_resolution_date text                           null,
+   Impediment_type	text	null,
+   Impediment_status	text	null,
+   Impediment_start	text	null,
+   Impediment_end	text	null,
+   Impediment_age	integer	null,
    constraint PK_IMPEDIMENT primary key (Impediment_id)
 );
 
@@ -361,7 +365,7 @@ create table Impediment
 /*==============================================================*/
 create table Measure 
 (
-   Measure_id           integer                        not null,
+   Measure_id           integer	AUTO_INCREMENT                     not null,
    Measure_name         text                           null,
    Measure_description  text                           null,
    constraint PK_MEASURE primary key (Measure_id)
@@ -410,7 +414,7 @@ create table Project
 /*==============================================================*/
 create table "Release" 
 (
-   Release_id           integer                        not null,
+   Release_id           integer	AUTO_INCREMENT                    not null,
    Release_description  text                           null,
    constraint PK_RELEASE primary key (Release_id)
 );
@@ -442,7 +446,7 @@ create table Release_measurement_result
 /*==============================================================*/
 create table Sprint 
 (
-   Sprint_id            integer                        not null,
+   Sprint_id            integer	AUTO_INCREMENT                        not null,
    Project_id           integer                        null,
    Team_id              integer                        null,
    Sprint_description   text                           null,
@@ -493,7 +497,7 @@ create table Sprint_team
 /*==============================================================*/
 create table Task 
 (
-   Task_id              integer                        not null,
+   Task_id              integer  	AUTO_INCREMENT                      not null,
    Employee_id          integer                        null,
    Team_id              integer                        null,
    Task_status_id       integer                        null,
@@ -522,7 +526,7 @@ create table Task_measurement_result
 /*==============================================================*/
 create table Task_status 
 (
-   Task_status_id       integer                        not null,
+   Task_status_id       integer	AUTO_INCREMENT                        not null,
    Task_status_description text                           null,
    constraint PK_TASK_STATUS primary key (Task_status_id)
 );
@@ -532,7 +536,7 @@ create table Task_status
 /*==============================================================*/
 create table Task_type 
 (
-   Task_type_id         integer                        not null,
+   Task_type_id         integer	AUTO_INCREMENT                        not null,
    Task_type_description text                           null,
    constraint PK_TASK_TYPE primary key (Task_type_id)
 );
@@ -542,7 +546,7 @@ create table Task_type
 /*==============================================================*/
 create table Team 
 (
-   Team_id              integer                        not null,
+   Team_id              integer	AUTO_INCREMENT                        not null,
    Team_description     text                           null,
    constraint PK_TEAM primary key (Team_id)
 );
@@ -579,6 +583,12 @@ alter table Impediment
 alter table Impediment
    add constraint FK_IMPEDIME_RELATIONS_EMPLOYEE foreign key (Employee_id)
       references Employee (Employee_id)
+      on update restrict
+      on delete restrict;
+	  
+alter table Impediment
+   add constraint FK_IMPEDIME_RELATIONS_TASK foreign key (Task_id)
+      references Task (Task_id)
       on update restrict
       on delete restrict;
 
