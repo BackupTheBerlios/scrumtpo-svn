@@ -6,27 +6,6 @@ import scrummer.Scrummer;
  * Class through which all models are accessable
  */
 public class Models {
-
-	/**
-	 * Default constructor
-	 * 
-	 * Constructs all models.
-	 */
-	/*
-	public Models()
-	{
-		createLoggingModel();
-		createPropertyModel(getLoggingModel());
-		
-		String languageClassFile = _propertyModel.getProperty("language.default");
-		Scrummer.setLanguageClassFile(languageClassFile);
-		
-		createConnectionModel(getPropertyModel());
-		createProjectModel();
-		createNavigationModel();
-		createResourceModel();	
-	}
-	*/
 	
 	/**
 	 * Constructor
@@ -47,6 +26,7 @@ public class Models {
 		createProjectModel();
 		createNavigationModel();
 		createResourceModel();
+		createDeveloperModel();
 	}
 	
 	/**
@@ -205,10 +185,36 @@ public class Models {
 		return _resourceModel;
 	}
 	
+	/**
+	 * Create developer model
+	 * @return created developer model
+	 */
+	private DeveloperModel createDeveloperModel()
+	{
+		if (_developerModel == null)	
+		{
+			_developerModel = new DeveloperModel(getConnectionModel());
+		}
+		return _developerModel;
+	}
+	
+	/**
+	 * @return developer model
+	 */
+	public DeveloperModel getDeveloperModel()
+	{
+		if (_developerModel == null)
+		{
+			throw new NullPointerException("Developer model was not yet created!");
+		}
+		return _developerModel;
+	}
+	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
 	private NavigationModel _navigationModel = null;
 	private PropertyModel   _propertyModel = null;
 	private LoggingModel    _loggingModel = null;
 	private ResourceModel   _resourceModel = null;
+	private DeveloperModel  _developerModel = null;
 }
