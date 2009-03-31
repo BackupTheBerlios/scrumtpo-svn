@@ -3,316 +3,64 @@
 /* Created on:     8.3.2009 17:33:02                            */
 /*==============================================================*/
 
+use scrumtpo;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_ADMINIST_RELATIONS_ABSENCE_') then
-    alter table Administrative_days
-       delete foreign key FK_ADMINIST_RELATIONS_ABSENCE_
-end if;
+alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
+alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_EMPLOYEE;
+alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_SPRINT_T;
+alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_EMPLOYEE;
+alter table PBI drop foreign key FK_PBI_RELATIONS_PROJECT;
+alter table PBI_measurement_result drop foreign key FK_PBI_MEAS_RELATIONS_MEASURE;
+alter table PBI_measurement_result drop foreign key FK_PBI_MEAS_RELATIONS_PBI;
+alter table Release_PBI drop foreign key FK_RELEASE__RELATIONS_PBI;
+alter table Release_PBI drop foreign key FK_RELEASE__RELATIONS_RELEASE;
+alter table Release_measurement_result drop foreign key FK_RELEASE__RELATIONS_MEASURE;
+alter table Release_measurement_result drop foreign key FK_RELEASE__RELATIONS_RELEASE;
+alter table Sprint drop foreign key FK_SPRINT_TEAM;
+alter table Sprint drop foreign key FK_SPRINT_RELATIONS_PROJECT;
+alter table Sprint_PBI drop foreign key FK_SPRINT_P_REFERENCE_TASK;
+alter table Sprint_PBI drop foreign key FK_SPRINT_P_RELATIONS_PBI;
+alter table Sprint_PBI drop foreign key FK_SPRINT_P_RELATIONS_SPRINT;
+alter table Sprint_measurement_result drop foreign key FK_SPRINT_M_RELATIONS_SPRINT;
+alter table Sprint_measurement_result drop foreign key FK_SPRINT_M_RELATIONS_MEASURE;
+alter table Sprint_team drop foreign key FK_SPRINT_T_RELATIONS_TEAM;
+alter table Sprint_team drop foreign key FK_SPRINT_T_RELATIONS_SPRINT;
+alter table Task drop foreign key FK_TASK_RELATIONS_TASK_STA;
+alter table Task drop foreign key FK_TASK_RELATIONS_TASK_TYP;
+alter table Task drop foreign key FK_TASK_RELATIONS_TEAM_MEM;
+alter table Task_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_MEASURE;
+alter table Task_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_TASK;
+alter table Team_member drop foreign key FK_TEAM_MEM_RELATIONS_EMPLOYEE;
+alter table Team_member drop foreign key FK_TEAM_MEM_RELATIONS_TEAM;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_ADMINIST_RELATIONS_EMPLOYEE') then
-    alter table Administrative_days
-       delete foreign key FK_ADMINIST_RELATIONS_EMPLOYEE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_IMPEDIME_RELATIONS_SPRINT_T') then
-    alter table Impediment
-       delete foreign key FK_IMPEDIME_RELATIONS_SPRINT_T
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_IMPEDIME_RELATIONS_EMPLOYEE') then
-    alter table Impediment
-       delete foreign key FK_IMPEDIME_RELATIONS_EMPLOYEE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_PBI_RELATIONS_PROJECT') then
-    alter table PBI
-       delete foreign key FK_PBI_RELATIONS_PROJECT
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_PBI_MEAS_RELATIONS_MEASURE') then
-    alter table PBI_measurement_result
-       delete foreign key FK_PBI_MEAS_RELATIONS_MEASURE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_PBI_MEAS_RELATIONS_PBI') then
-    alter table PBI_measurement_result
-       delete foreign key FK_PBI_MEAS_RELATIONS_PBI
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_RELEASE__RELATIONS_PBI') then
-    alter table Release_PBI
-       delete foreign key FK_RELEASE__RELATIONS_PBI
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_RELEASE__RELATIONS_RELEASE') then
-    alter table Release_PBI
-       delete foreign key FK_RELEASE__RELATIONS_RELEASE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_RELEASE__RELATIONS_MEASURE') then
-    alter table Release_measurement_result
-       delete foreign key FK_RELEASE__RELATIONS_MEASURE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_RELEASE__RELATIONS_RELEASE') then
-    alter table Release_measurement_result
-       delete foreign key FK_RELEASE__RELATIONS_RELEASE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_..._TEAM') then
-    alter table Sprint
-       delete foreign key "FK_SPRINT_..._TEAM"
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_RELATIONS_PROJECT') then
-    alter table Sprint
-       delete foreign key FK_SPRINT_RELATIONS_PROJECT
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_P_REFERENCE_TASK') then
-    alter table Sprint_PBI
-       delete foreign key FK_SPRINT_P_REFERENCE_TASK
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_P_RELATIONS_PBI') then
-    alter table Sprint_PBI
-       delete foreign key FK_SPRINT_P_RELATIONS_PBI
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_P_RELATIONS_SPRINT') then
-    alter table Sprint_PBI
-       delete foreign key FK_SPRINT_P_RELATIONS_SPRINT
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_M_RELATIONS_SPRINT') then
-    alter table Sprint_measurement_result
-       delete foreign key FK_SPRINT_M_RELATIONS_SPRINT
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_M_RELATIONS_MEASURE') then
-    alter table Sprint_measurement_result
-       delete foreign key FK_SPRINT_M_RELATIONS_MEASURE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_T_RELATIONS_TEAM') then
-    alter table Sprint_team
-       delete foreign key FK_SPRINT_T_RELATIONS_TEAM
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_SPRINT_T_RELATIONS_SPRINT') then
-    alter table Sprint_team
-       delete foreign key FK_SPRINT_T_RELATIONS_SPRINT
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TASK_RELATIONS_TASK_STA') then
-    alter table Task
-       delete foreign key FK_TASK_RELATIONS_TASK_STA
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TASK_RELATIONS_TASK_TYP') then
-    alter table Task
-       delete foreign key FK_TASK_RELATIONS_TASK_TYP
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TASK_RELATIONS_TEAM_MEM') then
-    alter table Task
-       delete foreign key FK_TASK_RELATIONS_TEAM_MEM
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TASK_MEA_RELATIONS_MEASURE') then
-    alter table Task_measurement_result
-       delete foreign key FK_TASK_MEA_RELATIONS_MEASURE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TASK_MEA_RELATIONS_TASK') then
-    alter table Task_measurement_result
-       delete foreign key FK_TASK_MEA_RELATIONS_TASK
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TEAM_MEM_RELATIONS_EMPLOYEE') then
-    alter table Team_member
-       delete foreign key FK_TEAM_MEM_RELATIONS_EMPLOYEE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_TEAM_MEM_RELATIONS_TEAM') then
-    alter table Team_member
-       delete foreign key FK_TEAM_MEM_RELATIONS_TEAM
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Absence_type'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Absence_type
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Administrative_days'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Administrative_days
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Employee'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Employee
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Impediment'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Impediment
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Measure'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Measure
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='PBI'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table PBI
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='PBI_measurement_result'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table PBI_measurement_result
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Project'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Project
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Release'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table "Release"
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Release_PBI'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Release_PBI
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Release_measurement_result'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Release_measurement_result
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Sprint'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Sprint
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Sprint_PBI'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Sprint_PBI
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Sprint_measurement_result'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Sprint_measurement_result
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Sprint_team'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Sprint_team
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Task'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Task
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Task_measurement_result'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Task_measurement_result
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Task_status'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Task_status
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Task_type'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Task_type
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Team'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Team
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='Team_member'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table Team_member
-end if;
+drop table Absence_type;
+drop table Administrative_days;
+drop table Employee;
+drop table Impediment;
+drop table Measure;
+drop table PBI;
+drop table PBI_measurement_result;
+drop table Project;
+drop table FinalRelease;
+drop table Release_PBI;
+drop table Release_measurement_result;
+drop table Sprint;
+drop table Sprint_PBI;
+drop table Sprint_measurement_result;
+drop table Sprint_team;
+drop table Task;
+drop table Task_measurement_result;
+drop table Task_status;
+drop table Task_type;
+drop table Team;
+drop table Team_member;
 
 /*==============================================================*/
 /* Table: Absence_type                                          */
 /*==============================================================*/
 create table Absence_type 
 (
-   Absence_type_id      integer	AUTO_INCREMENT                       not null,
+   Absence_type_id      integer	AUTO_INCREMENT             not null,
    Absence_type_description text                           null,
    constraint PK_ABSENCE_TYPE primary key (Absence_type_id)
 );
@@ -323,10 +71,9 @@ create table Absence_type
 create table Administrative_days 
 (
    Employee_id          integer                        not null,
-   Datum                text                           not null,
-   Absence_type_id      integer                        null,
-   Hours_not_worked     text                           null,
-   constraint PK_ADMINISTRATIVE_DAYS primary key (Employee_id, Datum)
+   Absence_type_id      integer                        not null,
+   Hours_not_worked     decimal                        not null,
+   constraint PK_ADMINISTRATIVE_DAYS primary key (Employee_id)
 );
 
 /*==============================================================*/
@@ -335,9 +82,9 @@ create table Administrative_days
 create table Employee 
 (
    Employee_id          integer	AUTO_INCREMENT	not null,
-   Employee_name	text	null,
-   Employee_surname	text	null,
-   Employee_address	text	null,
+   Employee_name		varchar(255)	not null,
+   Employee_surname		varchar(255)	not null,
+   Employee_address		varchar(255)   	not null,
    constraint PK_EMPLOYEE primary key (Employee_id)
 );
 
@@ -347,16 +94,18 @@ create table Employee
 create table Impediment 
 (
    Impediment_id        integer	AUTO_INCREMENT not null,
-   Team_id              integer                        not null,
-   Sprint_id            integer                        not null,
-   Employee_id          integer                        not null,
-   Task_id	integer	not null,
-   Impediment_description text                           null,
-   Impediment_type	text	null,
-   Impediment_status	text	null,
-   Impediment_start	text	null,
-   Impediment_end	text	null,
-   Impediment_age	integer	null,
+   Team_id              integer                not null,
+   Sprint_id            integer                not null,
+   Employee_id          integer                not null,
+   Task_id				integer				   not null,
+   Impediment_description text                 null,
+   Impediment_type		
+   ENUM('Specification problems', 'Hardware problems', 'Software problems', 'Security problems', 'Teamwork problems', 'Other') not null,
+   Impediment_status	
+   ENUM('Open', 'Pending', 'In Progress', 'Closed', 'Other') not null,
+   Impediment_start		DATE				   null,
+   Impediment_end		DATE				   null,
+   Impediment_age		integer				   null,
    constraint PK_IMPEDIMENT primary key (Impediment_id)
 );
 
@@ -395,7 +144,7 @@ create table PBI_measurement_result
    Measure_id           integer                        not null,
    PBI_id               integer                        not null,
    Measurement_result   long varchar                   null,
-   Datum                long varchar                   not null,
+   Datum                DATE		                   not null,
    constraint PK_PBI_MEASUREMENT_RESULT primary key (Measure_id, PBI_id, Datum)
 );
 
@@ -405,17 +154,17 @@ create table PBI_measurement_result
 create table Project 
 (
    Project_id           integer	AUTO_INCREMENT	not null,
-   Project_name	text	null,
-   Project_description	text	null,
+   Project_name			text					not null,
+   Project_description	text					not null,
    constraint PK_PROJECT primary key (Project_id)
 );
 
 /*==============================================================*/
-/* Table: "Release"                                             */
+/* Table: "FinalRelease"                                             */
 /*==============================================================*/
-create table "Release" 
+create table FinalRelease
 (
-   Release_id           integer	AUTO_INCREMENT                    not null,
+   Release_id           integer	AUTO_INCREMENT         not null,
    Release_description  text                           null,
    constraint PK_RELEASE primary key (Release_id)
 );
@@ -438,7 +187,7 @@ create table Release_measurement_result
    Measure_id           integer                        not null,
    Release_id           integer                        not null,
    Measurement_result   text                           null,
-   Datum                text                           not null,
+   Datum                DATE                           not null,
    constraint PK_RELEASE_MEASUREMENT_RESULT primary key (Measure_id, Release_id, Datum)
 );
 
@@ -447,14 +196,14 @@ create table Release_measurement_result
 /*==============================================================*/
 create table Sprint 
 (
-   Sprint_id            integer	AUTO_INCREMENT                        not null,
+   Sprint_id            integer	AUTO_INCREMENT         not null,
    Project_id           integer                        not null,
    Team_id              integer                        not null,
    Sprint_description   text                           null,
-   Sprint_begin_date    text                           null,
-   Sprint_end_date      text                           null,
-   Sprint_length        text                           null,
-   Sprint_estimated_date text                           null,
+   Sprint_begin_date    date                           not null,
+   Sprint_end_date      date                           null,
+   Sprint_length        integer                        not null,
+   Sprint_estimated_date date                          null,
    constraint PK_SPRINT primary key (Sprint_id)
 );
 
@@ -479,7 +228,7 @@ create table Sprint_measurement_result
    Sprint_id            integer                        not null,
    Measure_id           integer                        not null,
    Measurement_result   text                           null,
-   Datum                text                           not null,
+   Datum                date                           not null,
    constraint PK_SPRINT_MEASUREMENT_RESULT primary key (Sprint_id, Measure_id, Datum)
 );
 
@@ -518,7 +267,7 @@ create table Task_measurement_result
    Measure_id           integer                        not null,
    Task_id              integer                        not null,
    Measurement_result   text                           null,
-   Datum                text                           not null,
+   Datum                date                           not null,
    constraint PK_TASK_MEASUREMENT_RESULT primary key (Measure_id, Task_id, Datum)
 );
 
@@ -625,7 +374,7 @@ alter table Release_PBI
 
 alter table Release_PBI
    add constraint FK_RELEASE__RELATIONS_RELEASE foreign key (Release_id)
-      references "Release" (Release_id)
+      references FinalRelease (Release_id)
       on update restrict
       on delete restrict;
 
@@ -637,12 +386,12 @@ alter table Release_measurement_result
 
 alter table Release_measurement_result
    add constraint FK_RELEASE__RELATIONS_RELEASE foreign key (Release_id)
-      references "Release" (Release_id)
+      references FinalRelease (Release_id)
       on update restrict
       on delete restrict;
 
 alter table Sprint
-   add constraint "FK_SPRINT_..._TEAM" foreign key (Team_id)
+   add constraint FK_SPRINT_TEAM foreign key (Team_id)
       references Team (Team_id)
       on update restrict
       on delete restrict;
