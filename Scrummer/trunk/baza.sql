@@ -28,7 +28,7 @@ alter table Sprint_team drop foreign key FK_SPRINT_T_RELATIONS_SPRINT;
 alter table Task drop foreign key FK_TASK_RELATIONS_TASK_STA;
 alter table Task drop foreign key FK_TASK_RELATIONS_TASK_TYP;
 alter table Task drop foreign key FK_TASK_RELATIONS_TEAM_MEM;
-alter table Task_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_MEASURE;
+alter table uask_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_MEASURE;
 alter table Task_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_TASK;
 alter table Team_member drop foreign key FK_TEAM_MEM_RELATIONS_EMPLOYEE;
 alter table Team_member drop foreign key FK_TEAM_MEM_RELATIONS_TEAM;
