@@ -165,30 +165,14 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if (cmd.equals("ViewDevelopers"))
 		{
-			DevelopersViewDialog dialog;
-			try {
-				dialog = new DevelopersViewDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			DevelopersViewDialog dialog = new DevelopersViewDialog(this);
+			dialog.setVisible(true);
 		}
 		else if(cmd.equals("AddDeveloper"))
 		{
 			AddDeveloperDialog dialog = new AddDeveloperDialog(this);
 			Util.centre(dialog);
 			dialog.setVisible(true);
-			/*
-			DevelopersAddDialog dialog;
-			try {
-				dialog = new DevelopersAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			*/
-			
 		}
 		else if (cmd.equals("Exit"))
 		{
