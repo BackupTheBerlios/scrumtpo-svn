@@ -4,8 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-
 import javax.swing.table.DefaultTableModel;
+
+import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
 import scrummer.model.ConnectionModel;
@@ -18,10 +19,19 @@ public class DeveloperTableModel extends DefaultTableModel {
 	
 	/**
 	 * Default constructor
+	 * 
+	 * @param connectionModel connection model to connect to database
 	 */
-	public DeveloperTableModel() {
-		_connectionModel = Scrummer.getModels().getConnectionModel();
-		refresh();
+	public DeveloperTableModel(ConnectionModel connectionModel) {
+		super();
+		_connectionModel = connectionModel;
+		
+		_columns.add(i18n.tr("ID"));
+		_columns.add(i18n.tr("Name"));
+		_columns.add(i18n.tr("Surname"));
+		_columns.add(i18n.tr("Address"));
+		for (int i = 0; i < 4; i++)
+			_realColumns.add("");
 	}
 
 	/**
@@ -29,7 +39,46 @@ public class DeveloperTableModel extends DefaultTableModel {
 	 */
 	public void refresh()
 	{
+		refreshColumnNames();
 		refreshTableData();
+        fireTableDataChanged();
+	}
+	
+	/**
+	 * Refresh real column names
+	 */
+	private void refreshColumnNames()
+	{
+		java.sql.Connection conn = null;
+        Statement st = null; 
+        ResultSet res = null;
+        try
+        {
+        	conn = _connectionModel.getConnection();
+        
+            String query = 
+            	"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='" + Employee+ "'";   
+            	        
+            st = conn.createStatement();
+            res = st.executeQuery(query);
+            
+            int i = 0;
+            res.beforeFirst();
+            while (res.next())
+            {
+            	_realColumns.set(i, res.getString(1));
+            	i++;
+            }
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        finally
+        {
+            res = _connectionModel.close(res);
+            st  = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
 	}
 	
 	/**
@@ -43,42 +92,101 @@ public class DeveloperTableModel extends DefaultTableModel {
         try
         {
         	conn = _connectionModel.getConnection();
-            String query = "SELECT * FROM Employee";
-            conn.createStatement();
+        
+            String query = "SELECT * FROM " + Employee;
+        
+            st = conn.createStatement();
             res = st.executeQuery(query);
-            _rows = ObjectRow.fetchRows(res);
             
-            fireTableDataChanged();
+            _rows = ObjectRow.fetchRows(res);
+            _rowCount = _rows.size();
         }
-        catch (SQLException ex) {}
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
         finally
         {
             res = _connectionModel.close(res);
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
         }
+	}
 
+	@Override
+	public boolean isCellEditable(int row, int column) {
+		return true;
+	}
+
+	@Override
+	public void setValueAt(Object value, int row, int column) {
+		
+		String idColumnName = _realColumns.get(0);
+		String columnName = _realColumns.get(column+1);
+		
+		java.sql.Connection conn = null;
+        Statement st = null; 
+        try
+        {
+        	conn = _connectionModel.getConnection();
+        
+            String query = 
+            	"UPDATE " + Employee + " SET " + columnName + "='" + value.toString() + "' " + 
+            	"WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
+        
+           st = conn.createStatement();
+           st.execute(query);
+           
+           // update cell after all the fuss
+           refresh();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        finally
+        {
+            st  = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
+		
+		// super.setValueAt(value, row, column);
 	}
 	
 	@Override
 	public int getColumnCount() {
-		return 4;
+		return _columnCount;
 	}
 
 	@Override
 	public int getRowCount() {
-		return _rows.size();
+		return _rowCount;
 	}
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		return _rows.get(row).get(column);
+		return _rows.get(row).get(column+1);
 	}
 
+	@Override
+	public String getColumnName(int column) {
+		return _columns.get(column + 1);
+	}
+
+	/// column count
+	private int _columnCount = 3;
+	/// row count
+	private int _rowCount = 0;
 	/// connection handler
 	private ConnectionModel _connectionModel;
+	/// column names for display
+	private Vector<String> _columns = new Vector<String>(4);
+	/// real column names for UPDATE-ing
+	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
+	/// translation class field
+	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 2334976808166694864L;
+	/// table name
+	private static final String Employee = "Employee";
 }
