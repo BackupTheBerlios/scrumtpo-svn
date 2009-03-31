@@ -33,7 +33,7 @@ public class ConnectionModel {
 	public java.sql.Connection getConnection() throws SQLException
 	{
 		_lastConnectionString = createConnectionString(_username, _password, _hostname, _port, _database);
-		System.out.println(_lastConnectionString);
+		
 		String message = "";
 		java.sql.Connection ret;
 		try
