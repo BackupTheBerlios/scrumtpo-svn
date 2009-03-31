@@ -10,11 +10,15 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
@@ -23,7 +27,9 @@ import scrummer.uicomponents.TwoButtonDialog;
 /**
  * Add developer dialog
  */
-public class AddDeveloperDialog extends TwoButtonDialog {
+public class AddDeveloperDialog 
+	extends TwoButtonDialog 
+	implements OperationListener<DeveloperOperation> {
 	
 	/**
 	 * Constructor
@@ -36,6 +42,7 @@ public class AddDeveloperDialog extends TwoButtonDialog {
 		setTitle(i18n.tr("Add Developer"));
 		
 		_developerModel = Scrummer.getModels().getDeveloperModel();
+		_developerModel.addDeveloperListener(this);
 		
 		Panel.setLayout(new GridLayout(3, 2, 0, 10));
 		
@@ -91,6 +98,32 @@ public class AddDeveloperDialog extends TwoButtonDialog {
 			super.actionPerformed(e);
 		}
 	}
+	
+	@Override
+	public void setVisible(boolean b) {
+		
+		if (!b)
+		{
+			// _developerModel.
+		}
+
+		super.setVisible(b);
+	}
+
+	@Override
+	public void operationFailed(DataOperation type, DeveloperOperation identifier, String message) {
+		JOptionPane.showMessageDialog(this, message, i18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, DeveloperOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			setVisible(false);
+			break;
+		}
+	}
 
 	/// developer model
 	private DeveloperModel _developerModel;
@@ -100,5 +133,4 @@ public class AddDeveloperDialog extends TwoButtonDialog {
 	private static final long serialVersionUID = 8159590855907206180L;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
-	
 }
