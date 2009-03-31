@@ -484,4 +484,33 @@ alter table Team_member
       references Team (Team_id)
       on update restrict
       on delete restrict;
+	  
+insert into Absence_type (Absence_type_description) values ('weather');
+insert into Absence_type (Absence_type_description) values ('transportation');
+insert into Absence_type (Absence_type_description) values ('change of schedule');
+insert into Absence_type (Absence_type_description) values ('health');
+insert into Absence_type (Absence_type_description) values ('other');
+
+insert into Task_status (Task_status_description) values('not started');
+insert into Task_status (Task_status_description) values('in progress');
+insert into Task_status (Task_status_description) values('completed');
+insert into Task_status (Task_status_description) values('omitted');
+insert into Task_status (Task_status_description) values('moved into next sprint');
+insert into Task_status (Task_status_description) values('split/divided');
+insert into Task_status (Task_status_description) values('not completed due to incorrect feasibility assumptions');
+insert into Task_status (Task_status_description) values('other');
+
+insert into Task_type (Task_type_description) values ('analysis');
+insert into Task_type (Task_type_description) values ('design');
+insert into Task_type (Task_type_description) values ('coding');
+insert into Task_type (Task_type_description) values ('testing');
+insert into Task_type (Task_type_description) values ('documentation');
+insert into Task_type (Task_type_description) values ('rework due to error reported by the customer');
+insert into Task_type (Task_type_description) values ('rework due to change in requirements');
+insert into Task_type (Task_type_description) values ('rework due to inaccurat specifications');
+insert into Task_type (Task_type_description) values ('rework due to incomplete impact assessment');
+insert into Task_type (Task_type_description) values ('rework due to inadequate change specifications');
+insert into Task_type (Task_type_description) values ('rework due to inadequate testing');
+insert into Task_type (Task_type_description) values ('other');
+
 
