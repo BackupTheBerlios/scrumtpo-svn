@@ -29,7 +29,7 @@ public class DeveloperModel {
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		//_developerTableModel = new DeveloperTableModel();
+		_developerTableModel = new DeveloperTableModel(connectionModel);
 	}
 	
 	/**
