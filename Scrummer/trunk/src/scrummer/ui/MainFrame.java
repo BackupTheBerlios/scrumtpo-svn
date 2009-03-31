@@ -149,7 +149,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				dialog = new ProductBacklogViewDialog(this);
 				dialog.setVisible(true);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -171,7 +170,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				dialog = new DevelopersViewDialog(this);
 				dialog.setVisible(true);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
