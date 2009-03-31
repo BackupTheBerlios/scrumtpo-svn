@@ -5,41 +5,24 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.BorderLayout;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-
 import org.xnap.commons.i18n.I18n;
-
 import scrummer.Scrummer;
-import scrummer.model.ConnectionModel;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
-
-
-
-
 import java.awt.*;
-import java.text.*;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -91,7 +74,9 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 	    */
 		DeveloperModel devModel = Scrummer.getModels().getDeveloperModel();
 		DeveloperTableModel model = devModel.getDeveloperTableModel(); 
-		JTable table = new JTable();
+		JTable table = new JTable(model);
+		// refresh data from database
+		model.refresh();
 		
 		table.setSize(250, 170);
 		table.setRowHeight(20);
@@ -110,6 +95,7 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 	    	}
 	    };
 		
+	    /*
 		TableColumn column = null; 
 		for (int i = 0; i < 4; i++) 
 		{
@@ -128,6 +114,7 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		    column.setCellRenderer(rdr);
 		    
 		}
+		*/
 		
 		parentPanel.add(table.getTableHeader(), BorderLayout.PAGE_START);
 		parentPanel.add(table, BorderLayout.CENTER);
