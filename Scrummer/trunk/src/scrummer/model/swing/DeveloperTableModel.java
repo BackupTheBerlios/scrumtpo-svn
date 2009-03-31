@@ -9,8 +9,12 @@ import javax.swing.table.DefaultTableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
 import scrummer.util.ObjectRow;
+import scrummer.util.Operation;
 
 /**
  * Developer table synchronization class 
@@ -141,16 +145,52 @@ public class DeveloperTableModel extends DefaultTableModel {
         }
         catch (SQLException ex) {
         	ex.printStackTrace();
+        	_operation.operationFailed(
+        		DataOperation.Update, 
+        		DeveloperOperation.Developer, 
+        		i18n.tr("Could not set parameter."));
         }
         finally
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
         }
-		
-		// super.setValueAt(value, row, column);
 	}
 	
+	@Override
+	public void removeRow(int row) {
+	
+		String idColumnName = _realColumns.get(0);
+		
+		java.sql.Connection conn = null;
+        Statement st = null; 
+        try
+        {
+        	conn = _connectionModel.getConnection();
+        
+            String query = 
+            	"DELETE FROM " + Employee + " WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
+        
+            st = conn.createStatement();
+            st.execute(query);
+           
+            // update cell after all the fuss
+            refresh();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        	_operation.operationFailed(
+        		DataOperation.Remove, 
+        		DeveloperOperation.Developer, 
+        		i18n.tr("Could not remove developer."));
+        }
+        finally
+        {
+            st  = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
+	}
+
 	@Override
 	public int getColumnCount() {
 		return _columnCount;
@@ -171,6 +211,25 @@ public class DeveloperTableModel extends DefaultTableModel {
 		return _columns.get(column + 1);
 	}
 
+	/**
+	 * Add developer data change listener
+	 * 
+	 * @param listener listener to add
+	 */
+	public void addDeveloperListener(OperationListener<DeveloperOperation> listener)
+	{
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remove developer data change listener
+	 * @param listener listener to remove
+	 */
+	public void removeDeveloperListner(OperationListener<DeveloperOperation> listener)
+	{
+		_operation.removeListener(listener);
+	}
+	
 	/// column count
 	private int _columnCount = 3;
 	/// row count
@@ -183,10 +242,13 @@ public class DeveloperTableModel extends DefaultTableModel {
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
+	/// data listener
+	private Operation<DeveloperOperation> _operation = new Operation<DeveloperOperation>();
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 2334976808166694864L;
 	/// table name
-	private static final String Employee = "Employee";
+	public static final String Employee = "Employee";
+	
 }
