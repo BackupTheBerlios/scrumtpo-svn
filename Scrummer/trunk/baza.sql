@@ -253,7 +253,6 @@ create table Task
    Task_status_id       integer                        null,
    Task_type_id         integer                        null,
    Task_description     text                           null,
-   Task_cost_of_engineering_hour text                           null,
    Task_date            text                           null,
    Task_active          text                           null,
    constraint PK_TASK primary key (Task_id)
