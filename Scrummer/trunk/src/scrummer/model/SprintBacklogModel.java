@@ -21,7 +21,7 @@ public class SprintBacklogModel
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public SprinBacklogModel(ConnectionModel connectionModel)
+	public SprintBacklogModel(ConnectionModel connectionModel)
 	{
 		if (connectionModel == null)
 		{

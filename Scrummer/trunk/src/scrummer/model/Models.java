@@ -29,6 +29,7 @@ public class Models {
 		createDeveloperModel();
 		createImpedimentModel();
 		createProductBacklogModel();
+		createSprintBacklogModel();
 	}
 	
 	/**
@@ -261,6 +262,31 @@ public class Models {
 		}
 		return _productbacklogModel;
 	}
+	/**
+	 * Create product backlog model
+	 * @return created product backlog model
+	 */
+	private SprintBacklogModel createSprintBacklogModel()
+	{
+		if (_sprintbacklogModel == null)	
+		{
+			_sprintbacklogModel = new SprintBacklogModel(getConnectionModel());
+		}
+		return _sprintbacklogModel;
+	}
+	
+	/**
+	 * @return product backlog model
+	 */
+	public SprintBacklogModel getSprintBacklogModel()
+	{
+		if (_sprintbacklogModel == null)
+		{
+			throw new NullPointerException("Product Backlog model was not yet created!");
+		}
+		return _sprintbacklogModel;
+	}
+	
 	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
@@ -270,5 +296,6 @@ public class Models {
 	private ResourceModel   _resourceModel = null;
 	private DeveloperModel  _developerModel = null;
 	private ImpedimentModel _impedimentModel = null;
+	private SprintBacklogModel  _sprintbacklogModel = null;
 	private ProductBacklogModel _productbacklogModel = null;
 }

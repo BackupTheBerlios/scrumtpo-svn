@@ -17,6 +17,7 @@ import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
 import scrummer.model.ProductBacklogModel;
+import scrummer.model.SprintBacklogModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -90,17 +91,20 @@ public class SprintBacklogAddDialog extends TwoButtonDialog {
 	
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
+			throw new RuntimeException("Kle je blo par sintaksnih napak!");
+			/*
 			_sprintbacklogModel.add(
 				_taskdescriptionTextField.getText(),
-				_tasktypeTextField.getText(),
-				_taskstatusTextField.getText(),
+				Integer.parseInt(_tasktypeTextField.getText()),
+				Integer.parseInt(_taskstatusTextField.getText()),
 				_taskdateTextField.getText(),
-				_taskactiveTextField.getText(),
+				Integer.parseInt(_taskactiveTextField.getText()),
 				Integer.parseInt(_PBIidTextField.getText()), 
 				Integer.parseInt(_hoursspentTextField.getText()),
 				Integer.parseInt(_hoursremainingTextField.getText()),
 				Integer.parseInt(_nbopenimpedTextField.getText()),
 				Integer.parseInt(_nbclosedimpedTextField.getText()));
+			*/
 		}
 		else
 		{
