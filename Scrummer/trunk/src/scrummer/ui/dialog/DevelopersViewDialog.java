@@ -29,6 +29,8 @@ import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
 import scrummer.model.ConnectionModel;
+import scrummer.model.DeveloperModel;
+import scrummer.model.swing.DeveloperTableModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
 
@@ -56,6 +58,7 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		
 		setLayout(new BorderLayout());
 		
+		/*
 		ConnectionModel cm = Scrummer.getModels().getConnectionModel();
 		final java.sql.Connection con = cm.getConnection();
 		java.sql.Statement stmt = con.createStatement();
@@ -85,12 +88,13 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		rs.close();    // All done with that resultset
 	    stmt.close();  // All done with that statement
 	    con.close();  // All done with that DB connection
-	    
-		JTable table = new JTable(model);
+	    */
+		DeveloperModel devModel = Scrummer.getModels().getDeveloperModel();
+		DeveloperTableModel model = devModel.getDeveloperTableModel(); 
+		JTable table = new JTable();
 		
 		table.setSize(250, 170);
 		table.setRowHeight(20);
-		
 		
 		DefaultTableCellRenderer rdr = new DefaultTableCellRenderer() 
 		{
