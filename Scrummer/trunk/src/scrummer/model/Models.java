@@ -27,6 +27,8 @@ public class Models {
 		createNavigationModel();
 		createResourceModel();
 		createDeveloperModel();
+		createImpedimentModel();
+		createProductBacklogModel();
 	}
 	
 	/**
@@ -210,6 +212,56 @@ public class Models {
 		return _developerModel;
 	}
 	
+	/**
+	 * Create impediment model
+	 * @return created impediment model
+	 */
+	private ImpedimentModel createImpedimentModel()
+	{
+		if (_impedimentModel == null)	
+		{
+			_impedimentModel = new ImpedimentModel(getConnectionModel());
+		}
+		return _impedimentModel;
+	}
+	
+	/**
+	 * @return impediment model
+	 */
+	public ImpedimentModel getImpedimentModel()
+	{
+		if (_impedimentModel == null)
+		{
+			throw new NullPointerException("Impediment model was not yet created!");
+		}
+		return _impedimentModel;
+	}
+	
+	/**
+	 * Create product backlog model
+	 * @return created product backlog model
+	 */
+	private ProductBacklogModel createProductBacklogModel()
+	{
+		if (_productbacklogModel == null)	
+		{
+			_productbacklogModel = new ProductBacklogModel(getConnectionModel());
+		}
+		return _productbacklogModel;
+	}
+	
+	/**
+	 * @return product backlog model
+	 */
+	public ProductBacklogModel getProductBacklogModel()
+	{
+		if (_productbacklogModel == null)
+		{
+			throw new NullPointerException("Product Backlog model was not yet created!");
+		}
+		return _productbacklogModel;
+	}
+	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
 	private NavigationModel _navigationModel = null;
@@ -217,4 +269,6 @@ public class Models {
 	private LoggingModel    _loggingModel = null;
 	private ResourceModel   _resourceModel = null;
 	private DeveloperModel  _developerModel = null;
+	private ImpedimentModel _impedimentModel = null;
+	private ProductBacklogModel _productbacklogModel = null;
 }
