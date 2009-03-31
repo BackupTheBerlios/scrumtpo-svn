@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.model.swing.DeveloperTableModel;
 import scrummer.util.Operation;
 
 /**
@@ -28,6 +29,7 @@ public class DeveloperModel {
 		}
 		/// connection model
 		_connectionModel = connectionModel;
+		//_developerTableModel = new DeveloperTableModel();
 	}
 	
 	/**
@@ -43,12 +45,15 @@ public class DeveloperModel {
 		ResultSet res = null;
 		try {
 			 conn = _connectionModel.getConnection();
-			 st = conn.prepareStatement("INSERT INTO Employee VALUES ({1}, {2}, {3})");
+			 String query =
+				"INSERT INTO Employee " +
+			 	"(Employee_name, Employee_surname, Employee_address) " +
+			 	"VALUES (?, ?, ?)";
+			 st = conn.prepareStatement(query);
 			 st.setString(1, name);
 			 st.setString(2, surname);
 			 st.setString(3, address);
-			 res = st.executeQuery();
-			 _developerOp.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
+			 st.execute();
 			 _developerOp.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
 		} catch (SQLException e) {
 			_developerOp.operationFailed(DataOperation.Insert, DeveloperOperation.Developer, e.getMessage());
@@ -71,8 +76,20 @@ public class DeveloperModel {
 		throw new RuntimeException("Not yet implemented.");
 	}
 	
+	/**
+	 * Developer table model
+	 * 
+	 * @return developer table model
+	 */
+	public DeveloperTableModel getDeveloperTableModel()
+	{
+		return _developerTableModel;
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
+	/// developer table model
+	private DeveloperTableModel _developerTableModel;
 	/// developer operation
 	private Operation<DeveloperOperation> _developerOp = new Operation<DeveloperOperation>();
 }
