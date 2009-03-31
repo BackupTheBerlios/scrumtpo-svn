@@ -2,6 +2,7 @@ package scrummer.ui.dialog;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Vector;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.model.DeveloperModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -21,7 +23,7 @@ import scrummer.uicomponents.TwoButtonDialog;
 /**
  * Add developer dialog
  */
-public class AddDeveloperDialog extends TwoButtonDialog implements FocusListener {
+public class AddDeveloperDialog extends TwoButtonDialog {
 	
 	/**
 	 * Constructor
@@ -33,11 +35,13 @@ public class AddDeveloperDialog extends TwoButtonDialog implements FocusListener
 		// set translated title
 		setTitle(i18n.tr("Add Developer"));
 		
+		_developerModel = Scrummer.getModels().getDeveloperModel();
+		
 		Panel.setLayout(new GridLayout(3, 2, 0, 10));
 		
-		addEntry(i18n.tr("Name")    + ":", "Name");
-		addEntry(i18n.tr("Surname") + ":", "Surname");
-		addEntry(i18n.tr("Address") + ":", "Address");
+		_nameTextField    = addEntry(i18n.tr("Name")    + ":", "Name");
+		_surnameTextField = addEntry(i18n.tr("Surname") + ":", "Surname");
+		_addressTextField = addEntry(i18n.tr("Address") + ":", "Address");
 		
 		int topK = 10;
 		Panel.setBorder(
@@ -58,32 +62,40 @@ public class AddDeveloperDialog extends TwoButtonDialog implements FocusListener
 	 * 
 	 * @param labelText label text
 	 * @param textActionCmd text action command
+	 * @return added text field
 	 */
-	public void addEntry(String labelText, String textActionCmd)
+	public JTextField addEntry(String labelText, String textActionCmd)
 	{
 		JLabel label = new JLabel(labelText);
 		
 		JTextField textBox = new SelectedTextField();
-		_textField.add(textBox);
-		textBox.addFocusListener(this);
 		
 		Panel.add(label);
 		Panel.add(textBox);
+		
+		return textBox;
 	}
+		
+	@Override
+	public void actionPerformed(ActionEvent e) {
 	
-	@Override
-	public void focusGained(FocusEvent e) {}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		if (_textField.contains(e.getComponent()))
+		if (e.getActionCommand() == "StandardDialog.OK")
 		{
-			JTextField field = _textField.get(_textField.indexOf(e.getSource())); 
-			System.out.println(field.getText());
-		}	
+			_developerModel.add(
+				_nameTextField.getText(), 
+				_surnameTextField.getText(), 
+				_addressTextField.getText());
+		}
+		else
+		{
+			super.actionPerformed(e);
+		}
 	}
-	
-	private Vector<JTextField> _textField = new Vector<JTextField>();;
+
+	/// developer model
+	private DeveloperModel _developerModel;
+	/// name text field
+	private JTextField _nameTextField, _surnameTextField, _addressTextField;
 	/// serialization id
 	private static final long serialVersionUID = 8159590855907206180L;
 	/// translation class field
