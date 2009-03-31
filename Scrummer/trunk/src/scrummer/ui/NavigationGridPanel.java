@@ -117,10 +117,14 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	private void showSprintBacklogMetric(JPanel panel) {}
 
-	private void showSprintBacklogHurdles(JPanel panel) {}
+	private void showSprintBacklogHurdles(JPanel panel) 
+	{
+		
+	}
 
 	private void showSprintBacklogAbsent(JPanel panel) {}
 
+	//iteracijski
 	private void showSprintBacklog(JPanel panel) {
 		
 		panel.setLayout(new BorderLayout());
@@ -178,6 +182,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.add(vertBox);
 	}
 
+	//programski
 	private void showProductBacklog(JPanel panel) {}
 
 	/**

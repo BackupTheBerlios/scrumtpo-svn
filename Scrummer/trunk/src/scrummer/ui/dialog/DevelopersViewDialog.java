@@ -65,7 +65,7 @@ public class DevelopersViewDialog extends JDialog implements MouseListener
 		String name;
 		String surname;
 		String address;
-		DefaultTableModel model = new DefaultTableModel(null,new Object[]{"Team member ID","Name"})
+		DefaultTableModel model = new DefaultTableModel(null,new Object[]{"Team member ID","Name","Surname","Address"})
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex) 
 			{

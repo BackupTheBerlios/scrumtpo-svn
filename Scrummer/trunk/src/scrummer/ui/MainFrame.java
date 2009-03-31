@@ -155,8 +155,14 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		}
 		else if(cmd.equals("AddProductBacklog"))
 		{
-			ProductBacklogAddDialog dialog = new ProductBacklogAddDialog(this);
-			dialog.setVisible(true);
+			ProductBacklogAddDialog dialog;
+			try {
+				dialog = new ProductBacklogAddDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if (cmd.equals("ViewDevelopers"))
 		{
