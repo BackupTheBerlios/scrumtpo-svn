@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.util.Operation;
 
@@ -46,7 +47,7 @@ public class DeveloperModel {
 		try {
 			 conn = _connectionModel.getConnection();
 			 String query =
-				"INSERT INTO Employee " +
+				"INSERT INTO " + DeveloperTableModel.Employee + " " +
 			 	"(Employee_name, Employee_surname, Employee_address) " +
 			 	"VALUES (?, ?, ?)";
 			 st = conn.prepareStatement(query);
@@ -54,10 +55,10 @@ public class DeveloperModel {
 			 st.setString(2, surname);
 			 st.setString(3, address);
 			 st.execute();
-			 _developerOp.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
+			 _operation.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
 		} catch (SQLException e) {
-			_developerOp.operationFailed(DataOperation.Insert, DeveloperOperation.Developer, e.getMessage());
 			e.printStackTrace();
+			_operation.operationFailed(DataOperation.Insert, DeveloperOperation.Developer, e.getMessage());
 		}
 		finally
 		{
@@ -65,15 +66,6 @@ public class DeveloperModel {
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
 		}
-	}
-	
-	/**
-	 * Remove developer by id
-	 * @param id developer id
-	 */
-	public void remove(int id)
-	{
-		throw new RuntimeException("Not yet implemented.");
 	}
 	
 	/**
@@ -86,10 +78,29 @@ public class DeveloperModel {
 		return _developerTableModel;
 	}
 	
+	/**
+	 * Add developer data change listener
+	 * 
+	 * @param listener listener to add
+	 */
+	public void addDeveloperListener(OperationListener<DeveloperOperation> listener)
+	{
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remove developer data change listener
+	 * @param listener listener to remove
+	 */
+	public void removeDeveloperListner(OperationListener<DeveloperOperation> listener)
+	{
+		_operation.removeListener(listener);
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer table model
 	private DeveloperTableModel _developerTableModel;
 	/// developer operation
-	private Operation<DeveloperOperation> _developerOp = new Operation<DeveloperOperation>();
+	private Operation<DeveloperOperation> _operation = new Operation<DeveloperOperation>();
 }
