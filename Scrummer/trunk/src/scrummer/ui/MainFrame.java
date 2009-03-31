@@ -232,6 +232,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	@Override
 	public void windowOpened(WindowEvent e) {}
 	
+	
+	
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// model factory

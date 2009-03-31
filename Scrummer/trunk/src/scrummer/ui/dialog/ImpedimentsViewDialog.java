@@ -57,7 +57,7 @@ public class ImpedimentsViewDialog extends JDialog implements MouseListener
 		Models m = Scrummer.getModels();
 		final java.sql.Connection con = m.getConnectionModel().getConnection();
 		java.sql.Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Impediment");
 		
 		String desc;
 		String type;
@@ -65,6 +65,7 @@ public class ImpedimentsViewDialog extends JDialog implements MouseListener
 		String start;
 		String end;
 		String age;
+		
 		DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Description", "Type", "Status", "Start", "End", "Age"})
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex) 
