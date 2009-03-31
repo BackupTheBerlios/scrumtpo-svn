@@ -80,6 +80,7 @@ public class ObjectRow {
 		return rows;
 	}
 	
+	/// column count
 	private int _columnCount = 0;
 	/// cell list
 	private Vector<Object> _cells = new Vector<Object>();
