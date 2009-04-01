@@ -7,6 +7,7 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.BorderLayout;
@@ -18,7 +19,9 @@ import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -28,7 +31,15 @@ import javax.swing.table.TableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ImpedimentOperation;
+import scrummer.enumerator.ProductBacklogOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
+import scrummer.model.ImpedimentModel;
+import scrummer.model.ProductBacklogModel;
+import scrummer.model.swing.ImpedimentTableModel;
+import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
 
@@ -41,8 +52,15 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-public class ProductBacklogViewDialog extends JDialog implements MouseListener
+public class ProductBacklogViewDialog 
+	extends JDialog 
+	implements MouseListener, ActionListener, OperationListener<ProductBacklogOperation>
 {
+	
+	/**
+	 * Constructor
+	 * @param owner owner frame
+	 */
 	public ProductBacklogViewDialog(Frame owner) throws SQLException 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
@@ -52,49 +70,20 @@ public class ProductBacklogViewDialog extends JDialog implements MouseListener
 		
 		JPanel parentPanel = new JPanel();
 		parentPanel.setLayout(new BorderLayout());
-		parentPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
 		setLayout(new BorderLayout());
 		
-		ConnectionModel cm = Scrummer.getModels().getConnectionModel();
-		final java.sql.Connection con = cm.getConnection();
-		java.sql.Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM PBI GROUP BY ");
-		
-		int id;
-		String description;
-		String priority;
-		String initial_estimate;
-		String adjustment_factor;
-		String adjusted_estimate;
-		
-		DefaultTableModel model = new DefaultTableModel(null,new Object[]{"PBI id","Description","Priority","Initial estimate","Adjustment factor","Adjusted estimate"})
-		{
-			public boolean isCellEditable(int rowIndex, int mColIndex) 
-			{
-				return false;
-			}
-		};
-		
-		while(rs.next())
-		{
-			id=rs.getInt("PBI_id");
-			description=rs.getString("PBI_description");
-			priority = rs.getString("PBI_priority");
-			initial_estimate = rs.getString("PBI_initial_estimate");
-			adjustment_factor = rs.getString("PBI_adjustment_factor");
-			adjusted_estimate = rs.getString("PBI_adjusted_estimate");
-			model.addRow(new Object[]{id,description,priority,initial_estimate,adjustment_factor,adjusted_estimate}); 
-		}
-		
-		rs.close();    // All done with that resultset
-	    stmt.close();  // All done with that statement
-	    con.close();  // All done with that DB connection
-		
+		ProductBacklogModel impModel = Scrummer.getModels().getProductBacklogModel();
+		ProductBacklogTableModel model = impModel.getProductBacklogTableModel();
+		_productbacklogTableModel = model;
+		_productbacklogTableModel.addProductBacklogListener(this);
 		JTable table = new JTable(model);
+		_productbacklogTable = table;
+		// refresh data from database
+		model.refresh();
+		
 		table.setSize(250, 170);
 		table.setRowHeight(20);
-		
 		
 		DefaultTableCellRenderer rdr = new DefaultTableCellRenderer() 
 		{
@@ -110,36 +99,32 @@ public class ProductBacklogViewDialog extends JDialog implements MouseListener
 	    	}
 	    };
 		
-		TableColumn column = null; 
-		for (int i = 0; i < 6; i++) 
-		{
-		    column = table.getColumnModel().getColumn(i);
-		    column.setResizable(false);
-		    
-		    if (i == 1) 
-		        column.setPreferredWidth(200); //third column is bigger
-		    else if(i == 0)
-		    	column.setPreferredWidth(20);
-		    else if(i == 2)
-		    	column.setPreferredWidth(50);
-		    else 
-		        column.setPreferredWidth(100);
-		    
-		    column.setCellRenderer(rdr);
-		    
-		}
+	    JScrollPane scrollPane = new JScrollPane(table);
+		parentPanel.add(scrollPane, BorderLayout.CENTER);
 		
-		parentPanel.add(table.getTableHeader(), BorderLayout.PAGE_START);
-		parentPanel.add(table, BorderLayout.CENTER);
+		int k = 10;
+		scrollPane.setBorder(
+			Util.createSpacedTitleBorder(
+			k, k, k, k,
+			i18n.tr("Product Backlog table"), 
+			0, k, k, k));
 		
 		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
+		bottomPanel.setLayout(new FlowLayout(FlowLayout.TRAILING, k, k));
 		bottomPanel.setAlignmentX(RIGHT_ALIGNMENT);
 		
-		JButton backButton = new StandardButton(i18n.tr("Back"));
-		JButton editButton = new StandardButton(i18n.tr("Edit"));
-		bottomPanel.add(backButton);
-		bottomPanel.add(editButton);
+		bottomPanel.setBorder(BorderFactory.createEmptyBorder(k, k, 2, 2));
+		
+		JButton removeButton = new StandardButton(i18n.tr("Remove"));
+		removeButton.setActionCommand("RemoveButton");
+		removeButton.addActionListener(this);
+		
+		JButton closeButton = new StandardButton(i18n.tr("Close"));
+		closeButton.setActionCommand("CloseButton");
+		closeButton.addActionListener(this);
+		
+		bottomPanel.add(removeButton);
+		bottomPanel.add(closeButton);
 		
 		GridBagConstraints bottomGc = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 0.3);
 		bottomGc.gridy = 1;
@@ -150,8 +135,43 @@ public class ProductBacklogViewDialog extends JDialog implements MouseListener
 	}
 	
 
-	public void actionPerformed(ActionEvent e) {}
+	public void actionPerformed(ActionEvent e) 
+	{
+		String cmd = e.getActionCommand();
+		if (cmd == "RemoveButton")
+		{
+			int selectedRow = _productbacklogTable.getSelectedRow();
+			if (selectedRow == (-1))
+			{
+				JOptionPane.showMessageDialog(
+					this, 
+					i18n.tr("Cannot remove from Product Backlog because no Product Backlog item is selected. " +
+							"Click on a table row and then press remove."),
+					i18n.tr("Error"),
+					JOptionPane.ERROR_MESSAGE);
+			}
+			else
+			{
+				_productbacklogTableModel.removeRow(selectedRow);
+			}
+		}
+		else if (cmd == "CloseButton")
+		{
+			setVisible(false);
+		}
+	}
 
+	@Override
+	public void setVisible(boolean b) 
+	{	
+		if (!b)
+		{
+			_productbacklogTableModel.removeProductBacklogListner(this);
+		}
+		
+		super.setVisible(b);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 
@@ -173,13 +193,27 @@ public class ProductBacklogViewDialog extends JDialog implements MouseListener
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 	
+	@Override
+	public void operationFailed(DataOperation type, ProductBacklogOperation identifier, String message) 
+	{
+		switch (type)
+		{
+		case Remove:
+			JOptionPane.showMessageDialog(this, message, i18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+			break;
+		}
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, ProductBacklogOperation identifier, String message) {}
+	
+	/// product backlog table
+	private JTable _productbacklogTable;
+	/// impediment table model
+	private ProductBacklogTableModel _productbacklogTableModel;
 	/// serialization id 
 	private static final long serialVersionUID = 456365932759827558L;
-	/// project list
-	// private JList _projectList;
 	/// translation class field
-	private I18n i18n = Scrummer.getI18n(getClass()); 
+	private I18n i18n = Scrummer.getI18n(getClass());
 	
 }
-	
-

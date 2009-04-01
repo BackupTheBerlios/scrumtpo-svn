@@ -11,20 +11,27 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
+import scrummer.enumerator.ProductBacklogOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.ProductBacklogModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
- * Add developer dialog
+ * Insert into product backlog dialog
  */
-public class ProductBacklogAddDialog extends TwoButtonDialog {
+public class ProductBacklogAddDialog 
+	extends TwoButtonDialog
+	implements OperationListener<ProductBacklogOperation> {
 	
 	/**
 	 * Constructor
@@ -34,9 +41,10 @@ public class ProductBacklogAddDialog extends TwoButtonDialog {
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title
-		setTitle(i18n.tr("Add Developer"));
+		setTitle(i18n.tr("Insert into Product Backlog"));
 		
 		_productbacklogModel = Scrummer.getModels().getProductBacklogModel();
+		_productbacklogModel.addProductBacklogListener(this);
 		
 		Panel.setLayout(new GridLayout(7, 5, 0, 10));
 		
@@ -52,7 +60,7 @@ public class ProductBacklogAddDialog extends TwoButtonDialog {
 		Panel.setBorder(
 			Util.createSpacedTitleBorder(
 				topK, topK, topK, topK, 
-				i18n.tr("Add Developer"), 
+				i18n.tr("Insert into Product Backlog"), 
 				3, topK, topK, topK));
 		
 		int bottomK = 6;
@@ -102,6 +110,32 @@ public class ProductBacklogAddDialog extends TwoButtonDialog {
 		}
 	}
 
+	@Override
+	public void setVisible(boolean b) {
+		
+		if (!b)
+		{
+			// _productbacklogModel.
+		}
+
+		super.setVisible(b);
+	}
+	
+	@Override
+	public void operationFailed(DataOperation type, ProductBacklogOperation identifier, String message) {
+		JOptionPane.showMessageDialog(this, message, i18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, ProductBacklogOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			setVisible(false);
+			break;
+		}
+	}
+	
 	/// product backlog model
 	private ProductBacklogModel _productbacklogModel;
 	/// name text field

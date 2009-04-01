@@ -10,11 +10,16 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
+import scrummer.enumerator.ImpedimentOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.ImpedimentModel;
 import scrummer.ui.Util;
@@ -24,7 +29,9 @@ import scrummer.uicomponents.TwoButtonDialog;
 /**
  * Add developer dialog
  */
-public class ImpedimentsAddDialog extends TwoButtonDialog {
+public class ImpedimentsAddDialog 
+	extends TwoButtonDialog
+	implements OperationListener<ImpedimentOperation> {
 	
 	/**
 	 * Constructor
@@ -34,7 +41,7 @@ public class ImpedimentsAddDialog extends TwoButtonDialog {
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title
-		setTitle(i18n.tr("Add Developer"));
+		setTitle(i18n.tr("Add Impediment"));
 		
 		_impedimentModel = Scrummer.getModels().getImpedimentModel();
 		
@@ -108,7 +115,33 @@ public class ImpedimentsAddDialog extends TwoButtonDialog {
 		}
 	}
 
-	/// developer model
+	@Override
+	public void setVisible(boolean b) {
+		
+		if (!b)
+		{
+			// _impedimentModel.
+		}
+
+		super.setVisible(b);
+	}
+
+	@Override
+	public void operationFailed(DataOperation type, ImpedimentOperation identifier, String message) {
+		JOptionPane.showMessageDialog(this, message, i18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, ImpedimentOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			setVisible(false);
+			break;
+		}
+	}
+	
+	/// impediment model
 	private ImpedimentModel _impedimentModel;
 	/// name text field
 	private JTextField _teamTextField, _sprintTextField, _employeeTextField, _taskTextField, _descriptionTextField, _typeTextField, _statusTextField, _startTextField, _endTextField, _ageTextField;

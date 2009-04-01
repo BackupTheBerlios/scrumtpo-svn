@@ -79,7 +79,7 @@ public class SprintBacklogModel
 	}
 	
 	/**
-	 * Remove sprintt backlog item by id
+	 * Remove sprint backlog item by id
 	 * @param id sprint backlog id
 	 */
 	public void remove(int id)

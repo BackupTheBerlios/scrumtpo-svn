@@ -215,8 +215,6 @@ create table Sprint_PBI
    PBI_id               integer                        not null,
    Sprint_id            integer                        not null,
    Task_id              integer                        null,
-   Sprint_PBI_priority  text                           null,
-   Sprint_PBI_status    text                           null,
    constraint PK_SPRINT_PBI primary key (PBI_id, Sprint_id)
 );
 

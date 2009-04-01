@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProductBacklogOperation;
+import scrummer.listener.OperationListener;
+import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.util.Operation;
 
@@ -29,6 +31,7 @@ public class ProductBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
+		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel);
 	}
 	
 	/**
@@ -62,9 +65,9 @@ public class ProductBacklogModel
 			 st.setInt(7, adjusted_estimate);
 			 st.execute();
 			 
-			 _productbacklogOp.operationSucceeded(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, "");
+			 _operation.operationSucceeded(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, "");
 		} catch (SQLException e) {
-			_productbacklogOp.operationFailed(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, e.getMessage());
+			_operation.operationFailed(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, e.getMessage());
 			e.printStackTrace();
 		}
 		finally
@@ -94,10 +97,29 @@ public class ProductBacklogModel
 		return _productbacklogTableModel;
 	}
 	
+	/**
+	 * Add product backlog data change listener
+	 * 
+	 * @param listener listener to add
+	 */
+	public void addProductBacklogListener(OperationListener<ProductBacklogOperation> listener)
+	{
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remove product backlog data change listener
+	 * @param listener listener to remove
+	 */
+	public void removeProductBacklogListner(OperationListener<ProductBacklogOperation> listener)
+	{
+		_operation.removeListener(listener);
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
-	/// developer table model
+	/// product backlog table model
 	private ProductBacklogTableModel _productbacklogTableModel;
-	/// developer operation
-	private Operation<ProductBacklogOperation> _productbacklogOp = new Operation<ProductBacklogOperation>();
+	/// product backlog operation
+	private Operation<ProductBacklogOperation> _operation = new Operation<ProductBacklogOperation>();
 }
