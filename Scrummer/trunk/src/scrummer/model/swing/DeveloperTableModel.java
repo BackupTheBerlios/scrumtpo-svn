@@ -13,8 +13,11 @@ import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
+import scrummer.model.DBSchemaModel;
+import scrummer.model.Models;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Query;
 
 /**
  * Developer table synchronization class 
@@ -53,36 +56,9 @@ public class DeveloperTableModel extends DefaultTableModel {
 	 */
 	private void refreshColumnNames()
 	{
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='" + Employee+ "'";   
-            	        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            int i = 0;
-            res.beforeFirst();
-            while (res.next())
-            {
-            	_realColumns.set(i, res.getString(1));
-            	i++;
-            }
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }
+		Models m = Scrummer.getModels();
+		DBSchemaModel schemam = m.getDBSchemaModel();
+		_columns = schemam.getColumns(Employee);
 	}
 	
 	/**
@@ -90,30 +66,19 @@ public class DeveloperTableModel extends DefaultTableModel {
 	 */
 	private void refreshTableData()
 	{
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = "SELECT * FROM " + Employee;
-        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            _rows = ObjectRow.fetchRows(res);
-            _rowCount = _rows.size();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }
+		Query q = new Query(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) {
+			    _rows = ObjectRow.fetchRows(result);
+	            _rowCount = _rows.size();		
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult("SELECT * FROM " + Employee);
 	}
 
 	@Override
@@ -124,71 +89,43 @@ public class DeveloperTableModel extends DefaultTableModel {
 	@Override
 	public void setValueAt(Object value, int row, int column) {
 		
+		Query q = new Query(_connectionModel)
+		{
+			@Override
+			public void process() {
+	            refresh();
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Update, DeveloperOperation.Developer, 
+	        		i18n.tr("Could not set parameter."));
+			}
+		};
 		String idColumnName = _realColumns.get(0);
 		String columnName = _realColumns.get(column+1);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"UPDATE " + Employee + " SET " + columnName + "='" + value.toString() + "' " + 
-            	"WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-           st = conn.createStatement();
-           st.execute(query);
-           
-           // update cell after all the fuss
-           refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Update, 
-        		DeveloperOperation.Developer, 
-        		i18n.tr("Could not set parameter."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }
+		q.query("UPDATE " + Employee + " SET " + columnName + "='" + value.toString() + "' " + 
+            	"WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'");
 	}
 	
 	@Override
 	public void removeRow(int row) {
 	
+		Query q = new Query(_connectionModel)
+		{
+			@Override
+			public void process() {
+				refresh();		
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, DeveloperOperation.Developer, 
+	        		i18n.tr("Could not remove developer."));
+			}
+		};
 		String idColumnName = _realColumns.get(0);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"DELETE FROM " + Employee + " WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-            st = conn.createStatement();
-            st.execute(query);
-           
-            // update cell after all the fuss
-            refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Remove, 
-        		DeveloperOperation.Developer, 
-        		i18n.tr("Could not remove developer."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }
+		q.query("DELETE FROM " + Employee + " WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'");
 	}
 
 	@Override
