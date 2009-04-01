@@ -8,13 +8,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.DocumentFilter;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ProjectOperation;
+import scrummer.listener.OperationListener;
+import scrummer.model.Models;
+import scrummer.model.ProjectModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -22,7 +29,7 @@ import scrummer.uicomponents.TwoButtonDialog;
 /**
  * New project dialog.
  */
-public class NewProjectDialog extends TwoButtonDialog {
+public class NewProjectDialog extends TwoButtonDialog implements OperationListener<ProjectOperation> {
 	
 	/**
 	 * Constructor
@@ -31,6 +38,9 @@ public class NewProjectDialog extends TwoButtonDialog {
 	public NewProjectDialog(JFrame parent) {
 		super(parent,ModalityType.APPLICATION_MODAL);
 		setTitle(i18n.tr("Create New Project"));
+		
+		Models m = Scrummer.getModels();
+		_projectModel = m.getProjectModel();
 		
 		int outk = 10;
 		int ink = 10;
@@ -50,6 +60,7 @@ public class NewProjectDialog extends TwoButtonDialog {
 		SelectedFormattedTextField nameTextInput = new SelectedFormattedTextField();
 		nameTextInput.setColumns(14);
 		nameTextInput.setDocument(new DescriptionDocument(256));
+		_projectNameInput = nameTextInput;
 		
 		GridBagConstraints nameInputC = Util.constraint(GridBagConstraints.EAST, 0.3, 0.7); nameInputC.gridx = 1;
 		nameInputC.anchor = GridBagConstraints.EAST;
@@ -66,6 +77,7 @@ public class NewProjectDialog extends TwoButtonDialog {
 		descrInput.setDocument(new DescriptionDocument(1024));
 		descrInput.setLineWrap(true);
 		descrInput.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		_descriptionTextAreaInput = descrInput;
 		// make text area tab traversable
 		Util.tabTraverse(descrInput);
 		
@@ -90,14 +102,33 @@ public class NewProjectDialog extends TwoButtonDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("OK"))
+		if (e.getActionCommand().equals("StandardDialog.OK"))
 		{
-			// TODO: add new project via project model
+			 _projectModel.addProject(_projectNameInput.getText(), _descriptionTextAreaInput.getText());
 		}
 		else
 		{
 			super.actionPerformed(e);
 		}
+	}
+	
+	@Override
+	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			setVisible(false);
+			break;
+		}
+	}
+	
+	@Override
+	public void operationFailed(DataOperation type, ProjectOperation identifier, String message) {
+		JOptionPane.showMessageDialog(
+			this, 
+			i18n.tr("Could not add project") + ": " + message, 
+			i18n.tr("Error"), 
+			JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
@@ -171,9 +202,14 @@ public class NewProjectDialog extends TwoButtonDialog {
 		private static final long serialVersionUID = 529023227772650007L;	
 	}
 	
+	/// project name input text field
+	private JTextField _projectNameInput;
+	/// project description input field
+	private JTextArea _descriptionTextAreaInput;
+	/// project model
+	private ProjectModel _projectModel;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id 
 	private static final long serialVersionUID = 7218168248710426884L;
-
 }
