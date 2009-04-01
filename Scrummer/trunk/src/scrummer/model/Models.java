@@ -30,6 +30,7 @@ public class Models {
 		createImpedimentModel();
 		createProductBacklogModel();
 		createSprintBacklogModel();
+		createDBSchemaModel();
 	}
 	
 	/**
@@ -67,7 +68,7 @@ public class Models {
 	{
 		if (_projectModel == null)
 		{
-			_projectModel = new ProjectModel();
+			_projectModel = new ProjectModel(getConnectionModel());
 		}
 		return _projectModel;
 	}
@@ -262,6 +263,7 @@ public class Models {
 		}
 		return _productbacklogModel;
 	}
+	
 	/**
 	 * Create product backlog model
 	 * @return created product backlog model
@@ -287,6 +289,31 @@ public class Models {
 		return _sprintbacklogModel;
 	}
 	
+	/**
+	 * Create database schema model
+	 * @return created model
+	 */
+	private DBSchemaModel createDBSchemaModel()
+	{
+		if (_dbschemaModel == null)	
+		{
+			_dbschemaModel = new DBSchemaModel(getConnectionModel());
+		}
+		return _dbschemaModel;
+	}
+	
+	/**
+	 * @return database schema model
+	 */
+	public DBSchemaModel getDBSchemaModel()
+	{
+		if (_dbschemaModel == null)
+		{
+			throw new NullPointerException("Database schema model was not yet created!");
+		}
+		return _dbschemaModel;
+	}
+	
 	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
@@ -298,4 +325,6 @@ public class Models {
 	private ImpedimentModel _impedimentModel = null;
 	private SprintBacklogModel  _sprintbacklogModel = null;
 	private ProductBacklogModel _productbacklogModel = null;
+	/// schema model contains database schema related data
+	private DBSchemaModel _dbschemaModel = null;
 }
