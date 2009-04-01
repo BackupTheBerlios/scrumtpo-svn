@@ -41,31 +41,35 @@ public class DeveloperModel {
 	 */
 	public void add(String name, String surname, String address)
 	{
-		java.sql.Connection conn      = null;
-		java.sql.PreparedStatement st = null;
-		ResultSet res = null;
-		try {
-			 conn = _connectionModel.getConnection();
-			 String query =
-				"INSERT INTO " + DeveloperTableModel.Employee + " " +
-			 	"(Employee_name, Employee_surname, Employee_address) " +
-			 	"VALUES (?, ?, ?)";
-			 st = conn.prepareStatement(query);
-			 st.setString(1, name);
-			 st.setString(2, surname);
-			 st.setString(3, address);
-			 st.execute();
-			 _operation.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			_operation.operationFailed(DataOperation.Insert, DeveloperOperation.Developer, e.getMessage());
-		}
-		finally
-		{
-			res  = _connectionModel.close(res);
-			st   = _connectionModel.close(st);
-			conn = _connectionModel.close(conn);
-		}
+		 java.sql.Connection conn      = null;
+         java.sql.PreparedStatement st = null;
+         ResultSet res = null;
+         try {
+                  conn = _connectionModel.getConnection();
+                  String query =
+                 	"INSERT INTO " + DeveloperTableModel.Employee + " " +
+                 	"(Employee_name, Employee_surname, Employee_address) " +
+                               "VALUES (?, ?, ?)";
+
+                  st = conn.prepareStatement(query);
+                  st.setString(1, name);
+                  st.setString(2, surname);
+                  st.setString(3, address);
+               
+                  st.execute();
+                   
+                  _operation.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
+
+         } catch (SQLException e) {
+                 e.printStackTrace();
+                 _operation.operationFailed(DataOperation.Insert, DeveloperOperation.Developer, e.getMessage());
+         }
+         finally
+         {
+        	 _connectionModel.close(res);
+        	 _connectionModel.close(st);
+        	 _connectionModel.close(conn);
+         }
 	}
 	
 	/**
