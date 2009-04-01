@@ -20,6 +20,8 @@ import scrummer.ui.dialog.AboutBoxDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
 import scrummer.ui.dialog.DevelopersAddDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
+import scrummer.ui.dialog.ImpedimentsAddDialog;
+import scrummer.ui.dialog.ImpedimentsViewDialog;
 import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.NewProjectDialog;
 import scrummer.ui.dialog.OpenProjectDialog;
@@ -78,7 +80,9 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Add product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
-		
+		fileMenu.addSeparator();
+		addMenuEntry(fileMenu, i18n.tr("Add impediment"), KeyEvent.VK_I, "AddImpediment");
+		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
@@ -160,6 +164,28 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 				dialog.setVisible(true);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("AddImpediment"))
+		{
+			ImpedimentsAddDialog dialog;
+			try {
+				dialog = new ImpedimentsAddDialog(this);
+				dialog.setVisible(true);
+			} catch(SQLException e1) {
+				//TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("ViewImpediments"))
+		{
+			ImpedimentsViewDialog dialog;
+			try {
+				dialog = new ImpedimentsViewDialog(this);
+				dialog.setVisible(true);
+			} catch(SQLException e1) {
+				//TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}

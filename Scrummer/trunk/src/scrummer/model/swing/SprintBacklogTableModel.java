@@ -27,6 +27,8 @@ public class SprintBacklogTableModel extends DefaultTableModel
 {	
 	/**
 	 * Default constructor
+	 * 
+	 * @param connectionModel connection model to connect to database
 	 */
 	public SprintBacklogTableModel(ConnectionModel connectionModel) 
 	{
@@ -36,13 +38,15 @@ public class SprintBacklogTableModel extends DefaultTableModel
 		_columns.add(i18n.tr("PBI id"));
 		_columns.add(i18n.tr("Sprint id"));
 		_columns.add(i18n.tr("Task id"));
-		_columns.add(i18n.tr("Employee id"));
-		_columns.add(i18n.tr("Team id"));
-		_columns.add(i18n.tr("Task status id"));
-		_columns.add(i18n.tr("Task type id"));
-		_columns.add(i18n.tr("Task description"));
-		_columns.add(i18n.tr("Task date"));
-		_columns.add(i18n.tr("Task active"));
+		
+		_columnsT.add("Task id");
+		_columnsT.add(i18n.tr("Employee id"));
+		_columnsT.add(i18n.tr("Team id"));
+		_columnsT.add(i18n.tr("Task status id"));
+		_columnsT.add(i18n.tr("Task type id"));
+		_columnsT.add(i18n.tr("Task description"));
+		_columnsT.add(i18n.tr("Task date"));
+		_columnsT.add(i18n.tr("Task active"));
 		
 		for (int i = 0; i < 10; i++)
 			_realColumns.add("");
@@ -240,14 +244,18 @@ public class SprintBacklogTableModel extends DefaultTableModel
 		_operation.removeListener(listener);
 	}
 	
-	/// column count
-	private int _columnCount = 9;
+	/// column count Sprint PBI
+	private int _columnCount = 2;
+	/// column count Task
+	private int _columnCountT = 7;
 	/// row count
 	private int _rowCount = 0;
 	/// connection handler
 	private ConnectionModel _connectionModel;
-	/// column names for display
-	private Vector<String> _columns = new Vector<String>(10);
+	/// column names for Sprint PBI display
+	private Vector<String> _columns = new Vector<String>(3);
+	/// column names for task display
+	private Vector<String> _columnsT = new Vector<String>(8);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
@@ -258,7 +266,9 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 2334976808166694864L;
-	/// table name
+	/// table name Sprint PBI
 	public static final String Sprint_PBI = "Sprint_PBI";
+	/// table name Task
+	public static final String Task = "Task";
 	
 }

@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -37,7 +38,7 @@ public class ImpedimentsAddDialog
 	 * Constructor
 	 * @param owner owner of this dialog
 	 */
-	public ImpedimentsAddDialog(JFrame owner)
+	public ImpedimentsAddDialog(JFrame owner) throws SQLException 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title
@@ -45,18 +46,18 @@ public class ImpedimentsAddDialog
 		
 		_impedimentModel = Scrummer.getModels().getImpedimentModel();
 		
-		Panel.setLayout(new GridLayout(3, 2, 0, 10));
+		Panel.setLayout(new GridLayout(5, 5, 0, 13));
 		
-		_teamTextField    = addEntry(i18n.tr("Name")    + ":", "Name");
-		_sprintTextField = addEntry(i18n.tr("Surname") + ":", "Surname");
-		_employeeTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_taskTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_descriptionTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_typeTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_statusTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_startTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_endTextField = addEntry(i18n.tr("Address") + ":", "Address");
-		_ageTextField = addEntry(i18n.tr("Address") + ":", "Address");
+		_teamTextField    = addEntry(i18n.tr("Team")    + ":", "Team");
+		_sprintTextField = addEntry(i18n.tr("Sprint") + ":", "Sprint");
+		_employeeTextField = addEntry(i18n.tr("Employee") + ":", "Employee");
+		_taskTextField = addEntry(i18n.tr("Task") + ":", "Task");
+		_descriptionTextField = addEntry(i18n.tr("Description") + ":", "Description");
+		_typeTextField = addEntry(i18n.tr("Type") + ":", "Type");
+		_statusTextField = addEntry(i18n.tr("Status") + ":", "Status");
+		_startTextField = addEntry(i18n.tr("Start") + ":", "Start");
+		_endTextField = addEntry(i18n.tr("End") + ":", "End");
+		_ageTextField = addEntry(i18n.tr("Age") + ":", "Age");
 		
 		
 		int topK = 10;
@@ -70,7 +71,8 @@ public class ImpedimentsAddDialog
 		BottomPanel.setBorder(
 			BorderFactory.createEmptyBorder(0, bottomK, bottomK,bottomK));
 		
-		setSize(new Dimension(270, 210));
+		setSize(new Dimension(570, 310));
+		Util.centre(this);
 	}
 
 	/**

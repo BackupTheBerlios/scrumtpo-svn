@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.model.swing.ImpedimentTableModel;
+import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.util.Operation;
 
 /**
@@ -29,7 +30,7 @@ public class ImpedimentModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		//_developerTableModel = new DeveloperTableModel();
+		_impedimentTableModel = new ImpedimentTableModel(connectionModel);
 	}
 	
 	/**
