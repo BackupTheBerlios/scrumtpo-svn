@@ -82,22 +82,19 @@ public class DBSchemaModel {
 		}
 		else
 		{
-			_tableColumnsMap.put(table, new Vector<String>());
 			
-			// _tableColumnsMap.put(key, value)
-			Vector<String> ret = new Vector<String>();
+			
 			ColumnQuery q = new ColumnQuery(_connectionModel, table)
 			{
 				@Override
 				public void processResult(ResultSet result) throws java.sql.SQLException {
-					
-					Vector<String> ref = _tableColumnsMap.get(getTable());
 		            int i = 0; result.beforeFirst();				
 		            while (result.next())
 		            {
 		            	addColumns(result.getString(1));
 		            	i++;
-		            }		
+		            }
+		            _tableColumnsMap.put(getTable(), getColumns());
 				}
 				@Override
 				public void handleException(SQLException ex) {
@@ -124,4 +121,10 @@ public class DBSchemaModel {
 	private HashMap<String, Vector<String>> _tableColumnsMap = new HashMap<String, Vector<String>>();
 	/// connection model
 	private ConnectionModel _connectionModel;
+	
+	public static final String EmployeeTable   = "Employee";
+	public static final String EmployeeId	   = "Employee_id";
+	public static final String EmployeeName    = "Employee_name";
+	public static final String EmployeeSurname = "Employee_surname";
+	public static final String EmployeeAddress = "Employee_address";
 }
