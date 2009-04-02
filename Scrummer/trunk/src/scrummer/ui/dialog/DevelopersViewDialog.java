@@ -53,9 +53,10 @@ public class DevelopersViewDialog
 		setLayout(new BorderLayout());
 		
 		DeveloperModel devModel = Scrummer.getModels().getDeveloperModel();
+		_developerModel = devModel;
+		_developerModel.addDeveloperListener(this);
 		DeveloperTableModel model = devModel.getDeveloperTableModel();
 		_developerTableModel = model;
-		_developerTableModel.addDeveloperListener(this);
 		JTable table = new JTable(model);
 		_developerTable = table;
 		// refresh data from database
@@ -143,7 +144,7 @@ public class DevelopersViewDialog
 		
 		if (!b)
 		{
-			_developerTableModel.removeDeveloperListner(this);
+			_developerModel.removeDeveloperListener(this);
 		}
 		
 		super.setVisible(b);
@@ -184,6 +185,8 @@ public class DevelopersViewDialog
 	
 	/// developer table
 	private JTable _developerTable;
+	/// developer model
+	private DeveloperModel _developerModel;
 	/// developer table model
 	private DeveloperTableModel _developerTableModel;
 	/// serialization id 
