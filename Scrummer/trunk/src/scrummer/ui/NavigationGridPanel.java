@@ -19,6 +19,7 @@ import scrummer.Scrummer;
 import scrummer.listener.NavigationListener;
 import scrummer.model.NavigationModel;
 import scrummer.model.ResourceModel;
+import scrummer.ui.page.TransferDeveloperPage;
 
 /**
  * Navigation grid is a panel that contains a fixed grid i.e. it doesn't scale
@@ -163,8 +164,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	private void showProjectDevelopers(JPanel panel) {
 		
-		
-		
+		panel.setLayout(new GridLayout(1,1));
+		TransferDeveloperPage page = new TransferDeveloperPage();
+		panel.add(page);
 	}
 
 	private void showProject(JPanel panel) {
