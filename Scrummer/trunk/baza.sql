@@ -114,10 +114,10 @@ create table Impediment
 /*==============================================================*/
 create table Measure 
 (
-   Measure_id           integer	AUTO_INCREMENT                     not null,
-   Measure_name         text                           null,
-   Measure_description  text                           null,
-   constraint PK_MEASURE primary key (Measure_id)
+   Measure_id	integer	AUTO_INCREMENT	not null,
+   Measure_name	text	null,
+   Measure_description	text	null,
+   constraint PK_MEASURE primary key(Measure_id)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
@@ -212,10 +212,16 @@ create table Sprint
 /*==============================================================*/
 create table Sprint_PBI 
 (
-   PBI_id               integer                        not null,
-   Sprint_id            integer                        not null,
-   Task_id              integer                        null,
-   constraint PK_SPRINT_PBI primary key (PBI_id, Sprint_id)
+   Measure_day	integer	AUTO_INCREMENT	not null,
+   PBI_id	integer	not null,
+   Task_id	integer not null,
+   Sprint_id	integer	not null,
+   Employee_id	integer	not null,
+   Hours_spent	integer	default '0' null,
+   Hours_remaining integer default '0' null,
+   NbOpenImped	integer	default '0' null,
+   NbClosedImped	integer	default '0'	null,
+   constraint PK_MEASURE primary key (Measure_day, PBI_id, Sprint_id, Task_id)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
@@ -416,6 +422,12 @@ alter table Sprint_PBI
       references Sprint (Sprint_id)
       on update restrict
       on delete restrict;
+
+alter table Sprint_PBI
+   add constraint FK_SPRINT_P_RELATONS_EMPLOYEE foreign key (Employee_id)
+	  references Employee (Employee_id)
+	  on update restrict
+	  on delete restrict;
 
 alter table Sprint_measurement_result
    add constraint FK_SPRINT_M_RELATIONS_SPRINT foreign key (Sprint_id)

@@ -11,11 +11,16 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ProductBacklogOperation;
+import scrummer.enumerator.SprintBacklogOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.ProductBacklogModel;
 import scrummer.model.SprintBacklogModel;
 import scrummer.ui.Util;
@@ -25,7 +30,9 @@ import scrummer.uicomponents.TwoButtonDialog;
 /**
  * Add developer dialog
  */
-public class SprintBacklogAddDialog extends TwoButtonDialog {
+public class SprintBacklogAddDialog 
+	extends TwoButtonDialog
+	implements OperationListener<SprintBacklogOperation> {
 	
 	/**
 	 * Constructor
@@ -35,7 +42,7 @@ public class SprintBacklogAddDialog extends TwoButtonDialog {
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title
-		setTitle(i18n.tr("Add Developer"));
+		setTitle(i18n.tr("Insert into Sprint Backlog"));
 		
 		_sprintbacklogModel = Scrummer.getModels().getSprintBacklogModel();
 		
@@ -47,6 +54,8 @@ public class SprintBacklogAddDialog extends TwoButtonDialog {
 		_taskdateTextField = addEntry(i18n.tr("Task date") + ":", "Task active");
 		_taskactiveTextField = addEntry(i18n.tr("Task active") + ":", "Task active");
 		_PBIidTextField = addEntry(i18n.tr("PBI id") + ":", "PBI id");
+		_sprintTextField = addEntry(i18n.tr("Sprint id") + ":", "Sprint id");
+		_employeeTextField = addEntry(i18n.tr("Employee id") + ":", "Employee id");
 		_hoursspentTextField = addEntry(i18n.tr("Hours spent") + ":", "Hours spent");
 		_hoursremainingTextField = addEntry(i18n.tr("Hours remaining") + ":", "Hours remaining");
 		_nbopenimpedTextField = addEntry(i18n.tr("Number of open impediments") + ":", "Number of open impediments");
@@ -91,31 +100,56 @@ public class SprintBacklogAddDialog extends TwoButtonDialog {
 	
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
-			throw new RuntimeException("Kle je blo par sintaksnih napak!");
-			/*
 			_sprintbacklogModel.add(
 				_taskdescriptionTextField.getText(),
 				Integer.parseInt(_tasktypeTextField.getText()),
 				Integer.parseInt(_taskstatusTextField.getText()),
 				_taskdateTextField.getText(),
-				Integer.parseInt(_taskactiveTextField.getText()),
-				Integer.parseInt(_PBIidTextField.getText()), 
+				_taskactiveTextField.getText(),
+				Integer.parseInt(_PBIidTextField.getText()),
+				Integer.parseInt(_sprintTextField.getText()),
+				Integer.parseInt(_employeeTextField.getText()),
 				Integer.parseInt(_hoursspentTextField.getText()),
 				Integer.parseInt(_hoursremainingTextField.getText()),
 				Integer.parseInt(_nbopenimpedTextField.getText()),
 				Integer.parseInt(_nbclosedimpedTextField.getText()));
-			*/
 		}
 		else
 		{
 			super.actionPerformed(e);
 		}
 	}
+	
+	@Override
+	public void setVisible(boolean b) {
+		
+		if (!b)
+		{
+			// _productbacklogModel.
+		}
+
+		super.setVisible(b);
+	}
+	
+	@Override
+	public void operationFailed(DataOperation type, SprintBacklogOperation identifier, String message) {
+		JOptionPane.showMessageDialog(this, message, i18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, SprintBacklogOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			setVisible(false);
+			break;
+		}
+	}
 
 	/// product backlog model
 	private SprintBacklogModel _sprintbacklogModel;
 	/// name text field
-	private JTextField _taskdescriptionTextField, _tasktypeTextField, _taskstatusTextField, _taskdateTextField, _taskactiveTextField, _PBIidTextField, _hoursspentTextField, _hoursremainingTextField, _nbopenimpedTextField, _nbclosedimpedTextField;
+	private JTextField _taskdescriptionTextField, _tasktypeTextField, _taskstatusTextField, _taskdateTextField, _taskactiveTextField, _PBIidTextField, _sprintTextField, _employeeTextField, _hoursspentTextField, _hoursremainingTextField, _nbopenimpedTextField, _nbclosedimpedTextField;
 	/// serialization id
 	private static final long serialVersionUID = 8159590855907206180L;
 	/// translation class field

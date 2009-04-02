@@ -30,6 +30,8 @@ import scrummer.ui.dialog.NewProjectDialog;
 import scrummer.ui.dialog.OpenProjectDialog;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
+import scrummer.ui.dialog.SprintBacklogAddDialog;
+import scrummer.ui.dialog.SprintBacklogViewDialog;
 
 /**
  * Main application window
@@ -94,6 +96,9 @@ public class MainFrame extends JFrame
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Add impediment"), KeyEvent.VK_I, "AddImpediment");
 		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
+		fileMenu.addSeparator();
+		addMenuEntry(fileMenu, i18n.tr("Insert into Sprint Backlog"), KeyEvent.VK_S, "InsertSprintBacklog");
+		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
@@ -199,6 +204,28 @@ public class MainFrame extends JFrame
 			ImpedimentsViewDialog dialog;
 			try {
 				dialog = new ImpedimentsViewDialog(this);
+				dialog.setVisible(true);
+			} catch(SQLException e1) {
+				//TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("InsertSprintBacklog"))
+		{
+			SprintBacklogAddDialog dialog;
+			try {
+				dialog = new SprintBacklogAddDialog(this);
+				dialog.setVisible(true);
+			} catch(SQLException e1) {
+				//TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("ViewSprintBacklog"))
+		{
+			SprintBacklogViewDialog dialog;
+			try {
+				dialog = new SprintBacklogViewDialog(this);
 				dialog.setVisible(true);
 			} catch(SQLException e1) {
 				//TODO Auto-generated catch block

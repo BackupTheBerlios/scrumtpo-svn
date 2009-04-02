@@ -39,31 +39,52 @@ public class SprintBacklogModel
 	 * @param task_date date when task was closed/divided/...
 	 * @param task_active yes or no - is task valid?
 	 * @param PBI_id product backlog item id
+	 * @param Sprint_id sprint id
 	 * @param hours_spent hours spent on task
 	 * @param hours_remaining hours remaining to finish task
 	 * @param nbopenimped number of open impediments for task
 	 * @param nbclosedimped number of closed impediments for task
 	 */
-	public void add(String task_desc, int task_type, int task_status, String task_date, int employee, int team, String task_active, int PBI_id, int hours_spent, int hours_remaining, int nbopenimped, int nbclosedimped)
+	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
 	{
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet res = null;
 		try {
 			 conn = _connectionModel.getConnection();
-			 String query =
+			 String query1 =
 				"INSERT INTO Task " +
-			 	"(Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) " +
-			 	"VALUES (?, ?, ?, ?, ?, ?, ?)";
-			 st = conn.prepareStatement(query);
+			 	"(Employee_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) " +
+			 	"VALUES (?, ?, ?, ?, ?, ?)";
+			 st = conn.prepareStatement(query1);
 			 st.setInt(1, employee);
-			 st.setInt(2, team);
-			 st.setInt(3, task_status);
-			 st.setInt(4, task_type);
-			 st.setString(5, task_desc);
-			 st.setString(6, task_date);
-			 st.setString(7, task_active);
+			 st.setInt(2, task_status);
+			 st.setInt(3, task_type);
+			 st.setString(4, task_desc);
+			 st.setString(5, task_date);
+			 st.setString(6, task_active);
 			 st.execute();
+			 
+			 st = null;
+			 String query2 = 
+				 "SELECT MAX(Task_id) FROM Task";
+			 st = conn.prepareStatement(query2);
+			 int task_id = Integer.parseInt(st.getResultSet().toString());
+			 
+			 st = null;
+			 String query3 =
+				 "INSERT INTO Sprint_PBI " +
+				 "(PBI_id, Task_id, Sprint_id, Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped)" +
+				 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			 st = conn.prepareStatement(query3);
+			 st.setInt(1, pbi);
+			 st.setInt(2, task_id);
+			 st.setInt(3, sprint);
+			 st.setInt(4, employee);
+			 st.setInt(5, hours_spent);
+			 st.setInt(6, hours_remain);
+			 st.setInt(7, nbopenimped);
+			 st.setInt(8, nbclosedimped);
 			 
 			 _sprintbacklogOp.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.SprintBacklog, "");
 		} catch (SQLException e) {
