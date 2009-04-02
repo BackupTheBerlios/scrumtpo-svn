@@ -5,5 +5,9 @@ package scrummer.enumerator;
  */
 public enum ProjectOperation {
 	/// project related data operation
-	Project
+	Project,
+	/// open project
+	Open,
+	/// close project
+	Close
 }
