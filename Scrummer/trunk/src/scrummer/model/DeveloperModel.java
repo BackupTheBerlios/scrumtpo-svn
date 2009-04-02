@@ -30,7 +30,9 @@ public class DeveloperModel {
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_developerTableModel = new DeveloperTableModel(connectionModel);
+		_developerModelCommon = new DeveloperModelCommon(_connectionModel, _operation);
+		_developerTableModel = new DeveloperTableModel(connectionModel, _developerModelCommon, _operation);
+		
 	}
 	
 	/**
@@ -41,35 +43,7 @@ public class DeveloperModel {
 	 */
 	public void add(String name, String surname, String address)
 	{
-		 java.sql.Connection conn      = null;
-         java.sql.PreparedStatement st = null;
-         ResultSet res = null;
-         try {
-                  conn = _connectionModel.getConnection();
-                  String query =
-                 	"INSERT INTO " + DeveloperTableModel.Employee + " " +
-                 	"(Employee_name, Employee_surname, Employee_address) " +
-                               "VALUES (?, ?, ?)";
-
-                  st = conn.prepareStatement(query);
-                  st.setString(1, name);
-                  st.setString(2, surname);
-                  st.setString(3, address);
-               
-                  st.execute();
-                   
-                  _operation.operationSucceeded(DataOperation.Insert, DeveloperOperation.Developer, "");
-
-         } catch (SQLException e) {
-                 e.printStackTrace();
-                 _operation.operationFailed(DataOperation.Insert, DeveloperOperation.Developer, e.getMessage());
-         }
-         finally
-         {
-        	 _connectionModel.close(res);
-        	 _connectionModel.close(st);
-        	 _connectionModel.close(conn);
-         }
+		 _developerModelCommon.add(name, surname, address);
 	}
 	
 	/**
@@ -96,11 +70,13 @@ public class DeveloperModel {
 	 * Remove developer data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeDeveloperListner(OperationListener<DeveloperOperation> listener)
+	public void removeDeveloperListener(OperationListener<DeveloperOperation> listener)
 	{
 		_operation.removeListener(listener);
 	}
 	
+	/// common developer related functionality
+	private DeveloperModelCommon _developerModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer table model
