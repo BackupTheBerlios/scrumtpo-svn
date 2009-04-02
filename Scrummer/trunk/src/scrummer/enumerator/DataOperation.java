@@ -12,5 +12,7 @@ public enum DataOperation {
 	/// data update
 	Update,
 	/// data removal
-	Remove
+	Remove,
+	/// custom operation
+	Custom
 }
