@@ -14,11 +14,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ProjectOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.Models;
+import scrummer.model.ProjectModel;
 import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
-import scrummer.ui.dialog.DevelopersAddDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.ImpedimentsAddDialog;
 import scrummer.ui.dialog.ImpedimentsViewDialog;
@@ -31,7 +34,10 @@ import scrummer.ui.dialog.ProductBacklogViewDialog;
 /**
  * Main application window
  */
-public class MainFrame extends JFrame implements ActionListener, WindowListener {
+public class MainFrame extends JFrame 
+					   implements ActionListener, 
+					   			  WindowListener,
+					   			  OperationListener<ProjectOperation> {
 
 	/**
 	 * Default constructor
@@ -41,8 +47,11 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		super();
 		// store local model factory instance
 		_models = Scrummer.getModels();
+		_projectModel = _models.getProjectModel();
+		_projectModel.addProjectListener(this);
+		
 		// set title
-		setTitle("Scrummer");
+		setTitle(ApplicationName);
 		// quit application on close
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// listen to window close events(to save properties)
@@ -77,6 +86,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		addMenuEntry(fileMenu, i18n.tr("New Project"), 			KeyEvent.VK_N, "NewProject");
 		addMenuEntry(fileMenu, i18n.tr("Open Project"), 		KeyEvent.VK_O, "OpenProject");
+		_closeMenuItem = addMenuEntry(fileMenu, i18n.tr("Close Project"), KeyEvent.VK_C, "CloseProject");
+		_closeMenuItem.setEnabled(false);
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Add product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
@@ -110,12 +121,13 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	 * @param keyCode key shortcut
 	 * @param actionCommand string which will be compared to see if this was selected
 	 */
-	private void addMenuEntry(JMenu menu, String name, int keyCode, String actionCommand)
+	private JMenuItem addMenuEntry(JMenu menu, String name, int keyCode, String actionCommand)
 	{
 		JMenuItem item = new JMenuItem(name, keyCode);
 		item.addActionListener(this);
 		item.setActionCommand(actionCommand);
 		menu.add(item);
+		return item;
 	}
 
 	/**
@@ -146,6 +158,10 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 			OpenProjectDialog dialog = new OpenProjectDialog(this);
 			dialog.setVisible(true);
 		}
+		else if (cmd.equals("CloseProject"))
+		{
+			_projectModel.closeProject();
+		}
 		else if (cmd.equals("ViewProductBacklog"))
 		{
 			ProductBacklogViewDialog dialog;
@@ -173,8 +189,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 			try {
 				dialog = new ImpedimentsAddDialog(this);
 				dialog.setVisible(true);
-			} catch(SQLException e1) {
-				//TODO Auto-generated catch block
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -240,14 +256,39 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	@Override
 	public void windowOpened(WindowEvent e) {}
 	
+	@Override
+	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
+		if (type == DataOperation.Custom)
+		{
+			switch (identifier)
+			{
+			case Open:
+				setTitle(ApplicationName + " - " + _projectModel.getCurrentProjectName());
+				_closeMenuItem.setEnabled(true);
+				break;
+			case Close:
+				setTitle(ApplicationName);
+				_closeMenuItem.setEnabled(false);
+				break;
+			}
+		}
+	}
 	
+	@Override
+	public void operationFailed(DataOperation type, ProjectOperation identifier, String message) {}
 	
+	/// menu item for closing projects
+	private JMenuItem _closeMenuItem;
+	/// project model
+	private ProjectModel _projectModel;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// model factory
 	private Models _models;
 	/// have properties been saved on form closing or setVisible
 	private boolean _saved = false;
+	/// who am I?
+	private static final String ApplicationName = "Scrummer";
 	/// serialization id
 	private static final long serialVersionUID = 6549724505081986425L;
 }
