@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.OperationListener;
+import scrummer.model.swing.ProjectListModel;
 import scrummer.util.Operation;
 
 /**
@@ -20,6 +21,8 @@ public class ProjectModel {
 	public ProjectModel(ConnectionModel connectionModel)
 	{
 		_connectionModel = connectionModel;
+		_projectModelCommon = new ProjectModelCommon(connectionModel, _operation);
+		_projectListModel = new ProjectListModel(_projectModelCommon);
 	}
 	
 	/**
@@ -40,30 +43,7 @@ public class ProjectModel {
 	 */
 	public void addProject(String name, String description)
 	{
-		java.sql.Connection conn      = null;
-        java.sql.PreparedStatement st = null;
-        ResultSet res = null;
-        try {
-            conn = _connectionModel.getConnection();
-            String query =
-            	"INSERT INTO " + Project + " " +
-            	"(Project_name, Project_description) " +
-                "VALUES (?, ?)";
-            st = conn.prepareStatement(query);
-            st.setString(1, /* Util.toutf8(*/ name);
-            st.setString(2, /*Util.toutf8( */description);
-            st.execute();
-              
-            _operation.operationSucceeded(DataOperation.Insert, ProjectOperation.Project, "");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            _operation.operationFailed(DataOperation.Insert, ProjectOperation.Project, e.getMessage());
-        }
-        finally {
-	       	_connectionModel.close(res);
-	       	_connectionModel.close(st);
-	       	_connectionModel.close(conn);
-        }
+		_projectModelCommon.addProject(name, description);
 	}
 	
 	/**
@@ -73,6 +53,10 @@ public class ProjectModel {
 	 */
 	public void removeProject(int id)
 	{
+		if (_project == id)
+		{
+			closeProject();
+		}
 		
 	}
 	
@@ -83,7 +67,9 @@ public class ProjectModel {
 	 */
 	public void openProject(int id)
 	{
-		
+		_project = id;
+		_projectName = _projectModelCommon.fetchProjectName(id);
+		_operation.operationSucceeded(DataOperation.Custom, ProjectOperation.Open, "");
 	}
 	
 	/**
@@ -91,9 +77,10 @@ public class ProjectModel {
 	 * 
 	 * @param id project id
 	 */
-	public void closeProject(int id)
+	public void closeProject()
 	{
-		
+		_project = -1;
+		_operation.operationSucceeded(DataOperation.Custom, ProjectOperation.Close, "");	
 	}
 	
 	/**
@@ -116,26 +103,45 @@ public class ProjectModel {
 		
 	}
 	
+	/**
+	 * Fetch currently loaded project name
+	 * @return loaded project name
+	 */
+	public String getCurrentProjectName()
+	{
+		return _projectName;
+	}
+	
+	public ProjectListModel getProjectListModel()
+	{
+		return _projectListModel;
+	}
 	
 	/**
-	 * Add listener to connection related events
+	 * Add listener to project change related events
 	 * @param listener listener
 	 */
-	public void addConnectionListener(OperationListener<ProjectOperation> listener) {
+	public void addProjectListener(OperationListener<ProjectOperation> listener) {
 		_operation.addListener(listener);
 	}
 	
 	/**
-	 * Remove listener to connection related events
+	 * Remove listener project change related events
 	 * @param listener listener
 	 */
-	public void removeConnectionListener(OperationListener<ProjectOperation> listener)
+	public void removeProjectListener(OperationListener<ProjectOperation> listener)
 	{
 		_operation.removeListener(listener);
 	}
 	
+	/// project name
+	private String _projectName = "";
 	/// is any project currently opened
 	private boolean _opened = false;
+	/// common project related operations
+	private ProjectModelCommon _projectModelCommon;
+	/// project list model
+	private ProjectListModel _projectListModel;
 	/// project id
 	private int _project = 0;
 	/// connection model
