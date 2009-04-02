@@ -85,14 +85,7 @@ public class Operation<Identifier> {
 	 */
 	public void removeListener(OperationListener<Identifier> listener)
 	{
-		try {
-			_semaphore.acquire();
-			_listeners.remove(listener);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		_semaphore.release();
+		_listeners.remove(listener);
 	}
 	
 	/// listeners
