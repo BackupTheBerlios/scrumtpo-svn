@@ -28,32 +28,32 @@ alter table Sprint_team drop foreign key FK_SPRINT_T_RELATIONS_SPRINT;
 alter table Task drop foreign key FK_TASK_RELATIONS_TASK_STA;
 alter table Task drop foreign key FK_TASK_RELATIONS_TASK_TYP;
 alter table Task drop foreign key FK_TASK_RELATIONS_TEAM_MEM;
-alter table uask_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_MEASURE;
+alter table Task_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_MEASURE;
 alter table Task_measurement_result drop foreign key FK_TASK_MEA_RELATIONS_TASK;
 alter table Team_member drop foreign key FK_TEAM_MEM_RELATIONS_EMPLOYEE;
 alter table Team_member drop foreign key FK_TEAM_MEM_RELATIONS_TEAM;
 
-drop table Absence_type;
-drop table Administrative_days;
-drop table Employee;
-drop table Impediment;
-drop table Measure;
-drop table PBI;
-drop table PBI_measurement_result;
-drop table Project;
-drop table FinalRelease;
-drop table Release_PBI;
-drop table Release_measurement_result;
-drop table Sprint;
-drop table Sprint_PBI;
-drop table Sprint_measurement_result;
-drop table Sprint_team;
-drop table Task;
-drop table Task_measurement_result;
-drop table Task_status;
-drop table Task_type;
-drop table Team;
-drop table Team_member;
+drop table if exists Absence_type;
+drop table if exists Administrative_days;
+drop table if exists Employee;
+drop table if exists Impediment;
+drop table if exists Measure;
+drop table if exists PBI;
+drop table if exists PBI_measurement_result;
+drop table if exists Project;
+drop table if exists FinalRelease;
+drop table if exists Release_PBI;
+drop table if exists Release_measurement_result;
+drop table if exists Sprint;
+drop table if exists Sprint_PBI;
+drop table if exists Sprint_measurement_result;
+drop table if exists Sprint_team;
+drop table if exists Task;
+drop table if exists Task_measurement_result;
+drop table if exists Task_status;
+drop table if exists Task_type;
+drop table if exists Team;
+drop table if exists Team_member;
 
 /*==============================================================*/
 /* Table: Absence_type                                          */
@@ -63,7 +63,7 @@ create table Absence_type
    Absence_type_id      integer	AUTO_INCREMENT             not null,
    Absence_type_description text                           null,
    constraint PK_ABSENCE_TYPE primary key (Absence_type_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Administrative_days                                   */
@@ -74,7 +74,7 @@ create table Administrative_days
    Absence_type_id      integer                        not null,
    Hours_not_worked     decimal                        not null,
    constraint PK_ADMINISTRATIVE_DAYS primary key (Employee_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Employee                                              */
@@ -86,7 +86,7 @@ create table Employee
    Employee_surname		varchar(255)	not null,
    Employee_address		varchar(255)   	not null,
    constraint PK_EMPLOYEE primary key (Employee_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Impediment                                            */
@@ -107,7 +107,7 @@ create table Impediment
    Impediment_end		DATE				   null,
    Impediment_age		integer				   null,
    constraint PK_IMPEDIMENT primary key (Impediment_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Measure                                               */
@@ -118,7 +118,7 @@ create table Measure
    Measure_name         text                           null,
    Measure_description  text                           null,
    constraint PK_MEASURE primary key (Measure_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: PBI                                                   */
@@ -134,7 +134,7 @@ create table PBI
    PBI_adjustment_factor	text	null,
    PBI_adjusted_estimate	text	null,
    constraint PK_PBI primary key (PBI_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: PBI_measurement_result                                */
@@ -146,7 +146,7 @@ create table PBI_measurement_result
    Measurement_result   long varchar                   null,
    Datum                DATE		                   not null,
    constraint PK_PBI_MEASUREMENT_RESULT primary key (Measure_id, PBI_id, Datum)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Project                                               */
@@ -154,10 +154,10 @@ create table PBI_measurement_result
 create table Project 
 (
    Project_id           integer	AUTO_INCREMENT	not null,
-   Project_name			text					not null,
-   Project_description	text					not null,
+   Project_name			VARCHAR(255) not null unique,
+   Project_description	text(1024) not null,
    constraint PK_PROJECT primary key (Project_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: "FinalRelease"                                             */
@@ -167,7 +167,7 @@ create table FinalRelease
    Release_id           integer	AUTO_INCREMENT         not null,
    Release_description  text                           null,
    constraint PK_RELEASE primary key (Release_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Release_PBI                                           */
@@ -177,7 +177,7 @@ create table Release_PBI
    PBI_id               integer                        not null,
    Release_id           integer                        not null,
    constraint PK_RELEASE_PBI primary key (PBI_id, Release_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Release_measurement_result                            */
@@ -189,7 +189,7 @@ create table Release_measurement_result
    Measurement_result   text                           null,
    Datum                DATE                           not null,
    constraint PK_RELEASE_MEASUREMENT_RESULT primary key (Measure_id, Release_id, Datum)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Sprint                                                */
@@ -205,7 +205,7 @@ create table Sprint
    Sprint_length        integer                        not null,
    Sprint_estimated_date date                          null,
    constraint PK_SPRINT primary key (Sprint_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Sprint_PBI                                            */
@@ -216,7 +216,7 @@ create table Sprint_PBI
    Sprint_id            integer                        not null,
    Task_id              integer                        null,
    constraint PK_SPRINT_PBI primary key (PBI_id, Sprint_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Sprint_measurement_result                             */
@@ -228,7 +228,7 @@ create table Sprint_measurement_result
    Measurement_result   text                           null,
    Datum                date                           not null,
    constraint PK_SPRINT_MEASUREMENT_RESULT primary key (Sprint_id, Measure_id, Datum)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Sprint_team                                           */
@@ -238,7 +238,7 @@ create table Sprint_team
    Team_id              integer                        not null,
    Sprint_id            integer                        not null,
    constraint PK_SPRINT_TEAM primary key (Team_id, Sprint_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Task                                                  */
@@ -254,7 +254,7 @@ create table Task
    Task_date            text                           null,
    Task_active          text                           null,
    constraint PK_TASK primary key (Task_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Task_measurement_result                               */
@@ -266,7 +266,7 @@ create table Task_measurement_result
    Measurement_result   text                           null,
    Datum                date                           not null,
    constraint PK_TASK_MEASUREMENT_RESULT primary key (Measure_id, Task_id, Datum)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Task_status                                           */
@@ -276,7 +276,7 @@ create table Task_status
    Task_status_id       integer	AUTO_INCREMENT                        not null,
    Task_status_description text                           null,
    constraint PK_TASK_STATUS primary key (Task_status_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Task_type                                             */
@@ -286,7 +286,7 @@ create table Task_type
    Task_type_id         integer	AUTO_INCREMENT                        not null,
    Task_type_description text                           null,
    constraint PK_TASK_TYPE primary key (Task_type_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Team                                                  */
@@ -296,7 +296,7 @@ create table Team
    Team_id              integer	AUTO_INCREMENT                        not null,
    Team_description     text                           null,
    constraint PK_TEAM primary key (Team_id)
-);
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Team_member                                           */
@@ -307,7 +307,7 @@ create table Team_member
    Team_id              integer                        not null,
    Percentage_of_engagement_in_project integer                        null,
    constraint PK_TEAM_MEMBER primary key (Employee_id, Team_id)
-);
+) CHARACTER SET utf8;
 
 alter table Administrative_days
    add constraint FK_ADMINIST_RELATIONS_ABSENCE_ foreign key (Absence_type_id)
