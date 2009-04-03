@@ -3,7 +3,10 @@ package scrummer.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.SprintBacklogOperation;
+import scrummer.listener.OperationListener;
+import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.util.Operation;
 
@@ -29,6 +32,8 @@ public class SprintBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
+		_sprintbacklogModelCommon = new SprintBacklogModelCommon(_connectionModel, _operation);
+		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon, _operation);
 	}
 	
 	/**
@@ -45,9 +50,10 @@ public class SprintBacklogModel
 	 * @param nbopenimped number of open impediments for task
 	 * @param nbclosedimped number of closed impediments for task
 	 */
-	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
+	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
 	{
-		java.sql.Connection conn      = null;
+		_sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
+		/*java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet res = null;
 		try {
@@ -96,16 +102,7 @@ public class SprintBacklogModel
 			res  = _connectionModel.close(res);
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
-		}
-	}
-	
-	/**
-	 * Remove sprint backlog item by id
-	 * @param id sprint backlog id
-	 */
-	public void remove(int id)
-	{
-		throw new RuntimeException("Not yet implemented.");
+		}*/
 	}
 	
 	/**
@@ -118,10 +115,31 @@ public class SprintBacklogModel
 		return _sprintbacklogTableModel;
 	}
 	
+	/**
+	 * Add sprint backlog data change listener
+	 * 
+	 * @param listener listener to add
+	 */
+	public void addSprintBacklogListener(OperationListener<SprintBacklogOperation> listener)
+	{
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remove sprint backlog data change listener
+	 * @param listener listener to remove
+	 */
+	public void removeSprintBacklogListener(OperationListener<SprintBacklogOperation> listener)
+	{
+		_operation.removeListener(listener);
+	}
+	
+	/// common sprint backlog related functionality
+	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// developer operation
-	private Operation<SprintBacklogOperation> _sprintbacklogOp = new Operation<SprintBacklogOperation>();
+	private Operation<SprintBacklogOperation> _operation = new Operation<SprintBacklogOperation>();
 }

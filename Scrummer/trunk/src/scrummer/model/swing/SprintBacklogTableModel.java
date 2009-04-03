@@ -17,6 +17,10 @@ import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
+import scrummer.model.DBSchemaModel;
+import scrummer.model.DeveloperModelCommon;
+import scrummer.model.Models;
+import scrummer.model.SprintBacklogModelCommon;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 
@@ -30,17 +34,28 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 * 
 	 * @param connectionModel connection model to connect to database
 	 */
-	public SprintBacklogTableModel(ConnectionModel connectionModel) 
+	public SprintBacklogTableModel(ConnectionModel connectionModel, 
+				SprintBacklogModelCommon sprintbacklogModelCommon,
+				Operation<SprintBacklogOperation> operation) 
 	{
 		super();
-		_connectionModel = connectionModel;
 		
+		_columns.add(i18n.tr("Day"));
 		_columns.add(i18n.tr("PBI id"));
 		_columns.add(i18n.tr("Sprint id"));
 		_columns.add(i18n.tr("Task id"));
+		_columns.add(i18n.tr("Task description"));
+		_columns.add(i18n.tr("Task type"));
+		_columns.add(i18n.tr("Task status"));
+		_columns.add(i18n.tr("Task date"));
+		_columns.add(i18n.tr("Task active"));
 		_columns.add(i18n.tr("Employee id"));
+		_columns.add(i18n.tr("Hours spent"));
+		_columns.add(i18n.tr("Hours remaining"));
+		_columns.add(i18n.tr("Number of open impediments"));
+		_columns.add(i18n.tr("Number of closed impediments"));
 		
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 14; i++)
 			_realColumns.add("");
 	}
 
@@ -59,36 +74,15 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshColumnNames()
 	{
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='" + Sprint_PBI + "'";   
-            	        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            int i = 0;
-            res.beforeFirst();
-            while (res.next())
-            {
-            	_realColumns.set(i, res.getString(1));
-            	i++;
-            }
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }
+		Models m = Scrummer.getModels();
+		DBSchemaModel schemam = m.getDBSchemaModel();
+		_realColumns = schemam.getColumns(DBSchemaModel.EmployeeTable);
+		Vector<String> taskColumns = schemam.getColumns(DBSchemaModel.TaskTable);
+		_realColumns.add(taskColumns.elementAt(3));
+		_realColumns.add(taskColumns.elementAt(4));
+		_realColumns.add(taskColumns.elementAt(5));
+		_realColumns.add(taskColumns.elementAt(6));
+		_realColumns.add(taskColumns.elementAt(7));
 	}
 	
 	/**
@@ -96,30 +90,8 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshTableData()
 	{
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = "SELECT * FROM " + Sprint_PBI;
-        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            _rows = ObjectRow.fetchRows(res);
-            _rowCount = _rows.size();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }
+		_rows = _sprintbacklogModelCommon.fetchSprintBacklogTable();
+        _rowCount = _rows.size();
 	}
 
 	@Override
@@ -128,9 +100,20 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	}
 
 	@Override
-	public void setValueAt(Object value, int row, int column) {
+	public void setValueAt(Object value, int row, int column) 
+	{	
+		if (_sprintbacklogModelCommon.setSprintBacklog(
+				Integer.parseInt(_rows.get(row).get(0).toString()),
+				Integer.parseInt(_rows.get(row).get(1).toString()),
+				Integer.parseInt(_rows.get(row).get(2).toString()),
+				Integer.parseInt(_rows.get(row).get(3).toString()),
+				_realColumns.get(column + 1),
+				value.toString()))
+		{
+			refresh();
+		}
 		
-		String idColumnName = _realColumns.get(0);
+		/*String idColumnName = _realColumns.get(0);
 		String columnName = _realColumns.get(column+1);
 		
 		java.sql.Connection conn = null;
@@ -160,13 +143,18 @@ public class SprintBacklogTableModel extends DefaultTableModel
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 	
 	@Override
-	public void removeRow(int row) {
+	public void removeRow(int row) 
+	{
+		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
+		{
+			refresh();
+		}	
 	
-		String idColumnName = _realColumns.get(0);
+		/*String idColumnName = _realColumns.get(0);
 		
 		java.sql.Connection conn = null;
         Statement st = null; 
@@ -194,7 +182,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 
 	@Override
@@ -216,47 +204,22 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	public String getColumnName(int column) {
 		return _columns.get(column + 1);
 	}
-
-	/**
-	 * Add sprint backlog item data change listener
-	 * 
-	 * @param listener listener to add
-	 */
-	public void addSprintBacklogListener(OperationListener<SprintBacklogOperation> listener)
-	{
-		_operation.addListener(listener);
-	}
-	
-	/**
-	 * Remove sprint backlog item data change listener
-	 * @param listener listener to remove
-	 */
-	public void removeSprintBacklogListner(OperationListener<SprintBacklogOperation> listener)
-	{
-		_operation.removeListener(listener);
-	}
 	
 	/// column count Sprint PBI
-	private int _columnCount = 3;
+	private int _columnCount = 7;
 	/// row count
 	private int _rowCount = 0;
-	/// connection handler
-	private ConnectionModel _connectionModel;
 	/// column names for Sprint PBI display
-	private Vector<String> _columns = new Vector<String>(4);
+	private Vector<String> _columns = new Vector<String>(8);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
-	/// data listener
-	private Operation<SprintBacklogOperation> _operation = new Operation<SprintBacklogOperation>();
+	/// common developer model operations
+	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 2334976808166694864L;
-	/// table name Sprint PBI
-	public static final String Sprint_PBI = "Sprint_PBI";
-	/// table name Task
-	public static final String Task = "Task";
 	
 }

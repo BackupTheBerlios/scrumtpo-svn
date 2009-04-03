@@ -114,7 +114,8 @@ public class DevelopersViewDialog
 		Util.centre(this);
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		String cmd = e.getActionCommand();
 		if (cmd == "RemoveButton")
 		{
@@ -171,7 +172,8 @@ public class DevelopersViewDialog
 	public void mouseReleased(MouseEvent e) {}
 	
 	@Override
-	public void operationFailed(DataOperation type, DeveloperOperation identifier, String message) {
+	public void operationFailed(DataOperation type, DeveloperOperation identifier, String message) 
+	{
 		switch (type)
 		{
 		case Remove:

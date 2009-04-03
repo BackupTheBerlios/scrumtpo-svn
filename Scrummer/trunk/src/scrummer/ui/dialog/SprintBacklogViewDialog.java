@@ -5,80 +5,60 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.BorderLayout;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-
 import org.xnap.commons.i18n.I18n;
-
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.ImpedimentOperation;
-import scrummer.enumerator.ProductBacklogOperation;
+import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
-import scrummer.model.ConnectionModel;
-import scrummer.model.ImpedimentModel;
-import scrummer.model.ProductBacklogModel;
-import scrummer.model.swing.ImpedimentTableModel;
-import scrummer.model.swing.ProductBacklogTableModel;
+import scrummer.model.SprintBacklogModel;
+import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.StandardButton;
-
-
-
-
 import java.awt.*;
-import java.text.*;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+/**
+ * Developer overview and removal dialog
+ */
 public class SprintBacklogViewDialog 
 	extends JDialog 
-	implements MouseListener, ActionListener, OperationListener<ProductBacklogOperation>
+	implements MouseListener, ActionListener, OperationListener<SprintBacklogOperation>
 {
-	
 	/**
 	 * Constructor
 	 * @param owner owner frame
 	 */
-	public SprintBacklogViewDialog(Frame owner) throws SQLException 
+	public SprintBacklogViewDialog(Frame owner) throws SQLException
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
-		setTitle(i18n.tr("View Product Backlog"));
-		setSize(new Dimension(820,340));
+		setTitle(i18n.tr("View Sprint Backlog"));
+		setSize(new Dimension(420,280));
 		
 		JPanel parentPanel = new JPanel();
 		parentPanel.setLayout(new BorderLayout());
 		
 		setLayout(new BorderLayout());
 		
-		ProductBacklogModel impModel = Scrummer.getModels().getProductBacklogModel();
-		ProductBacklogTableModel model = impModel.getProductBacklogTableModel();
-		_productbacklogTableModel = model;
-		_productbacklogTableModel.addProductBacklogListener(this);
+		SprintBacklogModel devModel = Scrummer.getModels().getSprintBacklogModel();
+		_sprintbacklogModel = devModel;
+		_sprintbacklogModel.addSprintBacklogListener(this);
+		SprintBacklogTableModel model = devModel.getSprintBacklogTableModel();
+		_sprintbacklogTableModel = model;
 		JTable table = new JTable(model);
-		_productbacklogTable = table;
+		_sprintbacklogTable = table;
 		// refresh data from database
 		model.refresh();
 		
@@ -98,7 +78,7 @@ public class SprintBacklogViewDialog
 	    		return label;
 	    	}
 	    };
-		
+	    
 	    JScrollPane scrollPane = new JScrollPane(table);
 		parentPanel.add(scrollPane, BorderLayout.CENTER);
 		
@@ -106,7 +86,7 @@ public class SprintBacklogViewDialog
 		scrollPane.setBorder(
 			Util.createSpacedTitleBorder(
 			k, k, k, k,
-			i18n.tr("Product Backlog table"), 
+			i18n.tr("Sprint Backlog table"), 
 			0, k, k, k));
 		
 		JPanel bottomPanel = new JPanel();
@@ -133,26 +113,25 @@ public class SprintBacklogViewDialog
 		
 		Util.centre(this);
 	}
-	
 
 	public void actionPerformed(ActionEvent e) 
 	{
 		String cmd = e.getActionCommand();
 		if (cmd == "RemoveButton")
 		{
-			int selectedRow = _productbacklogTable.getSelectedRow();
+			int selectedRow = _sprintbacklogTable.getSelectedRow();
 			if (selectedRow == (-1))
 			{
 				JOptionPane.showMessageDialog(
 					this, 
-					i18n.tr("Cannot remove from Product Backlog because no Product Backlog item is selected. " +
+					i18n.tr("Cannot remove Sprint Backlog item because no item is selected. " +
 							"Click on a table row and then press remove."),
 					i18n.tr("Error"),
 					JOptionPane.ERROR_MESSAGE);
 			}
 			else
 			{
-				_productbacklogTableModel.removeRow(selectedRow);
+				_sprintbacklogTableModel.removeRow(selectedRow);
 			}
 		}
 		else if (cmd == "CloseButton")
@@ -162,16 +141,16 @@ public class SprintBacklogViewDialog
 	}
 
 	@Override
-	public void setVisible(boolean b) 
-	{	
+	public void setVisible(boolean b) {
+		
 		if (!b)
 		{
-			_productbacklogTableModel.removeProductBacklogListner(this);
+			_sprintbacklogModel.removeSprintBacklogListener(this);
 		}
 		
 		super.setVisible(b);
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 
@@ -185,7 +164,6 @@ public class SprintBacklogViewDialog
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
-
 	@Override
 	public void mousePressed(MouseEvent e) {}
 
@@ -194,7 +172,7 @@ public class SprintBacklogViewDialog
 	public void mouseReleased(MouseEvent e) {}
 	
 	@Override
-	public void operationFailed(DataOperation type, ProductBacklogOperation identifier, String message) 
+	public void operationFailed(DataOperation type, SprintBacklogOperation identifier, String message) 
 	{
 		switch (type)
 		{
@@ -205,15 +183,16 @@ public class SprintBacklogViewDialog
 	}
 
 	@Override
-	public void operationSucceeded(DataOperation type, ProductBacklogOperation identifier, String message) {}
+	public void operationSucceeded(DataOperation type, SprintBacklogOperation identifier, String message) {} 
 	
-	/// product backlog table
-	private JTable _productbacklogTable;
-	/// impediment table model
-	private ProductBacklogTableModel _productbacklogTableModel;
+	/// developer table
+	private JTable _sprintbacklogTable;
+	/// developer model
+	private SprintBacklogModel _sprintbacklogModel;
+	/// developer table model
+	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// serialization id 
 	private static final long serialVersionUID = 456365932759827558L;
 	/// translation class field
-	private I18n i18n = Scrummer.getI18n(getClass());
-	
+	private I18n i18n = Scrummer.getI18n(getClass());	
 }

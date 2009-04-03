@@ -82,8 +82,6 @@ public class DBSchemaModel {
 		}
 		else
 		{
-			
-			
 			ColumnQuery q = new ColumnQuery(_connectionModel, table)
 			{
 				@Override
@@ -127,4 +125,20 @@ public class DBSchemaModel {
 	public static final String EmployeeName    = "Employee_name";
 	public static final String EmployeeSurname = "Employee_surname";
 	public static final String EmployeeAddress = "Employee_address";
+	
+	public static final String Sprint_PBITable = "Sprint_PBI";
+	public static final String TaskTable = "Task";
+	public static final String TaskStatusId = "Task_status_id";
+	public static final String TaskTypeId = "Task_type_id";
+	public static final String TaskDescription = "Task_description";
+	public static final String TaskDate = "Task_date";
+	public static final String TaskActive = "Task_active";
+	public static final String TaskId = "Task_id";
+	public static final String SprintId = "Sprint_id";
+	public static final String PBIId = "PBI_id";
+	public static final String HoursSpent = "Hours_spent";
+	public static final String HoursRemaining = "Hours_remaining";
+	public static final String NbOpenImped = "NbOpenImped";
+	public static final String NbClosedImped = "NbClosedImped";
+	public static final String measureDay = "Measure_day";
 }
