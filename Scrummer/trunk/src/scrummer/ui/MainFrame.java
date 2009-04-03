@@ -12,11 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.OperationListener;
+import scrummer.model.DBSchemaModel;
 import scrummer.model.Models;
 import scrummer.model.ProjectModel;
 import scrummer.model.PropertyModel;
@@ -32,6 +35,10 @@ import scrummer.ui.dialog.ProductBacklogAddDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
 import scrummer.ui.dialog.SprintBacklogAddDialog;
 import scrummer.ui.dialog.SprintBacklogViewDialog;
+import scrummer.ui.dialog.TeamAddDialog;
+import scrummer.ui.dialog.TeamOverviewDialog;
+import scrummer.ui.dialog.TeamChangeNameDialog;
+import scrummer.ui.dialog.TeamRemoveDialog;
 
 /**
  * Main application window
@@ -102,13 +109,23 @@ public class MainFrame extends JFrame
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
-		JMenu developerMenu = new JMenu(i18n.tr("Developer"));
+		JMenu developerMenu = new JMenu(i18n.tr("Employees"));
+		developerMenu.setMnemonic(KeyEvent.VK_E);
 		
-		addMenuEntry(developerMenu, i18n.tr("Add"), KeyEvent.VK_D, "AddDeveloper");
+		addMenuEntry(developerMenu, i18n.tr("Add"), KeyEvent.VK_A, "AddDeveloper");
 		addMenuEntry(developerMenu, i18n.tr("View"), KeyEvent.VK_V, "ViewDevelopers");
+		
+		JMenu teamMenu = new JMenu(i18n.tr("Team"));
+		teamMenu.setMnemonic(KeyEvent.VK_T);
+		
+		addMenuEntry(teamMenu, i18n.tr("Add"),         KeyEvent.VK_A, "AddTeam");
+		addMenuEntry(teamMenu, i18n.tr("View"),        KeyEvent.VK_V, "ViewTeam");
+		addMenuEntry(teamMenu, i18n.tr("Change Name"), KeyEvent.VK_V, "ChangeName");
+		addMenuEntry(teamMenu, i18n.tr("Remove"),      KeyEvent.VK_R, "RemoveTeam");
 		
 		bar.add(fileMenu);
 		bar.add(developerMenu);
+		bar.add(teamMenu);
 		
 		JMenu helpMenu = new JMenu(i18n.tr("Help"));
 		helpMenu.setMnemonic(KeyEvent.VK_H);
@@ -184,7 +201,6 @@ public class MainFrame extends JFrame
 				dialog = new ProductBacklogAddDialog(this);
 				dialog.setVisible(true);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -195,7 +211,6 @@ public class MainFrame extends JFrame
 				dialog = new ImpedimentsAddDialog(this);
 				dialog.setVisible(true);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -206,7 +221,6 @@ public class MainFrame extends JFrame
 				dialog = new ImpedimentsViewDialog(this);
 				dialog.setVisible(true);
 			} catch(SQLException e1) {
-				//TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -217,7 +231,6 @@ public class MainFrame extends JFrame
 				dialog = new SprintBacklogAddDialog(this);
 				dialog.setVisible(true);
 			} catch(SQLException e1) {
-				//TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -228,7 +241,6 @@ public class MainFrame extends JFrame
 				dialog = new SprintBacklogViewDialog(this);
 				dialog.setVisible(true);
 			} catch(SQLException e1) {
-				//TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -240,6 +252,30 @@ public class MainFrame extends JFrame
 		else if(cmd.equals("AddDeveloper"))
 		{
 			AddDeveloperDialog dialog = new AddDeveloperDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
+		}
+		else if (cmd.equals("AddTeam"))
+		{
+			TeamAddDialog dialog = new TeamAddDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
+		}
+		else if (cmd.equals("ViewTeam"))
+		{
+			TeamOverviewDialog dialog = new TeamOverviewDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
+		}
+		else if (cmd.equals("ChangeName"))
+		{
+			TeamChangeNameDialog dialog = new TeamChangeNameDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);	
+		}
+		else if (cmd.equals("RemoveTeam"))
+		{
+			TeamRemoveDialog dialog = new TeamRemoveDialog(this);
 			Util.centre(dialog);
 			dialog.setVisible(true);
 		}
