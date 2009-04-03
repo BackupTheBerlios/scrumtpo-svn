@@ -20,7 +20,7 @@ import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
 import scrummer.model.DeveloperModelCommon;
 import scrummer.model.Models;
-import scrummer.model.SprintBacklogModelCommon;
+//import scrummer.model.SprintBacklogModelCommon;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 
@@ -35,7 +35,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 * @param connectionModel connection model to connect to database
 	 */
 	public SprintBacklogTableModel(ConnectionModel connectionModel, 
-				SprintBacklogModelCommon sprintbacklogModelCommon,
+				//SprintBacklogModelCommon sprintbacklogModelCommon,
 				Operation<SprintBacklogOperation> operation) 
 	{
 		super();
@@ -90,7 +90,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshTableData()
 	{
-		_rows = _sprintbacklogModelCommon.fetchSprintBacklogTable();
+		// _rows = _sprintbacklogModelCommon.fetchSprintBacklogTable();
         _rowCount = _rows.size();
 	}
 
@@ -102,6 +102,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	@Override
 	public void setValueAt(Object value, int row, int column) 
 	{	
+		/*
 		if (_sprintbacklogModelCommon.setSprintBacklog(
 				Integer.parseInt(_rows.get(row).get(0).toString()),
 				Integer.parseInt(_rows.get(row).get(1).toString()),
@@ -112,6 +113,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 		{
 			refresh();
 		}
+		*/
 		
 		/*String idColumnName = _realColumns.get(0);
 		String columnName = _realColumns.get(column+1);
@@ -149,10 +151,12 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	@Override
 	public void removeRow(int row) 
 	{
+		/*
 		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
 		{
 			refresh();
 		}	
+		*/
 	
 		/*String idColumnName = _realColumns.get(0);
 		
@@ -216,7 +220,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
 	/// common developer model operations
-	private SprintBacklogModelCommon _sprintbacklogModelCommon;
+	// private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
