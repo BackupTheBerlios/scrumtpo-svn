@@ -38,6 +38,7 @@ import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
 import scrummer.model.ImpedimentModel;
 import scrummer.model.ProductBacklogModel;
+import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.ImpedimentTableModel;
 import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.ui.Util;
@@ -73,10 +74,11 @@ public class ProductBacklogViewDialog
 		
 		setLayout(new BorderLayout());
 		
-		ProductBacklogModel impModel = Scrummer.getModels().getProductBacklogModel();
-		ProductBacklogTableModel model = impModel.getProductBacklogTableModel();
+		ProductBacklogModel pbmodel = Scrummer.getModels().getProductBacklogModel();
+		_productbacklogModel = pbmodel;
+		_productbacklogModel.addProductBacklogListener(this);
+		ProductBacklogTableModel model = pbmodel.getProductBacklogTableModel();
 		_productbacklogTableModel = model;
-		_productbacklogTableModel.addProductBacklogListener(this);
 		JTable table = new JTable(model);
 		_productbacklogTable = table;
 		// refresh data from database
@@ -166,7 +168,7 @@ public class ProductBacklogViewDialog
 	{	
 		if (!b)
 		{
-			_productbacklogTableModel.removeProductBacklogListner(this);
+			_productbacklogModel.removeProductBacklogListner(this);
 		}
 		
 		super.setVisible(b);
@@ -209,7 +211,9 @@ public class ProductBacklogViewDialog
 	
 	/// product backlog table
 	private JTable _productbacklogTable;
-	/// impediment table model
+	/// product backlog model
+	private ProductBacklogModel _productbacklogModel;
+	/// product backlog table model
 	private ProductBacklogTableModel _productbacklogTableModel;
 	/// serialization id 
 	private static final long serialVersionUID = 456365932759827558L;

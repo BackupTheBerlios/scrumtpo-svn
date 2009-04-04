@@ -31,7 +31,8 @@ public class ProductBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel);
+		_productbacklogModelCommon = new ProductBacklogModelCommon(_connectionModel, _operation);
+		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon, _operation);
 	}
 	
 	/**
@@ -46,45 +47,7 @@ public class ProductBacklogModel
 	 */
 	public void add(int project, int sprint, String description, int priority, int initial_estimate, float adjustment_factor, int adjusted_estimate)
 	{
-		java.sql.Connection conn      = null;
-		java.sql.PreparedStatement st = null;
-		ResultSet res = null;
-		try {
-			 conn = _connectionModel.getConnection();
-			 String query =
-				"INSERT INTO PBI " +
-			 	"(Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) " +
-			 	"VALUES (?, ?, ?, ?, ?, ?, ?)";
-			 st = conn.prepareStatement(query);
-			 st.setInt(1, project);
-			 st.setInt(2, sprint);
-			 st.setString(3, description);
-			 st.setInt(4, priority);
-			 st.setInt(5, initial_estimate);
-			 st.setFloat(6, adjustment_factor);
-			 st.setInt(7, adjusted_estimate);
-			 st.execute();
-			 
-			 _operation.operationSucceeded(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, "");
-		} catch (SQLException e) {
-			_operation.operationFailed(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, e.getMessage());
-			e.printStackTrace();
-		}
-		finally
-		{
-			res  = _connectionModel.close(res);
-			st   = _connectionModel.close(st);
-			conn = _connectionModel.close(conn);
-		}
-	}
-	
-	/**
-	 * Remove product backlog item by id
-	 * @param id product backlog id
-	 */
-	public void remove(int id)
-	{
-		throw new RuntimeException("Not yet implemented.");
+		_productbacklogModelCommon.add(project, sprint, description, priority, initial_estimate, adjustment_factor, adjusted_estimate);
 	}
 	
 	/**
@@ -116,6 +79,8 @@ public class ProductBacklogModel
 		_operation.removeListener(listener);
 	}
 	
+	/// common developer related functionality
+	private ProductBacklogModelCommon _productbacklogModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// product backlog table model

@@ -20,6 +20,7 @@ import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
 import scrummer.model.DeveloperModelCommon;
 import scrummer.model.Models;
+import scrummer.model.SprintBacklogModelCommon;
 //import scrummer.model.SprintBacklogModelCommon;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
@@ -90,7 +91,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshTableData()
 	{
-		// _rows = _sprintbacklogModelCommon.fetchSprintBacklogTable();
+		_rows = _sprintbacklogModelCommon.fetchSprintBacklogTable();
         _rowCount = _rows.size();
 	}
 
@@ -210,17 +211,17 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	}
 	
 	/// column count Sprint PBI
-	private int _columnCount = 7;
+	private int _columnCount = 13;
 	/// row count
 	private int _rowCount = 0;
 	/// column names for Sprint PBI display
-	private Vector<String> _columns = new Vector<String>(8);
+	private Vector<String> _columns = new Vector<String>(14);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
 	/// common developer model operations
-	// private SprintBacklogModelCommon _sprintbacklogModelCommon;
+	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

@@ -11,9 +11,14 @@ import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
+import scrummer.model.DBSchemaModel;
+import scrummer.model.DeveloperModelCommon;
+import scrummer.model.Models;
+import scrummer.model.ProductBacklogModelCommon;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 
@@ -25,10 +30,11 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	/**
 	 * Default constructor
 	 */
-	public ProductBacklogTableModel(ConnectionModel connectionModel) 
+	public ProductBacklogTableModel(ConnectionModel connectionModel,
+									ProductBacklogModelCommon productbacklogModelCommon,
+									Operation<ProductBacklogOperation> operation) 
 	{
 		super();
-		_connectionModel = connectionModel;
 		
 		_columns.add(i18n.tr("ID"));
 		_columns.add(i18n.tr("Project"));
@@ -58,7 +64,10 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshColumnNames()
 	{
-		java.sql.Connection conn = null;
+		Models m = Scrummer.getModels();
+		DBSchemaModel schemam = m.getDBSchemaModel();
+		_realColumns = schemam.getColumns(DBSchemaModel.PBITable);
+		/*java.sql.Connection conn = null;
         Statement st = null; 
         ResultSet res = null;
         try
@@ -87,7 +96,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
             res = _connectionModel.close(res);
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 	
 	/**
@@ -95,7 +104,10 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshTableData()
 	{
-		java.sql.Connection conn = null;
+		_rows = _productbacklogModelCommon.fetchProductBacklogTable();
+        _rowCount = _rows.size();
+        
+		/*java.sql.Connection conn = null;
         Statement st = null; 
         ResultSet res = null;
         try
@@ -118,7 +130,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
             res = _connectionModel.close(res);
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 
 	@Override
@@ -127,9 +139,16 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	}
 
 	@Override
-	public void setValueAt(Object value, int row, int column) {
-		
-		String idColumnName = _realColumns.get(0);
+	public void setValueAt(Object value, int row, int column) 
+	{
+		if (_productbacklogModelCommon.setProductBacklog(
+				_rows.get(row).get(0).toString(),
+				_realColumns.get(column + 1),
+				value.toString()))
+		{
+			refresh();
+		}
+		/*String idColumnName = _realColumns.get(0);
 		String columnName = _realColumns.get(column+1);
 		
 		java.sql.Connection conn = null;
@@ -159,13 +178,17 @@ public class ProductBacklogTableModel extends DefaultTableModel
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 	
 	@Override
-	public void removeRow(int row) {
-	
-		String idColumnName = _realColumns.get(0);
+	public void removeRow(int row) 
+	{
+		if (_productbacklogModelCommon.removeProductBacklogItem(_rows.get(row).get(0).toString()))
+		{
+			refresh();
+		}	
+		/*String idColumnName = _realColumns.get(0);
 		
 		java.sql.Connection conn = null;
         Statement st = null; 
@@ -193,7 +216,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 
 	@Override
@@ -215,40 +238,19 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	public String getColumnName(int column) {
 		return _columns.get(column + 1);
 	}
-
-	/**
-	 * Add product backlog item data change listener
-	 * 
-	 * @param listener listener to add
-	 */
-	public void addProductBacklogListener(OperationListener<ProductBacklogOperation> listener)
-	{
-		_operation.addListener(listener);
-	}
-	
-	/**
-	 * Remove product backlog item data change listener
-	 * @param listener listener to remove
-	 */
-	public void removeProductBacklogListner(OperationListener<ProductBacklogOperation> listener)
-	{
-		_operation.removeListener(listener);
-	}
 	
 	/// column count
 	private int _columnCount = 7;
 	/// row count
 	private int _rowCount = 0;
-	/// connection handler
-	private ConnectionModel _connectionModel;
 	/// column names for display
 	private Vector<String> _columns = new Vector<String>(8);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
-	/// data listener
-	private Operation<ProductBacklogOperation> _operation = new Operation<ProductBacklogOperation>();
+	/// common developer model operations
+	private ProductBacklogModelCommon _productbacklogModelCommon;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
