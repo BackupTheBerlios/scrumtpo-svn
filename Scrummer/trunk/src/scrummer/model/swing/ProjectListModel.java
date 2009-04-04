@@ -59,11 +59,6 @@ public class ProjectListModel extends DefaultListModel {
 	public Object get(int index) {
 		return _projectList.get(index).Name;
 	}
-
-	@Override
-	public Object getElementAt(int index) {	
-		return _projectList.get(index).Name;
-	}
 	
 	@Override
 	public int size() {
