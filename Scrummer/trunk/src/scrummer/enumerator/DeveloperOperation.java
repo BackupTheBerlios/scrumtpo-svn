@@ -5,5 +5,7 @@ package scrummer.enumerator;
  */
 public enum DeveloperOperation {
 	/// developer related operation
-	Developer
+	Developer,
+	/// team related operation
+	Team
 }
