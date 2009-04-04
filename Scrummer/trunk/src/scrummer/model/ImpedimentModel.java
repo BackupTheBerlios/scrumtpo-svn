@@ -1,9 +1,13 @@
 package scrummer.model;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.listener.OperationListener;
+import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.ImpedimentTableModel;
 import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.util.Operation;
@@ -30,7 +34,8 @@ public class ImpedimentModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_impedimentTableModel = new ImpedimentTableModel(connectionModel);
+		_impedimentModelCommon = new ImpedimentModelCommon(_connectionModel, _operation);
+		_impedimentTableModel = new ImpedimentTableModel(connectionModel, _impedimentModelCommon, _operation);
 	}
 	
 	/**
@@ -46,7 +51,7 @@ public class ImpedimentModel
 	 * @param end date when impediment was resolved
 	 * @param age number of days when impediment was active
 	 */
-	public void add(int team, int sprint, int employee, int task, String desc, String type, String status, String start, String end, int age)
+	public void add(int team, int sprint, int employee, int task, String desc, String type, String status, java.sql.Date start, java.sql.Date end, int age)
 	{
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
@@ -65,14 +70,14 @@ public class ImpedimentModel
 			 st.setString(5, desc);
 			 st.setString(6, type);
 			 st.setString(7, status);
-			 st.setString(8, start);
-			 st.setString(9, end);
+			 st.setDate(8, start);
+			 st.setDate(9, end);
 			 st.setInt(10, age);
 			 st.execute();
 			 
-			 _impedimentOp.operationSucceeded(DataOperation.Insert, ImpedimentOperation.Impediment, "");
+			 _operation.operationSucceeded(DataOperation.Insert, ImpedimentOperation.Impediment, "");
 		} catch (SQLException e) {
-			_impedimentOp.operationFailed(DataOperation.Insert, ImpedimentOperation.Impediment, e.getMessage());
+			_operation.operationFailed(DataOperation.Insert, ImpedimentOperation.Impediment, e.getMessage());
 			e.printStackTrace();
 		}
 		finally
@@ -102,10 +107,31 @@ public class ImpedimentModel
 		return _impedimentTableModel;
 	}
 	
+	/**
+	 * Add impediment data change listener
+	 * 
+	 * @param listener listener to add
+	 */
+	public void addImpedimentListener(OperationListener<ImpedimentOperation> listener)
+	{
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remove impediment data change listener
+	 * @param listener listener to remove
+	 */
+	public void removeImpedimentListener(OperationListener<ImpedimentOperation> listener)
+	{
+		_operation.removeListener(listener);
+	}
+	
+	/// common impediment related functionality
+	private ImpedimentModelCommon _impedimentModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer table model
 	private ImpedimentTableModel _impedimentTableModel;
 	/// developer operation
-	private Operation<ImpedimentOperation> _impedimentOp = new Operation<ImpedimentOperation>();
+	private Operation<ImpedimentOperation> _operation = new Operation<ImpedimentOperation>();
 }

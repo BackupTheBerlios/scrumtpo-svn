@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -45,6 +48,7 @@ public class ImpedimentsAddDialog
 		setTitle(i18n.tr("Add Impediment"));
 		
 		_impedimentModel = Scrummer.getModels().getImpedimentModel();
+		_impedimentModel.addImpedimentListener(this);
 		
 		Panel.setLayout(new GridLayout(5, 5, 0, 13));
 		
@@ -96,20 +100,30 @@ public class ImpedimentsAddDialog
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy"); 
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
-			_impedimentModel.add(
-				Integer.parseInt(_teamTextField.getText()),
-				Integer.parseInt(_sprintTextField.getText()), 
-				Integer.parseInt(_employeeTextField.getText()), 
-				Integer.parseInt(_taskTextField.getText()),
-				_descriptionTextField.getText(),
-				_typeTextField.getText(),
-				_statusTextField.getText(),
-				_startTextField.getText(),
-				_endTextField.getText(),
-				Integer.parseInt(_ageTextField.getText()));
+			java.util.Date startI, endI;
+			try {
+				startI = dateFormat.parse(_startTextField.getText());
+				endI = dateFormat.parse(_endTextField.getText());
+				java.sql.Date sqlDate1 = new java.sql.Date(startI.getTime());
+				java.sql.Date sqlDate2 = new java.sql.Date(endI.getTime());
+				_impedimentModel.add(
+						Integer.parseInt(_teamTextField.getText()),
+						Integer.parseInt(_sprintTextField.getText()), 
+						Integer.parseInt(_employeeTextField.getText()), 
+						Integer.parseInt(_taskTextField.getText()),
+						_descriptionTextField.getText(),
+						_typeTextField.getText(),
+						_statusTextField.getText(),
+						sqlDate1,
+						sqlDate2,
+						Integer.parseInt(_ageTextField.getText()));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
 		}
 		else
 		{

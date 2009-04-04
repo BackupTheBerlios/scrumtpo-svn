@@ -33,6 +33,7 @@ import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
+import scrummer.model.DeveloperModel;
 import scrummer.model.ImpedimentModel;
 import scrummer.model.Models;
 import scrummer.model.swing.DeveloperTableModel;
@@ -49,21 +50,22 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.*;
 
+/**
+ * Impediment overview and removal dialog
+ */
 public class ImpedimentsViewDialog 
 	extends JDialog 
 	implements MouseListener, ActionListener, OperationListener<ImpedimentOperation> 
 {
-	
 	/**
 	 * Constructor
 	 * @param owner owner frame
 	 */
-	
 	public ImpedimentsViewDialog(Frame owner) throws SQLException 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
-		setTitle(i18n.tr("Add developers"));
+		setTitle(i18n.tr("View impediments"));
 		setSize(new Dimension(820,340));
 		
 		JPanel parentPanel = new JPanel();
@@ -72,9 +74,10 @@ public class ImpedimentsViewDialog
 		setLayout(new BorderLayout());
 		
 		ImpedimentModel impModel = Scrummer.getModels().getImpedimentModel();
+		_impedimentModel = impModel;
+		_impedimentModel.addImpedimentListener(this);
 		ImpedimentTableModel model = impModel.getImpedimentTableModel();
 		_impedimentTableModel = model;
-		_impedimentTableModel.addImpedimentListener(this);
 		JTable table = new JTable(model);
 		_impedimentTable = table;
 		// refresh data from database
@@ -164,7 +167,7 @@ public class ImpedimentsViewDialog
 		
 		if (!b)
 		{
-			_impedimentTableModel.removeImpedimentListner(this);
+			//_impedimentTableModel.removeImpedimentListner(this);
 		}
 		
 		super.setVisible(b);
@@ -207,6 +210,8 @@ public class ImpedimentsViewDialog
 	
 	/// impediment table
 	private JTable _impedimentTable;
+	/// impediment model
+	private ImpedimentModel _impedimentModel;
 	/// impediment table model
 	private ImpedimentTableModel _impedimentTableModel;
 	/// serialization id 

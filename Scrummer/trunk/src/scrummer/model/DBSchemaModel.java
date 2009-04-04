@@ -195,4 +195,7 @@ public class DBSchemaModel {
 	
 	public static final String PBITable = "PBI";
 	public static final String PBIid = "PBI_id";
+	
+	public static final String ImpedimentTable = "Impediment";
+	public static final String ImpedimentId = "Impediment_id";
 }

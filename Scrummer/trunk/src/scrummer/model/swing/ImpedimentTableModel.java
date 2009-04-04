@@ -10,11 +10,11 @@ import javax.swing.table.DefaultTableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
-import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
-import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
+import scrummer.model.DBSchemaModel;
+import scrummer.model.ImpedimentModelCommon;
+import scrummer.model.Models;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 
@@ -26,10 +26,12 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	/**
 	 * Default constructor
 	 */
-	public ImpedimentTableModel(ConnectionModel connectionModel) 
+	public ImpedimentTableModel(ConnectionModel connectionModel,
+								ImpedimentModelCommon impedimentModelCommon,
+								Operation<ImpedimentOperation> operation) 
 	{
 		super();
-		_connectionModel = connectionModel;
+		_impedimentModelCommon = impedimentModelCommon;
 		
 		_columns.add(i18n.tr("ID"));
 		_columns.add(i18n.tr("Team"));
@@ -61,7 +63,11 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	 */
 	private void refreshColumnNames()
 	{
-		java.sql.Connection conn = null;
+		Models m = Scrummer.getModels();
+		DBSchemaModel schemam = m.getDBSchemaModel();
+		_realColumns = schemam.getColumns(DBSchemaModel.ImpedimentTable);
+		
+		/*java.sql.Connection conn = null;
         Statement st = null; 
         ResultSet res = null;
         try
@@ -90,7 +96,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
             res = _connectionModel.close(res);
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 	
 	/**
@@ -98,7 +104,10 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	 */
 	private void refreshTableData()
 	{
-		java.sql.Connection conn = null;
+		_rows = _impedimentModelCommon.fetchImpedimentTable();
+        _rowCount = _rows.size();
+		
+		/*java.sql.Connection conn = null;
         Statement st = null; 
         ResultSet res = null;
         try
@@ -121,7 +130,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
             res = _connectionModel.close(res);
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 
 	@Override
@@ -130,9 +139,17 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	}
 
 	@Override
-	public void setValueAt(Object value, int row, int column) {
+	public void setValueAt(Object value, int row, int column) 
+	{
+		if (_impedimentModelCommon.setImpediment(
+				_rows.get(row).get(0).toString(),
+				_realColumns.get(column + 1),
+				value.toString()))
+		{
+			refresh();
+		}
 		
-		String idColumnName = _realColumns.get(0);
+		/*String idColumnName = _realColumns.get(0);
 		String columnName = _realColumns.get(column+1);
 		
 		java.sql.Connection conn = null;
@@ -162,13 +179,18 @@ public class ImpedimentTableModel extends DefaultTableModel {
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 	
 	@Override
-	public void removeRow(int row) {
-	
-		String idColumnName = _realColumns.get(0);
+	public void removeRow(int row) 
+	{
+		if (_impedimentModelCommon.removeImpediment(_rows.get(row).get(0).toString()))
+		{
+			refresh();
+		}	
+		
+		/*String idColumnName = _realColumns.get(0);
 		
 		java.sql.Connection conn = null;
         Statement st = null; 
@@ -196,7 +218,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
         {
             st  = _connectionModel.close(st);
             conn = _connectionModel.close(conn);
-        }
+        }*/
 	}
 
 	@Override
@@ -219,39 +241,18 @@ public class ImpedimentTableModel extends DefaultTableModel {
 		return _columns.get(column + 1);
 	}
 
-	/**
-	 * Add impediment data change listener
-	 * 
-	 * @param listener listener to add
-	 */
-	public void addImpedimentListener(OperationListener<ImpedimentOperation> listener)
-	{
-		_operation.addListener(listener);
-	}
-	
-	/**
-	 * Remove impediment data change listener
-	 * @param listener listener to remove
-	 */
-	public void removeImpedimentListner(OperationListener<ImpedimentOperation> listener)
-	{
-		_operation.removeListener(listener);
-	}
-	
 	/// column count
-	private int _columnCount = 10;
+	private int _columnCount = 7;
 	/// row count
 	private int _rowCount = 0;
-	/// connection handler
-	private ConnectionModel _connectionModel;
 	/// column names for display
-	private Vector<String> _columns = new Vector<String>(11);
+	private Vector<String> _columns = new Vector<String>(8);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
-	/// data listener
-	private Operation<ImpedimentOperation> _operation = new Operation<ImpedimentOperation>();
+	/// common impediment model operations
+	private ImpedimentModelCommon _impedimentModelCommon;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
