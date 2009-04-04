@@ -11,14 +11,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
+
+import org.xnap.commons.i18n.I18n;
 
 /**
  * Various useful user interface utility functions
  */
 public class Util {
-
+	
 	/**
 	 * Centre main frame on screen
 	 */
@@ -109,4 +112,15 @@ public class Util {
         strokes = new HashSet<KeyStroke>(Arrays.asList(KeyStroke.getKeyStroke("shift pressed TAB")));
         c.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, strokes);
     }
+    
+    /**
+     * 
+     * @param parent
+     * @param message
+     */
+    public static void showError(Component parent, String message, String title)
+    {
+    	JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+    }
+   
 }
