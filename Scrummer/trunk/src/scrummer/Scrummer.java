@@ -7,7 +7,6 @@ import org.xnap.commons.i18n.I18nFactory;
 import scrummer.model.LoggingModel;
 import scrummer.model.Models;
 import scrummer.model.NavigationModel;
-import scrummer.model.PropertyModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
 
@@ -38,7 +37,7 @@ public class Scrummer {
 		eclipseCopyHack();
         
         getModels();
-		
+        
 		MainFrame mf = new MainFrame();
 		mf.pack();
 		mf.setSize(new Dimension(640, 480));
