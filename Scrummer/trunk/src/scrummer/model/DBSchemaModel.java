@@ -58,6 +58,49 @@ public class DBSchemaModel {
 	}
 	
 	/**
+	 * Id and string value struct
+	 */
+	public static class IdValue 
+	{
+		/**
+		 * Constructor
+		 * @param id id
+		 * @param name value
+		 */
+		public IdValue(int id, String value)
+		{
+			Id   = id;
+			Value = value;
+		}
+		
+		/**
+		 * Fetch id and values pairs from result set
+		 * @param result
+		 * @return
+		 */
+		public static Vector<IdValue> fetchValues(ResultSet result)
+		{
+			Vector<IdValue> ret = new Vector<IdValue>();
+			try {
+				result.beforeFirst();
+				while (result.next())
+				{
+					ret.add(new IdValue(result.getInt(1), result.getString(2)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				ret = null;
+			}
+			
+			return ret;
+		}
+		
+		public int Id;
+		public String Value;
+	}
+	
+	
+	/**
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
@@ -125,6 +168,14 @@ public class DBSchemaModel {
 	public static final String EmployeeName    = "Employee_name";
 	public static final String EmployeeSurname = "Employee_surname";
 	public static final String EmployeeAddress = "Employee_address";
+	
+	public static final String TeamTable = "Team";
+	public static final String TeamId	 = "Team_id";
+	public static final String TeamName	 = "Team_description";
+	
+	public static final String TeamMemberTable      = "Team_member";
+	public static final String TeamMemberEmployeeId = EmployeeId;
+	public static final String TeamMemberTeamId		= TeamId;
 	
 	public static final String Sprint_PBITable = "Sprint_PBI";
 	public static final String TaskTable = "Task";
