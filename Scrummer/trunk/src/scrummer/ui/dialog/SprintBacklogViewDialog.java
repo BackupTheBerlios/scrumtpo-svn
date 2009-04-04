@@ -45,24 +45,24 @@ public class SprintBacklogViewDialog
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
 		setTitle(i18n.tr("View Sprint Backlog"));
-		setSize(new Dimension(420,280));
+		setSize(new Dimension(1020,480));
 		
 		JPanel parentPanel = new JPanel();
 		parentPanel.setLayout(new BorderLayout());
 		
 		setLayout(new BorderLayout());
 		
-		SprintBacklogModel devModel = Scrummer.getModels().getSprintBacklogModel();
-		_sprintbacklogModel = devModel;
+		SprintBacklogModel sbModel = Scrummer.getModels().getSprintBacklogModel();
+		_sprintbacklogModel = sbModel;
 		_sprintbacklogModel.addSprintBacklogListener(this);
-		SprintBacklogTableModel model = devModel.getSprintBacklogTableModel();
+		SprintBacklogTableModel model = sbModel.getSprintBacklogTableModel();
 		_sprintbacklogTableModel = model;
 		JTable table = new JTable(model);
 		_sprintbacklogTable = table;
 		// refresh data from database
 		model.refresh();
 		
-		table.setSize(250, 170);
+		table.setSize(550, 470);
 		table.setRowHeight(20);
 		
 		DefaultTableCellRenderer rdr = new DefaultTableCellRenderer() 

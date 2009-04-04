@@ -35,6 +35,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
 									Operation<ProductBacklogOperation> operation) 
 	{
 		super();
+		_productbacklogModelCommon = productbacklogModelCommon;
 		
 		_columns.add(i18n.tr("ID"));
 		_columns.add(i18n.tr("Project"));

@@ -36,10 +36,11 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 * @param connectionModel connection model to connect to database
 	 */
 	public SprintBacklogTableModel(ConnectionModel connectionModel, 
-				//SprintBacklogModelCommon sprintbacklogModelCommon,
+				SprintBacklogModelCommon sprintbacklogModelCommon,
 				Operation<SprintBacklogOperation> operation) 
 	{
 		super();
+		_sprintbacklogModelCommon = sprintbacklogModelCommon;
 		
 		_columns.add(i18n.tr("Day"));
 		_columns.add(i18n.tr("PBI id"));
@@ -78,12 +79,12 @@ public class SprintBacklogTableModel extends DefaultTableModel
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
 		_realColumns = schemam.getColumns(DBSchemaModel.EmployeeTable);
-		Vector<String> taskColumns = schemam.getColumns(DBSchemaModel.TaskTable);
+		/*Vector<String> taskColumns = schemam.getColumns(DBSchemaModel.TaskTable);
 		_realColumns.add(taskColumns.elementAt(3));
 		_realColumns.add(taskColumns.elementAt(4));
 		_realColumns.add(taskColumns.elementAt(5));
 		_realColumns.add(taskColumns.elementAt(6));
-		_realColumns.add(taskColumns.elementAt(7));
+		_realColumns.add(taskColumns.elementAt(7));*/
 	}
 	
 	/**
@@ -103,6 +104,10 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	@Override
 	public void setValueAt(Object value, int row, int column) 
 	{	
+		//if (_sprintbacklogModelCommon.setSprintBacklog(_rows.get(row).get(0).toString(),_realColumns.get(column + 1),value.toString()))
+		//{
+		//	refresh();
+		//}
 		/*
 		if (_sprintbacklogModelCommon.setSprintBacklog(
 				Integer.parseInt(_rows.get(row).get(0).toString()),
@@ -152,6 +157,10 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	@Override
 	public void removeRow(int row) 
 	{
+		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
+		{
+			refresh();
+		}	
 		/*
 		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
 		{

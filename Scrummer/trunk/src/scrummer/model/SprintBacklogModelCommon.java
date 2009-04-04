@@ -18,6 +18,26 @@ import scrummer.util.ResultQuery;
 public class SprintBacklogModelCommon 
 {
 	/**
+	 * Id and name struct
+	 */
+	public static class IdName 
+	{
+		/**
+		 * Constructor
+		 * @param id id
+		 * @param name name
+		 */
+		public IdName(int id, String name)
+		{
+			Id   = id;
+			Name = name;
+		}
+		
+		public int Id;
+		public String Name;
+	}
+	
+	/**
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
@@ -136,7 +156,7 @@ public class SprintBacklogModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT Task_id, Task_type, Task_description, Task_status, Task_date, Task_active, Employee_id, Sprint_id, PBI_id, Measure_day, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.Sprint_PBITable + "," + DBSchemaModel.TaskTable);
+		q.queryResult("SELECT Task_id, Task_type, Task_description, Task_status, Task_date, Task_active, Employee_id, Sprint_id, PBI_id, Measure_day, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.Sprint_PBITable + " JOIN " + DBSchemaModel.TaskTable);
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();

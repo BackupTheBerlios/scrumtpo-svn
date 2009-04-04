@@ -32,8 +32,8 @@ public class SprintBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		// _sprintbacklogModelCommon = new SprintBacklogModelCommon(_connectionModel, _operation);
-		// _sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon, _operation);
+		_sprintbacklogModelCommon = new SprintBacklogModelCommon(_connectionModel, _operation);
+		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon, _operation);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class SprintBacklogModel
 	 */
 	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
 	{
-		// _sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
+		_sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
 		/*java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet res = null;
@@ -135,7 +135,7 @@ public class SprintBacklogModel
 	}
 	
 	/// common sprint backlog related functionality
-	// private SprintBacklogModelCommon _sprintbacklogModelCommon;
+	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer table model

@@ -265,8 +265,8 @@ public class Models {
 	}
 	
 	/**
-	 * Create product backlog model
-	 * @return created product backlog model
+	 * Create sprint backlog model
+	 * @return created sprint backlog model
 	 */
 	private SprintBacklogModel createSprintBacklogModel()
 	{
@@ -284,7 +284,7 @@ public class Models {
 	{
 		if (_sprintbacklogModel == null)
 		{
-			throw new NullPointerException("Product Backlog model was not yet created!");
+			throw new NullPointerException("Sprint Backlog model was not yet created!");
 		}
 		return _sprintbacklogModel;
 	}
