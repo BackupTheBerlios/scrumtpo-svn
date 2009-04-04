@@ -95,7 +95,7 @@ public class SprintBacklogModelCommon
         		 "SELECT MAX(Task_id) AS 'maxid' FROM Task";
         	 st = conn.prepareStatement(query2);
         	 st.execute();
-        	 int task_id = st.getResultSet().findColumn("maxid");
+        	 int taskId = st.getResultSet().findColumn("maxid");
 		 
         	 st = null;
         	 String query3 =
@@ -114,7 +114,7 @@ public class SprintBacklogModelCommon
         	 st = conn.prepareStatement(query3);
         	 st.setInt(1, day);
         	 st.setInt(2, pbi);
-        	 st.setInt(3, task_id);
+        	 st.setInt(3, taskId);
         	 st.setInt(4, sprint);
         	 st.setInt(5, employee);
         	 st.setInt(6, hours_spent);
@@ -156,7 +156,7 @@ public class SprintBacklogModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT Task_id, Task_type, Task_description, Task_status, Task_date, Task_active, Employee_id, Sprint_id, PBI_id, Measure_day, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.Sprint_PBITable + " JOIN " + DBSchemaModel.TaskTable);
+		q.queryResult("SELECT Measure_day, PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.Sprint_PBITable + " JOIN " + DBSchemaModel.TaskTable);
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();

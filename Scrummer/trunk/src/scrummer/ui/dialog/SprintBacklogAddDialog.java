@@ -45,6 +45,7 @@ public class SprintBacklogAddDialog
 		setTitle(i18n.tr("Insert into Sprint Backlog"));
 		
 		_sprintbacklogModel = Scrummer.getModels().getSprintBacklogModel();
+		_sprintbacklogModel.addSprintBacklogListener(this);
 		
 		Panel.setLayout(new GridLayout(7, 5, 0, 10));
 		

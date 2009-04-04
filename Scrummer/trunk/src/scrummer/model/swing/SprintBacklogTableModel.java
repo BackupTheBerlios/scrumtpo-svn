@@ -78,7 +78,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	{
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
-		_realColumns = schemam.getColumns(DBSchemaModel.EmployeeTable);
+		_realColumns = schemam.getColumns(DBSchemaModel.Sprint_PBITable);
 		/*Vector<String> taskColumns = schemam.getColumns(DBSchemaModel.TaskTable);
 		_realColumns.add(taskColumns.elementAt(3));
 		_realColumns.add(taskColumns.elementAt(4));
