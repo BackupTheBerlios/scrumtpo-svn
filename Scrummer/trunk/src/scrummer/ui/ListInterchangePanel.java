@@ -5,14 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
-
 import scrummer.uicomponents.StandardButton;
 
 /**
@@ -39,6 +37,7 @@ public class ListInterchangePanel extends JPanel {
 				leftName, 
 				k, k, k, k));
 		leftList.setPreferredSize(new Dimension(200,200));
+		// leftList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		
 		GridBagConstraints leftListC = Util.constraint(GridBagConstraints.VERTICAL, 2.0, 1.0);
 
@@ -93,6 +92,7 @@ public class ListInterchangePanel extends JPanel {
 				rightName, 
 				k, k, k, k));
 		rightList.setPreferredSize(new Dimension(200,200));
+		// rightList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		GridBagConstraints rightListC = Util.constraint(GridBagConstraints.VERTICAL, 2.0, 1.0);
 		
 		add(leftList,  leftListC);
@@ -110,7 +110,6 @@ public class ListInterchangePanel extends JPanel {
 	public JPanel MiddlePanel;
 	/// right list
 	public JList RightList;
-	
 	/// serialization id
 	private static final long serialVersionUID = 6473186258303568102L;
 }
