@@ -116,6 +116,17 @@ public class DeveloperModel {
 	}
 	
 	/**
+	 * Set new team name
+	 * 
+	 * @param teamId team id
+	 * @param newName name to set
+	 */
+	public void setTeamName(int teamId, String newName)
+	{
+		_developerModelCommon.setTeamName(teamId, newName);
+	}
+	
+	/**
 	 * Remove team by id
 	 * 
 	 * @param id team id

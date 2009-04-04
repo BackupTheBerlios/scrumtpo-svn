@@ -212,33 +212,6 @@ public class DeveloperModelCommon {
 	}
 	
 	/**
-	 * Fetch all developers on project with specified id 
-	 * @param projectId project id
-	 * @return devs
-	 */
-	public Vector<IdValue> fetchProjectDevelopers(int projectId)
-	{
-		/*
-		ResultQuery<Vector<IdName>> q = new ResultQuery<Vector<IdName>>(_connectionModel)
-		{
-			@Override
-			public void processResult(ResultSet result) throws SQLException {
-				
-			}
-
-			@Override
-			public void handleException(SQLException ex) {
-				ex.printStackTrace();
-			}
-		};
-		q.queryResult("");
-		
-		return q.getResult();
-		*/
-		return null;
-	}
-	
-	/**
 	 * Add team into database given following data
 	 * 
 	 * @param name team name
@@ -337,6 +310,34 @@ public class DeveloperModelCommon {
 		        }
 			}
         }
+	}
+	
+	/**
+	 * Set team name
+	 * 
+	 * @param id team id
+	 * @param name new team name
+	 */
+	public void setTeamName(int id, String name)
+	{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, DeveloperOperation.TeamName, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, DeveloperOperation.TeamName, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.TeamTable + " " +
+			"SET " + DBSchemaModel.TeamName + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.TeamId + "='" + id + "'");
 	}
 	
 	/**
