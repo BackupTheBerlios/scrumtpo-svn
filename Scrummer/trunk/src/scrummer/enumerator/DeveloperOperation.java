@@ -9,5 +9,7 @@ public enum DeveloperOperation {
 	/// team related operation
 	Team,
 	/// team name related operations
-	TeamName
+	TeamName,
+	/// developer - team realated operations
+	DeveloperTeam
 }
