@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.OperationListener;
+import scrummer.model.swing.ProjectComboBoxModel;
 import scrummer.model.swing.ProjectListModel;
 import scrummer.util.Operation;
 
@@ -20,9 +21,12 @@ public class ProjectModel {
 	 */
 	public ProjectModel(ConnectionModel connectionModel)
 	{
-		_connectionModel = connectionModel;
-		_projectModelCommon = new ProjectModelCommon(connectionModel, _operation);
-		_projectListModel = new ProjectListModel(_projectModelCommon);
+		_projectModelCommon = 
+			new ProjectModelCommon(connectionModel, _operation);
+		_projectListModel = 
+			new ProjectListModel(_projectModelCommon);
+		_projectComboBoxModel = 
+			new ProjectComboBoxModel(_projectModelCommon);
 	}
 	
 	/**
@@ -58,6 +62,7 @@ public class ProjectModel {
 			closeProject();
 		}
 		
+		_projectModelCommon.removeProject(id);
 	}
 	
 	/**
@@ -112,9 +117,23 @@ public class ProjectModel {
 		return _projectName;
 	}
 	
+	/**
+	 * Fetch project list model
+	 * 
+	 * @return model
+	 */
 	public ProjectListModel getProjectListModel()
 	{
 		return _projectListModel;
+	}
+	
+	/**
+	 * Fetch project list combo box model
+	 * @return model
+	 */
+	public ProjectComboBoxModel getProjectComboBoxModel()
+	{
+		return _projectComboBoxModel;
 	}
 	
 	/**
@@ -142,12 +161,10 @@ public class ProjectModel {
 	private ProjectModelCommon _projectModelCommon;
 	/// project list model
 	private ProjectListModel _projectListModel;
+	/// a list of all projects for use with combo boxes
+	private ProjectComboBoxModel _projectComboBoxModel;
 	/// project id
 	private int _project = 0;
-	/// connection model
-	private ConnectionModel _connectionModel;
 	/// project event listeners
 	private Operation<ProjectOperation> _operation = new Operation<ProjectOperation>();
-	/// project tablename
-	private static final String Project = "Project";
 }
