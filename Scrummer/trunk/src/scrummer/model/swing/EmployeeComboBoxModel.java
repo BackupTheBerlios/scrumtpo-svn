@@ -33,7 +33,7 @@ public class EmployeeComboBoxModel extends DefaultComboBoxModel {
 	
 	private void refreshEmployees()
 	{
-		_employees = _developerModelCommon.fetchEmployeeNames();		
+		_employees = _developerModelCommon.fetchDeveloperNames();		
 	}
 	
 	/**
