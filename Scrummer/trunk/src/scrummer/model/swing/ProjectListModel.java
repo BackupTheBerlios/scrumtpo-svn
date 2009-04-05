@@ -1,14 +1,9 @@
 package scrummer.model.swing;
 
-import java.util.Enumeration;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
-
-import scrummer.Scrummer;
-import scrummer.model.DBSchemaModel;
-import scrummer.model.Models;
-import scrummer.model.ProjectModel;
 import scrummer.model.ProjectModelCommon;
+import scrummer.model.DBSchemaModel.IdValue;
 
 /**
  * Represents a list of available projects
@@ -52,12 +47,17 @@ public class ProjectListModel extends DefaultListModel {
 	
 	@Override
 	public Object elementAt(int index) {
-		return _projectList.elementAt(index).Name;
+		return _projectList.elementAt(index).Value;
 	}
 	
 	@Override
+	public Object getElementAt(int index) {
+		return _projectList.elementAt(index).Value;
+	}
+
+	@Override
 	public Object get(int index) {
-		return _projectList.get(index).Name;
+		return _projectList.get(index).Value;
 	}
 	
 	@Override
@@ -73,10 +73,8 @@ public class ProjectListModel extends DefaultListModel {
 	/// project model
 	private ProjectModelCommon _projectModel;
 	/// project list
-	private Vector<ProjectModelCommon.ProjectIdName> _projectList = 
-		new Vector<ProjectModelCommon.ProjectIdName>();
+	private Vector<IdValue> _projectList = 
+		new Vector<IdValue>();
 	/// serialization id
 	private static final long serialVersionUID = -4159843185529045767L;
-	/// project table name 
-	private static final String Project = "Project";
 }
