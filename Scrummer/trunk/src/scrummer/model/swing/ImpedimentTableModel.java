@@ -242,11 +242,11 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	}
 
 	/// column count
-	private int _columnCount = 7;
+	private int _columnCount = 10;
 	/// row count
 	private int _rowCount = 0;
 	/// column names for display
-	private Vector<String> _columns = new Vector<String>(8);
+	private Vector<String> _columns = new Vector<String>(11);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows

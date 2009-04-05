@@ -99,6 +99,10 @@ public class ImpedimentModelCommon
 	}
 	
 	/**
+	 * Get existing impediment id's for adding
+	 */
+	
+	/**
 	 * Fetch entire impediment table
 	 * 
 	 * @return all rows

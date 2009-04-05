@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +27,8 @@ import scrummer.enumerator.ImpedimentOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.ImpedimentModel;
+import scrummer.model.swing.EmployeeComboBoxModel;
+import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -49,6 +52,15 @@ public class ImpedimentsAddDialog
 		
 		_impedimentModel = Scrummer.getModels().getImpedimentModel();
 		_impedimentModel.addImpedimentListener(this);
+		
+		/*_developerModel = Scrummer.getModels().getDeveloperModel();
+		_developerModel.addDeveloperListener(new OperationListener<DeveloperOperation>);
+		_teamComboBoxModel = _developerModel.getTeamComboBoxModel();
+		
+		_teamComboBox.setModel(_teamComboBoxModel);
+		_teamComboBoxModel.refresh();
+		
+		Panel.add(_teamComboBox);*/
 		
 		Panel.setLayout(new GridLayout(5, 5, 0, 13));
 		
@@ -159,6 +171,12 @@ public class ImpedimentsAddDialog
 	
 	/// impediment model
 	private ImpedimentModel _impedimentModel;
+	/// developer model
+	/*private DeveloperModel _developerModel;
+	/// combo box models
+	private JComboBox _employeeComboBox, _teamComboBox;
+	// team combo box model
+	private TeamComboBoxModel _teamComboBoxModel;*/
 	/// name text field
 	private JTextField _teamTextField, _sprintTextField, _employeeTextField, _taskTextField, _descriptionTextField, _typeTextField, _statusTextField, _startTextField, _endTextField, _ageTextField;
 	/// serialization id

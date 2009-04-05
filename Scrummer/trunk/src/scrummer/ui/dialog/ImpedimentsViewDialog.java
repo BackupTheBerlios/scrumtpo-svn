@@ -83,7 +83,7 @@ public class ImpedimentsViewDialog
 		// refresh data from database
 		model.refresh();
 		
-		table.setSize(250, 170);
+		table.setSize(350, 170);
 		table.setRowHeight(20);
 		
 		DefaultTableCellRenderer rdr = new DefaultTableCellRenderer() 

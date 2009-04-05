@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,7 +54,13 @@ public class SprintBacklogAddDialog
 		_tasktypeTextField = addEntry(i18n.tr("Task type") + ":", "Task type");
 		_taskstatusTextField = addEntry(i18n.tr("Task status") + ":", "Task status");
 		_taskdateTextField = addEntry(i18n.tr("Task date") + ":", "Task active");
-		_taskactiveTextField = addEntry(i18n.tr("Task active") + ":", "Task active");
+		JLabel label = new JLabel("Task active:");
+		String[] yesno = {"Yes","No"};
+		_taskactiveComboBox = new JComboBox(yesno);
+		Panel.add(label);
+		Panel.add(_taskactiveComboBox);
+		
+		//_taskactiveTextField = addEntry(i18n.tr("Task active") + ":", "Task active");
 		_measuredayTextField = addEntry(i18n.tr("Day") + ":", "Day");
 		_PBIidTextField = addEntry(i18n.tr("PBI id") + ":", "PBI id");
 		_sprintTextField = addEntry(i18n.tr("Sprint id") + ":", "Sprint id");
@@ -107,7 +114,8 @@ public class SprintBacklogAddDialog
 				Integer.parseInt(_tasktypeTextField.getText()),
 				Integer.parseInt(_taskstatusTextField.getText()),
 				_taskdateTextField.getText(),
-				_taskactiveTextField.getText(),
+				_taskactiveComboBox.getSelectedItem().toString(),
+				//_taskactiveTextField.getText(),
 				Integer.parseInt(_measuredayTextField.getText()),
 				Integer.parseInt(_PBIidTextField.getText()),
 				Integer.parseInt(_sprintTextField.getText()),
@@ -151,6 +159,8 @@ public class SprintBacklogAddDialog
 
 	/// product backlog model
 	private SprintBacklogModel _sprintbacklogModel;
+	/// combo boxes
+	private JComboBox _taskactiveComboBox;
 	/// name text field
 	private JTextField _taskdescriptionTextField, _tasktypeTextField, _taskstatusTextField, _taskdateTextField, _taskactiveTextField, _measuredayTextField, _PBIidTextField, _sprintTextField, _employeeTextField, _hoursspentTextField, _hoursremainingTextField, _nbopenimpedTextField, _nbclosedimpedTextField;
 	/// serialization id
