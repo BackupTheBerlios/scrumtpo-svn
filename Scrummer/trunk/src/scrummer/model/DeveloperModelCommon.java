@@ -8,6 +8,8 @@ import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.EmployeeListModel;
+import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 import scrummer.util.Query;
@@ -292,8 +294,8 @@ public class DeveloperModelCommon {
 		            st = conn.prepareStatement(query);
 		            for (int i = 0; i < employeeIds.size(); i++)
 		            {
-		            	st.setString(1, q.getResult());	
-		            	st.setInt(2, employeeIds.get(i));
+		            	st.setInt(1,  employeeIds.get(i));	
+		            	st.setString(2, q.getResult());
 		            	st.execute();
 		            }
 		        
@@ -361,6 +363,83 @@ public class DeveloperModelCommon {
 		q.queryResult(
 			"SELECT " + DBSchemaModel.TeamId + ", " + DBSchemaModel.TeamName + " " +
 			"FROM "   + DBSchemaModel.TeamTable);
+		
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	/**
+	 * Fetch full names of given team 
+	 * 
+	 * @param teamId team id
+	 * @return id's + full team member names
+	 */
+	public Vector<IdValue> fetchTeamMembers(int teamId)
+	{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(IdValue.fetchValues(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.EmployeeId + ", CONCAT(" + 
+			DBSchemaModel.EmployeeName + ", ' ', " +
+			DBSchemaModel.EmployeeSurname + ") as FullName from (select * from " +
+			DBSchemaModel.TeamMemberTable + " " +
+			"where " + DBSchemaModel.TeamMemberTeamId + "='" + teamId + "') as Team natural join " +
+			DBSchemaModel.EmployeeTable);
+		
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	
+	}
+	
+	/**
+	 * Fetch all non-team employee full names
+	 * 
+	 * @param teamId team id
+	 * @return all team employees
+	 */
+	public Vector<IdValue> fetchNonTeamMembers(int teamId)
+	{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(IdValue.fetchValues(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}
+		};
+		// select all employees that are not present in team with given id
+		q.queryResult(
+			"SELECT " + DBSchemaModel.EmployeeId + ", CONCAT(" + 
+			DBSchemaModel.EmployeeName + ", ' ', " +
+			DBSchemaModel.EmployeeSurname + ") as FullName from " + DBSchemaModel.EmployeeTable + " " +
+			"WHERE NOT EXISTS (SELECT " + DBSchemaModel.EmployeeId + " FROM " + DBSchemaModel.TeamMemberTable + " " +
+			"WHERE " + DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + "='" + teamId + "' AND " + 
+			DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + "=" +
+			DBSchemaModel.TeamMemberTable + "." + DBSchemaModel.TeamMemberEmployeeId + ")");
 		
 		if (q.getResult() == null)
 		{
