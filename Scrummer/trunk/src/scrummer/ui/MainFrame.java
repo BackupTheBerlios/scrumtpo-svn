@@ -35,6 +35,7 @@ import scrummer.ui.dialog.OpenProjectDialog;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
 import scrummer.ui.dialog.ProductBacklogChangeDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
+import scrummer.ui.dialog.ProjectRemoveDialog;
 import scrummer.ui.dialog.SprintBacklogAddDialog;
 import scrummer.ui.dialog.SprintBacklogViewDialog;
 import scrummer.ui.dialog.TeamAddDialog;
@@ -97,6 +98,7 @@ public class MainFrame extends JFrame
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		addMenuEntry(fileMenu, i18n.tr("New Project"), 			KeyEvent.VK_N, "NewProject");
 		addMenuEntry(fileMenu, i18n.tr("Open Project"), 		KeyEvent.VK_O, "OpenProject");
+		addMenuEntry(fileMenu, i18n.tr("Remove Project"), 		KeyEvent.VK_R, "RemoveProject");
 		_closeMenuItem = addMenuEntry(fileMenu, i18n.tr("Close Project"), KeyEvent.VK_C, "CloseProject");
 		_closeMenuItem.setEnabled(false);
 		fileMenu.addSeparator();
@@ -182,6 +184,12 @@ public class MainFrame extends JFrame
 		else if (cmd.equals("OpenProject"))
 		{
 			OpenProjectDialog dialog = new OpenProjectDialog(this);
+			dialog.setVisible(true);
+		}
+		else if (cmd == "RemoveProject")
+		{
+			ProjectRemoveDialog dialog = new ProjectRemoveDialog(this);
+			Util.centre(dialog);
 			dialog.setVisible(true);
 		}
 		else if (cmd.equals("CloseProject"))
