@@ -61,7 +61,7 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
 		
 		OK.setText("Change Name");
-		setSize(new Dimension(300, 160));
+		setSize(new Dimension(320, 160));
 	}
 	
 	/** 
