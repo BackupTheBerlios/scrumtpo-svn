@@ -437,7 +437,7 @@ public class DeveloperModelCommon {
 			DBSchemaModel.EmployeeName + ", ' ', " +
 			DBSchemaModel.EmployeeSurname + ") as FullName from " + DBSchemaModel.EmployeeTable + " " +
 			"WHERE NOT EXISTS (SELECT " + DBSchemaModel.EmployeeId + " FROM " + DBSchemaModel.TeamMemberTable + " " +
-			"WHERE " + DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + "='" + teamId + "' AND " + 
+			"WHERE " + DBSchemaModel.TeamMemberTable + "." + DBSchemaModel.TeamMemberTeamId + "='" + teamId + "' AND " + 
 			DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + "=" +
 			DBSchemaModel.TeamMemberTable + "." + DBSchemaModel.TeamMemberEmployeeId + ")");
 		
@@ -499,6 +499,70 @@ public class DeveloperModelCommon {
 		{
 			_operation.operationSucceeded(DataOperation.Remove, DeveloperOperation.Team, "");
 		}
+	}
+	
+	/**
+	 * Add developer to team 
+	 * @param developerId developer id
+	 * @param teamId team id
+	 */
+	public void addDeveloperToTeam(int developerId, int teamId)
+	{
+		 java.sql.Connection conn      = null;
+         java.sql.PreparedStatement st = null;
+         ResultSet res = null;
+         try {
+                  conn = _connectionModel.getConnection();
+                  String query =
+                 	"INSERT INTO " + DBSchemaModel.TeamMemberTable + " " +
+                 	"(" + DBSchemaModel.TeamMemberEmployeeId + "," + 
+                 		  DBSchemaModel.TeamMemberTeamId + ") " +
+                    "VALUES (?, ?)";
+
+                  st = conn.prepareStatement(query);
+                  st.setInt(1, developerId);
+                  st.setInt(2, teamId);
+               
+                  st.execute();
+                   
+                  _operation.operationSucceeded(DataOperation.Insert, DeveloperOperation.DeveloperTeam, "");
+
+         } catch (SQLException e) {
+                 e.printStackTrace();
+                 _operation.operationFailed(DataOperation.Insert, DeveloperOperation.DeveloperTeam, e.getMessage());
+         }
+         finally
+         {
+        	 _connectionModel.close(res);
+        	 _connectionModel.close(st);
+        	 _connectionModel.close(conn);
+         }
+	}
+	
+	/**
+	 * Remove developer from team
+	 * 
+	 * @param developerId developer id
+	 * @param teamId team id
+	 */
+	public void removeDeveloperFromTeam(int developerId, int teamId)
+	{
+		Query q = new Query(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Remove, DeveloperOperation.DeveloperTeam, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Remove, DeveloperOperation.DeveloperTeam, ex.getMessage());
+			}
+		};
+		q.query(
+			"DELETE FROM " + DBSchemaModel.TeamMemberTable + " " +
+			"WHERE " + DBSchemaModel.TeamMemberEmployeeId + "='" + developerId + "' AND " + 
+					   DBSchemaModel.TeamId + "='" + teamId + "'");	
 	}
 	
 	/// connection model
