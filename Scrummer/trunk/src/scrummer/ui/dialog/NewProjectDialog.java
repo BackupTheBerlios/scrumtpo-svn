@@ -41,6 +41,7 @@ public class NewProjectDialog extends TwoButtonDialog implements OperationListen
 		
 		Models m = Scrummer.getModels();
 		_projectModel = m.getProjectModel();
+		_projectModel.addProjectListener(this);
 		
 		int outk = 10;
 		int ink = 10;
@@ -131,6 +132,17 @@ public class NewProjectDialog extends TwoButtonDialog implements OperationListen
 			JOptionPane.ERROR_MESSAGE);
 	}
 	
+	@Override
+	public void setVisible(boolean b) {
+	
+		if (!b)
+		{
+			_projectModel.removeProjectListener(this);
+		}
+		
+		super.setVisible(b);
+	}
+
 	/**
 	 * Document with text size limit
 	 */
