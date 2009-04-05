@@ -83,7 +83,6 @@ public class EmployeeListModel extends DefaultListModel {
 
 	@Override
 	public int size() {
-		
 		return _employees.size();
 	}
 	
