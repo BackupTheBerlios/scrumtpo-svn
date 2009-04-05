@@ -6,6 +6,17 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Cancel"
 
+#: src/scrummer/model/SprintBacklogModelCommon.java:187
+#: src/scrummer/model/DeveloperModelCommon.java:165
+#: src/scrummer/model/ProductBacklogModelCommon.java:143
+#: src/scrummer/model/ImpedimentModelCommon.java:192
+msgid "Could not set parameter."
+msgstr "Could not set parameter."
+
+#: src/scrummer/model/SprintBacklogModelCommon.java:223
+msgid "Could not remove Sprint Backlog item."
+msgstr "Could not remove Sprint Backlog item."
+
 #: src/scrummer/model/NavigationModel.java:53
 msgid "Blank"
 msgstr "Blank"
@@ -19,7 +30,9 @@ msgid "Product Backlog"
 msgstr "Product Backlog"
 
 #: src/scrummer/model/NavigationModel.java:56
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:43
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:41
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:51
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:53
 msgid "Project"
 msgstr "Project"
 
@@ -51,47 +64,190 @@ msgstr "Metrics"
 msgid "Tasks"
 msgstr "Tasks"
 
+#: src/scrummer/model/DeveloperModelCommon.java:201
+msgid "Could not remove developer."
+msgstr "Could not remove developer."
+
+#: src/scrummer/model/ProductBacklogModelCommon.java:179
+msgid "Could not remove product backlog item."
+msgstr "Could not remove product backlog item."
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:36
 #: src/scrummer/model/swing/DeveloperTableModel.java:33
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:40
 msgid "ID"
 msgstr "ID"
 
+#: src/scrummer/model/swing/ImpedimentTableModel.java:37
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:47
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:50
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:67
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:68
+#: src/scrummer/ui/MainFrame.java:124
+msgid "Team"
+msgstr "Team"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:38
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:42
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:52
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:68
+msgid "Sprint"
+msgstr "Sprint"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:39
+#: src/scrummer/ui/dialog/TeamAddDialog.java:76
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:69
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:81
+#: src/scrummer/ui/page/TransferDeveloperPage.java:43
+msgid "Employee"
+msgstr "Employee"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:40
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:70
+msgid "Task"
+msgstr "Task"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:41
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:43
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:53
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:71
+msgid "Description"
+msgstr "Description"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:42
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:72
+msgid "Type"
+msgstr "Type"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:43
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:73
+msgid "Status"
+msgstr "Status"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:44
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:74
+msgid "Start"
+msgstr "Start"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:45
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:75
+msgid "End"
+msgstr "End"
+
+#: src/scrummer/model/swing/ImpedimentTableModel.java:46
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:76
+msgid "Age"
+msgstr "Age"
+
 #: src/scrummer/model/swing/DeveloperTableModel.java:34
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:49
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:43
 msgid "Name"
 msgstr "Name"
 
 #: src/scrummer/model/swing/DeveloperTableModel.java:35
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:50
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:44
 msgid "Surname"
 msgstr "Surname"
 
 #: src/scrummer/model/swing/DeveloperTableModel.java:36
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:51
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:45
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:46
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:47
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:48
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:49
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:50
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:51
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:52
 msgid "Address"
 msgstr "Address"
 
-#: src/scrummer/model/swing/DeveloperTableModel.java:151
-msgid "Could not set parameter."
-msgstr "Could not set parameter."
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:44
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:54
+msgid "Priority"
+msgstr "Priority"
 
-#: src/scrummer/model/swing/DeveloperTableModel.java:185
-msgid "Could not remove developer."
-msgstr "Could not remove developer."
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:45
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:55
+msgid "Initial estimate"
+msgstr "Initial estimate"
+
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:46
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:56
+msgid "Adjustment factor"
+msgstr "Adjustment factor"
+
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:47
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:57
+msgid "Adjusted estimate"
+msgstr "Adjusted estimate"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:45
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:64
+msgid "Day"
+msgstr "Day"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:46
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:65
+msgid "PBI id"
+msgstr "PBI id"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:47
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:66
+msgid "Sprint id"
+msgstr "Sprint id"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:48
+msgid "Task id"
+msgstr "Task id"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:49
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:53
+msgid "Task description"
+msgstr "Task description"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:50
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:54
+msgid "Task type"
+msgstr "Task type"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:51
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:55
+msgid "Task status"
+msgstr "Task status"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:52
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:56
+msgid "Task date"
+msgstr "Task date"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:53
+msgid "Task active"
+msgstr "Task active"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:54
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:67
+msgid "Employee id"
+msgstr "Employee id"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:55
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:68
+msgid "Hours spent"
+msgstr "Hours spent"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:56
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:69
+msgid "Hours remaining"
+msgstr "Hours remaining"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:57
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:70
+msgid "Number of open impediments"
+msgstr "Number of open impediments"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:58
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:71
+msgid "Number of closed impediments"
+msgstr "Number of closed impediments"
+
+#: src/scrummer/model/ImpedimentModelCommon.java:228
+msgid "Could not remove impediment."
+msgstr "Could not remove impediment."
 
 #: src/scrummer/ui/TitleLink.java:48
 #: src/scrummer/ui/dialog/DevelopersAddDialog.java:140
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:137
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:139
 msgid "Back"
 msgstr "Back"
 
@@ -104,12 +260,10 @@ msgid "Up"
 msgstr "Up"
 
 #: src/scrummer/ui/dialog/DevelopersAddDialog.java:34
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:48
 msgid "Add developers"
 msgstr "Add developers"
 
 #: src/scrummer/ui/dialog/DevelopersAddDialog.java:141
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:138
 msgid "Add row"
 msgstr "Add row"
 
@@ -150,192 +304,470 @@ msgid "Error while connecting to database server"
 msgstr "Error while connecting to database server"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:282
+#: src/scrummer/ui/dialog/TeamAddDialog.java:141
+#: src/scrummer/ui/dialog/TeamAddDialog.java:165
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:76
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:111
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:115
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:127
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:177
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:151
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:203
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:102
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:107
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:145
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:264
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:126
+#: src/scrummer/ui/dialog/NewProjectDialog.java:131
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:86
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:112
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:125
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:138
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:151
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:164
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:177
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:190
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:203
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:218
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:233
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:246
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:294
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:129
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:180
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:152
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:204
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:147
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:159
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:117
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:187
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:194
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:116
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:129
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:142
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:155
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:168
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:181
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:194
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:237
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:129
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:180
 msgid "Error"
 msgstr "Error"
 
 #: src/scrummer/ui/dialog/AboutBoxDialog.java:21
-#: src/scrummer/ui/MainFrame.java:95
+#: src/scrummer/ui/MainFrame.java:138
 msgid "About"
 msgstr "About"
 
+#: src/scrummer/ui/dialog/TeamAddDialog.java:48
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:52
+msgid "Add Team"
+msgstr "Add Team"
+
+#: src/scrummer/ui/dialog/TeamAddDialog.java:64
+msgid "Team name"
+msgstr "Team name"
+
+#: src/scrummer/ui/dialog/TeamAddDialog.java:77
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:82
+msgid "Team Member"
+msgstr "Team Member"
+
+#: src/scrummer/ui/dialog/TeamAddDialog.java:94
+#: src/scrummer/ui/MainFrame.java:121 src/scrummer/ui/MainFrame.java:127
+msgid "Add"
+msgstr "Add"
+
+#: src/scrummer/ui/dialog/TeamAddDialog.java:140
+msgid "Team name must contain at least one character."
+msgstr "Team name must contain at least one character."
+
+#: src/scrummer/ui/dialog/TeamAddDialog.java:164
+msgid "Could not delete team: "
+msgstr "Could not delete team: "
+
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:37
+msgid "Remove team"
+msgstr "Remove team"
+
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:75
+msgid "No team has been selected. Select team then click Remove."
+msgstr "No team has been selected. Select team then click Remove."
+
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:110
+msgid "Could not remove team: "
+msgstr "Could not remove team:"
+
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:42
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:57
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:37
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:55
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:38
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:37
 msgid "Add Developer"
 msgstr "Add Developer"
 
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:78
-msgid "Impediment_description"
-msgstr "Employee description"
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:68
+#: src/scrummer/ui/MainFrame.java:110
+msgid "View impediments"
+msgstr "View impediments"
 
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:79
-msgid "Impediment_type"
-msgstr "Impediment_type"
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:110
+msgid "Impediment table"
+msgstr "Impediment table"
 
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:80
-msgid "Impediment_status"
-msgstr "Impediment_status"
-
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:81
-msgid "Impediment_start"
-msgstr "Impediment_start"
-
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:82
-msgid "Impediment_end"
-msgstr "Impediment_end"
-
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:83
-msgid "Impediment_age"
-msgstr "Impediment_age"
-
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:44
-msgid "Sprint"
-msgstr "Sprint"
-
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:45
-msgid "Description"
-msgstr "Description"
-
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:46
-msgid "Priority"
-msgstr "Priority"
-
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:47
-msgid "Initial estimate"
-msgstr "Initial estimate"
-
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:48
-msgid "Adjustment factor"
-msgstr "Adjustment factor"
-
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:49
-msgid "Adjusted estimate"
-msgstr "Adjusted estimate"
-
-#: src/scrummer/ui/dialog/NewProjectDialog.java:33
-msgid "Create New Project"
-msgstr "Create New Project"
-
-#: src/scrummer/ui/dialog/NewProjectDialog.java:41
-msgid "Create Project"
-msgstr "Create Project"
-
-#: src/scrummer/ui/dialog/NewProjectDialog.java:45
-msgid "Project name"
-msgstr "Project name"
-
-#: src/scrummer/ui/dialog/NewProjectDialog.java:59
-msgid "Project description"
-msgstr "Project description"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:50
-msgid "View Product Backlog"
-msgstr "View Product Backlog"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:82
-msgid "PBI_description"
-msgstr "PBI_description"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:83
-msgid "PBI_priority"
-msgstr "PBI_priority"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:84
-msgid "PBI_initial_estimate"
-msgstr "PBI_initial_estimate"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:85
-msgid "PBI_adjustment_factor"
-msgstr "PBI_adjustment_factor"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:86
-msgid "PBI_adjusted_estimate"
-msgstr "PBI_adjusted_estimate"
-
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:140
-msgid "Edit"
-msgstr "Edit"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:44
-msgid "Task description"
-msgstr "Task description"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:45
-msgid "Task type"
-msgstr "Task type"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:46
-msgid "Task status"
-msgstr "Task status"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:47
-msgid "Task date"
-msgstr "Task date"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:48
-msgid "Task active"
-msgstr "Task active"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:49
-msgid "PBI id"
-msgstr "PBI id"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:50
-msgid "Hours spent"
-msgstr "Hours spent"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:51
-msgid "Hours remaining"
-msgstr "Hours remaining"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:52
-msgid "Number of open impediments"
-msgstr "Number of open impediments"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:53
-msgid "Number of closed impediments"
-msgstr "Number of closed impediments"
-
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:59
-msgid "Insert into Sprint Backlog"
-msgstr "Insert into Sprint Backlog"
-
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:59
-msgid "Add Impediment"
-msgstr "Add Impediment"
-
-#: src/scrummer/ui/dialog/OpenProjectDialog.java:39
-#: src/scrummer/ui/MainFrame.java:77
-msgid "Open Project"
-msgstr "Open Project"
-
-#: src/scrummer/ui/dialog/OpenProjectDialog.java:46
-msgid "Select Project"
-msgstr "Select Project"
-
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:47
-msgid "View developers"
-msgstr "View Developers"
-
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:88
-msgid "Developer table"
-msgstr "Developer table"
-
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:97
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:119
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:98
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:120
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:98
+#: src/scrummer/ui/MainFrame.java:130
 msgid "Remove"
 msgstr "Remove"
 
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:101
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:123
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:102
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:124
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:107
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:102
 msgid "Close"
 msgstr "Close"
 
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:125
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:149
+msgid ""
+"Cannot remove impediment because no impediment is selected. Click on a table "
+"row and then press remove."
+msgstr ""
+"Cannot remove impediment because no impediment is selected. Click on a table "
+"row and then press remove."
+
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:39
+msgid "Change team name"
+msgstr "Change team name"
+
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:59
+msgid "New name"
+msgstr "New Name"
+
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:102
+msgid "Some team must be selected to change it's name."
+msgstr "Some team must be selected to change it's name."
+
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:107
+msgid "Team must be at least one character long."
+msgstr "Team must be at least one character long."
+
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:144
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:263
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:293
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:236
+msgid "An error has occurred when setting team name"
+msgstr "An error has occurred when setting team name"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:37
+msgid "Change sprint backlog item"
+msgstr "Change sprint backlog item"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:48
+msgid "Sprint backlog item"
+msgstr "Sprint backlog item"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:57
+msgid "New measure day"
+msgstr "New measure day"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:58
+msgid "New product backlog item"
+msgstr "New product backlog item"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:59
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:65
+msgid "New task"
+msgstr "New task"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:60
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:63
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:61
+msgid "New sprint"
+msgstr "New sprint"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:61
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:64
+msgid "New employee"
+msgstr "New employee"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:62
+msgid "New spent hours"
+msgstr "New spent hours"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:63
+msgid "New remaining hours"
+msgstr "New remaining hours"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:64
+msgid "New number of open impediments"
+msgstr "New number of open impediments"
+
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:65
+msgid "New number of closed impediments"
+msgstr "New number of closed impediments"
+
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:44
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:63
+msgid "Insert into Product Backlog"
+msgstr "Insert into Product Backlog"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:40
+msgid "Create New Project"
+msgstr "Create New Project"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:52
+msgid "Create Project"
+msgstr "Create Project"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:56
+msgid "Project name"
+msgstr "Project name"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:71
+msgid "Project description"
+msgstr "Project description"
+
+#: src/scrummer/ui/dialog/NewProjectDialog.java:130
+msgid "Could not add project"
+msgstr "Could not add project"
+
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:101
+msgid "Remove Project"
+msgstr "Remove Project"
+
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:50
+msgid "Select project"
+msgstr "Select Project"
+
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:84
+msgid ""
+"Could not delete project. Select one project first, then click on Remove "
+"button."
+msgstr ""
+"Could not delete project. Select one project first, then click on Remove "
+"button."
+
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:112
+msgid "Could not remove project: "
+msgstr "Could not remove project:"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:42
+#: src/scrummer/ui/MainFrame.java:111
+msgid "Change impediment"
+msgstr "Change Impediment"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:53
+msgid "Impediment"
+msgstr "Impediment"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:62
+msgid "New team"
+msgstr "New team"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:66
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:62
+msgid "New description"
+msgstr "New description"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:67
+msgid "New type"
+msgstr "New type"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:68
+msgid "New status"
+msgstr "New status"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:69
+msgid "New start"
+msgstr "New start"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:70
+msgid "New end"
+msgstr "New end"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:71
+msgid "New age"
+msgstr "New age"
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:125
+msgid "Some impediment must be selected to change it's team."
+msgstr "Some impediment must be selected to change it's team."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:138
+msgid "Some impediment must be selected to change it's sprint."
+msgstr "Some impediment must be selected to change it's sprint."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:151
+msgid "Some impediment must be selected to change it's employee."
+msgstr "Some impediment must be selected to change it's employee."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:164
+msgid "Some impediment must be selected to change it's task."
+msgstr "Some impediment must be selected to change it's task."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:177
+msgid "Some impediment must be selected to change it's description."
+msgstr "Some impediment must be selected to change it's description."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:190
+msgid "Some impediment must be selected to change it's type."
+msgstr "Some impediment must be selected to change it's type."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:203
+msgid "Some impediment must be selected to change it's status."
+msgstr "Some impediment must be selected to change it's status."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:218
+msgid "Some impediment must be selected to change it's start."
+msgstr "Some impediment must be selected to change it's start."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:233
+msgid "Some impediment must be selected to change it's end."
+msgstr "Some impediment must be selected to change it's end."
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:246
+msgid "Some impediment must be selected to change it's age."
+msgstr "Some impediment must be selected to change it's age."
+
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:47
+#: src/scrummer/ui/MainFrame.java:114
+msgid "View Sprint Backlog"
+msgstr "View Sprint Backlog"
+
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:89
+msgid "Sprint Backlog table"
+msgstr "Sprint Backlog table"
+
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:127
+msgid ""
+"Cannot remove Sprint Backlog item because no item is selected. Click on a "
+"table row and then press remove."
+msgstr ""
+"Cannot remove Sprint Backlog item because no item is selected. Click on a "
+"table row and then press remove."
+
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:69
+msgid "View Product Backlog"
+msgstr "View Product Backlog"
+
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:111
+msgid "Product Backlog table"
+msgstr "Product Backlog table"
+
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:150
+msgid ""
+"Cannot remove from Product Backlog because no Product Backlog item is "
+"selected. Click on a table row and then press remove."
+msgstr ""
+"Cannot remove from Product Backlog because no Product Backlog item is "
+"selected. Click on a table row and then press remove."
+
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:46
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:77
+#: src/scrummer/ui/MainFrame.java:113
+msgid "Insert into Sprint Backlog"
+msgstr "Insert into Sprint Backlog"
+
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:51
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:83
+msgid "Add Impediment"
+msgstr "Add Impediment"
+
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:49
+#: src/scrummer/ui/MainFrame.java:100
+msgid "Open Project"
+msgstr "Open Project"
+
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:57
+msgid "Select Project"
+msgstr "Select Project"
+
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:115
+msgid ""
+"Could not open project. First select a project from project list, then click "
+"on Open."
+msgstr ""
+"Could not open project. First select a project from project list, then click "
+"on Open."
+
+#: src/scrummer/ui/dialog/OpenProjectDialog.java:186
+msgid "Could not open project"
+msgstr "Could not open project"
+
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:99
+msgid "Save"
+msgstr "Save"
+
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:193
+msgid "An error has occurred when transferring employee from/to team: "
+msgstr "An error has occurred when transferring employee from/to team: "
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:40
+#: src/scrummer/ui/MainFrame.java:107
+msgid "Change product backlog item"
+msgstr "Change product backlog item"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:51
+msgid "Product backlog item"
+msgstr "Product backlog item"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:60
+msgid "New project"
+msgstr "New project"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:63
+msgid "New priority"
+msgstr "New priority"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:64
+msgid "New initial estimate"
+msgstr "New initial estimate"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:65
+msgid "New adjustment factor"
+msgstr "New adjustment factor"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:66
+msgid "New adjusted estimate"
+msgstr "New adjusted estimate"
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:116
+msgid "Some PBI must be selected to change it's project."
+msgstr "Some PBI must be selected to change it's project."
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:129
+msgid "Some PBI must be selected to change it's sprint."
+msgstr "Some PBI must be selected to change it's sprint."
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:142
+msgid "Some PBI must be selected to change it's description."
+msgstr "Some PBI must be selected to change it's description."
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:155
+msgid "Some PBI must be selected to change it's priority."
+msgstr "Some PBI must be selected to change it's priority."
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:168
+msgid "Some PBI must be selected to change it's initial estimate."
+msgstr "Some PBI must be selected to change it's initial estimate."
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:181
+msgid "Some PBI must be selected to change it's adjustment factor."
+msgstr "Some PBI must be selected to change it's adjustment factor."
+
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:194
+msgid "Some PBI must be selected to change it's adjusted estimate."
+msgstr "Some PBI must be selected to change it's adjusted estimate."
+
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:47
+msgid "View developers"
+msgstr "View developers"
+
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:89
+msgid "Developer table"
+msgstr "Developer table"
+
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:127
 msgid ""
 "Cannot remove developer because no developer is selected. Click on a table "
 "row and then press remove."
@@ -343,41 +775,89 @@ msgstr ""
 "Cannot remove developer because no developer is selected. Click on a table "
 "row and then press remove."
 
-#: src/scrummer/ui/MainFrame.java:74
+#: src/scrummer/ui/MainFrame.java:97
 msgid "File"
 msgstr "File"
 
-#: src/scrummer/ui/MainFrame.java:76
+#: src/scrummer/ui/MainFrame.java:99
 msgid "New Project"
 msgstr "New Project"
 
-#: src/scrummer/ui/MainFrame.java:79
-msgid "Add product backlog"
-msgstr "Add Product Backlog"
+#: src/scrummer/ui/MainFrame.java:102
+msgid "Close Project"
+msgstr "Close Project"
 
-#: src/scrummer/ui/MainFrame.java:80
+#: src/scrummer/ui/MainFrame.java:105
+msgid "Insert into product backlog"
+msgstr "Insert into product backlog"
+
+#: src/scrummer/ui/MainFrame.java:106
 msgid "View product backlog"
-msgstr "View Product Backlog"
+msgstr "View product backlog"
 
-#: src/scrummer/ui/MainFrame.java:83
+#: src/scrummer/ui/MainFrame.java:109
+msgid "Add impediment"
+msgstr "Add impediment"
+
+#: src/scrummer/ui/MainFrame.java:116
 msgid "Exit"
 msgstr "Exit"
 
-#: src/scrummer/ui/MainFrame.java:85
-msgid "Developer"
-msgstr "Developer"
+#: src/scrummer/ui/MainFrame.java:118
+msgid "Employees"
+msgstr "Employees"
 
-#: src/scrummer/ui/MainFrame.java:87
-msgid "Add"
-msgstr "Add"
-
-#: src/scrummer/ui/MainFrame.java:88
+#: src/scrummer/ui/MainFrame.java:122 src/scrummer/ui/MainFrame.java:128
 msgid "View"
 msgstr "View"
 
-#: src/scrummer/ui/MainFrame.java:93
+#: src/scrummer/ui/MainFrame.java:129
+msgid "Change Name"
+msgstr "Change Name"
+
+#: src/scrummer/ui/MainFrame.java:136
 msgid "Help"
 msgstr "Help"
+
+#: src/scrummer/ui/page/TransferDeveloperPage.java:44
+msgid "Project Employee"
+msgstr "Project Employee"
+
+#~ msgid "Impediment_description"
+#~ msgstr "Employee description"
+
+#~ msgid "Impediment_type"
+#~ msgstr "Impediment_type"
+
+#~ msgid "Impediment_status"
+#~ msgstr "Impediment_status"
+
+#~ msgid "Impediment_start"
+#~ msgstr "Impediment_start"
+
+#~ msgid "PBI_description"
+#~ msgstr "PBI_description"
+
+#~ msgid "PBI_priority"
+#~ msgstr "PBI_priority"
+
+#~ msgid "PBI_initial_estimate"
+#~ msgstr "PBI_initial_estimate"
+
+#~ msgid "PBI_adjustment_factor"
+#~ msgstr "PBI_adjustment_factor"
+
+#~ msgid "PBI_adjusted_estimate"
+#~ msgstr "PBI_adjusted_estimate"
+
+#~ msgid "Edit"
+#~ msgstr "Edit"
+
+#~ msgid "Add product backlog"
+#~ msgstr "Add Product Backlog"
+
+#~ msgid "Developer"
+#~ msgstr "Developer"
 
 #~ msgid "Add Product Backlog"
 #~ msgstr "Add Product Backlog"
