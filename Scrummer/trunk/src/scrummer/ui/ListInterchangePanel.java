@@ -55,7 +55,7 @@ public class ListInterchangePanel extends JPanel {
 		JButton moveRightButton = new StandardButton(">");
 		moveRightButton.setSize(new Dimension(60,40));
 		moveRightButton.setActionCommand("MoveRight");
-		moveRightButton.setAlignmentY(TOP_ALIGNMENT);
+		moveRightButton.setAlignmentY(BOTTOM_ALIGNMENT);
 		MoveRightButton = moveRightButton;
 		
 		Box innerMoveRightBox = new Box(BoxLayout.X_AXIS);
@@ -74,15 +74,15 @@ public class ListInterchangePanel extends JPanel {
 		
 		JButton moveLeftButton = new StandardButton("<");
 		moveLeftButton.setSize(new Dimension(60, 40));
-		moveLeftButton.setAlignmentY(BOTTOM_ALIGNMENT);
+		moveLeftButton.setAlignmentY(TOP_ALIGNMENT);
 		moveLeftButton.setActionCommand("MoveLeft");
 		MoveLeftButton = moveLeftButton;
 		
 		innerMoveLeftBox.add(moveLeftButton);
 		moveLeftBox.add(innerMoveLeftBox);
 		
-		midPanel.add(moveLeftBox);
 		midPanel.add(moveRightBox);
+		midPanel.add(moveLeftBox);
 		
 		JList rightList = new JList();
 		RightList = rightList;
