@@ -5,5 +5,11 @@ package scrummer.enumerator;
  */
 public enum ImpedimentOperation {
 	/// impediment related operation
-	Impediment
+	Impediment,
+	/// team related operation
+	Team,
+	/// sprint related operations
+	Sprint,
+	/// task realated operations
+	Task
 }

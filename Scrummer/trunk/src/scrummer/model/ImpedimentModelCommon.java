@@ -7,6 +7,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 import scrummer.util.Query;
@@ -99,8 +100,48 @@ public class ImpedimentModelCommon
 	}
 	
 	/**
-	 * Get existing impediment id's for adding
+	 * Fetch impediments and return full descriptions + ids
+	 * 
+	 * @return identified imps
 	 */
+	public Vector<IdValue> fetchImpedimentNames()
+	{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) 
+			{
+				Vector<IdValue> res = new Vector<IdValue>();
+				try {
+					result.beforeFirst();
+					while (result.next())
+					{
+						res.add(new IdValue(result.getInt(1), result.getString(2)));
+					}
+					setResult(res);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.ImpedimentId + ", " +
+			DBSchemaModel.ImpedimentDesc +
+			" FROM "   + DBSchemaModel.ImpedimentTable);
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
 	
 	/**
 	 * Fetch entire impediment table
@@ -199,7 +240,279 @@ public class ImpedimentModelCommon
 		}
 	}
 	
-		/// connection model
+	/**
+	 * Set impediment team
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment team
+	 */
+	public void setImpedimentTeam(int id, String name)
+	{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentTeam + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment sprint
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment sprint
+	 */
+	public void setImpedimentSprint(int id, String name) 
+	{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentSprint + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment employee
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment employee
+	 */
+	public void setImpedimentEmployee(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentEmployee + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment task
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment task
+	 */
+	public void setImpedimentTask(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentTask + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment description
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment description
+	 */
+	public void setImpedimentDesc(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentDesc + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment type
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment type
+	 */
+	public void setImpedimentType(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentType + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment status
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment status
+	 */
+	public void setImpedimentStatus(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentStatus + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment start
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment start
+	 */
+	public void setImpedimentStart(int id, java.sql.Date name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentStart + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment end
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment end
+	 */
+	public void setImpedimentEnd(int id, java.sql.Date name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentEnd + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set impediment age
+	 * 
+	 * @param id impediment id
+	 * @param name new impediment age
+	 */
+	public void setImpedimentAge(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ImpedimentOperation.Team, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Team, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
+			"SET " + DBSchemaModel.ImpedimentAge + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operation<ImpedimentOperation> _operation;

@@ -8,8 +8,10 @@ import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.swing.DeveloperTableModel;
+import scrummer.model.swing.ImpedimentComboBoxModel;
 import scrummer.model.swing.ImpedimentTableModel;
 import scrummer.model.swing.ProductBacklogTableModel;
+import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.util.Operation;
 
 /**
@@ -36,6 +38,7 @@ public class ImpedimentModel
 		_connectionModel = connectionModel;
 		_impedimentModelCommon = new ImpedimentModelCommon(_connectionModel, _operation);
 		_impedimentTableModel = new ImpedimentTableModel(connectionModel, _impedimentModelCommon, _operation);
+		_impedimentComboBoxModel = new ImpedimentComboBoxModel(_impedimentModelCommon);
 	}
 	
 	/**
@@ -126,10 +129,123 @@ public class ImpedimentModel
 		_operation.removeListener(listener);
 	}
 	
+
+	/**
+	 * Fetch team combo box model(contains all team names)
+	 * @return model
+	 */
+	public ImpedimentComboBoxModel getImpedimentComboBoxModel()
+	{
+		return _impedimentComboBoxModel;
+	}
+	
+	/**
+	 * Set new impediment team
+	 * 
+	 * @param impId impediment id
+	 * @param newTeam team to set
+	 */
+	public void setImpedimentTeam(int impId, String newTeam)
+	{
+		_impedimentModelCommon.setImpedimentTeam(impId, newTeam);
+	}
+	
+	/**
+	 * Set new impediment sprint
+	 * 
+	 * @param impId impediment id
+	 * @param newSprint sprint to set
+	 */
+	public void setImpedimentSprint(int impId, String newSprint) {
+		_impedimentModelCommon.setImpedimentSprint(impId, newSprint);
+	}
+	
+	/**
+	 * Set new impediment employee
+	 * 
+	 * @param impId impediment id
+	 * @param newEmployee employee to set
+	 */
+	public void setImpedimentEmployee(int impId, String newEmployee) {
+		_impedimentModelCommon.setImpedimentEmployee(impId, newEmployee);
+	}
+	
+	/**
+	 * Set new impediment task
+	 * 
+	 * @param impId impediment id
+	 * @param newTask task to set
+	 */
+	public void setImpedimentTask(int impId, String newTask) {
+		_impedimentModelCommon.setImpedimentTask(impId, newTask);
+	}
+	
+	/**
+	 * Set new impediment description
+	 * 
+	 * @param impId impediment id
+	 * @param newDesc description to set
+	 */
+	public void setImpedimentDesc(int impId, String newDesc) {
+		_impedimentModelCommon.setImpedimentDesc(impId, newDesc);
+	}
+	
+	/**
+	 * Set new impediment type
+	 * 
+	 * @param impId impediment id
+	 * @param newType type to set
+	 */
+	public void setImpedimentType(int impId, String newType) {
+		_impedimentModelCommon.setImpedimentType(impId, newType);
+	}
+	
+	/**
+	 * Set new impediment status
+	 * 
+	 * @param impId impediment id
+	 * @param newStatus status to set
+	 */
+	public void setImpedimentStatus(int impId, String newStatus) {
+		_impedimentModelCommon.setImpedimentStatus(impId, newStatus);
+	}
+	
+	/**
+	 * Set new impediment start
+	 * 
+	 * @param impId impediment id
+	 * @param newStart start to set
+	 */
+	public void setImpedimentStart(int impId, java.sql.Date newStart) {
+		_impedimentModelCommon.setImpedimentStart(impId, newStart);
+	}
+
+	/**
+	 * Set new impediment end
+	 * 
+	 * @param impId impediment id
+	 * @param newEnd end to set
+	 */
+	public void setImpedimentEnd(int impId, java.sql.Date newEnd) {
+		_impedimentModelCommon.setImpedimentEnd(impId, newEnd);
+	}
+	
+	/**
+	 * Set new impediment age
+	 * 
+	 * @param impId impediment id
+	 * @param newAge age to set
+	 */
+	public void setImpedimentAge(int impId, String newAge) {
+		_impedimentModelCommon.setImpedimentAge(impId, newAge);
+	}
+	
 	/// common impediment related functionality
 	private ImpedimentModelCommon _impedimentModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
+	/// impediment combo box model
+	private ImpedimentComboBoxModel _impedimentComboBoxModel;
 	/// developer table model
 	private ImpedimentTableModel _impedimentTableModel;
 	/// developer operation

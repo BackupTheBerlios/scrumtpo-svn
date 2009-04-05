@@ -198,4 +198,14 @@ public class DBSchemaModel {
 	
 	public static final String ImpedimentTable = "Impediment";
 	public static final String ImpedimentId = "Impediment_id";
+	public static final String ImpedimentDesc = "Impediment_description";
+	public static final String ImpedimentTeam = "Team_id";
+	public static final String ImpedimentSprint = "Sprint_id";
+	public static final String ImpedimentEmployee = "Employee_id";
+	public static final String ImpedimentTask = "Task_id";
+	public static final String ImpedimentType = "Impediment_type";
+	public static final String ImpedimentStatus = "Impediment_status";
+	public static final String ImpedimentStart = "Impediment_start";
+	public static final String ImpedimentEnd = "Impediment_end";
+	public static final String ImpedimentAge = "Impediment_age";
 }

@@ -112,7 +112,7 @@ public class ImpedimentsAddDialog
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy"); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy"); 
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
 			java.util.Date startI, endI;
