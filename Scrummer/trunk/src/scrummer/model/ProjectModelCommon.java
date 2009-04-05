@@ -3,64 +3,17 @@ package scrummer.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
-import scrummer.listener.ProjectListener;
+import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.Operation;
 import scrummer.util.Query;
+import scrummer.util.ResultQuery;
 
 /**
  * Common project model operations(sql queries) that are used in several project related models
  */
 public class ProjectModelCommon {
-
-	/**
-	 * Project id and name combination
-	 */
-	public static class ProjectIdName
-	{
-		/**
-		 * Constructor
-		 * @param id project id
-		 * @param name project name
-		 */
-		public ProjectIdName(int id, String name)
-		{
-			Id   = id;
-			Name = name;
-		}
-		
-		public int Id;
-		public String Name;
-	}
-
-	/**
-	 * Project name query has method for returning name as result
-	 */
-	private static class ProjectNameQuery extends Query
-	{
-		public ProjectNameQuery(ConnectionModel connectionModel) {
-			super(connectionModel);
-		}
-
-		public String getResult() { return ""; }
-	}
-	
-	/**
-	 * Class that can return result in form of ProjectIdName 
-	 */
-	private static class ProjectIdNameQuery extends Query
-	{
-		public ProjectIdNameQuery(ConnectionModel connectionModel) {
-			super(connectionModel);
-		}
-
-		public Vector<ProjectIdName> getResult()
-		{
-			return null;
-		}	
-	}
 	
 	/**
 	 * Constructor
@@ -87,8 +40,8 @@ public class ProjectModelCommon {
         try {
             conn = _connectionModel.getConnection();
             String query =
-            	"INSERT INTO " + Project + " " +
-            	"(" + ProjectName + ", " + ProjectDescription + ") " +
+            	"INSERT INTO " + DBSchemaModel.ProjectTable + " " +
+            	"(" + DBSchemaModel.ProjectName + ", " + DBSchemaModel.ProjectDescription + ") " +
                 "VALUES (?, ?)";
             st = conn.prepareStatement(query);
             st.setString(1, name);
@@ -114,21 +67,14 @@ public class ProjectModelCommon {
 	 */
 	public String fetchProjectName(int id)
 	{
-		ProjectNameQuery q = new ProjectNameQuery(_connectionModel)
+		ResultQuery<String> q = new ResultQuery<String>(_connectionModel)
 		{
-			private String _result = "";
-
-			@Override
-			public String getResult() {
-				return _result;
-			}
-
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
 				result.beforeFirst();
 				while (result.next())
 				{
-					_result = result.getString(1);
+					setResult(result.getString(1));
 				}
 			}
 			
@@ -137,7 +83,9 @@ public class ProjectModelCommon {
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT " + ProjectName + " FROM " + Project + " WHERE " + ProjectId + "='" + id + "'");
+		q.queryResult(
+			"SELECT " + DBSchemaModel.ProjectName + 
+			" FROM " + DBSchemaModel.ProjectTable + " WHERE " + DBSchemaModel.ProjectId + "='" + id + "'");
 		return q.getResult();
 	}
 	
@@ -145,28 +93,13 @@ public class ProjectModelCommon {
 	 * Fetch all projects from db
 	 * @return project id's and names
 	 */
-	public Vector<ProjectIdName> fetchProjects()
+	public Vector<IdValue> fetchProjects()
 	{
-		ProjectIdNameQuery q = new ProjectIdNameQuery(_connectionModel) {	
-			private Vector<ProjectIdName> _result = new Vector<ProjectIdName>();
-			
-			@Override
-			public Vector<ProjectIdName> getResult() {
-				return _result;
-			}
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
 
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
-				try {
-					result.beforeFirst();
-			        while (result.next())
-			        {
-			        	ProjectIdName pidn = new ProjectIdName(result.getInt(1), result.getString(2)); 
-			        	_result.add(pidn);
-			        }
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				setResult(IdValue.fetchValues(result));
 			}
 			
 			@Override
@@ -174,18 +107,42 @@ public class ProjectModelCommon {
 				ex.printStackTrace();
 			}					
 		};
-		q.queryResult("SELECT " + ProjectId + ", " + ProjectName + " FROM " + Project);
+		q.queryResult(
+			"SELECT " + DBSchemaModel.ProjectId + ", " +
+						DBSchemaModel.ProjectName + 
+			" FROM " + DBSchemaModel.ProjectTable);
 		
 		return q.getResult();
+	}
+	
+	/**
+	 * Remove project id
+	 * 
+	 * TODO: Remove everything associated with project
+	 * 
+	 * @param projectId project id
+	 */
+	public void removeProject(int projectId)
+	{
+		Query q = new Query(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Remove, ProjectOperation.Project, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Remove, ProjectOperation.Project, ex.getMessage());
+			}
+		};
+		q.query(
+			"DELETE FROM " + DBSchemaModel.ProjectTable + " " +
+			"WHERE " + DBSchemaModel.ProjectId + "='" + projectId + "'");		
 	}
 	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// data operation notifier
 	private Operation<ProjectOperation> _operation;
-	
-	private static final String Project = "Project";
-	private static final String ProjectId = "Project_id";
-	private static final String ProjectName = "Project_name";
-	private static final String ProjectDescription = "Project_description";
 }
