@@ -5,6 +5,7 @@ import java.util.Vector;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.DeveloperNonTeamListModel;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.DeveloperTeamListModel;
 import scrummer.model.swing.EmployeeListModel;
@@ -45,6 +46,8 @@ public class DeveloperModel {
 			new TeamComboBoxModel(_developerModelCommon);
 		_developerTeamListModel =
 			new DeveloperTeamListModel(0, _developerModelCommon);
+		_developerNonTeamListModel =
+			new DeveloperNonTeamListModel(0, _developerModelCommon);
 	}
 	
 	/**
@@ -119,6 +122,28 @@ public class DeveloperModel {
 	}
 	
 	/**
+	 * Add developer to team 
+	 * 
+	 * @param developerId developer id
+	 * @param teamId team id
+	 */
+	public void addDeveloperToTeam(int developerId, int teamId)
+	{
+		_developerModelCommon.addDeveloperToTeam(developerId, teamId);
+	}
+	
+	/**
+	 * Remove developer from team
+	 * 
+	 * @param developerId developer id
+	 * @param teamId team id
+	 */
+	public void removeDeveloperFromTeam(int developerId, int teamId)
+	{
+		_developerModelCommon.removeDeveloperFromTeam(developerId, teamId);
+	}
+	
+	/**
 	 * Set new team name
 	 * 
 	 * @param teamId team id
@@ -186,6 +211,15 @@ public class DeveloperModel {
 	}
 	
 	/**
+	 * Fetch developer model not on given team
+	 * @return model
+	 */
+	public DeveloperNonTeamListModel getDeveloperNonTeamListModel()
+	{
+		return _developerNonTeamListModel;
+	}
+	
+	/**
 	 * Add developer data change listener
 	 * 
 	 * @param listener listener to add
@@ -216,6 +250,8 @@ public class DeveloperModel {
 	private EmployeeListModel _employeeListModelB;
 	/// developer team list model - team developers
 	private DeveloperTeamListModel _developerTeamListModel;
+	/// developer list model - all employees not on given team
+	private DeveloperNonTeamListModel _developerNonTeamListModel;
 	/// team combo box model
 	private TeamComboBoxModel _teamComboBoxModel;
 	/// developer operation
