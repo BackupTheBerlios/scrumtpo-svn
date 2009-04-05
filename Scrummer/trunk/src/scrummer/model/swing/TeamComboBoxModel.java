@@ -3,8 +3,6 @@ package scrummer.model.swing;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
-
-import scrummer.model.DBSchemaModel;
 import scrummer.model.DeveloperModelCommon;
 import scrummer.model.DBSchemaModel.IdValue;
 
@@ -61,4 +59,7 @@ public class TeamComboBoxModel extends DefaultComboBoxModel {
 	private Vector<IdValue> _teams = new Vector<IdValue>();
 	/// common developer operations
 	private DeveloperModelCommon _developerModelCommon;
+	/// serialization id
+	private static final long serialVersionUID = 6494898047192792857L;
+
 }
