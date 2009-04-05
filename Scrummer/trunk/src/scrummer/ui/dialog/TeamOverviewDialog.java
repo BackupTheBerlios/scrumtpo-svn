@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -23,7 +24,11 @@ import org.xnap.commons.i18n.I18n;
 import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
+import scrummer.model.swing.DeveloperNonTeamListModel;
 import scrummer.model.swing.DeveloperTeamListModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.ListInterchangePanel;
@@ -35,7 +40,8 @@ import scrummer.uicomponents.TwoButtonDialog;
  * Team overview dialog makes team editing easier
  */
 public class TeamOverviewDialog extends TwoButtonDialog
-								implements ItemListener {
+								implements ItemListener, 
+										   OperationListener<DeveloperOperation> {
 
 	/**
 	 * Constructor
@@ -46,7 +52,9 @@ public class TeamOverviewDialog extends TwoButtonDialog
 		setTitle(i18n.tr("Add Team"));
 		
 		_developerModel         = Scrummer.getModels().getDeveloperModel();
+		_developerModel.addDeveloperListener(this);
 		_developerTeamListModel = _developerModel.getDeveloperTeamListModel();
+		_developerNonTeamListModel = _developerModel.getDeveloperNonTeamListModel();
 		_teamComboBoxModel      = _developerModel.getTeamComboBoxModel();
 		
 		Panel.setLayout(new GridBagLayout());
@@ -92,15 +100,20 @@ public class TeamOverviewDialog extends TwoButtonDialog
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(k - 5,k,k - 5,k - 5));
 		
+		ListPanel.LeftList.setModel(_developerNonTeamListModel);
 		ListPanel.RightList.setModel(_developerTeamListModel);
-		ListPanel.RightList.invalidate();
+		
+		OK.setVisible(false);
+		Cancel.setText(i18n.tr("Close"));
+		
+		ListPanel.MoveLeftButton.addActionListener(this);
+		ListPanel.MoveRightButton.addActionListener(this);
 		
 		setSize(new Dimension(440, 280));
 	}
 	
 	@Override
-	public void itemStateChanged(ItemEvent e) {
-		
+	public void itemStateChanged(ItemEvent e) {		
 		if (e.getStateChange() == ItemEvent.SELECTED)
 		{
 			int index = _teamInput.getSelectedIndex();
@@ -108,7 +121,9 @@ public class TeamOverviewDialog extends TwoButtonDialog
 			{
 				int newTeam = _teamComboBoxModel.getId(index);
 				_developerTeamListModel.setTeam(newTeam);
+				_developerNonTeamListModel.setTeam(newTeam);
 					
+				ListPanel.LeftList.invalidate();
 				ListPanel.RightList.invalidate();
 			}
 		}
@@ -129,14 +144,65 @@ public class TeamOverviewDialog extends TwoButtonDialog
 				_teamInput.setEnabled(false);
 			}
 		}
+		else
+		{
+			_developerModel.removeDeveloperListener(this);
+		}
 		
 		super.setVisible(b);
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	
+		String cmd = e.getActionCommand();
+		if (cmd == "MoveRight")
+		{
+			int selected = ListPanel.LeftList.getSelectedIndex(); 
+			if (selected != -1)
+			{
+				int employeeId = _developerNonTeamListModel.getValue(selected).Id;
+				_developerModel.addDeveloperToTeam(employeeId, _developerNonTeamListModel.getTeam());
+				
+				_developerTeamListModel.refresh();
+				_developerNonTeamListModel.refresh();
+			}
+		}
+		else if (cmd == "MoveLeft")
+		{
+			int selected = ListPanel.RightList.getSelectedIndex(); 
+			if (selected != -1)
+			{
+				int employeeId = _developerTeamListModel.getValue(selected).Id;
+				_developerModel.removeDeveloperFromTeam(employeeId, _developerTeamListModel.getTeam());
+				
+				_developerTeamListModel.refresh();
+				_developerNonTeamListModel.refresh();
+			}
+		}
+		else
+		{
+			super.actionPerformed(e);
+		}
+	}
+	
+	@Override
+	public void operationFailed(DataOperation type, DeveloperOperation identifier, String message) {
+		Util.showError(
+			this, 
+			i18n.tr("An error has occurred when transferring employee from/to team: " + message), 
+			i18n.tr("Error"));
+	}
 
+	@Override
+	public void operationSucceeded(DataOperation type, DeveloperOperation identifier, String message) {}
+		
 	/// team input box
 	private JComboBox _teamInput;
 	/// developer model
 	private DeveloperModel _developerModel;
+	/// all developers not on given team
+	private DeveloperNonTeamListModel _developerNonTeamListModel;
 	/// current team developer list model
 	private DeveloperTeamListModel _developerTeamListModel;
 	/// team combo box model
@@ -147,5 +213,6 @@ public class TeamOverviewDialog extends TwoButtonDialog
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 1110268887633198339L;
+
 	
 }
