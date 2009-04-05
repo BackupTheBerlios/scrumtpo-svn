@@ -6,6 +6,7 @@ import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.OperationListener;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.model.swing.DeveloperTableModel;
+import scrummer.model.swing.DeveloperTeamListModel;
 import scrummer.model.swing.EmployeeListModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.util.Operation;
@@ -42,6 +43,8 @@ public class DeveloperModel {
 			new EmployeeListModel(_developerModelCommon);
 		_teamComboBoxModel = 
 			new TeamComboBoxModel(_developerModelCommon);
+		_developerTeamListModel =
+			new DeveloperTeamListModel(0, _developerModelCommon);
 	}
 	
 	/**
@@ -174,6 +177,15 @@ public class DeveloperModel {
 	}
 	
 	/**
+	 * Fetch developer team list model
+	 * @return model
+	 */
+	public DeveloperTeamListModel getDeveloperTeamListModel()
+	{
+		return _developerTeamListModel;
+	}
+	
+	/**
 	 * Add developer data change listener
 	 * 
 	 * @param listener listener to add
@@ -202,6 +214,8 @@ public class DeveloperModel {
 	private EmployeeListModel _employeeListModelA;
 	/// employee list model - contains all employees except those in A
 	private EmployeeListModel _employeeListModelB;
+	/// developer team list model - team developers
+	private DeveloperTeamListModel _developerTeamListModel;
 	/// team combo box model
 	private TeamComboBoxModel _teamComboBoxModel;
 	/// developer operation
