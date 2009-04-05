@@ -5,5 +5,13 @@ package scrummer.enumerator;
  */
 public enum SprintBacklogOperation {
 	/// sprint backlog related operation
-	SprintBacklog
+	SprintBacklog,
+	Sprint,
+	PBI,
+	Task,
+	Employee,
+	HoursSpent,
+	HoursRemaining,
+	NbOpenImped,
+	NbClosedImped
 }

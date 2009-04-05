@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ImpedimentOperation;
 import scrummer.enumerator.ProductBacklogOperation;
+import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 import scrummer.util.Query;
@@ -188,7 +190,241 @@ public class ProductBacklogModelCommon {
 			return q.getResult();
 		}
 	}
-		
+	
+	/**
+	 * Fetch PBIs and return full descriptions + ids
+	 * 
+	 * @return identified PBIs
+	 */
+	public Vector<IdValue> fetchPBIsNames() 
+	{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) 
+			{
+				Vector<IdValue> res = new Vector<IdValue>();
+				try {
+					result.beforeFirst();
+					while (result.next())
+					{
+						res.add(new IdValue(result.getInt(1), result.getString(2)));
+					}
+					setResult(res);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.PBIId + ", " +
+			DBSchemaModel.PBIDesc +
+			" FROM "   + DBSchemaModel.PBITable);
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	/**
+	 * Set pbi project
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi project
+	 */
+	public void setPBIProject(int id, String name) 
+	{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBIProject + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set pbi sprint
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi sprint
+	 */
+	public void setPBISprint(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBISprint + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set pbi description
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi description
+	 */
+	public void setPBIDesc(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBIDesc + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set pbi priority
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi priority
+	 */
+	public void setPBIPriority(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBIPriority + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set pbi initial estimate
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi initial estimate
+	 */
+	public void setPBIIniEstimate(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBIIniEstimate + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set pbi adjustment factor
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi adjustment factor
+	 */
+	public void setPBIAdjFactor(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBIAdjFactor + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
+	/**
+	 * Set pbi adjusted estimate
+	 * 
+	 * @param id pbi id
+	 * @param name new pbi adjusted estimate
+	 */
+	public void setPBIAdjEstimate(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.Project, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.Project, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " + DBSchemaModel.PBIAdjEstimate + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier

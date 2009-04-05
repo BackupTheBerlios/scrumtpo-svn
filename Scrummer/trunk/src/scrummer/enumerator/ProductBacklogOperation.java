@@ -5,5 +5,12 @@ package scrummer.enumerator;
  */
 public enum ProductBacklogOperation {
 	/// product backlog related operation
-	ProductBacklog
+	ProductBacklog,
+	Project,
+	Sprint,
+	Description,
+	Priority,
+	InitialEstimate,
+	AdjustmentFactor,
+	AdjustedEstimate
 }

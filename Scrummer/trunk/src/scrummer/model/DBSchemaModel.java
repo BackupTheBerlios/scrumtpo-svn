@@ -186,7 +186,6 @@ public class DBSchemaModel {
 	public static final String TaskActive = "Task_active";
 	public static final String TaskId = "Task_id";
 	public static final String SprintId = "Sprint_id";
-	public static final String PBIId = "PBI_id";
 	public static final String HoursSpent = "Hours_spent";
 	public static final String HoursRemaining = "Hours_remaining";
 	public static final String NbOpenImped = "NbOpenImped";
@@ -194,7 +193,14 @@ public class DBSchemaModel {
 	public static final String measureDay = "Measure_day";
 	
 	public static final String PBITable = "PBI";
-	public static final String PBIid = "PBI_id";
+	public static final String PBIId = "PBI_id";
+	public static final String PBIDesc = "PBI_description";
+	public static final String PBIProject = "Project_id";
+	public static final String PBISprint = "Sprint_id";
+	public static final String PBIPriority = "PBI_priority";
+	public static final String PBIIniEstimate = "PBI_initial_estimate";
+	public static final String PBIAdjFactor = "PBI_adjustment_factor";
+	public static final String PBIAdjEstimate = "PBI_adjusted_estimate";
 	
 	public static final String ImpedimentTable = "Impediment";
 	public static final String ImpedimentId = "Impediment_id";

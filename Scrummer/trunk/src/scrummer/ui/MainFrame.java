@@ -33,6 +33,7 @@ import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.NewProjectDialog;
 import scrummer.ui.dialog.OpenProjectDialog;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
+import scrummer.ui.dialog.ProductBacklogChangeDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
 import scrummer.ui.dialog.SprintBacklogAddDialog;
 import scrummer.ui.dialog.SprintBacklogViewDialog;
@@ -101,6 +102,7 @@ public class MainFrame extends JFrame
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Insert into product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
+		addMenuEntry(fileMenu, i18n.tr("Change product backlog item"), KeyEvent.VK_P, "ChangeProductBacklogItem");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Add impediment"), KeyEvent.VK_I, "AddImpediment");
 		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
@@ -205,6 +207,12 @@ public class MainFrame extends JFrame
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+		}
+		else if(cmd.equals("ChangeProductBacklogItem"))
+		{
+			ProductBacklogChangeDialog dialog = new ProductBacklogChangeDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
 		}
 		else if(cmd.equals("AddImpediment"))
 		{

@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -126,7 +125,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's team."), i18n.tr("Error"));
 					}
 				}
-				else if(sprint.length() > 0)
+				if(sprint.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -139,7 +138,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's sprint."), i18n.tr("Error"));
 					}
 				}
-				else if(employee.length() > 0)
+				if(employee.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -152,7 +151,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's employee."), i18n.tr("Error"));
 					}
 				}
-				else if(task.length() > 0)
+				if(task.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -165,7 +164,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's task."), i18n.tr("Error"));
 					}
 				}
-				else if(desc.length() > 0)
+				if(desc.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -178,7 +177,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's description."), i18n.tr("Error"));
 					}
 				}
-				else if(type.length() > 0)
+				if(type.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -191,7 +190,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's type."), i18n.tr("Error"));
 					}
 				}
-				else if(status.length() > 0)
+				if(status.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -204,7 +203,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's status."), i18n.tr("Error"));
 					}
 				}
-				else if(_startInput.getText().trim().length() > 0)
+				if(_startInput.getText().trim().length() > 0)
 				{
 					startI = dateFormat.parse(_startInput.getText());
 					java.sql.Date start = new java.sql.Date(startI.getTime());
@@ -219,7 +218,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's start."), i18n.tr("Error"));
 					}
 				}
-				else if(_endInput.getText().trim().length() > 0)
+				if(_endInput.getText().trim().length() > 0)
 				{
 					endI = dateFormat.parse(_endInput.getText());
 					java.sql.Date end = new java.sql.Date(endI.getTime());
@@ -234,7 +233,7 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's end."), i18n.tr("Error"));
 					}
 				}
-				else if(age.length() > 0)
+				if(age.length() > 0)
 				{
 					int selected = _impInput.getSelectedIndex();
 					if (selected != -1)
@@ -247,10 +246,10 @@ public class ImpedimentsChangeDialog
 						Util.showError(this, i18n.tr("Some impediment must be selected to change it's age."), i18n.tr("Error"));
 					}
 				}
-				else
+				/*else
 				{
 					Util.showError(this, i18n.tr("Impediment must be at least one character long."), i18n.tr("Error"));
-				}
+				}*/
 				
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
