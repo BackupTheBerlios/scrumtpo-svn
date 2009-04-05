@@ -163,6 +163,11 @@ public class DBSchemaModel {
 	/// connection model
 	private ConnectionModel _connectionModel;
 	
+	public static final String ProjectTable = "Project";
+	public static final String ProjectId = "Project_id";
+	public static final String ProjectName = "Project_name";
+	public static final String ProjectDescription = "Project_description";
+	
 	public static final String EmployeeTable   = "Employee";
 	public static final String EmployeeId	   = "Employee_id";
 	public static final String EmployeeName    = "Employee_name";
