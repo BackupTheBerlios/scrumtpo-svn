@@ -64,6 +64,7 @@ public class Query {
 	 */
 	public void queryResult(String query)
 	{
+		// System.out.println(query);
 		try
 		{
 			// fetch connection
