@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -71,6 +72,8 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		bottomPanel.setBackground(Color.WHITE);		
 		
 		_panel.add(bottomPanel);
+		
+		_titleLabel.setText(_navigationModel.getName(newLink));
 		
 		switch (newLink)
 		{
@@ -247,7 +250,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 			JLabel titleLabel = new TitleLabel(title);
 			titleLabel.setSize(200, 10);
 			titleLabel.setPreferredSize(new Dimension(200, 20));
-			
+			_titleLabel = titleLabel;
 			titlePanel.add(titleLabel);
 			
 			header.add(linkPanel);
@@ -292,10 +295,24 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	{
 		ResourceModel res = Scrummer.getModels().getResourceModel();
 		try {
+			BufferedImage image = res.get(ResourceModel.Image.Sun);
+			switch (link)
+			{
+			case Project:
+				image = res.get(ResourceModel.Image.Project);
+				break;
+			case ProductBacklog:
+				image = res.get(ResourceModel.Image.ProductBacklog);
+				break;
+			case SprintBacklog:
+				image = res.get(ResourceModel.Image.SprintBacklog);
+				break;
+			}
+			
 			scrummer.ui.Link linkControl = 
 				new scrummer.ui.Link(
 					link,
-					res.get(ResourceModel.Image.Sun));
+					image);
 			linkControl.setBorderGrowth(0, 8, 8);
 			linkControl.setPictureSideOffset(36);
 			linkControl.setPictureTopOffset(5);
@@ -322,6 +339,8 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	/// grid panel
     private Box _panel;
+    /// title label
+    private JLabel _titleLabel;
     /// header box
     private Box _header = null;
 	/// navigation model
