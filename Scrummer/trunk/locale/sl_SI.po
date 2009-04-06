@@ -45,7 +45,7 @@ msgstr "Pregled"
 
 #: src/scrummer/model/NavigationModel.java:55
 msgid "Product Backlog"
-msgstr "Programski dnevnik"
+msgstr "Naročnikov dnevnik"
 
 #: src/scrummer/model/NavigationModel.java:56
 #: src/scrummer/model/swing/ProductBacklogTableModel.java:41
