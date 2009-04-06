@@ -394,7 +394,7 @@ public class DeveloperModelCommon {
 			}
 		};
 		q.queryResult(
-			"SELECT " + DBSchemaModel.EmployeeId + ", CONCAT(" + 
+			"SELECT " + DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + ", CONCAT(" + 
 			DBSchemaModel.EmployeeName + ", ' ', " +
 			DBSchemaModel.EmployeeSurname + ") as FullName from (select * from " +
 			DBSchemaModel.TeamMemberTable + " " +
