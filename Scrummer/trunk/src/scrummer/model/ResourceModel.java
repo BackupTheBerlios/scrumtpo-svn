@@ -36,7 +36,13 @@ public class ResourceModel {
 		/// home 
 		Home,
 		/// sun debugging icon
-		Sun
+		Sun,
+		/// project
+		Project,
+		/// product backlog
+		ProductBacklog,
+		/// sprint backlog
+		SprintBacklog
 		;
 		
 		/**
@@ -58,6 +64,12 @@ public class ResourceModel {
 				return r("home.png");
 			case Sun:
 				return r("sun.png");
+			case Project:
+				return r("project.png");
+			case ProductBacklog:
+				return r("pb.png");
+			case SprintBacklog:
+				return r("sprint.png");
 			}
 			
 			throw new ValueInvalid(image.toString(), "Unknown image path!");
