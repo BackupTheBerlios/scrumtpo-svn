@@ -129,7 +129,7 @@ public class DeveloperModel {
 	 */
 	public void addDeveloperToTeam(int developerId, int teamId)
 	{
-		//_developerModelCommon.addDeveloperToTeam(developerId, teamId);
+		_developerModelCommon.addDeveloperToTeam(developerId, teamId);
 	}
 	
 	/**
@@ -140,7 +140,7 @@ public class DeveloperModel {
 	 */
 	public void removeDeveloperFromTeam(int developerId, int teamId)
 	{
-		//_developerModelCommon.removeDeveloperFromTeam(developerId, teamId);
+		_developerModelCommon.removeDeveloperFromTeam(developerId, teamId);
 	}
 	
 	/**
