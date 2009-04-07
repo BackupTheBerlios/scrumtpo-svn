@@ -212,7 +212,7 @@ create table Sprint
 /*==============================================================*/
 create table Sprint_PBI 
 (
-   Measure_day	integer	AUTO_INCREMENT	not null,
+   Measure_day	integer	not null,
    PBI_id	integer	not null,
    Task_id	integer not null,
    Sprint_id	integer	not null,
@@ -221,7 +221,7 @@ create table Sprint_PBI
    Hours_remaining integer default '0' null,
    NbOpenImped	integer	default '0' null,
    NbClosedImped	integer	default '0'	null,
-   constraint PK_MEASURE primary key (Measure_day, PBI_id, Sprint_id, Task_id)
+   constraint PK_MEASURE primary key (Measure_day, PBI_id)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
