@@ -38,6 +38,7 @@ import scrummer.ui.dialog.ProductBacklogChangeDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
 import scrummer.ui.dialog.ProjectRemoveDialog;
 import scrummer.ui.dialog.SprintBacklogAddDialog;
+import scrummer.ui.dialog.SprintBacklogChangeDialog;
 import scrummer.ui.dialog.SprintBacklogViewDialog;
 import scrummer.ui.dialog.TeamAddDialog;
 import scrummer.ui.dialog.TeamOverviewDialog;
@@ -113,6 +114,7 @@ public class MainFrame extends JFrame
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Insert into Sprint Backlog"), KeyEvent.VK_S, "InsertSprintBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
+		addMenuEntry(fileMenu, i18n.tr("Change sprint PBI"), KeyEvent.VK_Z, "ChangeSBI");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
@@ -268,6 +270,11 @@ public class MainFrame extends JFrame
 			} catch(SQLException e1) {
 				e1.printStackTrace();
 			}
+		}
+		else if(cmd.equals("ChangeSBI"))
+		{
+			SprintBacklogChangeDialog dialog = new SprintBacklogChangeDialog(this);
+			dialog.setVisible(true);
 		}
 		else if (cmd.equals("ViewDevelopers"))
 		{

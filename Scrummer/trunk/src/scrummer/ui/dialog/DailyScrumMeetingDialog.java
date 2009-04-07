@@ -1,3 +1,9 @@
+// vstavljanje v del sprint backloga
+// najprej izbereš ustrezni task (glede na task_description)
+// nato izbereš dan za katerega vnašaš porabljene/preostale ure ter ovire
+// nato imaš možnost vnesti "spent_hours", "remaining_hours", "nb_open_imped", "nb_closed_imped"
+// na koncu vse shraniš
+
 package scrummer.ui.dialog;
 
 import java.awt.Dimension;
@@ -15,59 +21,55 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
-import scrummer.listener.SprintBacklogListener;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.SBIComboBoxModel;
+import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
 
-public class SprintBacklogChangeDialog 
+public class DailyScrumMeetingDialog 
 	extends TwoButtonDialog
-	implements SprintBacklogListener {
+	implements OperationListener<SprintBacklogOperation> {
 
 	/**
 	 * Constructor
 	 * 
 	 * @param owner owner form
 	 */
-	public SprintBacklogChangeDialog(Frame owner)
+	public DailyScrumMeetingDialog(Frame owner)
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 
-		setTitle(i18n.tr("Change sprint backlog item"));
+		setTitle(i18n.tr("Daily scrum meeting"));
 		
 		_sprintbacklogModel = Scrummer.getModels().getSprintBacklogModel();
 		_sprintbacklogModel.addSprintBacklogListener(this);
 		
-		_sprintbacklogComboModel = _sprintbacklogModel.getSBIComboBoxModel();
+		_taskComboModel = _sprintbacklogModel.getTaskComboBoxModel();
 		
 		int k = 10;
 		Panel.setLayout(new GridLayout(6, 6, 10, 12));
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
-		JLabel sbiLbl = new JLabel(i18n.tr("Sprint backlog item") + ":");
-		JComboBox sbiInput = new JComboBox();
-		sbiInput.setModel(_sprintbacklogComboModel);
-		_sbiInput = sbiInput;
-		_sprintbacklogComboModel.refresh();
+		JLabel taskLbl = new JLabel(i18n.tr("Task") + ":");
+		JComboBox taskInput = new JComboBox();
+		taskInput.setModel(_taskComboModel);
+		_taskInput = taskInput;
+		_taskComboModel.refresh();
 		
-		Panel.add(sbiLbl);
-		Panel.add(sbiInput);
+		Panel.add(taskLbl);
+		Panel.add(taskInput);
 		
-		_measuredayInput = addEntry(i18n.tr("New measure day") + ":", "NewMeasureDay");
-		_pbiInput = addEntry(i18n.tr("New product backlog item") + ":", "NewPBI");
-		_taskInput = addEntry(i18n.tr("New task") + ":", "NewTask");
-		_sprintInput = addEntry(i18n.tr("New sprint") + ":", "NewSprint");
-		_employeeInput = addEntry(i18n.tr("New employee") + ":", "NewEmployee");
-		_hoursspentInput = addEntry(i18n.tr("New spent hours") + ":", "NewHoursSpent");
-		_hoursremainInput = addEntry(i18n.tr("New remaining hours") + ":", "NewHoursRemain");
-		_nbopenimpedInput = addEntry(i18n.tr("New number of open impediments") + ":", "NewNbOpenImped");
-		_nbclosedimpedInput = addEntry(i18n.tr("New number of closed impediments") + ":", "NewNbClosedImped");
+		_measuredayInput = addEntry(i18n.tr("Measure day") + ":", "MeasureDay");
+		_hoursspentInput = addEntry(i18n.tr("Spent hours") + ":", "HoursSpent");
+		_hoursremainInput = addEntry(i18n.tr("Remaining hours") + ":", "HoursRemain");
+		_nbopenimpedInput = addEntry(i18n.tr("Number of open impediments") + ":", "NbOpenImped");
+		_nbclosedimpedInput = addEntry(i18n.tr("Number of closed impediments") + ":", "NbClosedImped");
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
 		
-		OK.setText("Change");
+		OK.setText("Save");
 		setSize(new Dimension(460, 360));
 	}
 	
@@ -96,21 +98,17 @@ public class SprintBacklogChangeDialog
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
 				String day = _measuredayInput.getText().trim();
-				String pbi = _pbiInput.getText().trim();
-				String task = _taskInput.getText().trim();
-				String sprint = _sprintInput.getText().trim();
-				String employee = _employeeInput.getText().trim();
 				String hoursspent = _hoursspentInput.getText().trim();
 				String hoursremain = _hoursremainInput.getText().trim();
 				String nbopenimped = _nbopenimpedInput.getText().trim();
 				String nbclosedimped = _nbclosedimpedInput.getText().trim();
 				
-				/*if (day.length() > 0)
+				if (day.length() > 0)
 				{
-					int selected = _sbiInput.getSelectedIndex();
+					int selected = _taskInput.getSelectedIndex();
 					if (selected != -1)
 					{
-						int id = _sprintbacklogComboModel.getId(selected);
+						int id = _taskComboModel.getId(selected);
 						_sprintbacklogModel.setSBIDay(id, day);
 					}
 					else
@@ -118,64 +116,12 @@ public class SprintBacklogChangeDialog
 						Util.showError(this, i18n.tr("Some sprint backlog item must be selected to change it's measure day."), i18n.tr("Error"));
 					}
 				}
-				else if(pbi.length() > 0)
-				{
-					int selected = _sbiInput.getSelectedIndex();
-					if (selected != -1)
-					{
-						int id = _sprintbacklogComboModel.getId(selected);
-						_sprintbacklogModel.setSBIPBI(id, pbi);
-					}
-					else
-					{
-						Util.showError(this, i18n.tr("Some sprint backlog item must be selected to change it's product backlog item."), i18n.tr("Error"));
-					}
-				}
-				else if(task.length() > 0)
-				{
-					int selected = _sbiInput.getSelectedIndex();
-					if (selected != -1)
-					{
-						int id = _sprintbacklogComboModel.getId(selected);
-						_sprintbacklogModel.setSBITask(id, task);
-					}
-					else
-					{
-						Util.showError(this, i18n.tr("Some sprint backlog item must be selected to change it's task."), i18n.tr("Error"));
-					}
-				}
-				else if(sprint.length() > 0)
-				{
-					int selected = _sbiInput.getSelectedIndex();
-					if (selected != -1)
-					{
-						int id = _sprintbacklogComboModel.getId(selected);
-						_sprintbacklogModel.setSBISprint(id, sprint);
-					}
-					else
-					{
-						Util.showError(this, i18n.tr("Some sprint backlog item must be selected to change it's priority."), i18n.tr("Error"));
-					}
-				}
-				else if(employee.length() > 0)
-				{
-					int selected = _sbiInput.getSelectedIndex();
-					if (selected != -1)
-					{
-						int id = _sprintbacklogComboModel.getId(selected);
-						_sprintbacklogModel.setSBIEmployee(id, employee);
-					}
-					else
-					{
-						Util.showError(this, i18n.tr("Some sprint backlog item must be selected to change it's employee."), i18n.tr("Error"));
-					}
-				}
 				if(hoursspent.length() > 0)
 				{
-					int selected = _sbiInput.getSelectedIndex();
+					int selected = _taskInput.getSelectedIndex();
 					if (selected != -1)
 					{
-						int id = _sprintbacklogComboModel.getId(selected);
+						int id = _taskComboModel.getId(selected);
 						_sprintbacklogModel.setSBIHoursSpent(id, hoursspent);
 					}
 					else
@@ -185,10 +131,10 @@ public class SprintBacklogChangeDialog
 				}
 				if(hoursremain.length() > 0)
 				{
-					int selected = _sbiInput.getSelectedIndex();
+					int selected = _taskInput.getSelectedIndex();
 					if (selected != -1)
 					{
-						int id = _sprintbacklogComboModel.getId(selected);
+						int id = _taskComboModel.getId(selected);
 						_sprintbacklogModel.setSBIHoursRemain(id, hoursremain);
 					}
 					else
@@ -198,10 +144,10 @@ public class SprintBacklogChangeDialog
 				}
 				if(nbopenimped.length() > 0)
 				{
-					int selected = _sbiInput.getSelectedIndex();
+					int selected = _taskInput.getSelectedIndex();
 					if (selected != -1)
 					{
-						int id = _sprintbacklogComboModel.getId(selected);
+						int id = _taskComboModel.getId(selected);
 						_sprintbacklogModel.setSBINbOpenImped(id, nbopenimped);
 					}
 					else
@@ -211,10 +157,10 @@ public class SprintBacklogChangeDialog
 				}
 				if(hoursremain.length() > 0)
 				{
-					int selected = _sbiInput.getSelectedIndex();
+					int selected = _taskInput.getSelectedIndex();
 					if (selected != -1)
 					{
-						int id = _sprintbacklogComboModel.getId(selected);
+						int id = _taskComboModel.getId(selected);
 						_sprintbacklogModel.setSBINbClosedImped(id, nbclosedimped);
 					}
 					else
@@ -222,10 +168,6 @@ public class SprintBacklogChangeDialog
 						Util.showError(this, i18n.tr("Some sprint backlog item must be selected to change it's number of closed impediments."), i18n.tr("Error"));
 					}
 				}
-				else
-				{
-					Util.showError(this, i18n.tr("PBI must be at least one character long."), i18n.tr("Error"));
-				}*/
 		}
 		else
 		{
@@ -241,9 +183,9 @@ public class SprintBacklogChangeDialog
 		
 			switch (identifier)
 			{
-			case Sprint:
-				_sprintbacklogComboModel.refresh();
-				_sbiInput.setSelectedIndex(0);
+			case Task:
+				_taskComboModel.refresh();
+				_taskInput.setSelectedIndex(0);
 				setVisible(false);
 				break;
 			}
@@ -259,7 +201,7 @@ public class SprintBacklogChangeDialog
 		case Update:
 			switch (identifier)
 			{
-			case Sprint:
+			case Task:
 				Util.showError(this, 
 					i18n.tr("An error has occurred when setting team name") + ": " + message, 
 					i18n.tr("Error"));
@@ -278,14 +220,14 @@ public class SprintBacklogChangeDialog
 		}
 		else
 		{
-			if (_sprintbacklogComboModel.getSize() == 0)
+			if (_taskComboModel.getSize() == 0)
 			{
-				_sbiInput.setEnabled(false);
+				_taskInput.setEnabled(false);
 			}
 			else
 			{
-				_sbiInput.setEnabled(true);
-				_sbiInput.setSelectedIndex(0);
+				_taskInput.setEnabled(true);
+				_taskInput.setSelectedIndex(0);
 			}
 		}
 		
@@ -295,11 +237,11 @@ public class SprintBacklogChangeDialog
 	/// sprint backlog model
 	private SprintBacklogModel _sprintbacklogModel;
 	/// all SBI in combo box
-	private SBIComboBoxModel _sprintbacklogComboModel;
+	private TaskComboBoxModel _taskComboModel;
 	/// team new name input
-	private JTextField _measuredayInput, _pbiInput,  _taskInput, _sprintInput, _employeeInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
+	private JTextField _measuredayInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
 	/// team input combo box
-	private JComboBox _sbiInput;
+	private JComboBox _taskInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

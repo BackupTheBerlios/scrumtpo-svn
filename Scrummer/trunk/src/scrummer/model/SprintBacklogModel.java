@@ -8,7 +8,10 @@ import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.DeveloperTableModel;
+import scrummer.model.swing.ImpedimentComboBoxModel;
+import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
+import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.util.Operation;
 import scrummer.util.Operations;
 
@@ -36,6 +39,8 @@ public class SprintBacklogModel
 		_connectionModel = connectionModel;
 		_sprintbacklogModelCommon = new SprintBacklogModelCommon(_connectionModel, _operation);
 		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon);
+		_sbiComboBoxModel = new SBIComboBoxModel(_sprintbacklogModelCommon);
+		_taskComboBoxModel = new TaskComboBoxModel(_sprintbacklogModelCommon);
 	}
 	
 	/**
@@ -136,10 +141,48 @@ public class SprintBacklogModel
 		_operation.removeListener(listener);
 	}
 	
+	/**
+	 * Fetch SBI combo box model(contains all SBIs)
+	 * @return model
+	 */
+	public SBIComboBoxModel getSBIComboBoxModel() 
+	{
+		return _sbiComboBoxModel;
+	}
+	
+	public TaskComboBoxModel getTaskComboBoxModel() {
+		return _taskComboBoxModel;
+	}
+	
+	public void setSBIDay(int sbiId, String newDay) 
+	{
+		_sprintbacklogModelCommon.setSBIDay(sbiId, newDay);
+	}
+	
+	public void setSBIHoursSpent(int sbiId, String newHoursSpent) {
+		_sprintbacklogModelCommon.setSBIHoursSpent(sbiId, newHoursSpent);
+	}
+	
+	public void setSBIHoursRemain(int sbiId, String newHoursRemain) {
+		_sprintbacklogModelCommon.setSBIHoursRemain(sbiId, newHoursRemain);
+	}
+	
+	public void setSBINbOpenImped(int sbiId, String newNbOpenImped) {
+		_sprintbacklogModelCommon.setSBINbOpenImped(sbiId, newNbOpenImped);
+	}
+	
+	public void setSBINbClosedImped(int sbiId, String newNbClosedImped) {
+		_sprintbacklogModelCommon.setSBINbClosedImped(sbiId, newNbClosedImped);
+	}
+	
 	/// common sprint backlog related functionality
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
+	/// SBI combo box model
+	private SBIComboBoxModel _sbiComboBoxModel;
+	/// task combo box model
+	private TaskComboBoxModel _taskComboBoxModel;
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// developer operation

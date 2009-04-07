@@ -24,9 +24,6 @@ import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
 
-/**
- * Remove some team from database
- */
 public class ImpedimentsChangeDialog 
 	extends TwoButtonDialog
 	implements ImpedimentListener {
@@ -322,7 +319,7 @@ public class ImpedimentsChangeDialog
 		super.setVisible(b);
 	}
 
-	/// developer model
+	/// impediment model
 	private ImpedimentModel _impedimentModel;
 	/// all impediments in combo box
 	private ImpedimentComboBoxModel _impedimentComboModel;

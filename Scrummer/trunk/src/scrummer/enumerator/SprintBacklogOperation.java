@@ -13,5 +13,6 @@ public enum SprintBacklogOperation {
 	HoursSpent,
 	HoursRemaining,
 	NbOpenImped,
-	NbClosedImped
+	NbClosedImped,
+	MeasureDay
 }

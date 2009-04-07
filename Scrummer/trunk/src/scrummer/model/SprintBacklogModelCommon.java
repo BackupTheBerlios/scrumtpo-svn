@@ -6,7 +6,10 @@ import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.enumerator.ImpedimentOperation;
 import scrummer.enumerator.SprintBacklogOperation;
+import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.DBSchemaModel.IdsValue;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 import scrummer.util.Operations;
@@ -120,6 +123,52 @@ public class SprintBacklogModelCommon
 	}     
 	
 	/**
+	 * Fetch SBIs and return full descriptions + ids
+	 * 
+	 * @return identified sbis
+	 */
+	public Vector<IdValue> fetchSBIsNames()
+	{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) 
+			{
+				Vector<IdValue> res = new Vector<IdValue>();
+				try {
+					result.beforeFirst();
+					while (result.next())
+					{
+						res.add(new IdValue(result.getInt(1), result.getString(2)));
+					}
+					setResult(res);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+				"SELECT " + DBSchemaModel.TaskId + ", " +
+				DBSchemaModel.TaskDescription +
+				"FROM "   + DBSchemaModel.Sprint_PBITable +
+				" JOIN " + DBSchemaModel.TaskTable +
+				" WHERE " + DBSchemaModel.measureDay + "=1");
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	/**
 	 * Fetch entire developer table
 	 * 
 	 * @return all rows
@@ -214,6 +263,111 @@ public class SprintBacklogModelCommon
 		{
 			return q.getResult();
 		}
+	}
+	
+	public void setSBIDay(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.MeasureDay, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.MeasureDay, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"SET " + DBSchemaModel.measureDay + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
+	}
+	
+	public void setSBIHoursSpent(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.HoursSpent, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.HoursSpent, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"SET " + DBSchemaModel.HoursSpent + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
+	}
+	
+	public void setSBIHoursRemain(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.HoursRemaining, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.HoursRemaining, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"SET " + DBSchemaModel.HoursRemaining + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
+	}
+	
+	public void setSBINbOpenImped(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.NbOpenImped, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.NbOpenImped, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"SET " + DBSchemaModel.NbOpenImped + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
+	}
+	
+	public void setSBINbClosedImped(int id, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.NbClosedImped, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.NbClosedImped, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"SET " + DBSchemaModel.NbClosedImped + "='" + name + "' " +
+			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
 	
 	/// connection model

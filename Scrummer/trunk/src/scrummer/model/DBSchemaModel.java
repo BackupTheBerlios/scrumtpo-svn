@@ -99,6 +99,50 @@ public class DBSchemaModel {
 		public String Value;
 	}
 	
+	/**
+	 * Id and string value struct
+	 */
+	public static class IdsValue 
+	{
+		/**
+		 * Constructor
+		 * @param id1 id1
+		 * @param id2 id2
+		 * @param name value
+		 */
+		public IdsValue(int id1, int id2, String value)
+		{
+			Id1   = id1;
+			Id2   = id2;
+			Value = value;
+		}
+		
+		/**
+		 * Fetch id's and values pairs from result set
+		 * @param result
+		 * @return
+		 */
+		public static Vector<IdsValue> fetchValues(ResultSet result)
+		{
+			Vector<IdsValue> ret = new Vector<IdsValue>();
+			try {
+				result.beforeFirst();
+				while (result.next())
+				{
+					ret.add(new IdsValue(result.getInt(1), result.getInt(2), result.getString(3)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				ret = null;
+			}
+			
+			return ret;
+		}
+		
+		public int Id1, Id2;
+		public String Value;
+	}
+	
 	
 	/**
 	 * Constructor
