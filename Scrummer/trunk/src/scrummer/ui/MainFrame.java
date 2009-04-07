@@ -19,6 +19,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProjectListener;
 import scrummer.model.DBSchemaModel;
 import scrummer.model.Models;
 import scrummer.model.ProjectModel;
@@ -30,8 +31,8 @@ import scrummer.ui.dialog.ImpedimentsAddDialog;
 import scrummer.ui.dialog.ImpedimentsChangeDialog;
 import scrummer.ui.dialog.ImpedimentsViewDialog;
 import scrummer.ui.dialog.LoginDialog;
-import scrummer.ui.dialog.NewProjectDialog;
-import scrummer.ui.dialog.OpenProjectDialog;
+import scrummer.ui.dialog.ProjectNewDialog;
+import scrummer.ui.dialog.ProjectOpenDialog;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
 import scrummer.ui.dialog.ProductBacklogChangeDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
@@ -49,7 +50,7 @@ import scrummer.ui.dialog.TeamRemoveDialog;
 public class MainFrame extends JFrame 
 					   implements ActionListener, 
 					   			  WindowListener,
-					   			  OperationListener<ProjectOperation> {
+					   			  ProjectListener {
 
 	/**
 	 * Default constructor
@@ -178,12 +179,12 @@ public class MainFrame extends JFrame
 		String cmd = e.getActionCommand();
 		if (cmd.equals("NewProject"))
 		{
-			NewProjectDialog dialog = new NewProjectDialog(this);
+			ProjectNewDialog dialog = new ProjectNewDialog(this);
 			dialog.setVisible(true);
 		}
 		else if (cmd.equals("OpenProject"))
 		{
-			OpenProjectDialog dialog = new OpenProjectDialog(this);
+			ProjectOpenDialog dialog = new ProjectOpenDialog(this);
 			dialog.setVisible(true);
 		}
 		else if (cmd == "RemoveProject")

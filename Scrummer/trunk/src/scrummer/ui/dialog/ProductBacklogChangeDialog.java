@@ -15,6 +15,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProductBacklogListener;
 import scrummer.model.ProductBacklogModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.ui.Util;
@@ -26,7 +27,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class ProductBacklogChangeDialog 
 	extends TwoButtonDialog
-	implements OperationListener<ProductBacklogOperation> {
+	implements ProductBacklogListener {
 
 	/**
 	 * Constructor

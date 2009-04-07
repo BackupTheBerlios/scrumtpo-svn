@@ -31,8 +31,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	 * Default constructor
 	 */
 	public ProductBacklogTableModel(ConnectionModel connectionModel,
-									ProductBacklogModelCommon productbacklogModelCommon,
-									Operation<ProductBacklogOperation> operation) 
+									ProductBacklogModelCommon productbacklogModelCommon) 
 	{
 		super();
 		_productbacklogModelCommon = productbacklogModelCommon;

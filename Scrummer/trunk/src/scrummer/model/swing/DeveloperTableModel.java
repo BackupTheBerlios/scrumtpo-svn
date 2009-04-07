@@ -13,6 +13,7 @@ import scrummer.model.DeveloperModelCommon;
 import scrummer.model.Models;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Developer table synchronization class 
@@ -25,8 +26,7 @@ public class DeveloperTableModel extends DefaultTableModel {
 	 * @param connectionModel connection model to connect to database
 	 */
 	public DeveloperTableModel(ConnectionModel connectionModel, 
-							   DeveloperModelCommon developerModelCommon,
-							   Operation<DeveloperOperation> operation) {
+							   DeveloperModelCommon developerModelCommon) {
 		super();
 		_developerModelCommon = developerModelCommon;
 		

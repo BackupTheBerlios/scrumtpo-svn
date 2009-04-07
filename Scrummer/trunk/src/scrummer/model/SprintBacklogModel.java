@@ -6,9 +6,11 @@ import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Sprint Backlog model
@@ -33,7 +35,7 @@ public class SprintBacklogModel
 		/// connection model
 		_connectionModel = connectionModel;
 		_sprintbacklogModelCommon = new SprintBacklogModelCommon(_connectionModel, _operation);
-		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon, _operation);
+		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon);
 	}
 	
 	/**
@@ -120,7 +122,7 @@ public class SprintBacklogModel
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addSprintBacklogListener(OperationListener<SprintBacklogOperation> listener)
+	public void addSprintBacklogListener(SprintBacklogListener listener)
 	{
 		_operation.addListener(listener);
 	}
@@ -129,7 +131,7 @@ public class SprintBacklogModel
 	 * Remove sprint backlog data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeSprintBacklogListener(OperationListener<SprintBacklogOperation> listener)
+	public void removeSprintBacklogListener(SprintBacklogListener listener)
 	{
 		_operation.removeListener(listener);
 	}
@@ -141,5 +143,5 @@ public class SprintBacklogModel
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// developer operation
-	private Operation<SprintBacklogOperation> _operation = new Operation<SprintBacklogOperation>();
+	private Operations.SprintBacklogOperation _operation = new Operations.SprintBacklogOperation();
 }

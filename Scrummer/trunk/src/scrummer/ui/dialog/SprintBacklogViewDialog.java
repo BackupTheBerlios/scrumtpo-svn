@@ -21,6 +21,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.SprintBacklogListener;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.ui.Util;
@@ -34,7 +35,7 @@ import javax.swing.table.*;
  */
 public class SprintBacklogViewDialog 
 	extends JDialog 
-	implements MouseListener, ActionListener, OperationListener<SprintBacklogOperation>
+	implements MouseListener, ActionListener, SprintBacklogListener
 {
 	/**
 	 * Constructor

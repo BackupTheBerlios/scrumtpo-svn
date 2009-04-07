@@ -3,7 +3,6 @@ package scrummer.util;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import scrummer.enumerator.DataOperation;
-import scrummer.listener.OperationListener;
 
 /**
  * This class makes notifications of listeners about failure or success of
@@ -15,7 +14,7 @@ import scrummer.listener.OperationListener;
  *
  * @param <Identifier> identifier through which listeners and source identify common operation
  */
-public class Operation<Identifier> {
+public class Operation<Identifier, ListenerType> {
 	
 	/**
 	 * Operation was successful
@@ -28,10 +27,7 @@ public class Operation<Identifier> {
 	{
 		try {
 			_semaphore.acquire();
-			for (int i = 0; i < _listeners.size(); i++)
-			{
-				_listeners.get(i).operationSucceeded(type, identifier, message);
-			}
+			opFailure(type, identifier, message);
 			_semaphore.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -49,13 +45,37 @@ public class Operation<Identifier> {
 	{
 		try {
 			_semaphore.acquire();
-			for (int i = 0; i < _listeners.size(); i++)
-			{
-				_listeners.get(i).operationFailed(type, identifier, message);
-			}
+			opSuccess(type, identifier, message);
 			_semaphore.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * CAll success operation on all listeners
+	 * @param type type of operation
+	 * @param identifier operation identifier
+	 * @param message message
+	 */
+	protected void opSuccess(DataOperation type, Identifier identifier, String message) {
+		for (int i = 0; i < _listeners.size(); i++)
+		{
+			// _listeners.get(i).operationSuceeded(type, identifier, message);
+		}
+	}
+	
+	/**
+	 * Call failure operation on all listeners
+	 * 
+	 * @param type data operation type
+	 * @param identifier identifier 
+	 * @param message failure operation
+	 */
+	protected void opFailure(DataOperation type, Identifier identifier, String message) {
+		for (int i = 0; i < _listeners.size(); i++)
+		{
+			// _listeners.get(i).operationFailed(type, identifier, message);
 		}
 	}
 	
@@ -64,7 +84,7 @@ public class Operation<Identifier> {
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addListener(OperationListener<Identifier> listener)
+	public void addListener(ListenerType listener)
 	{
 		try {
 			_semaphore.acquire();
@@ -83,13 +103,13 @@ public class Operation<Identifier> {
 	 * 
 	 * @param listener listener
 	 */
-	public void removeListener(OperationListener<Identifier> listener)
+	public void removeListener(ListenerType listener)
 	{
 		_listeners.remove(listener);
 	}
 	
 	/// listeners
-	private Vector<OperationListener<Identifier>> _listeners = new Vector<OperationListener<Identifier>>();
+	protected Vector<ListenerType> _listeners = new Vector<ListenerType>();
 	/// lock access to listeners
 	private Semaphore _semaphore = new Semaphore(1);
 }

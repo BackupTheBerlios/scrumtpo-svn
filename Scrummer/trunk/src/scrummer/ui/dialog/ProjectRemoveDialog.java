@@ -15,6 +15,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProjectListener;
 import scrummer.model.ProjectModel;
 import scrummer.model.swing.ProjectComboBoxModel;
 import scrummer.ui.Util;
@@ -24,7 +25,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  * Remove project dialog
  */
 public class ProjectRemoveDialog extends TwoButtonDialog
-								 implements OperationListener<ProjectOperation> {
+								 implements ProjectListener {
 
 	/**
 	 * Constructor
@@ -74,7 +75,7 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 			int index = _projectInput.getSelectedIndex(); 
 			if (index != -1)	
 			{
-				int projectId = _projectComboBoxModel.getValue(index).Id;
+				int projectId = _projectComboBoxModel.getId(index);
 				_projectModel.removeProject(projectId);
 			}
 			else

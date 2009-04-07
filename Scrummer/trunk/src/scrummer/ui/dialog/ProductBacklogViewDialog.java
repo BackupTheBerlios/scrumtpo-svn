@@ -35,6 +35,7 @@ import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProductBacklogListener;
 import scrummer.model.ConnectionModel;
 import scrummer.model.ImpedimentModel;
 import scrummer.model.ProductBacklogModel;
@@ -55,7 +56,7 @@ import javax.swing.table.*;
 
 public class ProductBacklogViewDialog 
 	extends JDialog 
-	implements MouseListener, ActionListener, OperationListener<ProductBacklogOperation>
+	implements MouseListener, ActionListener, ProductBacklogListener
 {
 	
 	/**

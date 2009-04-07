@@ -15,6 +15,7 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.TeamComboBoxModel;
@@ -24,7 +25,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  * Remove team dialog
  */
 public class TeamRemoveDialog extends TwoButtonDialog
-							  implements OperationListener<DeveloperOperation>{
+							  implements DeveloperListener {
 
 	/**
 	 * Constructor

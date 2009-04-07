@@ -5,11 +5,13 @@ import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProductBacklogListener;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.ImpedimentComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Product Backlog model
@@ -34,7 +36,7 @@ public class ProductBacklogModel
 		/// connection model
 		_connectionModel = connectionModel;
 		_productbacklogModelCommon = new ProductBacklogModelCommon(_connectionModel, _operation);
-		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon, _operation);
+		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon);
 		_productbacklogComboBoxModel = new PBIComboBoxModel(_productbacklogModelCommon);
 	}
 	
@@ -68,7 +70,7 @@ public class ProductBacklogModel
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addProductBacklogListener(OperationListener<ProductBacklogOperation> listener)
+	public void addProductBacklogListener(ProductBacklogListener listener)
 	{
 		_operation.addListener(listener);
 	}
@@ -77,7 +79,7 @@ public class ProductBacklogModel
 	 * Remove product backlog data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeProductBacklogListner(OperationListener<ProductBacklogOperation> listener)
+	public void removeProductBacklogListner(ProductBacklogListener listener)
 	{
 		_operation.removeListener(listener);
 	}
@@ -169,5 +171,5 @@ public class ProductBacklogModel
 	/// product backlog table model
 	private ProductBacklogTableModel _productbacklogTableModel;
 	/// product backlog operation
-	private Operation<ProductBacklogOperation> _operation = new Operation<ProductBacklogOperation>();
+	private Operations.ProductBacklogOperation _operation = new Operations.ProductBacklogOperation();
 }

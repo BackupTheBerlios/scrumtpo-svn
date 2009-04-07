@@ -16,6 +16,7 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.listener.ImpedimentListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.ImpedimentModel;
 import scrummer.model.swing.ImpedimentComboBoxModel;
@@ -28,7 +29,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class ImpedimentsChangeDialog 
 	extends TwoButtonDialog
-	implements OperationListener<ImpedimentOperation> {
+	implements ImpedimentListener {
 
 	/**
 	 * Constructor

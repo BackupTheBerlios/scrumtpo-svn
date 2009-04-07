@@ -10,6 +10,7 @@ import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
@@ -19,31 +20,11 @@ import scrummer.util.ResultQuery;
 public class ProductBacklogModelCommon {
 	
 	/**
-	 * Id and name struct
-	 */
-	public static class IdName 
-	{
-		/**
-		 * Constructor
-		 * @param id id
-		 * @param name name
-		 */
-		public IdName(int id, String name)
-		{
-			Id   = id;
-			Name = name;
-		}
-		
-		public int Id;
-		public String Name;
-	}
-	
-	/**
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public ProductBacklogModelCommon(ConnectionModel connectionModel, Operation<ProductBacklogOperation> operation)
+	public ProductBacklogModelCommon(ConnectionModel connectionModel, Operations.ProductBacklogOperation operation)
 	{
 		_connectionModel = connectionModel;
 		_operation 		 = operation;
@@ -428,7 +409,7 @@ public class ProductBacklogModelCommon {
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
-	private Operation<ProductBacklogOperation> _operation;
+	private Operations.ProductBacklogOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }

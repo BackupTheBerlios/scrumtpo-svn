@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.listener.ImpedimentListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.ImpedimentComboBoxModel;
@@ -13,6 +14,7 @@ import scrummer.model.swing.ImpedimentTableModel;
 import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Impediment model
@@ -37,7 +39,7 @@ public class ImpedimentModel
 		/// connection model
 		_connectionModel = connectionModel;
 		_impedimentModelCommon = new ImpedimentModelCommon(_connectionModel, _operation);
-		_impedimentTableModel = new ImpedimentTableModel(connectionModel, _impedimentModelCommon, _operation);
+		_impedimentTableModel = new ImpedimentTableModel(connectionModel, _impedimentModelCommon);
 		_impedimentComboBoxModel = new ImpedimentComboBoxModel(_impedimentModelCommon);
 	}
 	
@@ -115,7 +117,7 @@ public class ImpedimentModel
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addImpedimentListener(OperationListener<ImpedimentOperation> listener)
+	public void addImpedimentListener(ImpedimentListener listener)
 	{
 		_operation.addListener(listener);
 	}
@@ -124,7 +126,7 @@ public class ImpedimentModel
 	 * Remove impediment data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeImpedimentListener(OperationListener<ImpedimentOperation> listener)
+	public void removeImpedimentListener(ImpedimentListener listener)
 	{
 		_operation.removeListener(listener);
 	}
@@ -249,5 +251,5 @@ public class ImpedimentModel
 	/// developer table model
 	private ImpedimentTableModel _impedimentTableModel;
 	/// developer operation
-	private Operation<ImpedimentOperation> _operation = new Operation<ImpedimentOperation>();
+	private Operations.ImpedimentOperation _operation = new Operations.ImpedimentOperation();
 }

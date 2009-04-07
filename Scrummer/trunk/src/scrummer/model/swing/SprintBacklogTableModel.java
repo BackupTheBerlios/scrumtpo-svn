@@ -36,8 +36,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	 * @param connectionModel connection model to connect to database
 	 */
 	public SprintBacklogTableModel(ConnectionModel connectionModel, 
-				SprintBacklogModelCommon sprintbacklogModelCommon,
-				Operation<SprintBacklogOperation> operation) 
+				SprintBacklogModelCommon sprintbacklogModelCommon) 
 	{
 		super();
 		_sprintbacklogModelCommon = sprintbacklogModelCommon;

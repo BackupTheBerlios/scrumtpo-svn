@@ -9,6 +9,7 @@ import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
@@ -16,33 +17,13 @@ import scrummer.util.ResultQuery;
  * This model features common sprint backlog related functionality
  */
 public class SprintBacklogModelCommon 
-{
-	/**
-	 * Id and name struct
-	 */
-	public static class IdName 
-	{
-		/**
-		 * Constructor
-		 * @param id id
-		 * @param name name
-		 */
-		public IdName(int id, String name)
-		{
-			Id   = id;
-			Name = name;
-		}
-		
-		public int Id;
-		public String Name;
-	}
-	
+{	
 	/**
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public SprintBacklogModelCommon(ConnectionModel connectionModel, Operation<SprintBacklogOperation> operation)
+	public SprintBacklogModelCommon(ConnectionModel connectionModel, Operations.SprintBacklogOperation operation)
 	{
 		_connectionModel = connectionModel;
 		_operation 		 = operation;
@@ -238,7 +219,7 @@ public class SprintBacklogModelCommon
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
-	private Operation<SprintBacklogOperation> _operation;
+	private Operations.SprintBacklogOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }

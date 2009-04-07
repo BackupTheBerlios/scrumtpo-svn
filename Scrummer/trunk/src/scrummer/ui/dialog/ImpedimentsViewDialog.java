@@ -31,6 +31,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.listener.ImpedimentListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
 import scrummer.model.DeveloperModel;
@@ -55,7 +56,7 @@ import javax.swing.table.*;
  */
 public class ImpedimentsViewDialog 
 	extends JDialog 
-	implements MouseListener, ActionListener, OperationListener<ImpedimentOperation> 
+	implements MouseListener, ActionListener, ImpedimentListener
 {
 	/**
 	 * Constructor

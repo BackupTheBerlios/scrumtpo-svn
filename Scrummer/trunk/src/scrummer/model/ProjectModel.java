@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProjectListener;
 import scrummer.model.swing.ProjectComboBoxModel;
 import scrummer.model.swing.ProjectListModel;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Project creation and loading data model 
@@ -140,7 +142,7 @@ public class ProjectModel {
 	 * Add listener to project change related events
 	 * @param listener listener
 	 */
-	public void addProjectListener(OperationListener<ProjectOperation> listener) {
+	public void addProjectListener(ProjectListener listener) {
 		_operation.addListener(listener);
 	}
 	
@@ -148,7 +150,7 @@ public class ProjectModel {
 	 * Remove listener project change related events
 	 * @param listener listener
 	 */
-	public void removeProjectListener(OperationListener<ProjectOperation> listener)
+	public void removeProjectListener(ProjectListener listener)
 	{
 		_operation.removeListener(listener);
 	}
@@ -166,5 +168,5 @@ public class ProjectModel {
 	/// project id
 	private int _project = 0;
 	/// project event listeners
-	private Operation<ProjectOperation> _operation = new Operation<ProjectOperation>();
+	private Operations.ProjectOperation _operation = new Operations.ProjectOperation();
 }

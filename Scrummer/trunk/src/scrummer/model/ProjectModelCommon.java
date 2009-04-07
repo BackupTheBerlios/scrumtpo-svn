@@ -7,6 +7,7 @@ import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
@@ -20,7 +21,7 @@ public class ProjectModelCommon {
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public ProjectModelCommon(ConnectionModel connectionModel, Operation<ProjectOperation> operation)
+	public ProjectModelCommon(ConnectionModel connectionModel, Operations.ProjectOperation operation)
 	{
 		_connectionModel = connectionModel;
 		_operation = operation;
@@ -144,5 +145,5 @@ public class ProjectModelCommon {
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// data operation notifier
-	private Operation<ProjectOperation> _operation;
+	private Operations.ProjectOperation _operation;
 }

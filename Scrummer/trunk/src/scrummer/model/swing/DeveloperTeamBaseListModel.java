@@ -1,14 +1,12 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-import javax.swing.DefaultListModel;
 import scrummer.model.DeveloperModelCommon;
-import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.base.IdValueListModel;
 
 /**
  * Base class for developer lists
  */
-public class DeveloperTeamBaseListModel extends DefaultListModel {
+public class DeveloperTeamBaseListModel extends IdValueListModel {
 
 	/**
 	 * Constructor
@@ -28,22 +26,6 @@ public class DeveloperTeamBaseListModel extends DefaultListModel {
 	{
 		fireContentsChanged(this, 0, size() - 1);
 	}
-		
-	/**
-	 * Insert given element 
-	 * 
-	 * @param value value to add
-	 */
-	public void addValue(IdValue value)
-	{
-		_employees.add(value);
-		fireContentsChanged(this, 0, size());
-	}
-	
-	public IdValue getValue(int index)
-	{
-		return _employees.get(index);
-	}
 	
 	/**
 	 * @return team id
@@ -62,45 +44,6 @@ public class DeveloperTeamBaseListModel extends DefaultListModel {
 		refresh();
 	}
 	
-	@Override
-	public Object getElementAt(int index) {
-		return _employees.get(index).Value;
-	}
-	
-	@Override
-	public Object get(int index) {
-		return getElementAt(index);
-	}
-	
-	@Override
-	public boolean removeElement(Object obj) {
-		boolean ret = _employees.remove(obj);
-		fireContentsChanged(this, 0, size());
-		return ret;
-	}
-
-	@Override
-	public void removeElementAt(int index) {
-		_employees.remove(index);
-		fireContentsChanged(this, 0, size());
-	}
-
-	@Override
-	public void removeAllElements() {
-		_employees.clear();
-		fireContentsChanged(this, 0, size());
-	}
-
-	@Override
-	public int size() {	
-		return _employees.size();
-	}
-	
-	@Override
-	public int getSize() {
-		return size();
-	}
-	
 	/**
 	 * Fetch developer model
 	 * 
@@ -111,25 +54,6 @@ public class DeveloperTeamBaseListModel extends DefaultListModel {
 		return _developerModelCommon;
 	}
 	
-	/**
-	 * @return employees
-	 */
-	protected Vector<IdValue> getEmployees()
-	{
-		return _employees;
-	}
-	
-	/**
-	 * Set employees
-	 * @param value value to set
-	 */
-	protected void setEmployees(Vector<IdValue> value)
-	{
-		_employees = value;
-	}
-	
-	/// employee list
-	private Vector<IdValue> _employees = new Vector<IdValue>();
 	/// team id
 	private int _teamId;
 	/// common personell operations

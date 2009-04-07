@@ -26,6 +26,7 @@ import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.DeveloperNonTeamListModel;
@@ -41,7 +42,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class TeamOverviewDialog extends TwoButtonDialog
 								implements ItemListener, 
-										   OperationListener<DeveloperOperation> {
+										   DeveloperListener {
 
 	/**
 	 * Constructor

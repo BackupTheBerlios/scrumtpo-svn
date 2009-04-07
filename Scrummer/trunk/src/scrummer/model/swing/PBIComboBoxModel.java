@@ -1,15 +1,12 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
 import scrummer.model.ProductBacklogModelCommon;
-import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.base.IdValueComboBoxModel;
 
 /**
  * PBI combo box model contains id's + PBI descriptions
  */
-public class PBIComboBoxModel extends DefaultComboBoxModel 
+public class PBIComboBoxModel extends IdValueComboBoxModel 
 {
 	/**
 	 * Constructor
@@ -31,32 +28,9 @@ public class PBIComboBoxModel extends DefaultComboBoxModel
 	
 	private void refreshPBIs()
 	{
-		_PBIs = _productbacklogModelCommon.fetchPBIsNames();		
-	}
-	
-	/**
-	 * Fetch id for specified PBI
-	 * 
-	 * @param index PBI index
-	 * @return PBI id
-	 */
-	public int getId(int index)
-	{
-		return _PBIs.get(index).Id;
-	}
-	
-	@Override
-	public Object getElementAt(int index) {
-		return _PBIs.get(index).Value;
+		setValues(_productbacklogModelCommon.fetchPBIsNames());		
 	}
 
-	@Override
-	public int getSize() {
-		return _PBIs.size();
-	}
-
-	/// PBI list
-	private Vector<IdValue> _PBIs = new Vector<IdValue>();
 	/// common product backlog operations
 	private ProductBacklogModelCommon _productbacklogModelCommon;
 	/// serialization id

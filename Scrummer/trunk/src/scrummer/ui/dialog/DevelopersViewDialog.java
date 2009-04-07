@@ -20,6 +20,7 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.DeveloperTableModel;
@@ -34,7 +35,7 @@ import javax.swing.table.*;
  */
 public class DevelopersViewDialog 
 	extends JDialog 
-	implements MouseListener, ActionListener, OperationListener<DeveloperOperation>
+	implements MouseListener, ActionListener, DeveloperListener
 {
 	/**
 	 * Constructor

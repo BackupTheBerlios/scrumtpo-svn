@@ -10,6 +10,7 @@ import scrummer.enumerator.ImpedimentOperation;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
@@ -19,31 +20,11 @@ import scrummer.util.ResultQuery;
 public class ImpedimentModelCommon 
 {	
 	/**
-	 * Id and name struct
-	 */
-	public static class IdName 
-	{
-		/**
-		 * Constructor
-		 * @param id id
-		 * @param name name
-		 */
-		public IdName(int id, String name)
-		{
-			Id   = id;
-			Name = name;
-		}
-		
-		public int Id;
-		public String Name;
-	}
-	
-	/**
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public ImpedimentModelCommon(ConnectionModel connectionModel, Operation<ImpedimentOperation> operation)
+	public ImpedimentModelCommon(ConnectionModel connectionModel, Operations.ImpedimentOperation operation)
 	{
 		_connectionModel = connectionModel;
 		_operation 		 = operation;
@@ -515,7 +496,7 @@ public class ImpedimentModelCommon
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
-	private Operation<ImpedimentOperation> _operation;
+	private Operations.ImpedimentOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }

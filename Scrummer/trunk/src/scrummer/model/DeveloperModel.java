@@ -3,6 +3,7 @@ package scrummer.model;
 import java.util.Vector;
 
 import scrummer.enumerator.DeveloperOperation;
+import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.model.swing.DeveloperNonTeamListModel;
@@ -11,6 +12,7 @@ import scrummer.model.swing.DeveloperTeamListModel;
 import scrummer.model.swing.EmployeeListModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Developer model
@@ -37,7 +39,7 @@ public class DeveloperModel {
 		_developerModelCommon = 
 			new DeveloperModelCommon(_connectionModel, _operation);
 		_developerTableModel = 
-			new DeveloperTableModel(connectionModel, _developerModelCommon, _operation);
+			new DeveloperTableModel(connectionModel, _developerModelCommon);
 		_employeeListModelA = 
 			new EmployeeListModel(_developerModelCommon);
 		_employeeListModelB = 
@@ -224,7 +226,7 @@ public class DeveloperModel {
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addDeveloperListener(OperationListener<DeveloperOperation> listener)
+	public void addDeveloperListener(DeveloperListener listener)
 	{
 		_operation.addListener(listener);
 	}
@@ -233,7 +235,7 @@ public class DeveloperModel {
 	 * Remove developer data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeDeveloperListener(OperationListener<DeveloperOperation> listener)
+	public void removeDeveloperListener(DeveloperListener listener)
 	{
 		_operation.removeListener(listener);
 	}
@@ -255,5 +257,5 @@ public class DeveloperModel {
 	/// team combo box model
 	private TeamComboBoxModel _teamComboBoxModel;
 	/// developer operation
-	private Operation<DeveloperOperation> _operation = new Operation<DeveloperOperation>();
+	private Operations.DeveloperOperation _operation = new Operations.DeveloperOperation();
 }

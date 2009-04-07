@@ -17,6 +17,7 @@ import scrummer.model.ImpedimentModelCommon;
 import scrummer.model.Models;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 
 /**
  * Impediment table synchronization class 
@@ -27,8 +28,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	 * Default constructor
 	 */
 	public ImpedimentTableModel(ConnectionModel connectionModel,
-								ImpedimentModelCommon impedimentModelCommon,
-								Operation<ImpedimentOperation> operation) 
+								ImpedimentModelCommon impedimentModelCommon) 
 	{
 		super();
 		_impedimentModelCommon = impedimentModelCommon;

@@ -24,6 +24,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.listener.ImpedimentListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.ImpedimentModel;
@@ -38,7 +39,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class ImpedimentsAddDialog 
 	extends TwoButtonDialog
-	implements OperationListener<ImpedimentOperation> {
+	implements ImpedimentListener {
 	
 	/**
 	 * Constructor

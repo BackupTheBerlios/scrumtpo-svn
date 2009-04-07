@@ -5,11 +5,12 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import scrummer.model.SprintBacklogModelCommon;
 import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.base.IdValueComboBoxModel;
 
 /**
  * SBI combo box model contains id's + task descriptions
  */
-public class SBIComboBoxModel extends DefaultComboBoxModel 
+public class SBIComboBoxModel extends IdValueComboBoxModel 
 {
 	/**
 	 * Constructor
@@ -33,30 +34,7 @@ public class SBIComboBoxModel extends DefaultComboBoxModel
 	{
 		//_SBIs = _sprintbacklogModelCommon.fetchSBIsNames();		
 	}
-	
-	/**
-	 * Fetch id for specified SBI
-	 * 
-	 * @param index SBI index
-	 * @return SBI id
-	 */
-	/*public int getId(int index)
-	{
-		return _SBIs.get(index).Id;
-	}*/
-	
-	/*@Override
-	public Object getElementAt(int index) {
-		return _SBIs.get(index).Value;
-	}*/
 
-	/*@Override
-	public int getSize() {
-		return _SBIs.size();
-	}*/
-
-	/// PBI list
-	//private Vector<IdsValue> _SBIs = new Vector<IdsValue>();
 	/// common product backlog operations
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// serialization id

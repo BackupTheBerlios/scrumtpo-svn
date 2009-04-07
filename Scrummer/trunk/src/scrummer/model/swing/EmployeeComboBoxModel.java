@@ -1,17 +1,12 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
-
-import scrummer.model.DBSchemaModel;
 import scrummer.model.DeveloperModelCommon;
-import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.base.IdValueComboBoxModel;
 
 /**
  * Employee combo box model contains id's + team names
  */
-public class EmployeeComboBoxModel extends DefaultComboBoxModel {
+public class EmployeeComboBoxModel extends IdValueComboBoxModel {
 
 	/**
 	 * Constructor
@@ -33,32 +28,11 @@ public class EmployeeComboBoxModel extends DefaultComboBoxModel {
 	
 	private void refreshEmployees()
 	{
-		_employees = _developerModelCommon.fetchDeveloperNames();		
-	}
-	
-	/**
-	 * Fetch id for specified employee
-	 * 
-	 * @param index team index
-	 * @return employee id
-	 */
-	public int getId(int index)
-	{
-		return _employees.get(index).Id;
-	}
-	
-	@Override
-	public Object getElementAt(int index) {
-		return _employees.get(index).Value;
+		setValues(_developerModelCommon.fetchDeveloperNames());		
 	}
 
-	@Override
-	public int getSize() {
-		return _employees.size();
-	}
-
-	/// employee list
-	private Vector<IdValue> _employees = new Vector<IdValue>();
 	/// common developer operations
 	private DeveloperModelCommon _developerModelCommon;
+	/// serialization id
+	private static final long serialVersionUID = 1501362735692796702L;
 }

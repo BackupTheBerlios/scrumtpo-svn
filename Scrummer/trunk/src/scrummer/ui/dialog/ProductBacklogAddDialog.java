@@ -21,6 +21,7 @@ import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.listener.ProductBacklogListener;
 import scrummer.model.ProductBacklogModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
@@ -31,7 +32,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class ProductBacklogAddDialog 
 	extends TwoButtonDialog
-	implements OperationListener<ProductBacklogOperation> {
+	implements ProductBacklogListener {
 	
 	/**
 	 * Constructor

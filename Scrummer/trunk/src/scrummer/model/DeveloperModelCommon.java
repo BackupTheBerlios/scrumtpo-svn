@@ -12,6 +12,7 @@ import scrummer.model.swing.EmployeeListModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
+import scrummer.util.Operations;
 import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 import sun.security.pkcs11.Secmod.DbMode;
@@ -26,7 +27,7 @@ public class DeveloperModelCommon {
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public DeveloperModelCommon(ConnectionModel connectionModel, Operation<DeveloperOperation> operation)
+	public DeveloperModelCommon(ConnectionModel connectionModel, Operations.DeveloperOperation operation)
 	{
 		_connectionModel = connectionModel;
 		_operation 		 = operation;
@@ -568,7 +569,7 @@ public class DeveloperModelCommon {
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
-	private Operation<DeveloperOperation> _operation;
+	private Operations.DeveloperOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }

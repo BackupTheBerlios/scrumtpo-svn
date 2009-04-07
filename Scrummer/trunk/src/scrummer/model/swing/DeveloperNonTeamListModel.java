@@ -30,7 +30,7 @@ public class DeveloperNonTeamListModel extends DeveloperTeamBaseListModel {
 	 */
 	private void refreshRows()
 	{
-		setEmployees(getDeveloperModelCommon().fetchNonTeamMembers(getTeam()));
+		setValues(getDeveloperModelCommon().fetchNonTeamMembers(getTeam()));
 	}
 	
 	/// serialization id

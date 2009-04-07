@@ -31,7 +31,7 @@ public class DeveloperTeamListModel extends DeveloperTeamBaseListModel {
 	 */
 	private void refreshRows()
 	{
-		setEmployees(getDeveloperModelCommon().fetchTeamMembers(getTeam()));
+		setValues(getDeveloperModelCommon().fetchTeamMembers(getTeam()));
 	}
 	
 	/// serialization id
