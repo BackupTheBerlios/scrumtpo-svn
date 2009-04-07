@@ -221,7 +221,7 @@ create table Sprint_PBI
    Hours_remaining integer default '0' null,
    NbOpenImped	integer	default '0' null,
    NbClosedImped	integer	default '0'	null,
-   constraint PK_MEASURE primary key (Measure_day, PBI_id)
+   constraint PK_MEASURE primary key (Measure_day, Task_id)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
@@ -311,7 +311,6 @@ create table Team_member
 (
    Employee_id          integer                        not null,
    Team_id              integer                        not null,
-   Percentage_of_engagement_in_project integer                        null,
    constraint PK_TEAM_MEMBER primary key (Employee_id, Team_id)
 ) CHARACTER SET utf8;
 
@@ -523,4 +522,27 @@ insert into Task_type (Task_type_description) values ('rework due to inadequate 
 insert into Task_type (Task_type_description) values ('rework due to inadequate testing');
 insert into Task_type (Task_type_description) values ('other');
 
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Katja', 'Cetinski', 'Koèevje');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Urša', 'Levec', 'Ložine');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Tadej', 'Èertanc', 'Ljubljana');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Simon', 'Mihevc', 'Logatec');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Daša', 'Gelze', 'Ribnica');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Miha', 'Mikuliè', 'Celje');
 
+insert into Project (Project_name, Project_description) values ('Scrumer', 'aplikacija za vodenje projektov po metodi scrum');
+insert into Project (Project_name, Project_description) values ('Testni projekt', 'testna aplikacija');
+insert into Project (Project_name, Project_description) values ('Bolnišnica', 'aplikacija za vodenje bolnišnice');
+insert into Project (Project_name, Project_description) values ('Igrica', 'igrica hexagon');
+
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (1, 1, 'prvi sprint', '01.01.2009', '31.01.2009', 30, '31.01.2009');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (1, 1, 'drugi sprint', '01.02.2009', '21.02.2009', 20, '21.02.2009');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (2, 2, 'prvi sprint', '01.03.2009', '31.03.2009', 30, '31.03.2009');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (2, 2, 'drugi sprint', '01.04.2009', '30.04.2009', 29, '30.04.2009');
+
+insert into Team (Team_description) values ('lisice');
+insert into Team (Team_description) values ('medvedi');
+
+insert into Team_member (Employee_id, Team_id) values (1, 1);
+insert into Team_member (Employee_id, Team_id) values (2, 1);
+insert into Team_member (Employee_id, Team_id) values (3, 2);
+insert into Team_member (Employee_id, Team_id) values (4, 2);
