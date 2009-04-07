@@ -1,12 +1,9 @@
 package scrummer.listener;
 
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.ProjectOperation;
+import scrummer.enumerator.DeveloperOperation;
 
-/**
- * Listener for project management related events
- */
-public interface ProjectListener {
+public interface DeveloperListener {
 
 	/**
 	 * Operation was successful
@@ -15,7 +12,7 @@ public interface ProjectListener {
 	 * @param identifier operation identifier
 	 * @param message operation message
 	 */
-	void operationSucceeded(DataOperation type, ProjectOperation identifier, String message);
+	void operationSucceeded(DataOperation type, DeveloperOperation identifier, String message);
 	
 	/**
 	 * Operation failed
@@ -24,5 +21,6 @@ public interface ProjectListener {
 	 * @param identifier operation identifier
 	 * @param message failure message
 	 */
-	void operationFailed(DataOperation type, ProjectOperation identifier, String message);
+	void operationFailed(DataOperation type, DeveloperOperation identifier, String message);
+
 }
