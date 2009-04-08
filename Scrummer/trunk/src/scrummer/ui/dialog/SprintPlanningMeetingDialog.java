@@ -1,9 +1,3 @@
-// vstavljanje v del sprint backloga
-// najprej izbereš ustrezni task (glede na task_description)
-// nato izbereš dan za katerega vnašaš porabljene/preostale ure ter ovire
-// nato imaš možnost vnesti "spent_hours", "remaining_hours", "nb_open_imped", "nb_closed_imped"
-// na koncu vse shraniš
-
 package scrummer.ui.dialog;
 
 import java.awt.Dimension;
@@ -19,38 +13,41 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
-import scrummer.listener.OperationListener;
+import scrummer.listener.SprintBacklogListener;
 import scrummer.model.SprintBacklogModel;
+import scrummer.model.swing.EmployeeComboBoxModel;
+import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
 
-public class DailyScrumMeetingDialog 
+public class SprintPlanningMeetingDialog 
 	extends TwoButtonDialog
-	implements OperationListener<SprintBacklogOperation> {
+	implements SprintBacklogListener {
 
 	/**
 	 * Constructor
 	 * 
 	 * @param owner owner form
 	 */
-	public DailyScrumMeetingDialog(Frame owner)
+	public SprintPlanningMeetingDialog(Frame owner)
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 
-		setTitle(i18n.tr("Daily scrum meeting"));
+		setTitle(i18n.tr("Change sprint backlog item"));
 		
 		_sprintbacklogModel = Scrummer.getModels().getSprintBacklogModel();
-		//_sprintbacklogModel.addSprintBacklogListener(this);
-		
+		_sprintbacklogModel.addSprintBacklogListener(this);
 		_taskComboModel = _sprintbacklogModel.getTaskComboBoxModel();
+		_empComboModel = _sprintbacklogModel.getEmpComboBoxModel();
+		_pbiComboModel = _sprintbacklogModel.getPbiComboBoxModel();
 		
 		int k = 10;
 		Panel.setLayout(new GridLayout(6, 6, 10, 12));
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
-		JLabel taskLbl = new JLabel(i18n.tr("Task") + ":");
+		JLabel taskLbl = new JLabel(i18n.tr("Choose task") + ":");
 		JComboBox taskInput = new JComboBox();
 		taskInput.setModel(_taskComboModel);
 		_taskInput = taskInput;
@@ -59,15 +56,29 @@ public class DailyScrumMeetingDialog
 		Panel.add(taskLbl);
 		Panel.add(taskInput);
 		
-		_measuredayInput = addEntry(i18n.tr("Measure day") + ":", "MeasureDay");
-		_hoursspentInput = addEntry(i18n.tr("Spent hours") + ":", "HoursSpent");
-		_hoursremainInput = addEntry(i18n.tr("Remaining hours") + ":", "HoursRemain");
-		_nbopenimpedInput = addEntry(i18n.tr("Number of open impediments") + ":", "NbOpenImped");
-		_nbclosedimpedInput = addEntry(i18n.tr("Number of closed impediments") + ":", "NbClosedImped");
+		JLabel empLbl = new JLabel(i18n.tr("Choose employee") + ":");
+		JComboBox empInput = new JComboBox();
+		empInput.setModel(_empComboModel);
+		_empInput = empInput;
+		_empComboModel.refresh();
+		
+		Panel.add(empLbl);
+		Panel.add(empInput);
+		
+		JLabel pbiLbl = new JLabel(i18n.tr("Choose product backlog item") + ":");
+		JComboBox pbiInput = new JComboBox();
+		pbiInput.setModel(_pbiComboModel);
+		_pbiInput = pbiInput;
+		_pbiComboModel.refresh();
+		
+		Panel.add(pbiLbl);
+		Panel.add(pbiInput);
+		
+		_sprintInput = addEntry(i18n.tr("Set sprint") + ":", "NewSprint");
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
 		
-		OK.setText("Save");
+		OK.setText("Change");
 		setSize(new Dimension(460, 360));
 	}
 	
@@ -95,27 +106,45 @@ public class DailyScrumMeetingDialog
 		
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
-				String day = _measuredayInput.getText().trim();
-				String hoursspent = _hoursspentInput.getText().trim();
-				String hoursremain = _hoursremainInput.getText().trim();
-				String nbopenimped = _nbopenimpedInput.getText().trim();
-				String nbclosedimped = _nbclosedimpedInput.getText().trim();
+				String pbi = _pbiInput.getSelectedItem().toString().trim();
+				String sprint = _sprintInput.getText().trim();
+				String employee = _empInput.getSelectedItem().toString().trim();
 				
-				if (day.length() > 0)
+				if (pbi.length() > 0)
 				{
 					int selected = _taskInput.getSelectedIndex();
-					if (selected != -1)
+					int selected_pbi = _pbiInput.getSelectedIndex();
+					int selected_emp = _empInput.getSelectedIndex();
+					if (selected != -1 && selected_pbi != -1 && selected_emp != -1)
 					{
 						int id = _taskComboModel.getId(selected);
-						if(hoursspent.length() > 0 && hoursremain.length() > 0 && nbopenimped.length() > 0 && nbclosedimped.length() > 0)
+						int pbi_id = _pbiComboModel.getId(selected_pbi);
+						int emp_id = _empComboModel.getId(selected_emp);
+						if(sprint.length() > 0)
 						{
-							_sprintbacklogModel.setTaskMeasures(id, Integer.parseInt(day), Integer.parseInt(hoursspent), Integer.parseInt(hoursremain), Integer.parseInt(nbopenimped), Integer.parseInt(nbclosedimped));
+							if(employee.length() > 0)
+							{
+								
+									_sprintbacklogModel.setTaskProp(id, pbi_id, sprint, emp_id);
+							}
+							else
+							{
+								Util.showError(this, i18n.tr("You have to select one item!"), i18n.tr("Error"));
+							}
+						}
+						else
+						{
+							Util.showError(this, i18n.tr("Sprint must be at least one character long."), i18n.tr("Error"));
 						}
 					}
 					else
 					{
-						Util.showError(this, i18n.tr("Some task must be selected to set it's measures."), i18n.tr("Error"));
+						Util.showError(this, i18n.tr("Some task must be selected to set it's product backlog item."), i18n.tr("Error"));
 					}
+				}
+				else
+				{
+					Util.showError(this, i18n.tr("You have to select one item!"), i18n.tr("Error"));
 				}
 		}
 		else
@@ -152,7 +181,7 @@ public class DailyScrumMeetingDialog
 			{
 			case Task:
 				Util.showError(this, 
-					i18n.tr("An error has occurred when setting team name") + ": " + message, 
+					i18n.tr("An error has occurred when setting sprint backlog properties") + ": " + message, 
 					i18n.tr("Error"));
 				break;
 			}
@@ -185,12 +214,16 @@ public class DailyScrumMeetingDialog
 
 	/// sprint backlog model
 	private SprintBacklogModel _sprintbacklogModel;
-	/// all SBI in combo box
+	/// all tasks in combo box
 	private TaskComboBoxModel _taskComboModel;
+	/// all employeed in combo box
+	private EmployeeComboBoxModel _empComboModel;
+	/// all pbis in combo box
+	private PBIComboBoxModel _pbiComboModel;
 	/// team new name input
-	private JTextField _measuredayInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
+	private JTextField _sprintInput;
 	/// team input combo box
-	private JComboBox _taskInput;
+	private JComboBox _taskInput, _empInput, _pbiInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

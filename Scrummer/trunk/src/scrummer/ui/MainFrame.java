@@ -12,20 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
 
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
-import scrummer.listener.OperationListener;
 import scrummer.listener.ProjectListener;
-import scrummer.model.DBSchemaModel;
 import scrummer.model.Models;
 import scrummer.model.ProjectModel;
 import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
+import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.ImpedimentsAddDialog;
 import scrummer.ui.dialog.ImpedimentsChangeDialog;
@@ -37,9 +35,8 @@ import scrummer.ui.dialog.ProductBacklogAddDialog;
 import scrummer.ui.dialog.ProductBacklogChangeDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
 import scrummer.ui.dialog.ProjectRemoveDialog;
-import scrummer.ui.dialog.SprintBacklogAddDialog;
-import scrummer.ui.dialog.SprintBacklogChangeDialog;
 import scrummer.ui.dialog.SprintBacklogViewDialog;
+import scrummer.ui.dialog.SprintPlanningMeetingDialog;
 import scrummer.ui.dialog.TeamAddDialog;
 import scrummer.ui.dialog.TeamOverviewDialog;
 import scrummer.ui.dialog.TeamChangeNameDialog;
@@ -112,9 +109,9 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
 		addMenuEntry(fileMenu, i18n.tr("Change impediment"), KeyEvent.VK_C, "ChangeImpediment");
 		fileMenu.addSeparator();
-		addMenuEntry(fileMenu, i18n.tr("Insert into Sprint Backlog"), KeyEvent.VK_S, "InsertSprintBacklog");
-		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
-		addMenuEntry(fileMenu, i18n.tr("Change sprint PBI"), KeyEvent.VK_Z, "ChangeSBI");
+		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
+		//addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
+		addMenuEntry(fileMenu, i18n.tr("Daily scrum meeting"), KeyEvent.VK_Z, "DailyScrumMeet");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
@@ -251,15 +248,11 @@ public class MainFrame extends JFrame
 			Util.centre(dialog);
 			dialog.setVisible(true);
 		}
-		else if(cmd.equals("InsertSprintBacklog"))
+		else if(cmd.equals("SprintPlanMeet"))
 		{
-			SprintBacklogAddDialog dialog;
-			try {
-				dialog = new SprintBacklogAddDialog(this);
-				dialog.setVisible(true);
-			} catch(SQLException e1) {
-				e1.printStackTrace();
-			}
+			SprintPlanningMeetingDialog dialog = new SprintPlanningMeetingDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
 		}
 		else if(cmd.equals("ViewSprintBacklog"))
 		{
@@ -271,9 +264,9 @@ public class MainFrame extends JFrame
 				e1.printStackTrace();
 			}
 		}
-		else if(cmd.equals("ChangeSBI"))
+		else if(cmd.equals("DailyScrumMeet"))
 		{
-			SprintBacklogChangeDialog dialog = new SprintBacklogChangeDialog(this);
+			DailyScrumMeetingDialog dialog = new DailyScrumMeetingDialog(this);
 			dialog.setVisible(true);
 		}
 		else if (cmd.equals("ViewDevelopers"))

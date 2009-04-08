@@ -1,20 +1,25 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
-
 import scrummer.model.SprintBacklogModelCommon;
-import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.swing.base.IdValueComboBoxModel;
 
-public class TaskComboBoxModel extends DefaultComboBoxModel 
+/**
+ * Task combo box model contains id's + task descriptions
+ */
+public class TaskComboBoxModel extends IdValueComboBoxModel 
 {
-	
+	/**
+	 * Constructor
+	 * @param taskModelCommon common task operations
+	 */
 	public TaskComboBoxModel(SprintBacklogModelCommon taskModelCommon)
 	{
 		_taskModelCommon = taskModelCommon;
 	}
 	
+	/**
+	 * Refresh data from database
+	 */
 	public void refresh()
 	{
 		refreshSBIs();
@@ -23,26 +28,9 @@ public class TaskComboBoxModel extends DefaultComboBoxModel
 	
 	private void refreshSBIs()
 	{
-		_SBIs = _taskModelCommon.fetchSBIsNames();		
+		setValues(_taskModelCommon.fetchSBIsNames());
 	}
 	
-	public int getId(int index)
-	{
-		return _SBIs.get(index).Id;
-	}
-	
-	@Override
-	public Object getElementAt(int index) {
-		return _SBIs.get(index).Value;
-	}
-
-	@Override
-	public int getSize() {
-		return _SBIs.size();
-	}
-
-	/// impediment list
-	private Vector<IdValue> _SBIs = new Vector<IdValue>();
 	/// common impediment operations
 	private SprintBacklogModelCommon _taskModelCommon;
 	/// serialization id

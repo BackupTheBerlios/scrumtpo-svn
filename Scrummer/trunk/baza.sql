@@ -5,7 +5,7 @@
 
 use scrumtpo;
 
-alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
+/*alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
 alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_EMPLOYEE;
 alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_SPRINT_T;
 alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_EMPLOYEE;
@@ -53,7 +53,7 @@ drop table if exists Task_measurement_result;
 drop table if exists Task_status;
 drop table if exists Task_type;
 drop table if exists Team;
-drop table if exists Team_member;
+drop table if exists Team_member;*/
 
 /*==============================================================*/
 /* Table: Absence_type                                          */
@@ -212,7 +212,7 @@ create table Sprint
 /*==============================================================*/
 create table Sprint_PBI 
 (
-   Measure_day	integer	not null unique,
+   Measure_day	integer	not null,
    PBI_id	integer	not null,
    Task_id	integer not null,
    Sprint_id	integer	not null,
@@ -221,7 +221,7 @@ create table Sprint_PBI
    Hours_remaining integer default '0' null,
    NbOpenImped	integer	default '0' null,
    NbClosedImped	integer	default '0'	null,
-   constraint PK_MEASURE primary key (Task_id)
+   constraint PK_MEASURE primary key (Task_id, Measure_day)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
@@ -251,14 +251,14 @@ create table Sprint_team
 /*==============================================================*/
 create table Task 
 (
-   Task_id              integer  	AUTO_INCREMENT                      not null,
+   Task_id              integer  	AUTO_INCREMENT 	   not null,
    Employee_id          integer                        null,
    Team_id              integer                        null,
-   Task_status_id       integer                        null,
-   Task_type_id         integer                        null,
-   Task_description     text                           null,
+   Task_status_id       integer                        not null,
+   Task_type_id         integer                        not null,
+   Task_description     text                           not null,
    Task_date            text                           null,
-   Task_active          text                           null,
+   Task_active          text			   not null,
    constraint PK_TASK primary key (Task_id)
 ) CHARACTER SET utf8;
 
@@ -522,12 +522,12 @@ insert into Task_type (Task_type_description) values ('rework due to inadequate 
 insert into Task_type (Task_type_description) values ('rework due to inadequate testing');
 insert into Task_type (Task_type_description) values ('other');
 
-insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Katja', 'Cetinski', 'Koèevje');
-insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Urša', 'Levec', 'Ložine');
-insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Tadej', 'Èertanc', 'Ljubljana');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Katja', 'Cetinski', 'Kocevje');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Ursa', 'Levec', 'Lozine');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Tadej', 'Certanc', 'Ljubljana');
 insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Simon', 'Mihevc', 'Logatec');
-insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Daša', 'Gelze', 'Ribnica');
-insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Miha', 'Mikuliè', 'Celje');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Dasa', 'Gelze', 'Ribnica');
+insert into Employee (Employee_name, Employee_surname, Employee_address) values ('Miha', 'Mikulic', 'Celje');
 
 insert into Project (Project_name, Project_description) values ('Scrumer', 'aplikacija za vodenje projektov po metodi scrum');
 insert into Project (Project_name, Project_description) values ('Testni projekt', 'testna aplikacija');
@@ -546,3 +546,13 @@ insert into Team_member (Employee_id, Team_id) values (1, 1);
 insert into Team_member (Employee_id, Team_id) values (2, 1);
 insert into Team_member (Employee_id, Team_id) values (3, 2);
 insert into Team_member (Employee_id, Team_id) values (4, 2);
+
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'prvi pbi', 1, 20, 1.5, 30);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'drugi pbi', 1, 20, 1.5, 30);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'tretji pbi', 2, 40, 1, 40);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'cetrti pbi', 2, 10, 2, 20);
+
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (1, 1, 1, 1, 'obrazec', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (2, 1, 2, 1, 'meni', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (1, 1, 3, 2, 'ikone', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (2, 1, 2, 3, 'modeli', 'yes');

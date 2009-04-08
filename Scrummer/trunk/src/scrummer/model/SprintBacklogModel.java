@@ -1,18 +1,11 @@
 package scrummer.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
-import scrummer.enumerator.SprintBacklogOperation;
-import scrummer.listener.OperationListener;
 import scrummer.listener.SprintBacklogListener;
-import scrummer.model.swing.DeveloperTableModel;
-import scrummer.model.swing.ImpedimentComboBoxModel;
+import scrummer.model.swing.EmployeeComboBoxModel;
+import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.TaskComboBoxModel;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
 
 /**
@@ -41,6 +34,13 @@ public class SprintBacklogModel
 		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon);
 		_sbiComboBoxModel = new SBIComboBoxModel(_sprintbacklogModelCommon);
 		_taskComboBoxModel = new TaskComboBoxModel(_sprintbacklogModelCommon);
+		
+		_devModelCommon = new DeveloperModelCommon(_connectionModel, _devOperation);
+		
+		_pbiModelCommon = new ProductBacklogModelCommon(_connectionModel, _pbiOperation);
+		
+		_empComboBoxModel = new EmployeeComboBoxModel(_devModelCommon);
+		_pbiComboBoxModel = new PBIComboBoxModel(_pbiModelCommon);
 	}
 	
 	/**
@@ -154,37 +154,40 @@ public class SprintBacklogModel
 		return _taskComboBoxModel;
 	}
 	
-	public void setSBIDay(int sbiId, String newDay) 
-	{
-		_sprintbacklogModelCommon.setSBIDay(sbiId, newDay);
+	public EmployeeComboBoxModel getEmpComboBoxModel() {
+		return _empComboBoxModel;
 	}
 	
-	public void setSBIHoursSpent(int sbiId, String newHoursSpent) {
-		_sprintbacklogModelCommon.setSBIHoursSpent(sbiId, newHoursSpent);
+	public PBIComboBoxModel getPbiComboBoxModel() {
+		return _pbiComboBoxModel;
 	}
 	
-	public void setSBIHoursRemain(int sbiId, String newHoursRemain) {
-		_sprintbacklogModelCommon.setSBIHoursRemain(sbiId, newHoursRemain);
+	public void setTaskProp(int taskId, int pbi_id, String newSprint, int emp_id) {
+		_sprintbacklogModelCommon.setTaskProp(taskId, pbi_id, newSprint, emp_id);	
 	}
 	
-	public void setSBINbOpenImped(int sbiId, String newNbOpenImped) {
-		_sprintbacklogModelCommon.setSBINbOpenImped(sbiId, newNbOpenImped);
-	}
-	
-	public void setSBINbClosedImped(int sbiId, String newNbClosedImped) {
-		_sprintbacklogModelCommon.setSBINbClosedImped(sbiId, newNbClosedImped);
+	public void setTaskMeasures(int id, int day, int sh, int rh, int oi, int ci) {
+		_sprintbacklogModelCommon.setTaskMeasures(id, day , sh, rh, oi, ci);
 	}
 	
 	/// common sprint backlog related functionality
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
+	private ProductBacklogModelCommon _pbiModelCommon;
+	private DeveloperModelCommon _devModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// SBI combo box model
 	private SBIComboBoxModel _sbiComboBoxModel;
 	/// task combo box model
 	private TaskComboBoxModel _taskComboBoxModel;
+	/// pbi combo box model
+	private PBIComboBoxModel _pbiComboBoxModel;
+	/// employee combo box model
+	private EmployeeComboBoxModel _empComboBoxModel;
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// developer operation
 	private Operations.SprintBacklogOperation _operation = new Operations.SprintBacklogOperation();
+	private Operations.DeveloperOperation _devOperation = new Operations.DeveloperOperation();
+	private Operations.ProductBacklogOperation _pbiOperation = new Operations.ProductBacklogOperation();
 }

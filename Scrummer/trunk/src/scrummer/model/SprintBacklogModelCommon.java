@@ -5,15 +5,10 @@ import java.sql.SQLException;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
-import scrummer.enumerator.ImpedimentOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.model.DBSchemaModel.IdValue;
-import scrummer.model.DBSchemaModel.IdsValue;
 import scrummer.util.ObjectRow;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
-import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
 /**
@@ -55,7 +50,7 @@ public class SprintBacklogModelCommon
          
          try {
         	 conn = _connectionModel.getConnection();
-        	 String query1 = 
+        	 /*String query1 = 
         		 "INSERT INTO " + DBSchemaModel.TaskTable + " " +
         		 "(" + DBSchemaModel.EmployeeId + "," + 
         		 DBSchemaModel.TaskStatusId + "," + 
@@ -74,7 +69,7 @@ public class SprintBacklogModelCommon
         	 st.setString(6, task_active);
         	 st.execute();
 		 
-        	 st = null;
+        	 st = null;*/
         	 String query2 = 
         		 "SELECT MAX(Task_id) AS 'maxid' FROM Task";
         	 st = conn.prepareStatement(query2);
@@ -153,11 +148,8 @@ public class SprintBacklogModelCommon
 			}
 		};
 		q.queryResult(
-				"SELECT " + DBSchemaModel.TaskId + ", " +
-				DBSchemaModel.TaskDescription +
-				"FROM "   + DBSchemaModel.Sprint_PBITable +
-				" JOIN " + DBSchemaModel.TaskTable +
-				" WHERE " + DBSchemaModel.measureDay + "=1");
+				"SELECT Task_id, Task_description " +
+				"FROM Task");
 		if (q.getResult() == null)
 		{
 			return new Vector<IdValue>();
@@ -368,6 +360,50 @@ public class SprintBacklogModelCommon
 			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
 			"SET " + DBSchemaModel.NbClosedImped + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
+	}
+	
+	public void setTaskProp(int taskId, int pbi_id, String newSprint, int emp_id) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.NbClosedImped, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Insert, SprintBacklogOperation.NbClosedImped, ex.getMessage());
+			}
+				
+			};
+			q.query(
+				"INSERT INTO " + DBSchemaModel.Sprint_PBITable + " " +
+				"(Measure_day, PBI_id, Task_id, Sprint_id, Employee_id) VALUES(" +
+				1 + ", " + pbi_id + ", " + taskId + ", " + newSprint + ", " + emp_id + ") ");
+	}
+	
+	public void setTaskMeasures(int id, int day, int sh, int rh, int oi, int ci) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.NbClosedImped, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.NbClosedImped, ex.getMessage());
+			}
+				
+			};
+			q.query(
+				"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+				"SET " + DBSchemaModel.measureDay + "=" + day +
+				", " + DBSchemaModel.HoursSpent + "=" + sh +
+				", " + DBSchemaModel.HoursRemaining + "=" + rh +
+				", " + DBSchemaModel.NbOpenImped + "=" + oi +
+				", " + DBSchemaModel.NbClosedImped + "=" + ci +
+				" WHERE " + DBSchemaModel.TaskId + "=" + id );
 	}
 	
 	/// connection model
