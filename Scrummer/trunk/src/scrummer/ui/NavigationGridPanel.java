@@ -10,7 +10,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -18,8 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import scrummer.Scrummer;
 import scrummer.listener.NavigationListener;
+import scrummer.model.Models;
 import scrummer.model.NavigationModel;
+import scrummer.model.ProjectModel;
 import scrummer.model.ResourceModel;
+import scrummer.ui.page.ProjectPage;
 import scrummer.ui.page.TransferDeveloperPage;
 
 /**
@@ -30,12 +32,17 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	
 	/**
 	 * Default constructor
+	 * 
+	 * @param mainFrame main frame
 	 */
-	public NavigationGridPanel() {
+	public NavigationGridPanel(MainFrame mainFrame) {
 		super();
 		
+		_mainFrame = mainFrame;
 		// navigation model
-		_navigationModel = Scrummer.getModels().getNavigationModel();
+		Models m = Scrummer.getModels();
+		_projectModel = m.getProjectModel();
+		_navigationModel = m.getNavigationModel();
 		_navigationModel.addConnectionListener(this);
 		setLayout(new GridLayout(1,1));
 		
@@ -63,17 +70,25 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		// remove all components from panel
 		_panel.removeAll();
 		
-		Box header = createHeader(_navigationModel.getName(newLink));
-		header.setPreferredSize(new Dimension(1600, 110));
-		header.setMaximumSize(new Dimension(1600, 110));
+		Box header = createHeader(_navigationModel.getName(newLink));		
 		_panel.add(header);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(Color.WHITE);		
 		
 		_panel.add(bottomPanel);
+
+		if (!_projectModel.isOpened())
+		{
+			// newLink = NavigationModel.Link.Blank;
+			_header.setButtonsEnabled(false);
+		}
+		else
+		{
+			_header.setButtonsEnabled(true);
+		}
 		
-		_titleLabel.setText(_navigationModel.getName(newLink));
+		_header.TitleText.setText(_navigationModel.getName(newLink));
 		
 		switch (newLink)
 		{
@@ -163,7 +178,11 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.add(vertBox, BorderLayout.CENTER);	
 	}
 
-	private void showProjectOptions(JPanel panel) {}
+	private void showProjectOptions(JPanel panel) {
+		panel.setLayout(new GridLayout(1,1));
+		ProjectPage page = new ProjectPage(_mainFrame);
+		panel.add(page);
+	}
 
 	private void showProjectDevelopers(JPanel panel) {
 		
@@ -228,63 +247,20 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	{
 		if (_header == null)
 		{
-			Box header = new Box(BoxLayout.Y_AXIS);
+			_header = new NavigationGridHeader(BoxLayout.Y_AXIS);
 			
-			JPanel linkPanel = new JPanel();
-			linkPanel.setBackground(Color.WHITE);
-			linkPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-			linkPanel.setMinimumSize(new Dimension(500, 50));
-			linkPanel.setPreferredSize(new Dimension(200, 50));
+			_header.HomeButton.setEnabled(false);		
+			_header.LeftButton.setEnabled(false);
+			_header.UpButton.setEnabled(false);
 			
-			addLabel(linkPanel, ResourceModel.Image.ArrowLeft, TitleLink.Endpoint.Back, 2);
-			addLabel(linkPanel, ResourceModel.Image.ArrowUp,   TitleLink.Endpoint.Up, 2);
-			addLabel(linkPanel, ResourceModel.Image.Home,      TitleLink.Endpoint.Home, 0);
-					
-			JPanel titlePanel = new JPanel();
-			titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			titlePanel.setBackground(Color.WHITE);
-			titlePanel.setMinimumSize(new Dimension(500, 30));
-			titlePanel.setPreferredSize(new Dimension(500, 30));
-			titlePanel.setMaximumSize(new Dimension(1600, 30));
-			
-			JLabel titleLabel = new TitleLabel(title);
-			titleLabel.setSize(200, 10);
-			titleLabel.setPreferredSize(new Dimension(200, 20));
-			_titleLabel = titleLabel;
-			titlePanel.add(titleLabel);
-			
-			header.add(linkPanel);
-			header.add(titlePanel);
-			_header = header;
+			_header.setPreferredSize(new Dimension(1600, 110));
+			_header.setMaximumSize(new Dimension(1600, 110));
 		}
 		
 		return _header;
 	}
 	
-	/**
-	 * Add label to panel
-	 * @param panel panel to which to add
-	 * @param image image that will be displayed on label
-	 * @param endpoint type of link
-	 * @param addBottomText additional value to add to bottom text offset
-	 */
-	private void addLabel(JPanel panel, ResourceModel.Image image, TitleLink.Endpoint endpoint, int addBottomText)
-	{
-		ResourceModel res = Scrummer.getModels().getResourceModel();	
-		// add back, up, home connection
-		try {
-			GrowingLabel label = new TitleLink(endpoint, res.get(image));
-			label.setBorderGrowth(0, 8, 8);
-			label.setPictureSideOffset(5);
-			label.setPictureTopOffset(5);
-			label.setTextBottomOffset(4 + addBottomText);
-			label.setPreferredSize(new Dimension(64,76));
-			// label.setText(text);
-			panel.add(label);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	/**
 	 * Add link to some container
@@ -337,12 +313,16 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		super.setVisible(flag);
 	}
 
+	/// main frame
+	private MainFrame _mainFrame;
 	/// grid panel
     private Box _panel;
     /// title label
     private JLabel _titleLabel;
     /// header box
-    private Box _header = null;
+    private NavigationGridHeader _header = null;
+    /// project model
+    private ProjectModel _projectModel;
 	/// navigation model
 	private NavigationModel _navigationModel; 
 	/// serialization id
