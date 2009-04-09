@@ -5,7 +5,8 @@
 
 use scrumtpo;
 
-/*alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
+/*
+alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
 alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_EMPLOYEE;
 alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_SPRINT_T;
 alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_EMPLOYEE;
@@ -53,7 +54,8 @@ drop table if exists Task_measurement_result;
 drop table if exists Task_status;
 drop table if exists Task_type;
 drop table if exists Team;
-drop table if exists Team_member;*/
+drop table if exists Team_member;
+*/
 
 /*==============================================================*/
 /* Table: Absence_type                                          */
@@ -127,12 +129,11 @@ create table PBI
 (
    PBI_id               integer	AUTO_INCREMENT	not null,
    Project_id           integer	not null,
-   Sprint_id	integer	not null,
-   PBI_description      text                           null,
-   PBI_priority         text                           null,
-   PBI_initial_estimate	text	null,
-   PBI_adjustment_factor	text	null,
-   PBI_adjusted_estimate	text	null,
+   Sprint_id			integer,
+   PBI_description      text not null,
+   PBI_priority         int                           null,
+   PBI_initial_estimate	decimal	null,
+   PBI_adjustment_factor decimal null,
    constraint PK_PBI primary key (PBI_id)
 ) CHARACTER SET utf8;
 
@@ -547,10 +548,10 @@ insert into Team_member (Employee_id, Team_id) values (2, 1);
 insert into Team_member (Employee_id, Team_id) values (3, 2);
 insert into Team_member (Employee_id, Team_id) values (4, 2);
 
-insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'prvi pbi', 1, 20, 1.5, 30);
-insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'drugi pbi', 1, 20, 1.5, 30);
-insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'tretji pbi', 2, 40, 1, 40);
-insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) values(1, 1, 'cetrti pbi', 2, 10, 2, 20);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor) values(1, 1, 'prvi pbi', 1, 20, 1.5);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor) values(1, 1, 'drugi pbi', 1, 20, 1.5);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor) values(1, 1, 'tretji pbi', 2, 40, 1);
+insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor) values(1, 1, 'cetrti pbi', 2, 10, 2);
 
 insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (1, 1, 1, 1, 'obrazec', 'yes');
 insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (2, 1, 2, 1, 'meni', 'yes');
