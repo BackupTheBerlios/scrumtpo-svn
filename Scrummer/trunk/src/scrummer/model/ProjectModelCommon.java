@@ -3,7 +3,10 @@ package scrummer.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+
+import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.Operation;
@@ -91,6 +94,34 @@ public class ProjectModelCommon {
 	}
 	
 	/**
+	 * Query project description
+	 * @param id project id 
+	 * @return project description
+	 */
+	public String fetchProjectDescription(int id) {
+		ResultQuery<String> q = new ResultQuery<String>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				result.beforeFirst();
+				while (result.next())
+				{
+					setResult(result.getString(1));
+				}
+			}
+			
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.ProjectDescription + 
+			" FROM " + DBSchemaModel.ProjectTable + " WHERE " + DBSchemaModel.ProjectId + "='" + id + "'");
+		return q.getResult();
+	}
+	
+	/**
 	 * Fetch all projects from db
 	 * @return project id's and names
 	 */
@@ -141,9 +172,126 @@ public class ProjectModelCommon {
 			"DELETE FROM " + DBSchemaModel.ProjectTable + " " +
 			"WHERE " + DBSchemaModel.ProjectId + "='" + projectId + "'");		
 	}
+
+	/**
+	 * Set project name
+	 * 
+	 * @param projectId project id
+	 * @param name new project name
+	 */
+	public boolean setProjectName(int projectId, String name) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{	
+			@Override
+			public void process() {
+				setResult(true);
+	    
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Update, ProjectOperation.Project, 
+	        		i18n.tr("Could not set parameter") + ": " + ex.getMessage());
+			}
+		};
+		q.query("UPDATE " + DBSchemaModel.ProjectTable + 
+				" SET " + DBSchemaModel.ProjectName + "='" + name + "' " +
+				"WHERE " + DBSchemaModel.ProjectId + "='" + projectId + "'");
+		
+		if (q.getResult())
+		{
+			_projectName = name;
+	        _operation.operationSucceeded(DataOperation.Update, ProjectOperation.Project, "");
+		}
+		
+		return q.getResult();
+	}
 	
+	/**
+	 * Set project description
+	 *  
+	 * @param projectId project id
+	 * @param description project description
+	 */
+	public boolean setProjectDescription(int projectId, String description) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{	
+			@Override
+			public void process() {
+				setResult(true);
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Update, ProjectOperation.Project, 
+	        		i18n.tr("Could not set parameter."));
+			}
+		};
+		q.query("UPDATE " + DBSchemaModel.ProjectTable + " " +
+				"SET " + DBSchemaModel.ProjectDescription + "='" + description + "' " +
+				"WHERE " + DBSchemaModel.ProjectId + "='" + projectId + "'");
+		if (q.getResult())
+		{
+			_projectDescription = description;
+		    _operation.operationSucceeded(DataOperation.Update, ProjectOperation.Project, "");
+		}
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch project name
+	 * @return project name
+	 */
+	public String getName()
+	{
+		return _projectName;
+	}
+
+	/**
+	 * Set project name
+	 */
+	public void setName(String value)
+	{
+		_projectName = value;
+	}
+	
+	/**
+	 * Fetch project description
+	 * @return orihect description
+	 */
+	public String getDescription()
+	{
+		return _projectDescription;
+	}
+	
+	/**
+	 * Set project description
+	 */
+	public void setDescription(String value)
+	{
+		_projectDescription = value;
+	}
+	
+	/**
+	 * Open project
+	 * @param projectId project id
+	 */
+	public void openProject(int projectId)
+	{
+		_projectName = fetchProjectName(projectId);
+		_projectDescription = fetchProjectDescription(projectId);
+	}
+	
+	/// project name
+	private String _projectName = "";
+	/// project description
+	private String _projectDescription = "";
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// data operation notifier
 	private Operations.ProjectOperation _operation;
+	/// translation class field
+	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }
