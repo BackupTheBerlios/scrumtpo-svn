@@ -21,6 +21,7 @@ import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
+import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -45,11 +46,14 @@ public class AddDeveloperDialog
 		_developerModel = Scrummer.getModels().getDeveloperModel();
 		_developerModel.addDeveloperListener(this);
 		
-		Panel.setLayout(new GridLayout(3, 2, 0, 10));
-		
-		_nameTextField    = addEntry(i18n.tr("Name")    + ":", "Name");
-		_surnameTextField = addEntry(i18n.tr("Surname") + ":", "Surname");
-		_addressTextField = addEntry(i18n.tr("Address") + ":", "Address");
+		_formBuilder = new FormBuilder(Panel);
+		_nameTextField = 
+			_formBuilder.addSelectedTextInput(i18n.tr("Name") + ":", "Name");
+		_surnameTextField = 
+			_formBuilder.addSelectedTextInput(i18n.tr("Surname") + ":", "Surname");
+		_addressTextField = 
+			_formBuilder.addSelectedTextInput(i18n.tr("Address") + ":", "Address");
+		_formBuilder.setCellSpacing(0, 10);
 		
 		int topK = 10;
 		Panel.setBorder(
@@ -63,25 +67,6 @@ public class AddDeveloperDialog
 			BorderFactory.createEmptyBorder(0, bottomK, bottomK,bottomK));
 		
 		setSize(new Dimension(270, 210));
-	}
-
-	/**
-	 * Add form entry(label + textbox)
-	 * 
-	 * @param labelText label text
-	 * @param textActionCmd text action command
-	 * @return added text field
-	 */
-	public JTextField addEntry(String labelText, String textActionCmd)
-	{
-		JLabel label = new JLabel(labelText);
-		
-		JTextField textBox = new SelectedTextField();
-		
-		Panel.add(label);
-		Panel.add(textBox);
-		
-		return textBox;
 	}
 		
 	@Override
@@ -130,6 +115,8 @@ public class AddDeveloperDialog
 	private DeveloperModel _developerModel;
 	/// name text field
 	private JTextField _nameTextField, _surnameTextField, _addressTextField;
+	/// form building class
+	private FormBuilder _formBuilder;
 	/// serialization id
 	private static final long serialVersionUID = 8159590855907206180L;
 	/// translation class field
