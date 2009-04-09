@@ -1,14 +1,10 @@
 package scrummer.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProjectOperation;
-import scrummer.listener.OperationListener;
 import scrummer.listener.ProjectListener;
 import scrummer.model.swing.ProjectComboBoxModel;
 import scrummer.model.swing.ProjectListModel;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
 
 /**
@@ -29,16 +25,6 @@ public class ProjectModel {
 			new ProjectListModel(_projectModelCommon);
 		_projectComboBoxModel = 
 			new ProjectComboBoxModel(_projectModelCommon);
-	}
-	
-	/**
-	 * Check for project existance
-	 * 
-	 * If project doesn't exist unload it.
-	 */
-	public void refresh()
-	{
-		
 	}
 	
 	/**
@@ -75,7 +61,8 @@ public class ProjectModel {
 	public void openProject(int id)
 	{
 		_project = id;
-		_projectName = _projectModelCommon.fetchProjectName(id);
+		_projectModelCommon.openProject(id);
+		_opened = true;
 		_operation.operationSucceeded(DataOperation.Custom, ProjectOperation.Open, "");
 	}
 	
@@ -87,7 +74,8 @@ public class ProjectModel {
 	public void closeProject()
 	{
 		_project = -1;
-		_operation.operationSucceeded(DataOperation.Custom, ProjectOperation.Close, "");	
+		_opened = false;
+		_operation.operationSucceeded(DataOperation.Custom, ProjectOperation.Close, "");
 	}
 	
 	/**
@@ -96,8 +84,8 @@ public class ProjectModel {
 	 * @param name project name
 	 */
 	public void setProjectName(String name)
-	{
-		
+	{	
+		_projectModelCommon.setProjectName(_project, name);
 	}
 	
 	/**
@@ -107,7 +95,7 @@ public class ProjectModel {
 	 */
 	public void setProjectDescription(String description)
 	{
-		
+		_projectModelCommon.setProjectDescription(_project, description);
 	}
 	
 	/**
@@ -116,7 +104,16 @@ public class ProjectModel {
 	 */
 	public String getCurrentProjectName()
 	{
-		return _projectName;
+		return _projectModelCommon.getName();
+	}
+	
+	/**
+	 * Fetch current project description
+	 * @return project description
+	 */
+	public String getCurrentProjectDescription()
+	{
+		return _projectModelCommon.getDescription();
 	}
 	
 	/**
@@ -142,7 +139,7 @@ public class ProjectModel {
 	 * Add listener to project change related events
 	 * @param listener listener
 	 */
-	public void addProjectListener(ProjectListener listener) {
+	public void addProjectListener(ProjectListener listener) {		
 		_operation.addListener(listener);
 	}
 	
@@ -154,9 +151,15 @@ public class ProjectModel {
 	{
 		_operation.removeListener(listener);
 	}
+
+	/**
+	 * @return true if any project is opened, false otherwise
+	 */
+	public boolean isOpened()
+	{
+		return _opened;
+	}
 	
-	/// project name
-	private String _projectName = "";
 	/// is any project currently opened
 	private boolean _opened = false;
 	/// common project related operations
