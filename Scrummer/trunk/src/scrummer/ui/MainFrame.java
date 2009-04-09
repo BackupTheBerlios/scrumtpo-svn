@@ -70,7 +70,7 @@ public class MainFrame extends JFrame
 		// add menu bar, entries for it and event listeners
 		addMenu();
 		// add navigation grid
-		NavigationGridPanel grid = new NavigationGridPanel();
+		NavigationGridPanel grid = new NavigationGridPanel(this);
 		add(grid);
 	}
 	
@@ -346,7 +346,18 @@ public class MainFrame extends JFrame
 	
 	@Override
 	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
-		if (type == DataOperation.Custom)
+		switch (type)
+		{
+		case Update:
+		{
+			switch (identifier)
+			{
+			case Project:
+				setTitle(ApplicationName + " - " + _projectModel.getCurrentProjectName());
+				break;
+			}
+		}
+		case Custom:
 		{
 			switch (identifier)
 			{
@@ -359,6 +370,7 @@ public class MainFrame extends JFrame
 				_closeMenuItem.setEnabled(false);
 				break;
 			}
+		}
 		}
 	}
 	
