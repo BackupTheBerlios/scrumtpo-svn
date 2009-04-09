@@ -201,7 +201,7 @@ public class DBSchemaModel {
 			}
 		}
 	}
-
+	
 	/// mapping from table names to table column names
 	private HashMap<String, Vector<String>> _tableColumnsMap = new HashMap<String, Vector<String>>();
 	/// connection model
