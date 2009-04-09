@@ -27,11 +27,7 @@ public class NavigationModel implements ProjectListener {
 		/// application overview
 		Overview,
 		/// project overview
-		Project,
-		/// project options
-		ProjectOptions,
-		/// developers on project
-		ProjectDevelopers,		
+		Project,		
 		/// product backlog
 		ProductBacklog,
 		/// sprint backlog
@@ -59,8 +55,6 @@ public class NavigationModel implements ProjectListener {
 		_translatedLinks.put(Link.Overview, 			i18n.tr("Overview"));
 		_translatedLinks.put(Link.ProductBacklog, 		i18n.tr("Product Backlog"));
 		_translatedLinks.put(Link.Project, 				i18n.tr("Project"));
-		_translatedLinks.put(Link.ProjectDevelopers, 	i18n.tr("Developers"));
-		_translatedLinks.put(Link.ProjectOptions, 		i18n.tr("Options"));
 		_translatedLinks.put(Link.SprintBacklog, 		i18n.tr("Sprint Backlog"));
 		_translatedLinks.put(Link.SprintBacklogAbsent,  i18n.tr("Absent"));
 		_translatedLinks.put(Link.SprintBacklogHurdles, i18n.tr("Hurdles"));
