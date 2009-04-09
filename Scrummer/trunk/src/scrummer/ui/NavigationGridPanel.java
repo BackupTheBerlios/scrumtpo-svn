@@ -104,12 +104,6 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		case Project:
 			showProject(bottomPanel); 
 			break;
-		case ProjectDevelopers:
-			showProjectDevelopers(bottomPanel); 
-			break;
-		case ProjectOptions:
-			showProjectOptions(bottomPanel); 
-			break;
 		case SprintBacklog:
 			showSprintBacklog(bottomPanel); 
 			break;
@@ -178,20 +172,11 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.add(vertBox, BorderLayout.CENTER);	
 	}
 
-	private void showProjectOptions(JPanel panel) {
+	private void showProject(JPanel panel) {
 		panel.setLayout(new GridLayout(1,1));
 		ProjectPage page = new ProjectPage(_mainFrame);
 		panel.add(page);
-	}
-
-	private void showProjectDevelopers(JPanel panel) {
-		
-		panel.setLayout(new GridLayout(1,1));
-		TransferDeveloperPage page = new TransferDeveloperPage();
-		panel.add(page);
-	}
-
-	private void showProject(JPanel panel) {
+		/*
 		panel.setLayout(new BorderLayout());
 		
 		JPanel box = new JPanel();
@@ -208,6 +193,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		vertBox.add(box);
 		
 		panel.add(vertBox);
+		*/
 	}
 
 	//programski
