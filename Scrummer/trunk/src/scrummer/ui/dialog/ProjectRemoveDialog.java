@@ -18,6 +18,7 @@ import scrummer.listener.OperationListener;
 import scrummer.listener.ProjectListener;
 import scrummer.model.ProjectModel;
 import scrummer.model.swing.ProjectComboBoxModel;
+import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.TwoButtonDialog;
 
@@ -36,7 +37,6 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
 		setTitle(i18n.tr("Remove Project"));
-		Panel.setLayout(new GridLayout(1,2));
 		
 		_projectModel = Scrummer.getModels().getProjectModel();
 		_projectComboBoxModel = _projectModel.getProjectComboBoxModel();
@@ -51,15 +51,10 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 				i18n.tr("Select project"),
 				0, k, k, k));
 		
-		JLabel projectLabel = new JLabel(i18n.tr("Project") + ":");
-		
-		JComboBox projectInput = new JComboBox();
-		projectInput.setModel(_projectComboBoxModel);
-		_projectInput = projectInput;
+		_formBuilder = new FormBuilder(Panel);
+		_projectInput = _formBuilder.addComboBoxInput(i18n.tr("Project") + ":");	
+		_projectInput.setModel(_projectComboBoxModel);
 		_projectComboBoxModel.refresh();
-			
-		Panel.add(projectLabel);
-		Panel.add(projectInput);
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, k, k, k));
 		
@@ -142,6 +137,8 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 	private ProjectModel _projectModel;
 	/// project combo box model
 	private ProjectComboBoxModel _projectComboBoxModel;
+	/// form building class
+	private FormBuilder _formBuilder;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
