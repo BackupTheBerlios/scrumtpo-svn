@@ -5,14 +5,17 @@ import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ProjectOperation;
 import scrummer.listener.NavigationListener;
+import scrummer.listener.ProjectListener;
 
 /**
  * Navigation data model
  * 
  * Contains and manages current, last and home navigation links.
  */
-public class NavigationModel {
+public class NavigationModel implements ProjectListener {
 
 	/**
 	 * Possible links
@@ -45,8 +48,10 @@ public class NavigationModel {
 	
 	/**
 	 * Constructor
+	 * 
+	 * @param projectModel project model
 	 */
-	public NavigationModel()
+	public NavigationModel(ProjectModel projectModel)
 	{	
 		_top = Link.Overview;
 		
@@ -61,6 +66,8 @@ public class NavigationModel {
 		_translatedLinks.put(Link.SprintBacklogHurdles, i18n.tr("Hurdles"));
 		_translatedLinks.put(Link.SprintBacklogMetric,  i18n.tr("Metrics"));
 		_translatedLinks.put(Link.SprintBacklogTasks,   i18n.tr("Tasks"));
+		
+		projectModel.addProjectListener(this);
 	}
 	
 	/**
@@ -145,6 +152,27 @@ public class NavigationModel {
 		_navigationSemaphore.release();
 	}
 	
+	@Override
+	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
+		switch (type)
+		{
+		case Custom:
+			switch (identifier)
+			{
+			case Open:
+				home();
+				break;
+			case Close:
+				switchPage(NavigationModel.Link.Blank);
+				break;
+			}
+			break;
+		}
+	}
+	
+	@Override
+	public void operationFailed(DataOperation type, ProjectOperation identifier, String message) {}
+	
 	/// previous navigation link
 	private Vector<Link> _previous = new Vector<Link>();
 	/// current navigation link
@@ -158,5 +186,6 @@ public class NavigationModel {
 	/// navigation event listeners
 	private Vector<NavigationListener> _navigationListeners = new Vector<NavigationListener>();
 	/// translation class field
-	private I18n i18n = Scrummer.getI18n(getClass());;
+	private I18n i18n = Scrummer.getI18n(getClass());
+	
 }
