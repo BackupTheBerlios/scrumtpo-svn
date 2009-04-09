@@ -25,13 +25,17 @@ public class Operation<Identifier, ListenerType> {
 	 */
 	public void operationSucceeded(DataOperation type, Identifier identifier, String message)
 	{
+		/*
 		try {
-			_semaphore.acquire();
+			 _semaphore.acquire();
+		*/
 			opFailure(type, identifier, message);
+		/*
 			_semaphore.release();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	/**
