@@ -19,6 +19,7 @@ import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.TeamComboBoxModel;
+import scrummer.ui.FormBuilder;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -42,17 +43,12 @@ public class TeamRemoveDialog extends TwoButtonDialog
 		_teamComboBoxModel = _developerModel.getTeamComboBoxModel();
 		
 		int k = 10;
-		Panel.setLayout(new GridLayout(1,2));
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
-		JLabel teamLbl = new JLabel(i18n.tr("Team") + ":");
-		JComboBox teamInput = new JComboBox();
-		teamInput.setModel(_teamComboBoxModel);
-		_teamInput = teamInput;
+		_formBuilder = new FormBuilder(Panel);
+		_teamInput = _formBuilder.addComboBoxInput(i18n.tr("Team") + ":");
+		_teamInput.setModel(_teamComboBoxModel);
 		_teamComboBoxModel.refresh();
-		
-		Panel.add(teamLbl);
-		Panel.add(teamInput);
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 6));
 		
@@ -144,6 +140,8 @@ public class TeamRemoveDialog extends TwoButtonDialog
 	private TeamComboBoxModel _teamComboBoxModel;
 	/// combo box input
 	private JComboBox _teamInput;
+	/// form building class
+	private FormBuilder _formBuilder;
 	/// serialization id
 	private static final long serialVersionUID = 9057417391317485126L;
 	/// translation class field
