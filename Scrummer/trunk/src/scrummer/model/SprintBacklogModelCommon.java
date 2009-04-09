@@ -382,28 +382,75 @@ public class SprintBacklogModelCommon
 				1 + ", " + pbi_id + ", " + taskId + ", " + newSprint + ", " + emp_id + ") ");
 	}
 	
-	public void setTaskMeasures(int id, int day, int sh, int rh, int oi, int ci) {
+	public void setTaskMeasures(int id, int day, int sh, int rh, int oi, int ci) 
+	{
+        java.sql.PreparedStatement st = null;
+		String q1 = 
+			"SELECT " + DBSchemaModel.EmployeeId + " AS empid, " + DBSchemaModel.SprintId + " AS sprintid, " + DBSchemaModel.PBIId +
+			" AS pbiid FROM " + DBSchemaModel.Sprint_PBITable + " WHERE " + DBSchemaModel.TaskId + "=" + id;
+   	 	
+			try {
+				st = _connectionModel.getConnection().prepareStatement(q1);
+				st.execute();
+		   	 	int emp_id = st.getResultSet().findColumn("empid");
+		   	 	int sprint_id = st.getResultSet().findColumn("sprintid");
+		   	 	int pbi_id = st.getResultSet().findColumn("pbiid");
+		   	 		
+				ResultQuery<Boolean> q2 = new ResultQuery<Boolean>(_connectionModel)
+				{
+					@Override
+					public void process() {
+						_operation.operationSucceeded(DataOperation.Insert, null, "");
+					}
+					@Override
+					public void handleException(SQLException ex) {
+						ex.printStackTrace();
+						_operation.operationFailed(DataOperation.Insert, null, ex.getMessage());
+					}
+						
+				};
+				
+				q2.query("INSERT INTO " + DBSchemaModel.Sprint_PBITable +
+						" (" + DBSchemaModel.measureDay + "," + 
+		       		 	DBSchemaModel.PBIId + "," +
+		       		 	DBSchemaModel.TaskId + "," +
+		       		 	DBSchemaModel.SprintId + "," +
+		       		 	DBSchemaModel.EmployeeId + "," +
+		       		 	DBSchemaModel.HoursSpent + "," +
+		       		 	DBSchemaModel.HoursRemaining + "," +
+		       		 	DBSchemaModel.NbOpenImped + "," +
+		       		 	DBSchemaModel.NbClosedImped + ") " +
+						"VALUES (" + day + ", " + pbi_id +
+						", " + id + ", " + sprint_id +
+						", " + emp_id + ", " + sh +
+						", " + rh + ", " + oi + ", " + ci + ")" );
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+	public boolean existsTaskInSBI(int id) 
+	{
 		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
 		{
 			@Override
 			public void process() {
-				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.NbClosedImped, "");
+				_operation.operationSucceeded(DataOperation.Select, SprintBacklogOperation.Task, "");
 			}
 			@Override
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
-				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.NbClosedImped, ex.getMessage());
+				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Task, ex.getMessage());
 			}
 				
 			};
-			q.query(
-				"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
-				"SET " + DBSchemaModel.measureDay + "=" + day +
-				", " + DBSchemaModel.HoursSpent + "=" + sh +
-				", " + DBSchemaModel.HoursRemaining + "=" + rh +
-				", " + DBSchemaModel.NbOpenImped + "=" + oi +
-				", " + DBSchemaModel.NbClosedImped + "=" + ci +
-				" WHERE " + DBSchemaModel.TaskId + "=" + id );
+			q.query("SELECT * FROM " + DBSchemaModel.Sprint_PBITable +
+					" WHERE " + DBSchemaModel.TaskId + " = " + id);
+			if(q.equals(null))
+				return false;
+			else
+				return true;
 	}
 	
 	/// connection model

@@ -170,6 +170,11 @@ public class SprintBacklogModel
 		_sprintbacklogModelCommon.setTaskMeasures(id, day , sh, rh, oi, ci);
 	}
 	
+	public boolean existsTaskInSBI(int id) 
+	{
+		return _sprintbacklogModelCommon.existsTaskInSBI(id);
+	}
+	
 	/// common sprint backlog related functionality
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	private ProductBacklogModelCommon _pbiModelCommon;

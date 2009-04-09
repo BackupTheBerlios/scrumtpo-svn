@@ -109,7 +109,10 @@ public class DailyScrumMeetingDialog
 						int id = _taskComboModel.getId(selected);
 						if(hoursspent.length() > 0 && hoursremain.length() > 0 && nbopenimped.length() > 0 && nbclosedimped.length() > 0)
 						{
-							_sprintbacklogModel.setTaskMeasures(id, Integer.parseInt(day), Integer.parseInt(hoursspent), Integer.parseInt(hoursremain), Integer.parseInt(nbopenimped), Integer.parseInt(nbclosedimped));
+							if (_sprintbacklogModel.existsTaskInSBI(id))
+								_sprintbacklogModel.setTaskMeasures(id, Integer.parseInt(day), Integer.parseInt(hoursspent), Integer.parseInt(hoursremain), Integer.parseInt(nbopenimped), Integer.parseInt(nbclosedimped));
+							else
+								Util.showError(this, i18n.tr("First insert task into your sprint backlog and then set it's measures!"), i18n.tr("Error"));
 						}
 					}
 					else
