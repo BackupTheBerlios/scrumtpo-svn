@@ -5,7 +5,6 @@
 
 use scrumtpo;
 
-/*
 alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
 alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_EMPLOYEE;
 alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_SPRINT_T;
@@ -55,7 +54,6 @@ drop table if exists Task_status;
 drop table if exists Task_type;
 drop table if exists Team;
 drop table if exists Team_member;
-*/
 
 /*==============================================================*/
 /* Table: Absence_type                                          */
