@@ -147,7 +147,7 @@ public class ProjectNewDialog extends TwoButtonDialog implements ProjectListener
 	/**
 	 * Document with text size limit
 	 */
-	static class DescriptionDocument extends DefaultStyledDocument
+	public static class DescriptionDocument extends DefaultStyledDocument
 	{
 		/**
 		 * Constructor
@@ -201,12 +201,19 @@ public class ProjectNewDialog extends TwoButtonDialog implements ProjectListener
 			public void replace(FilterBypass fb, int offset, int length,
 					String text, AttributeSet attrs)
 					throws BadLocationException {
-				int size = fb.getDocument().getLength() + text.length() - length;
-				if (size <= _maxSize)
+
+				if (text == null)
 				{
-					super.insertString(fb, offset, text, attrs);
+					super.replace(fb, offset, length, text, attrs);
 				}
-				
+				else
+				{
+					int size = fb.getDocument().getLength() + text.length() - length;
+					if (size <= _maxSize)
+					{
+						super.insertString(fb, offset, text, attrs);
+					}
+				}
 			}
 			
 			private int _maxSize = 0;
