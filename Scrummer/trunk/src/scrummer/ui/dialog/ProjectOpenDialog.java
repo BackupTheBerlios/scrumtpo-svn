@@ -154,14 +154,7 @@ public class ProjectOpenDialog extends TwoButtonDialog
 
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		/*
-		if (!_projectList.isSelectionEmpty())
-		{	
-		System.out.println(_projectList.getSelectedValue());
-		}
-		*/
-	}
+	public void mouseReleased(MouseEvent e) {}
 	
 	@Override
 	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
