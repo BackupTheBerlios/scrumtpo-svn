@@ -47,7 +47,7 @@ public class Scrummer {
 		
 		// go to homepage
 		NavigationModel nm = _models.getNavigationModel();
-		nm.home();
+		nm.switchPage(NavigationModel.Link.Blank);
 	}
 
 	/**
