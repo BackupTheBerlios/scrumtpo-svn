@@ -94,7 +94,7 @@ public class Models {
 	{
 		if (_navigationModel == null)
 		{
-			_navigationModel = new NavigationModel();
+			_navigationModel = new NavigationModel(getProjectModel());
 		}
 		return _navigationModel;
 	}
