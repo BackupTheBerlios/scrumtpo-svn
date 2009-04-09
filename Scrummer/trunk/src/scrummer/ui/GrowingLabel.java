@@ -1,5 +1,6 @@
 package scrummer.ui;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 import scrummer.exception.ValueInvalid;
+import sun.java2d.loops.FillRect;
 
 /**
  * Label that is drawn smaller than it really is. When user hoovers over it it grows
@@ -34,6 +36,11 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 		UP
 	}
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param image image to display
+	 */
 	public GrowingLabel(Image image) {
 		super();
 		_image = image;
@@ -139,7 +146,13 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 		else
 		{
 			g.drawString(getText(), getWidth() / 2 - textWidth / 2, getHeight() - _textbottom);
-		}	
+		}
+		
+		if (!isEnabled())
+		{
+			g.setColor(new Color(0, 0, 0, 128));
+			g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 10, 10);
+		}
 	}
 
 	@Override
@@ -175,22 +188,28 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		_mouseIn = true;
-		_state = BorderState.DOWN;
-		if (!_timer.isRunning())
+		if (isEnabled())
 		{
-			_timer.start();
+			_mouseIn = true;
+			_state = BorderState.DOWN;
+			if (!_timer.isRunning())
+			{
+				_timer.start();
+			}
 		}
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		_mouseIn = false;
-		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		_state = BorderState.UP;
-		if (!_timer.isRunning())
+		if (isEnabled())
 		{
-			_timer.start();
+			_mouseIn = false;
+			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			_state = BorderState.UP;
+			if (!_timer.isRunning())
+			{
+				_timer.start();
+			}
 		}
 	}
 
@@ -205,12 +224,15 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		_mouseIn = true;
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
-		_state = BorderState.DOWN;
-		if (!_timer.isRunning())
+		if (isEnabled())
 		{
-			_timer.start();
+			_mouseIn = true;
+			setCursor(new Cursor(Cursor.HAND_CURSOR));
+			_state = BorderState.DOWN;
+			if (!_timer.isRunning())
+			{
+				_timer.start();
+			}
 		}
 	}
 
