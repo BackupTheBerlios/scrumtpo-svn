@@ -18,6 +18,7 @@ import scrummer.listener.DeveloperListener;
 import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.TeamComboBoxModel;
+import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -45,43 +46,21 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 		_teamComboModel = _developerModel.getTeamComboBoxModel();
 		
 		int k = 10;
-		Panel.setLayout(new GridLayout(2,2, 10, 15));
+		// Panel.setLayout(new GridLayout(2,2, 10, 15));
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
-		JLabel teamLbl = new JLabel(i18n.tr("Team") + ":");
-		JComboBox teamInput = new JComboBox();
-		teamInput.setModel(_teamComboModel);
-		_teamInput = teamInput;
+		_formBuilder = new FormBuilder(Panel);
+		_formBuilder.setCellSpacing(10, 15);
+		_teamInput = _formBuilder.addComboBoxInput(i18n.tr("Team") + ":");
+		_teamInput.setModel(_teamComboModel);		
 		_teamComboModel.refresh();
 		
-		Panel.add(teamLbl);
-		Panel.add(teamInput);
-		
-		_nameInput = addEntry(i18n.tr("New name") + ":", "NewName");
+		_nameInput = _formBuilder.addSelectedTextInput(i18n.tr("New name") + ":", "NewName");
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
 		
 		OK.setText("Change Name");
 		setSize(new Dimension(320, 160));
-	}
-	
-	/** 
-	 * Add form entry(label + textbox)
-	 * 
-	 * @param labelText label text
-	 * @param textActionCmd text action command
-	 * @return added text field
-	 */
-	public JTextField addEntry(String labelText, String textActionCmd)
-	{
-		JLabel label = new JLabel(labelText);
-		
-		JTextField textBox = new SelectedTextField();
-		
-		Panel.add(label);
-		Panel.add(textBox);
-		
-		return textBox;
 	}
 	
 	@Override
@@ -181,6 +160,8 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 	private JTextField _nameInput;
 	/// team input combo box
 	private JComboBox _teamInput;
+	/// form building class
+	private FormBuilder _formBuilder;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
