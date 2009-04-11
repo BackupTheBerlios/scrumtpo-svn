@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -21,8 +22,8 @@ import scrummer.model.Models;
 import scrummer.model.NavigationModel;
 import scrummer.model.ProjectModel;
 import scrummer.model.ResourceModel;
+import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
-import scrummer.ui.page.TransferDeveloperPage;
 
 /**
  * Navigation grid is a panel that contains a fixed grid i.e. it doesn't scale
@@ -70,7 +71,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		// remove all components from panel
 		_panel.removeAll();
 		
-		Box header = createHeader(_navigationModel.getName(newLink));		
+		Box header = createHeader(_navigationModel.getName(newLink));
 		_panel.add(header);
 		
 		JPanel bottomPanel = new JPanel();
@@ -176,28 +177,14 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.setLayout(new GridLayout(1,1));
 		ProjectPage page = new ProjectPage(_mainFrame);
 		panel.add(page);
-		/*
-		panel.setLayout(new BorderLayout());
-		
-		JPanel box = new JPanel();
-		box.setLayout(new FlowLayout(FlowLayout.CENTER));
-		box.setAlignmentX(CENTER_ALIGNMENT);
-		box.setBackground(Color.WHITE);
-		
-		addLink(box, NavigationModel.Link.ProjectDevelopers);
-		addLink(box, NavigationModel.Link.ProjectOptions);
-		
-		box.setMaximumSize(new Dimension(1600, 100));
-		
-		Box vertBox = new Box(BoxLayout.X_AXIS);
-		vertBox.add(box);
-		
-		panel.add(vertBox);
-		*/
 	}
 
-	//programski
-	private void showProductBacklog(JPanel panel) {}
+	private void showProductBacklog(JPanel panel) {
+		panel.setLayout(new GridLayout(1,1));
+		ProductBacklogPage page = new ProductBacklogPage(_mainFrame);
+		panel.add(page);
+		panel.setBackground(Color.WHITE);
+	}
 
 	/**
 	 * Show project, sprint backlog, product backlog links
@@ -215,6 +202,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		addLink(box, NavigationModel.Link.ProductBacklog);
 		addLink(box, NavigationModel.Link.SprintBacklog);
 		
+		box.setMaximumSize(new Dimension(100, 100));
 		box.setMaximumSize(new Dimension(1600, 100));
 		
 		Box vertBox = new Box(BoxLayout.X_AXIS);
@@ -239,14 +227,13 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 			_header.LeftButton.setEnabled(false);
 			_header.UpButton.setEnabled(false);
 			
+			_header.setMinimumSize(new Dimension(1600, 110));
 			_header.setPreferredSize(new Dimension(1600, 110));
 			_header.setMaximumSize(new Dimension(1600, 110));
 		}
 		
 		return _header;
 	}
-	
-	
 	
 	/**
 	 * Add link to some container
@@ -303,8 +290,6 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	private MainFrame _mainFrame;
 	/// grid panel
     private Box _panel;
-    /// title label
-    private JLabel _titleLabel;
     /// header box
     private NavigationGridHeader _header = null;
     /// project model
