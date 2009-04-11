@@ -208,19 +208,17 @@ public class MainFrame extends JFrame
 		}
 		else if(cmd.equals("AddProductBacklog"))
 		{
-			ProductBacklogAddDialog dialog;
-			try {
-				dialog = new ProductBacklogAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			ProductBacklogAddDialog dialog = new ProductBacklogAddDialog(this);
+			Util.centre(dialog);
+			dialog.setVisible(true);
 		}
 		else if(cmd.equals("ChangeProductBacklogItem"))
 		{
-			ProductBacklogChangeDialog dialog = new ProductBacklogChangeDialog(this);
+			/*
+			ProductBacklogChangeDialog dialog = new ProductBacklogChangeDialog(this, 2);
 			Util.centre(dialog);
 			dialog.setVisible(true);
+			*/
 		}
 		else if(cmd.equals("AddImpediment"))
 		{
