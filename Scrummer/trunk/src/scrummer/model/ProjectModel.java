@@ -99,6 +99,14 @@ public class ProjectModel {
 	}
 	
 	/**
+	 * @return project id
+	 */
+	public int getCurrentProjectId()
+	{
+		return _project;
+	}
+	
+	/**
 	 * Fetch currently loaded project name
 	 * @return loaded project name
 	 */
