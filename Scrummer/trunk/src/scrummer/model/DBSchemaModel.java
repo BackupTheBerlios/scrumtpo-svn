@@ -226,6 +226,16 @@ public class DBSchemaModel {
 	public static final String TeamMemberEmployeeId = EmployeeId;
 	public static final String TeamMemberTeamId		= TeamId;
 	
+	public static final String SprintTable = "Sprint";
+	public static final String SprintId = "Sprint_id";
+	public static final String SprintProjectId = "Project_id";
+	public static final String SprintTeamId = "Team_id";
+	public static final String SprintDescription = "Sprint_description";
+	public static final String SprintBegin = "Sprint_begin_date";
+	public static final String SprintEnd = "Sprint_end_date";
+	public static final String SprintLength = "Sprint_length";
+	public static final String SprintEstimated = "Sprint_estimated_date";
+	
 	public static final String Sprint_PBITable = "Sprint_PBI";
 	public static final String TaskTable = "Task";
 	public static final String TaskStatusId = "Task_status_id";
@@ -234,7 +244,6 @@ public class DBSchemaModel {
 	public static final String TaskDate = "Task_date";
 	public static final String TaskActive = "Task_active";
 	public static final String TaskId = "Task_id";
-	public static final String SprintId = "Sprint_id";
 	public static final String HoursSpent = "Hours_spent";
 	public static final String HoursRemaining = "Hours_remaining";
 	public static final String NbOpenImped = "NbOpenImped";
