@@ -29,7 +29,7 @@ import scrummer.ui.dialog.ProjectNewDialog;
 /**
  * This page contains project name and description 
  */
-public class ProjectPage extends JPanel
+public class ProjectPage extends BasePage
 						 implements FocusListener, ProjectListener {
 	/**
 	 * Constructor
@@ -37,8 +37,8 @@ public class ProjectPage extends JPanel
 	 * @param mainFrame main frame
 	 */
 	public ProjectPage(MainFrame mainFrame) {
-		
-		_mainFrame = mainFrame;
+		super(mainFrame);
+
 		_projectModel = Scrummer.getModels().getProjectModel();
 		_projectModel.addProjectListener(this);
 		
@@ -123,7 +123,7 @@ public class ProjectPage extends JPanel
 				_projectInput.setText(_projectModel.getCurrentProjectName());
 				_descriptionInput.setText(null);
 				_descriptionInput.setText(_projectModel.getCurrentProjectDescription());
-				Util.showError(_mainFrame, 
+				Util.showError(getMainFrame(), 
 					i18n.tr("Error while saving project data") + ": " + message, 
 					i18n.tr("Error"));
 				break; 
@@ -137,8 +137,6 @@ public class ProjectPage extends JPanel
 	private JTextArea _descriptionInput;
 	/// project model
 	private ProjectModel _projectModel;
-	/// main frame - for showing error messages
-	private MainFrame _mainFrame;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
