@@ -39,6 +39,11 @@ public class IdValueComboBoxModel extends DefaultComboBoxModel {
 		return _values.get(index).Id;
 	}
 	
+	public String getValue(int index)
+	{
+		return _values.get(index).Value;
+	}
+	
 	@Override
 	public Object getElementAt(int index) {
 		return _values.get(index).Value;
