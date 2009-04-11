@@ -1,10 +1,12 @@
 package scrummer.model;
 
+import scrummer.Scrummer;
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
+import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.util.Operations;
 
@@ -22,7 +24,7 @@ public class SprintBacklogModel
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public SprintBacklogModel(ConnectionModel connectionModel)
+	public SprintBacklogModel(ConnectionModel connectionModel, ProjectModel projectModel)
 	{
 		if (connectionModel == null)
 		{
@@ -30,17 +32,24 @@ public class SprintBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_sprintbacklogModelCommon = new SprintBacklogModelCommon(_connectionModel, _operation);
-		_sprintbacklogTableModel = new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon);
-		_sbiComboBoxModel = new SBIComboBoxModel(_sprintbacklogModelCommon);
-		_taskComboBoxModel = new TaskComboBoxModel(_sprintbacklogModelCommon);
-		
-		_devModelCommon = new DeveloperModelCommon(_connectionModel, _devOperation);
-		
-		_pbiModelCommon = new ProductBacklogModelCommon(_connectionModel, _pbiOperation);
-		
-		_empComboBoxModel = new EmployeeComboBoxModel(_devModelCommon);
-		_pbiComboBoxModel = new PBIComboBoxModel(_pbiModelCommon);
+		_sprintbacklogModelCommon = 
+			new SprintBacklogModelCommon(_connectionModel, _operation);
+		_sprintbacklogTableModel = 
+			new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon);
+		_sbiComboBoxModel = 
+			new SBIComboBoxModel(_sprintbacklogModelCommon);
+		_taskComboBoxModel = 
+			new TaskComboBoxModel(_sprintbacklogModelCommon);
+		_devModelCommon = 
+			new DeveloperModelCommon(_connectionModel, _devOperation);
+		_pbiModelCommon = 
+			new ProductBacklogModelCommon(_connectionModel, _pbiOperation);
+		_empComboBoxModel = 
+			new EmployeeComboBoxModel(_devModelCommon);
+		_pbiComboBoxModel = 
+			new PBIComboBoxModel(_pbiModelCommon);
+		_sprintProjectComboBoxModel = 
+			new SprintProjectComboBoxModel(_sprintbacklogModelCommon, projectModel);
 	}
 	
 	/**
@@ -123,6 +132,14 @@ public class SprintBacklogModel
 	}
 	
 	/**
+	 * @return model that displays sprint id's on current project
+	 */
+	public SprintProjectComboBoxModel getSprintProjectComboBoxModel()
+	{
+		return _sprintProjectComboBoxModel;
+	}
+	
+	/**
 	 * Add sprint backlog data change listener
 	 * 
 	 * @param listener listener to add
@@ -191,6 +208,8 @@ public class SprintBacklogModel
 	private EmployeeComboBoxModel _empComboBoxModel;
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
+	/// model that displays sprint id's on only one project
+	private SprintProjectComboBoxModel _sprintProjectComboBoxModel;
 	/// developer operation
 	private Operations.SprintBacklogOperation _operation = new Operations.SprintBacklogOperation();
 	private Operations.DeveloperOperation _devOperation = new Operations.DeveloperOperation();
