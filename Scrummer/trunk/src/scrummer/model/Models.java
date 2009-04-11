@@ -247,7 +247,7 @@ public class Models {
 	{
 		if (_productbacklogModel == null)	
 		{
-			_productbacklogModel = new ProductBacklogModel(getConnectionModel());
+			_productbacklogModel = new ProductBacklogModel(getConnectionModel(), getProjectModel());
 		}
 		return _productbacklogModel;
 	}
@@ -272,7 +272,7 @@ public class Models {
 	{
 		if (_sprintbacklogModel == null)	
 		{
-			_sprintbacklogModel = new SprintBacklogModel(getConnectionModel());
+			_sprintbacklogModel = new SprintBacklogModel(getConnectionModel(), getProjectModel());
 		}
 		return _sprintbacklogModel;
 	}
