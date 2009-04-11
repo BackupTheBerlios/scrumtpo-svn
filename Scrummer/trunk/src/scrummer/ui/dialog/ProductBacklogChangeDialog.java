@@ -1,50 +1,55 @@
 package scrummer.ui.dialog;
 
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import java.math.BigDecimal;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProductBacklogOperation;
-import scrummer.listener.OperationListener;
 import scrummer.listener.ProductBacklogListener;
-import scrummer.model.ProductBacklogModel;
-import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.ui.Util;
-import scrummer.uicomponents.SelectedTextField;
-import scrummer.uicomponents.TwoButtonDialog;
 
 /**
  * Remove some team from database
  */
 public class ProductBacklogChangeDialog 
-	extends TwoButtonDialog
+	extends ProductBacklogDialog
 	implements ProductBacklogListener {
 
 	/**
 	 * Constructor
 	 * 
 	 * @param owner owner form
+	 * @param pbiId product backlog item id
 	 */
-	public ProductBacklogChangeDialog(Frame owner)
+	public ProductBacklogChangeDialog(Frame owner, int pbiId)
 	{
-		super(owner, ModalityType.APPLICATION_MODAL);
-
-		setTitle(i18n.tr("Change product backlog item"));
+		super(owner);
+		_pbiId = pbiId;
 		
-		_productbacklogModel = Scrummer.getModels().getProductBacklogModel();
+		setTitle(i18n.tr("Change product backlog item"));
+				
 		_productbacklogModel.addProductBacklogListener(this);
 		
-		_productbacklogComboModel = _productbacklogModel.getPBIComboBoxModel();
+		_descriptionTextField.selectAll();
+		_descriptionTextField.setText(_productbacklogModel.getDescription(pbiId));
+		int sprintIndex = _productbacklogModel.getSprint(pbiId);
+		for (int i = 0; i < _sprintInput.getModel().getSize(); i++)
+		{
+			if (Integer.parseInt(_sprintProjectComboBoxModel.getValue(i)) == sprintIndex)
+			{
+				_sprintInput.setSelectedIndex(i);
+			}
+		}
+		_priorityTextField.setText(new Integer(_productbacklogModel.getPriority(pbiId)).toString());
+		_initialestimateTextField.setText(_productbacklogModel.getInitialEstimate(pbiId).toString());
+		_adjustmentfactorTextField.setText(_productbacklogModel.getAdjustmentFactor(pbiId).toString());
 		
+		
+		// _descriptionTextField = _productbacklogModel.
+		
+		/*
 		int k = 10;
 		Panel.setLayout(new GridLayout(8, 9, 10, 10));
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
@@ -67,28 +72,8 @@ public class ProductBacklogChangeDialog
 		_adjestimateInput = addEntry(i18n.tr("New adjusted estimate") + ":", "NewAdjEstimate");
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
-		
+		*/
 		OK.setText("Change");
-		setSize(new Dimension(350, 360));
-	}
-	
-	/** 
-	 * Add form entry(label + textbox)
-	 * 
-	 * @param labelText label text
-	 * @param textActionCmd text action command
-	 * @return added text field
-	 */
-	public JTextField addEntry(String labelText, String textActionCmd)
-	{
-		JLabel label = new JLabel(labelText);
-		
-		JTextField textBox = new SelectedTextField();
-		
-		Panel.add(label);
-		Panel.add(textBox);
-		
-		return textBox;
 	}
 	
 	@Override
@@ -96,6 +81,16 @@ public class ProductBacklogChangeDialog
 		
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
+			int sprintId = Integer.parseInt(_sprintProjectComboBoxModel.getElementAt(_sprintInput.getSelectedIndex()).toString());
+			_productbacklogModel.modify(
+				_pbiId,
+				sprintId,
+				_descriptionTextField.getText(),
+				Integer.parseInt(_priorityTextField.getText()),
+				new BigDecimal(_initialestimateTextField.getText()),
+				new BigDecimal(_adjustmentfactorTextField.getText()));
+			
+		/*	
 				String project = _projectInput.getText().trim();
 				String sprint = _sprintInput.getText().trim();
 				String description = _descInput.getText().trim();
@@ -144,7 +139,7 @@ public class ProductBacklogChangeDialog
 					}
 				}
 				if(priority.length() > 0)
-				{
+				{test
 					int selected = _pbiInput.getSelectedIndex();
 					if (selected != -1)
 					{
@@ -199,6 +194,7 @@ public class ProductBacklogChangeDialog
 				{
 					Util.showError(this, i18n.tr("PBI must be at least one character long."), i18n.tr("Error"));
 				}*/
+			
 		}
 		else
 		{
@@ -214,9 +210,10 @@ public class ProductBacklogChangeDialog
 		
 			switch (identifier)
 			{
-			case Project:
-				_productbacklogComboModel.refresh();
-				_pbiInput.setSelectedIndex(0);
+			case ProductBacklog:
+				
+				// _productbacklogComboModel.refresh();
+				// _pbiInput.setSelectedIndex(0);
 				setVisible(false);
 				break;
 			}
@@ -232,7 +229,7 @@ public class ProductBacklogChangeDialog
 		case Update:
 			switch (identifier)
 			{
-			case Project:
+			case ProductBacklog:
 				Util.showError(this, 
 					i18n.tr("An error has occurred when setting team name") + ": " + message, 
 					i18n.tr("Error"));
@@ -249,30 +246,12 @@ public class ProductBacklogChangeDialog
 		{
 			_productbacklogModel.removeProductBacklogListner(this);
 		}
-		else
-		{
-			if (_productbacklogComboModel.getSize() == 0)
-			{
-				_pbiInput.setEnabled(false);
-			}
-			else
-			{
-				_pbiInput.setEnabled(true);
-				_pbiInput.setSelectedIndex(0);
-			}
-		}
 		
 		super.setVisible(b);
 	}
 
-	/// product backlog model
-	private ProductBacklogModel _productbacklogModel;
-	/// all PBI in combo box
-	private PBIComboBoxModel _productbacklogComboModel;
-	/// team new name input
-	private JTextField _projectInput, _sprintInput,  _descInput, _priorityInput, _initialestimateInput, _adjfactorInput, _adjestimateInput;
-	/// team input combo box
-	private JComboBox _pbiInput;
+	/// pbi id, for which this form is showing data
+	private int _pbiId;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
