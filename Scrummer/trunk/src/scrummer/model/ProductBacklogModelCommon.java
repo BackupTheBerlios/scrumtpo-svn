@@ -1,5 +1,6 @@
 package scrummer.model;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -32,15 +33,15 @@ public class ProductBacklogModelCommon {
 	
 	/**
 	 * Insert into product backlog
-	 * @param project current project
-	 * @param sprint current sprint
+	 * 
+	 * @param projectId project into which to insert
+	 * @param sprintId current sprint
 	 * @param description description of product backlog item
 	 * @param priority priority of product backlog item
 	 * @param initial_estimate how many hour should be spent on item
 	 * @param adjustment_factor ratio of extra hours for item
-	 * @param adjusted_estimate max hours spent on item
 	 */
-	public void add(int project, int sprint, String description, int priority, int initial_estimate, float adjustment_factor, int adjusted_estimate)
+	public void add(int projectId, int sprintId, String description, int priority, BigDecimal initial_estimate, BigDecimal adjustment_factor)
 	{
 		
 		java.sql.Connection conn      = null;
@@ -50,16 +51,20 @@ public class ProductBacklogModelCommon {
 			 conn = _connectionModel.getConnection();
 			 String query =
 				"INSERT INTO PBI " +
-			 	"(Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor, PBI_adjusted_estimate) " +
-			 	"VALUES (?, ?, ?, ?, ?, ?, ?)";
+			 	"(" + DBSchemaModel.PBIProject + ", " +
+			 		  DBSchemaModel.PBISprint + ", " +
+			 		  DBSchemaModel.PBIDesc + ", " +
+			 		  DBSchemaModel.PBIPriority + ", " +
+			 		  DBSchemaModel.PBIIniEstimate + ", " +
+			 		  DBSchemaModel.PBIAdjFactor + ") " +
+			 	"VALUES (?, ?, ?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
-			 st.setInt(1, project);
-			 st.setInt(2, sprint);
+			 st.setInt(1, projectId);
+			 st.setInt(2, sprintId);
 			 st.setString(3, description);
 			 st.setInt(4, priority);
-			 st.setInt(5, initial_estimate);
-			 st.setFloat(6, adjustment_factor);
-			 st.setInt(7, adjusted_estimate);
+			 st.setBigDecimal(5, initial_estimate);
+			 st.setBigDecimal(6, adjustment_factor);
 			 st.execute();
 			 
 			 _operation.operationSucceeded(DataOperation.Insert, ProductBacklogOperation.ProductBacklog, "");
@@ -78,9 +83,10 @@ public class ProductBacklogModelCommon {
 	/**
 	 * Fetch entire product backlog table
 	 * 
+	 * @param projectId project
 	 * @return all rows
 	 */
-	public Vector<ObjectRow> fetchProductBacklogTable()
+	public Vector<ObjectRow> fetchProductBacklogTable(int projectId)
 	{
 		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel)
 		{
@@ -93,7 +99,16 @@ public class ProductBacklogModelCommon {
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT * FROM " + DBSchemaModel.PBITable);
+		q.queryResult(
+			"SELECT " + DBSchemaModel.PBIId + ", " +
+						DBSchemaModel.PBIDesc + ", " +
+						DBSchemaModel.PBIPriority + ", " +
+						DBSchemaModel.PBIIniEstimate + ", " +
+						DBSchemaModel.PBIAdjFactor + ", " +						
+					    DBSchemaModel.PBIIniEstimate + " * " + 
+						DBSchemaModel.PBIAdjFactor + " as " + DBSchemaModel.PBIAdjEstimate + ", " + 
+						DBSchemaModel.PBISprint + " " +
+			"FROM " + DBSchemaModel.PBITable + " WHERE " + DBSchemaModel.PBIProject + "='" + projectId + "'");
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();
@@ -102,6 +117,65 @@ public class ProductBacklogModelCommon {
 		{
 			return q.getResult();
 		}
+	}
+	
+	public Integer getSprint(int productId, int projectId)
+	{
+		return Integer.parseInt(getProductBacklog(productId, DBSchemaModel.PBISprint));
+	}
+	
+	public String getDescription(int productId, int projectId)	
+	{
+		return getProductBacklog(productId, DBSchemaModel.PBIDesc);
+	}
+	
+	public BigDecimal getInitialEstimate(int productId, int projectId)
+	{
+		return new BigDecimal(getProductBacklog(productId, DBSchemaModel.PBIIniEstimate));
+	}
+	
+	public BigDecimal getAdjustmentFactor(int productId, int projectId)
+	{
+		return new BigDecimal(getProductBacklog(productId, DBSchemaModel.PBIAdjFactor));
+	}
+	
+	public int getPriority(int productId, int projectId)
+	{
+		return Integer.parseInt(getProductBacklog(productId,DBSchemaModel.PBIPriority));
+	}
+	
+	/**
+	 * Fetch product backlog item 
+	 * 
+	 * @param productId product backlog item id
+	 * @param column required column
+	 * @return cell value
+	 */
+	private String getProductBacklog(int productId, String column)
+	{
+		ResultQuery<String> q = new ResultQuery<String>(_connectionModel)
+		{				
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				result.beforeFirst();
+				while (result.next())
+					setResult(result.getString(1));
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.ProductBacklog, 
+	        		i18n.tr("Could not set parameter."));
+			}
+		};
+		
+		q.queryResult(
+			"SELECT " + column + " " + 
+			"FROM " + DBSchemaModel.PBITable + " " +
+			"WHERE " + DBSchemaModel.PBIId + "='" + productId + "'");
+		
+		return q.getResult();
 	}
 	
 	/**
@@ -406,10 +480,48 @@ public class ProductBacklogModelCommon {
 			"WHERE " + DBSchemaModel.PBIId + "='" + id + "'");
 	}
 	
+	/**
+	 * Change one or more pbi entries
+	 * 
+	 * @param pbiId product backlog item
+	 * @param sprintId sprint
+	 * @param description product backlog description
+	 * @param priority priority
+	 * @param initial_estimate initial estimate
+	 * @param adjustment_factor adjustment factor
+	 */
+	public void change(int pbiId, int projectId, int sprintId, String description, int priority, BigDecimal initial_estimate, BigDecimal adjustment_factor) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, ProductBacklogOperation.ProductBacklog, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, ProductBacklogOperation.ProductBacklog, ex.getMessage());
+			}
+			
+		};
+				
+		q.query(
+			"UPDATE " + DBSchemaModel.PBITable + " " +
+			"SET " +  DBSchemaModel.PBISprint + "='" + sprintId + "', " +
+			 		  DBSchemaModel.PBIDesc + "='" + description + "', " +
+			 		  DBSchemaModel.PBIPriority + "='" + priority + "', " +
+			 		  DBSchemaModel.PBIIniEstimate + "='" + initial_estimate + "', " +
+			 		  DBSchemaModel.PBIAdjFactor + "='" + adjustment_factor + "'" +
+			"WHERE " + DBSchemaModel.PBIId + "='" + pbiId + "' AND " +
+					   DBSchemaModel.PBIProject + "='" + projectId + "'");
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operations.ProductBacklogOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
+	
 }
