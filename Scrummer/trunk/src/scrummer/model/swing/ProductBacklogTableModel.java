@@ -19,6 +19,7 @@ import scrummer.model.DBSchemaModel;
 import scrummer.model.DeveloperModelCommon;
 import scrummer.model.Models;
 import scrummer.model.ProductBacklogModelCommon;
+import scrummer.model.ProjectModel;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operation;
 
@@ -31,19 +32,20 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	 * Default constructor
 	 */
 	public ProductBacklogTableModel(ConnectionModel connectionModel,
-									ProductBacklogModelCommon productbacklogModelCommon) 
+									ProductBacklogModelCommon productbacklogModelCommon,
+									ProjectModel projectModel) 
 	{
 		super();
+		_projectModel = projectModel;
 		_productbacklogModelCommon = productbacklogModelCommon;
 		
 		_columns.add(i18n.tr("ID"));
-		_columns.add(i18n.tr("Project"));
-		_columns.add(i18n.tr("Sprint"));
 		_columns.add(i18n.tr("Description"));
 		_columns.add(i18n.tr("Priority"));
 		_columns.add(i18n.tr("Initial estimate"));
 		_columns.add(i18n.tr("Adjustment factor"));
 		_columns.add(i18n.tr("Adjusted estimate"));
+		_columns.add(i18n.tr("Sprint"));
 		
 		for (int i = 0; i < 8; i++)
 			_realColumns.add("");
@@ -66,37 +68,8 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	{
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
-		_realColumns = schemam.getColumns(DBSchemaModel.PBITable);
-		/*java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='" + PBI + "'";   
-            	        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            int i = 0;
-            res.beforeFirst();
-            while (res.next())
-            {
-            	_realColumns.set(i, res.getString(1));
-            	i++;
-            }
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
+		_realColumns = schemam.getColumns(DBSchemaModel.PBITable);		
+		_columnCount = _realColumns.size();
 	}
 	
 	/**
@@ -104,38 +77,13 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	 */
 	private void refreshTableData()
 	{
-		_rows = _productbacklogModelCommon.fetchProductBacklogTable();
+		_rows = _productbacklogModelCommon.fetchProductBacklogTable(_projectModel.getCurrentProjectId());
         _rowCount = _rows.size();
-        
-		/*java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = "SELECT * FROM " + PBI;
-        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            _rows = ObjectRow.fetchRows(res);
-            _rowCount = _rows.size();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 
 	@Override
 	public boolean isCellEditable(int row, int column) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -148,37 +96,6 @@ public class ProductBacklogTableModel extends DefaultTableModel
 		{
 			refresh();
 		}
-		/*String idColumnName = _realColumns.get(0);
-		String columnName = _realColumns.get(column+1);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"UPDATE " + PBI + " SET " + columnName + "='" + value.toString() + "' " + 
-            	"WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-           st = conn.createStatement();
-           st.execute(query);
-           
-           // update cell after all the fuss
-           refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Update, 
-        		ProductBacklogOperation.ProductBacklog, 
-        		i18n.tr("Could not set parameter."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 	
 	@Override
@@ -188,35 +105,6 @@ public class ProductBacklogTableModel extends DefaultTableModel
 		{
 			refresh();
 		}	
-		/*String idColumnName = _realColumns.get(0);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"DELETE FROM " + PBI + " WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-            st = conn.createStatement();
-            st.execute(query);
-           
-            // update cell after all the fuss
-            refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Remove, 
-        		ProductBacklogOperation.ProductBacklog, 
-        		i18n.tr("Could not remove product backlog item."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 
 	@Override
@@ -231,16 +119,21 @@ public class ProductBacklogTableModel extends DefaultTableModel
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		return _rows.get(row).get(column+1);
+		return _rows.get(row).get(column);
 	}
 
 	@Override
 	public String getColumnName(int column) {
-		return _columns.get(column + 1);
+		return _columns.get(column);
 	}
 	
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return String.class;
+	}
+
 	/// column count
-	private int _columnCount = 7;
+	private int _columnCount = 0;
 	/// row count
 	private int _rowCount = 0;
 	/// column names for display
@@ -251,6 +144,8 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
 	/// common developer model operations
 	private ProductBacklogModelCommon _productbacklogModelCommon;
+	/// project model
+	private ProjectModel _projectModel;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
