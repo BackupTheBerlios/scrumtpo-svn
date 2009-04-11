@@ -6,7 +6,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 
+import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.SelectedTextField;
 
 /**
@@ -32,13 +34,36 @@ public class FormBuilder {
 	 * 
 	 * @return added text field
 	 */
-	public JTextField addSelectedTextInput(String labelText, String textActionCmd)
+	public SelectedTextField addSelectedTextInput(String labelText, String textActionCmd)
 	{
 		_addedElements += 2;
 		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
 		
 		JLabel label = new JLabel(labelText);
-		JTextField textBox = new SelectedTextField();
+		SelectedTextField textBox = new SelectedTextField();
+		
+		_panel.add(label);
+		_panel.add(textBox);
+		
+		return textBox;
+	}
+	
+	/**
+	 * Add form entry(label + textbox)
+	 * 
+	 * @param labelText label text
+	 * @param textActionCmd text action command
+	 * @param formatter class used to format input field
+	 * 
+	 * @return added text field
+	 */
+	public SelectedFormattedTextField addSelectedFormattedTextInput(String labelText, String textActionCmd, AbstractFormatter formatter)
+	{
+		_addedElements += 2;
+		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
+		
+		JLabel label = new JLabel(labelText);
+		SelectedFormattedTextField textBox = new SelectedFormattedTextField(formatter);
 		
 		_panel.add(label);
 		_panel.add(textBox);
