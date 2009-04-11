@@ -442,15 +442,48 @@ public class SprintBacklogModelCommon
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
 				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Task, ex.getMessage());
+			}		
+		};
+		q.query("SELECT * FROM " + DBSchemaModel.Sprint_PBITable +
+				" WHERE " + DBSchemaModel.TaskId + " = " + id);
+		if(q.equals(null))
+			return false;
+		else
+			return true;
+	}
+	
+	/**
+	 * Fetch all sprints on some project
+	 * @param projectId project id
+	 * @return all sprint
+	 */
+	public Vector<Integer> fetchSprints(int projectId)
+	{
+		ResultQuery<Vector<Integer>> q = new ResultQuery<Vector<Integer>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				Vector<Integer> res = new Vector<Integer>();
+				result.beforeFirst();
+				while (result.next())
+				{
+					res.add(result.getInt(1));
+				}
+				setResult(res);
+				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Sprint, "");
 			}
-				
-			};
-			q.query("SELECT * FROM " + DBSchemaModel.Sprint_PBITable +
-					" WHERE " + DBSchemaModel.TaskId + " = " + id);
-			if(q.equals(null))
-				return false;
-			else
-				return true;
+
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(null);
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Sprint, ex.getMessage());
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.SprintId + " FROM " + DBSchemaModel.SprintTable + " " +
+			"WHERE " + DBSchemaModel.SprintProjectId + "='" + projectId + "'");
+		return q.getResult();
 	}
 	
 	/// connection model
@@ -460,3 +493,4 @@ public class SprintBacklogModelCommon
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }
+
