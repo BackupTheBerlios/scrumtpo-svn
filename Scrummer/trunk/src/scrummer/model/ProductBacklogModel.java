@@ -1,7 +1,10 @@
 package scrummer.model;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.listener.OperationListener;
@@ -27,7 +30,7 @@ public class ProductBacklogModel
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public ProductBacklogModel(ConnectionModel connectionModel)
+	public ProductBacklogModel(ConnectionModel connectionModel, ProjectModel projectModel)
 	{
 		if (connectionModel == null)
 		{
@@ -35,24 +38,33 @@ public class ProductBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
+		_projectModel = projectModel;
 		_productbacklogModelCommon = new ProductBacklogModelCommon(_connectionModel, _operation);
-		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon);
+		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon, projectModel);
 		_productbacklogComboBoxModel = new PBIComboBoxModel(_productbacklogModelCommon);
 	}
 	
 	/**
 	 * Insert into Product Backlog
-	 * @param project current project
-	 * @param sprint current sprint
+	 * 
+	 * @param sprintId current sprint
 	 * @param description description of product backlog item
 	 * @param priority priority of product backlog item
 	 * @param initial_estimate how many hour should be spent on item
 	 * @param adjustment_factor ratio of extra hours for item
 	 * @param adjusted_estimate max hours spent on item
 	 */
-	public void add(int project, int sprint, String description, int priority, int initial_estimate, float adjustment_factor, int adjusted_estimate)
+	public void add(int sprintId, String description, int priority, BigDecimal initial_estimate, BigDecimal adjustment_factor)
 	{
-		_productbacklogModelCommon.add(project, sprint, description, priority, initial_estimate, adjustment_factor, adjusted_estimate);
+		int projectId = _projectModel.getCurrentProjectId();
+		_productbacklogModelCommon.add(projectId, sprintId, description, priority, initial_estimate, adjustment_factor);
+		_productbacklogTableModel.refresh();
+	}
+	
+	public void modify(int pbiId, int sprintId, String description, int priority, BigDecimal initial_estimate, BigDecimal adjustment_factor) {
+		int projectId = _projectModel.getCurrentProjectId();
+		_productbacklogModelCommon.change(pbiId, projectId, sprintId, description, priority, initial_estimate, adjustment_factor);
+		_productbacklogTableModel.refresh();
 	}
 	
 	/**
@@ -162,6 +174,31 @@ public class ProductBacklogModel
 		_productbacklogModelCommon.setPBIAdjEstimate(pbiid, newAdjestimate);
 	}
 	
+	public Integer getSprint(int productId)
+	{
+		return _productbacklogModelCommon.getSprint(productId, _projectModel.getCurrentProjectId());
+	}
+	
+	public String getDescription(int productId)	
+	{
+		return _productbacklogModelCommon.getDescription(productId, _projectModel.getCurrentProjectId());
+	}
+	
+	public BigDecimal getInitialEstimate(int productId)
+	{
+		return _productbacklogModelCommon.getInitialEstimate(productId, _projectModel.getCurrentProjectId());
+	}
+	
+	public BigDecimal getAdjustmentFactor(int productId)
+	{
+		return _productbacklogModelCommon.getAdjustmentFactor(productId, _projectModel.getCurrentProjectId());
+	}
+	
+	public int getPriority(int productId)
+	{
+		return _productbacklogModelCommon.getPriority(productId, _projectModel.getCurrentProjectId());
+	}
+
 	/// PBI combo box model
 	private PBIComboBoxModel _productbacklogComboBoxModel;
 	/// common developer related functionality
@@ -170,6 +207,9 @@ public class ProductBacklogModel
 	private ConnectionModel _connectionModel;
 	/// product backlog table model
 	private ProductBacklogTableModel _productbacklogTableModel;
+	/// project model
+	private ProjectModel _projectModel;
 	/// product backlog operation
 	private Operations.ProductBacklogOperation _operation = new Operations.ProductBacklogOperation();
+
 }
