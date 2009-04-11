@@ -2,6 +2,12 @@ package scrummer;
 
 import java.awt.Dimension;
 import java.io.File;
+
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 import scrummer.model.LoggingModel;
@@ -28,6 +34,20 @@ public class Scrummer {
         } catch (Exception ex) {
             // handle the error
         }		
+                
+    	try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+        
+        
 		
         _logger = new LoggingModel();
         IO.setLogger(_logger);
