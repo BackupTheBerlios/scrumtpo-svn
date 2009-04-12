@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -37,7 +39,8 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class ProjectOpenDialog extends TwoButtonDialog 
 	implements MouseListener, 
-			   ProjectListener {
+			   ProjectListener,
+			   KeyListener {
 
 	/**
 	 * Constructor
@@ -74,6 +77,7 @@ public class ProjectOpenDialog extends TwoButtonDialog
 		list.setFixedCellHeight(20);
 		list.setVisibleRowCount(5);
 		list.addMouseListener(this);
+		list.addKeyListener(this);
 		
 		Panel.add(list);
 		
@@ -184,7 +188,19 @@ public class ProjectOpenDialog extends TwoButtonDialog
 		}
 	}
 	
-	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			OK.doClick();
+		}		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {}
+
+	@Override
+	public void keyTyped(KeyEvent e) {}
 	
 	/// project list
 	private JList _projectList;
@@ -196,5 +212,5 @@ public class ProjectOpenDialog extends TwoButtonDialog
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id 
 	private static final long serialVersionUID = 456365932759827558L;
-
+	
 }
