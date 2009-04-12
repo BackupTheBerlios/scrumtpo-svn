@@ -7,24 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
-import com.sun.org.apache.xml.internal.security.utils.I18n;
-
 import scrummer.Scrummer;
-import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.ProductBacklogOperation;
-import scrummer.listener.ProductBacklogListener;
 import scrummer.model.ProductBacklogModel;
 import scrummer.model.swing.ProductBacklogTableModel;
 import scrummer.ui.MainFrame;
@@ -87,6 +78,7 @@ public class ProductBacklogPage
 		tableScroll.setBackground(Color.WHITE);
 		table.addMouseListener(this);
 		_productBacklogTable = table;
+		table.setAdjacentComponents(addButton, removeButton);
 				
 		box.add(toolbar);
 		box.add(tableScroll);
@@ -97,8 +89,6 @@ public class ProductBacklogPage
 		table.validate();
 		setBackground(Color.WHITE);
 		validate();
-		
-		setFocusTraversalPolicy(new NiceTable.FocusPolicy());
 	}
 	
 	/**
@@ -188,5 +178,4 @@ public class ProductBacklogPage
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = -3054683430416992071L;
-	
 }
