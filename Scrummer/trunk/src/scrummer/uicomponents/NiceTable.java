@@ -5,8 +5,11 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.DefaultFocusTraversalPolicy;
 import java.awt.Rectangle;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Vector;
 
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -40,7 +43,7 @@ public class NiceTable extends JTable {
 	            setBackground(_color);
 	        else
 	            setBackground(null);
-	
+	      
 	        super.getTableCellRendererComponent(table, value, selected, focused, row, column);
 	
 	        return this;
@@ -89,30 +92,75 @@ public class NiceTable extends JTable {
 		OddRenderer renderer = new OddRenderer(new Color(200, 200, 255, 75));
 		renderer.setOpaque(true);
 		setDefaultRenderer(Object.class, renderer);
-		setFocusCycleRoot(true);
-		setFocusTraversalPolicy(new FocusPolicy());
+		setRowSelectionAllowed(true);
 	}
 	
-	public static class FocusPolicy extends DefaultFocusTraversalPolicy
-	{
-		public FocusPolicy()
-		{}
+	@Override
+	public void changeSelection(int rowIndex, int columnIndex, boolean toggle,
+			boolean extend) {
+				
+		boolean changed = false;
 		
-		@Override
-		public Component getComponentAfter(Container container,
-				Component component) {
+		if (rowIndex != -1)
+		{
+			int lastRow = getModel().getRowCount() - 1;
+			int lastColumn = getModel().getColumnCount() - 1;
 			
-			if (component == getLastComponent(container))
+			// if jumped from last to first cell using tab
+			if ((rowIndex == 0) && (columnIndex == 0) &&
+				(_previousRowIndex == lastRow) && 
+				(_previousColumnIndex == lastColumn))
 			{
-				return super.getFirstComponent(container.getParent());
+				if (_previousComponent != null)
+				{
+					_previousComponent.requestFocus();
+					changed = true;
+				}
 			}
-			else
+			// if jumped from first to last cell using shift+tab
+			else if ((rowIndex == lastRow) && 
+					 (columnIndex == lastColumn) &&
+					 (_previousRowIndex == 0) && 
+					 (_previousColumnIndex == 0))
 			{
-				return super.getComponentAfter(container, component);
+				if (_nextComponent != null)
+				{					
+					_nextComponent.requestFocus();
+					changed = true;
+				}
 			}
-		}	
+		}
+		
+		super.changeSelection(rowIndex, columnIndex, toggle, extend);
+		if (changed)
+		{
+			clearSelection();	
+		}
+		
+		_previousRowIndex = rowIndex;
+		_previousColumnIndex = columnIndex;
 	}
 	
+	/**
+	 * Set adjacent components 
+	 * 
+	 * @param previous previous component
+	 * @param next next component
+	 */
+	public void setAdjacentComponents(JComponent previous, JComponent next)
+	{
+		_previousComponent = previous;
+		_nextComponent = next;
+	}
+
+	/// last selected cell row index
+	private int _previousRowIndex = -1;
+	/// last selected cell column index
+	private int _previousColumnIndex = -1;
+	/// previous component to be focused
+	private JComponent _previousComponent = null;
+	/// after table component to be focused
+	private JComponent _nextComponent = null;
 	/// serialization id
 	private static final long serialVersionUID = 5498309926057211075L;
 }
