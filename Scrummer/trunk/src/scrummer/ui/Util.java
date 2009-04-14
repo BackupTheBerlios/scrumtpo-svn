@@ -6,16 +6,19 @@ import java.awt.GridBagConstraints;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
-
-import org.xnap.commons.i18n.I18n;
+import scrummer.Scrummer;
+import scrummer.model.NavigationModel;
+import scrummer.model.ResourceModel;
 
 /**
  * Various useful user interface utility functions
@@ -123,4 +126,45 @@ public class Util {
     	JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
     }
    
+	/**
+	 * Add link(growing button) to some container
+	 * 
+	 * @param component container
+	 * @param link link to which it points
+	 */
+	public static scrummer.ui.Link addLink(JComponent component, NavigationModel.Link link)
+	{
+		ResourceModel res = Scrummer.getModels().getResourceModel();
+		try {
+			BufferedImage image = res.get(ResourceModel.Image.Sun);
+			switch (link)
+			{
+			case Project:
+				image = res.get(ResourceModel.Image.Project);
+				break;
+			case ProductBacklog:
+				image = res.get(ResourceModel.Image.ProductBacklog);
+				break;
+			case SprintBacklog:
+				image = res.get(ResourceModel.Image.SprintBacklog);
+				break;
+			}
+			
+			scrummer.ui.Link linkControl = 
+				new scrummer.ui.Link(
+					link,
+					image);
+			linkControl.setBorderGrowth(0, 8, 8);
+			linkControl.setPictureSideOffset(36);
+			linkControl.setPictureTopOffset(5);
+			linkControl.setPreferredSize(new Dimension(64 + 72,76));
+			linkControl.setMaximumSize(new Dimension(64 + 72,76));
+			linkControl.setTextBottomOffset(4);
+			component.add(linkControl);
+			return linkControl;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
