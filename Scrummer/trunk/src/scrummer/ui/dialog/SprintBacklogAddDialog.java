@@ -40,7 +40,7 @@ public class SprintBacklogAddDialog
 	 * Constructor
 	 * @param owner owner of this dialog
 	 */
-	public SprintBacklogAddDialog(JFrame owner) throws SQLException
+	public SprintBacklogAddDialog(JFrame owner)
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title

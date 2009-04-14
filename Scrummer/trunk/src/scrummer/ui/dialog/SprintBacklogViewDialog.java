@@ -20,7 +20,6 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
-import scrummer.listener.OperationListener;
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.SprintBacklogTableModel;
