@@ -486,11 +486,39 @@ public class SprintBacklogModelCommon
 		return q.getResult();
 	}
 	
+	/**
+	 * Fetch sprint descriptions
+	 * 
+	 * @param projectId project id
+	 * @return id/description pairs
+	 */
+	public Vector<IdValue> fetchSprintDescriptions(int projectId) {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));
+				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Sprint, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(null);
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Sprint, ex.getMessage());
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.SprintId + ", " + DBSchemaModel.SprintDescription + " FROM " + DBSchemaModel.SprintTable + " " +
+			"WHERE " + DBSchemaModel.SprintProjectId + "='" + projectId + "'");
+		return q.getResult();
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operations.SprintBacklogOperation _operation;
 	/// translation class field
-	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
+	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());	
 }
 
