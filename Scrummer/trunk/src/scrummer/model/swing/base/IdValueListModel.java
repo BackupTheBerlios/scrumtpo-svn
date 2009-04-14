@@ -89,6 +89,11 @@ public class IdValueListModel extends DefaultListModel {
 		return size();
 	}
 	
+	@Override
+	public boolean isEmpty() {
+		return _values.isEmpty();
+	}
+
 	/**
 	 * @return employees
 	 */
