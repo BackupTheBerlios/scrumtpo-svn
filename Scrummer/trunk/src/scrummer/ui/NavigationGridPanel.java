@@ -24,6 +24,7 @@ import scrummer.model.ProjectModel;
 import scrummer.model.ResourceModel;
 import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
+import scrummer.ui.page.SprintBacklogPage;
 
 /**
  * Navigation grid is a panel that contains a fixed grid i.e. it doesn't scale
@@ -141,8 +142,14 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	//iteracijski
 	private void showSprintBacklog(JPanel panel) {
 		
-		panel.setLayout(new BorderLayout());
+		panel.setLayout(new GridLayout(1,1));
 		
+		SprintBacklogPage page = new SprintBacklogPage(_mainFrame);
+		panel.add(page);
+		
+		/*		
+		panel.setLayout(new BorderLayout());
+
 		int length = 280;
 		// distance between two rows vertically
 		int vertAdd = 30;
@@ -155,10 +162,10 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		box.setAlignmentY(CENTER_ALIGNMENT);
 		box.setBackground(Color.WHITE);
 		
-		addLink(box, NavigationModel.Link.SprintBacklogTasks);
-		addLink(box, NavigationModel.Link.SprintBacklogMetric);
-		addLink(box, NavigationModel.Link.SprintBacklogAbsent);
-		addLink(box, NavigationModel.Link.SprintBacklogHurdles);
+		Util.addLink(box, NavigationModel.Link.SprintBacklogTasks);
+		Util.addLink(box, NavigationModel.Link.SprintBacklogMetric);
+		Util.addLink(box, NavigationModel.Link.SprintBacklogAbsent);
+		Util.addLink(box, NavigationModel.Link.SprintBacklogHurdles);
 		
 		box.setMaximumSize(new Dimension(length, 150 + vertAdd));
 		
@@ -170,7 +177,8 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		Box vertBox = new Box(BoxLayout.Y_AXIS);
 		vertBox.add(horCentreBox);
 		
-		panel.add(vertBox, BorderLayout.CENTER);	
+		panel.add(vertBox, BorderLayout.CENTER);
+		*/	
 	}
 
 	private void showProject(JPanel panel) {
@@ -198,9 +206,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		box.setAlignmentX(CENTER_ALIGNMENT);
 		box.setBackground(Color.WHITE);
 		
-		addLink(box, NavigationModel.Link.Project);
-		addLink(box, NavigationModel.Link.ProductBacklog);
-		addLink(box, NavigationModel.Link.SprintBacklog);
+		Util.addLink(box, NavigationModel.Link.Project);
+		Util.addLink(box, NavigationModel.Link.ProductBacklog);
+		Util.addLink(box, NavigationModel.Link.SprintBacklog);
 		
 		box.setMaximumSize(new Dimension(100, 100));
 		box.setMaximumSize(new Dimension(1600, 100));
@@ -233,45 +241,6 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		}
 		
 		return _header;
-	}
-	
-	/**
-	 * Add link to some container
-	 * @param component container
-	 * @param link link to which it points
-	 */
-	private void addLink(JComponent component, NavigationModel.Link link)
-	{
-		ResourceModel res = Scrummer.getModels().getResourceModel();
-		try {
-			BufferedImage image = res.get(ResourceModel.Image.Sun);
-			switch (link)
-			{
-			case Project:
-				image = res.get(ResourceModel.Image.Project);
-				break;
-			case ProductBacklog:
-				image = res.get(ResourceModel.Image.ProductBacklog);
-				break;
-			case SprintBacklog:
-				image = res.get(ResourceModel.Image.SprintBacklog);
-				break;
-			}
-			
-			scrummer.ui.Link linkControl = 
-				new scrummer.ui.Link(
-					link,
-					image);
-			linkControl.setBorderGrowth(0, 8, 8);
-			linkControl.setPictureSideOffset(36);
-			linkControl.setPictureTopOffset(5);
-			linkControl.setPreferredSize(new Dimension(64 + 72,76));
-			linkControl.setMaximumSize(new Dimension(64 + 72,76));
-			linkControl.setTextBottomOffset(4);
-			component.add(linkControl);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	/**
