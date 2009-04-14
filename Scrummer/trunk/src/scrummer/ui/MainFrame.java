@@ -110,7 +110,7 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("Change impediment"), KeyEvent.VK_C, "ChangeImpediment");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
-		//addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
+		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Daily scrum meeting"), KeyEvent.VK_Z, "DailyScrumMeet");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
