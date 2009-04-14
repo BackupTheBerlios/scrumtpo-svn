@@ -1,11 +1,11 @@
 package scrummer.model;
 
-import scrummer.Scrummer;
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
+import scrummer.model.swing.SprintDescriptionListModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.util.Operations;
@@ -50,6 +50,8 @@ public class SprintBacklogModel
 			new PBIComboBoxModel(_pbiModelCommon);
 		_sprintProjectComboBoxModel = 
 			new SprintProjectComboBoxModel(_sprintbacklogModelCommon, projectModel);
+		_sprintDescriptionListModel =
+			new SprintDescriptionListModel(_sprintbacklogModelCommon, projectModel);
 	}
 	
 	/**
@@ -69,56 +71,6 @@ public class SprintBacklogModel
 	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
 	{
 		_sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
-		/*java.sql.Connection conn      = null;
-		java.sql.PreparedStatement st = null;
-		ResultSet res = null;
-		try {
-			 conn = _connectionModel.getConnection();
-			 String query1 =
-				"INSERT INTO Task " +
-			 	"(Employee_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) " +
-			 	"VALUES (?, ?, ?, ?, ?, ?)";
-			 st = conn.prepareStatement(query1);
-			 st.setInt(1, employee);
-			 st.setInt(2, task_status);
-			 st.setInt(3, task_type);
-			 st.setString(4, task_desc);
-			 st.setString(5, task_date);
-			 st.setString(6, task_active);
-			 st.execute();
-			 
-			 st = null;
-			 String query2 = 
-				 "SELECT MAX(Task_id) FROM Task";
-			 st = conn.prepareStatement(query2);
-			 int task_id = Integer.parseInt(st.getResultSet().toString());
-			 
-			 st = null;
-			 String query3 =
-				 "INSERT INTO Sprint_PBI " +
-				 "(PBI_id, Task_id, Sprint_id, Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped)" +
-				 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-			 st = conn.prepareStatement(query3);
-			 st.setInt(1, pbi);
-			 st.setInt(2, task_id);
-			 st.setInt(3, sprint);
-			 st.setInt(4, employee);
-			 st.setInt(5, hours_spent);
-			 st.setInt(6, hours_remain);
-			 st.setInt(7, nbopenimped);
-			 st.setInt(8, nbclosedimped);
-			 
-			 _sprintbacklogOp.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.SprintBacklog, "");
-		} catch (SQLException e) {
-			_sprintbacklogOp.operationFailed(DataOperation.Insert, SprintBacklogOperation.SprintBacklog, e.getMessage());
-			e.printStackTrace();
-		}
-		finally
-		{
-			res  = _connectionModel.close(res);
-			st   = _connectionModel.close(st);
-			conn = _connectionModel.close(conn);
-		}*/
 	}
 	
 	/**
@@ -179,6 +131,10 @@ public class SprintBacklogModel
 		return _pbiComboBoxModel;
 	}
 	
+	public SprintDescriptionListModel getSprintDescriptionListModel() {
+		return _sprintDescriptionListModel;
+	}
+	
 	public void setTaskProp(int taskId, int pbi_id, String newSprint, int emp_id) {
 		_sprintbacklogModelCommon.setTaskProp(taskId, pbi_id, newSprint, emp_id);	
 	}
@@ -210,8 +166,12 @@ public class SprintBacklogModel
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// model that displays sprint id's on only one project
 	private SprintProjectComboBoxModel _sprintProjectComboBoxModel;
+	/// sprint descriptiona list model
+	private SprintDescriptionListModel _sprintDescriptionListModel;
 	/// developer operation
 	private Operations.SprintBacklogOperation _operation = new Operations.SprintBacklogOperation();
+	/// developer operations
 	private Operations.DeveloperOperation _devOperation = new Operations.DeveloperOperation();
+	/// product backlog item operations
 	private Operations.ProductBacklogOperation _pbiOperation = new Operations.ProductBacklogOperation();
 }
