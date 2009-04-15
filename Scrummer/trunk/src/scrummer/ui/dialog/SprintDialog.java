@@ -76,6 +76,17 @@ public class SprintDialog extends TwoButtonDialog implements SprintBacklogListen
 	@Override
 	public void operationFailed(DataOperation type, SprintBacklogOperation identifier, String message) {}
 	
+	@Override
+	public void setVisible(boolean b) {
+	
+		if (!b)
+		{
+			_sprintBacklogModel.removeSprintBacklogListener(this);
+		}
+		
+		super.setVisible(b);
+	}
+
 	/// sprint backlog model
 	protected SprintBacklogModel _sprintBacklogModel;
 	/// various input fields
