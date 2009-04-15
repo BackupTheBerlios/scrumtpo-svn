@@ -2,6 +2,9 @@ package scrummer.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -49,27 +52,7 @@ public class SprintBacklogModelCommon
          ResultSet res = null;
          
          try {
-        	 conn = _connectionModel.getConnection();
-        	 /*String query1 = 
-        		 "INSERT INTO " + DBSchemaModel.TaskTable + " " +
-        		 "(" + DBSchemaModel.EmployeeId + "," + 
-        		 DBSchemaModel.TaskStatusId + "," + 
-        		 DBSchemaModel.TaskTypeId + "," +
-        		 DBSchemaModel.TaskDescription + "," +
-        		 DBSchemaModel.TaskDate + "," +
-        		 DBSchemaModel.TaskActive + ") " +
-        		 "VALUES (?, ?, ?, ?, ?, ?)";
-		 
-        	 st = conn.prepareStatement(query1);
-        	 st.setInt(1, employee);
-        	 st.setInt(2, task_status);
-        	 st.setInt(3, task_type);
-        	 st.setString(4, task_desc);
-        	 st.setString(5, task_date);
-        	 st.setString(6, task_active);
-        	 st.execute();
-		 
-        	 st = null;*/
+        	 conn = _connectionModel.getConnection();        	 
         	 String query2 = 
         		 "SELECT MAX(Task_id) AS 'maxid' FROM Task";
         	 st = conn.prepareStatement(query2);
@@ -514,11 +497,280 @@ public class SprintBacklogModelCommon
 		return q.getResult();
 	}
 	
+	/**
+	 * Add sprint to project
+	 * 
+	 * @param projectId project id
+	 * @param description sprint description
+	 * @param teamId team id
+	 * @param startDate starting date
+	 * @param endDate ending date
+	 * @param length sprint length
+	 * @param estimated estimated sprint end
+	 */
+	public boolean addSprint(int projectId, String description, int teamId, Date startDate, Date endDate, int length, Date estimated) {
+		
+		boolean ret = false;
+		java.sql.Connection conn      = null;
+        java.sql.PreparedStatement st = null;
+        ResultSet res = null;
+         
+        try {
+        	conn = _connectionModel.getConnection();        	         	
+
+        	String query =
+        		"INSERT INTO " + DBSchemaModel.SprintTable + " " +
+        		"(" + DBSchemaModel.SprintProjectId + "," + 
+        		 	  DBSchemaModel.TeamId + "," +
+        		 	  DBSchemaModel.SprintDescription + "," +
+        		 	  DBSchemaModel.SprintBegin + "," +
+        		 	  DBSchemaModel.SprintEnd + "," +
+        		 	  DBSchemaModel.SprintLength + "," +
+        		 	  DBSchemaModel.SprintEstimated + ") " +
+        		"VALUES (?, ?, ?, ?, ?, ?, ?)";
+		 
+        	st = conn.prepareStatement(query);
+        	st.setInt(1, projectId);
+        	st.setInt(2, teamId);
+        	st.setString(3, description);
+        	st.setDate(4, new java.sql.Date(startDate.getTime()));
+        	st.setDate(5, new java.sql.Date(endDate.getTime()));
+        	st.setInt(6, length);
+        	st.setDate(7, new java.sql.Date(estimated.getTime()));
+        	st.execute();
+        	 
+        	ret = true;
+        	_operation.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.Sprint, "");
+	
+        } catch (SQLException e) {
+        	_operation.operationFailed(DataOperation.Insert, SprintBacklogOperation.Sprint, e.getMessage());
+        	e.printStackTrace();
+        } finally {
+        	res  = _connectionModel.close(res);
+        	st   = _connectionModel.close(st);
+        	conn = _connectionModel.close(conn); 
+        }
+        return ret;
+	}	
+	
+	/**
+	 * Remove sprint from project
+	 * 
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return true if sprint removed, false otherwise
+	 */
+	public boolean removeSprint(int projectId, int sprintId)
+	{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{	
+			@Override
+			public void process() {
+				setResult(true);
+				_operation.operationSucceeded(DataOperation.Remove, SprintBacklogOperation.Sprint, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, SprintBacklogOperation.Sprint, 
+	        		i18n.tr("Could not remove Sprint Backlog item."));
+			}
+		};
+		q.query("DELETE FROM " + DBSchemaModel.SprintTable + " " + 
+				"WHERE " + DBSchemaModel.SprintProjectId + "='" + projectId + "'" + " " +
+				"AND " + DBSchemaModel.SprintId + "='" + sprintId + "'");
+		return q.getResult();
+	}
+	
+	/**
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @retur sprint description
+	 */
+	public String getSprintDescription(int projectId, int sprintId)
+	{
+		return getSprintCell(projectId, sprintId, DBSchemaModel.SprintDescription);
+	}
+	
+	/**
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return team id
+	 */
+	public int getTeam(int projectId, int sprintId)
+	{
+		return Integer.parseInt(getSprintCell(projectId, sprintId, DBSchemaModel.SprintTeamId));
+	}
+	
+	/**
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return starting date
+	 */
+	public Date getBeginDate(int projectId, int sprintId) {		
+		java.sql.Date ret = getDateSprintCell(projectId, sprintId, DBSchemaModel.SprintBegin);
+		return (ret != null) ? new Date(ret.getTime()) : null;
+	}
+	
+	/**
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return sprint end date
+	 */
+	public Date getEndDate(int projectId, int sprintId) {
+		java.sql.Date ret = getDateSprintCell(projectId, sprintId, DBSchemaModel.SprintEnd);
+		return (ret != null) ? new Date(ret.getTime()) : null;
+	}
+	
+	/**
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return sprint length
+	 */
+	public int getSprintLength(int projectId, int sprintId)
+	{
+		return Integer.parseInt(getSprintCell(projectId, sprintId, DBSchemaModel.SprintLength));
+	}
+	
+	/**
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return sprint estimated end date
+	 */
+	public Date getSprintEstimated(int projectId, int sprintId) {		
+		java.sql.Date ret = getDateSprintCell(projectId, sprintId, DBSchemaModel.SprintEstimated);
+		return (ret != null) ? new Date(ret.getTime()) : null;
+	}
+	
+	/**
+	 * Fetch sprint cell given a primary key and column
+	 * 
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @param column column name
+	 * @return cell
+	 */
+	public String getSprintCell(int projectId, int sprintId, String column)
+	{
+		ResultQuery<String> q = new ResultQuery<String>(_connectionModel)
+		{				
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				result.beforeFirst();
+				while (result.next())
+				{
+					setResult(result.getString(1));
+				}
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Sprint, 
+	        		i18n.tr("Could not set parameter."));
+			}
+		};
+		
+		q.queryResult(
+			"SELECT " + column + " " + 
+			"FROM " + DBSchemaModel.SprintTable + " " +
+			"WHERE " + DBSchemaModel.SprintProjectId + "='" + projectId + "'" + " " +
+			"AND " + DBSchemaModel.SprintId + "='" + sprintId + "'");
+		
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch sprint cell given a primary key and column
+	 * 
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @param column column name
+	 * @return cell
+	 */
+	public java.sql.Date getDateSprintCell(int projectId, int sprintId, String column)
+	{
+		ResultQuery<java.sql.Date> q = new ResultQuery<java.sql.Date>(_connectionModel)
+		{				
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				result.beforeFirst();
+				while (result.next())
+				{
+					setResult(result.getDate(1));
+				}
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(null);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Sprint, 
+	        		i18n.tr("Could not set parameter."));
+			}
+		};
+		
+		q.queryResult(
+			"SELECT " + column + " " + 
+			"FROM " + DBSchemaModel.SprintTable + " " +
+			"WHERE " + DBSchemaModel.SprintProjectId + "='" + projectId + "'" + " " +
+			"AND " + DBSchemaModel.SprintId + "='" + sprintId + "'");
+		
+		return q.getResult();
+	}
+	
+	/**
+	 * Update sprint information
+	 * 
+	 * @param projectId project
+	 * @param sprintId sprint id
+	 * @param teamId team id
+	 * @param description sprint description
+	 * @param startDate sprint starting date
+	 * @param endDate sprint ending date
+	 * @param estimated sprint estimated end date
+	 * @param length sprint length
+	 */
+	public boolean updateSprint(int projectId, int sprintId, int teamId, String description, Date startDate, Date endDate, Date estimated, int length) {
+	
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				setResult(true);
+				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.Sprint, "");
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.Sprint, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + DBSchemaModel.SprintTable + " " +
+			"SET " + DBSchemaModel.SprintDescription + "='" + description + "', " +
+					 DBSchemaModel.SprintTeamId + "='" + teamId + "', " +
+					 DBSchemaModel.SprintBegin + "='" + new java.sql.Date(startDate.getTime()) + "', " +
+					 DBSchemaModel.SprintEnd + "='" + new java.sql.Date(endDate.getTime()) + "', " +
+					 DBSchemaModel.SprintEstimated + "='" + new java.sql.Date(estimated.getTime()) + "', " +
+					 DBSchemaModel.SprintLength + "='" + length + "' " +
+			"WHERE " + DBSchemaModel.ProjectId + "='" + projectId + "'" + " AND " +
+					   DBSchemaModel.SprintId + "='" + sprintId + "'");
+		
+		return q.getResult();
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operations.SprintBacklogOperation _operation;
 	/// translation class field
-	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());	
+	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
+	
+	
 }
 

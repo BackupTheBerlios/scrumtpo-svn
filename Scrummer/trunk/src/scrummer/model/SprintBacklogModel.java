@@ -1,5 +1,7 @@
 package scrummer.model;
 
+import java.util.Date;
+
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
@@ -32,6 +34,7 @@ public class SprintBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
+		_projectModel = projectModel;
 		_sprintbacklogModelCommon = 
 			new SprintBacklogModelCommon(_connectionModel, _operation);
 		_sprintbacklogTableModel = 
@@ -71,6 +74,41 @@ public class SprintBacklogModel
 	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
 	{
 		_sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
+	}
+	
+	/**
+	 * Add new sprint to current project
+	 * 
+	 * @param text sprint description
+	 * @param teamId team id
+	 * @param startDate sprint start date
+	 * @param endDate sprint end date
+	 * @param estimated estimated sprint end
+	 * @param length sprint length
+	 * @param estimated estimated sprint end
+	 */
+	public void addSprint(String description, int teamId, Date startDate, Date endDate, int length, Date estimated) {
+		int projectId = _projectModel.getCurrentProjectId(); 
+		if (_sprintbacklogModelCommon.addSprint(projectId, description, teamId, startDate, endDate, length, estimated))
+		{
+			_sprintDescriptionListModel.refresh();
+			_sprintProjectComboBoxModel.refresh();
+		}
+	}
+	
+	/**
+	 * Remove sprint from project
+	 * 
+	 * @param sprintId sprint id
+	 */
+	public void removeSprint(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		if (_sprintbacklogModelCommon.removeSprint(projectId, sprintId))
+		{
+			_sprintDescriptionListModel.refresh();
+			_sprintProjectComboBoxModel.refresh();
+		}
 	}
 	
 	/**
@@ -143,9 +181,89 @@ public class SprintBacklogModel
 		_sprintbacklogModelCommon.setTaskMeasures(id, day , sh, rh, oi, ci);
 	}
 	
-	public boolean existsTaskInSBI(int id) 
+	public boolean existsTaskInSBI(int id)
 	{
 		return _sprintbacklogModelCommon.existsTaskInSBI(id);
+	}
+	
+	/**
+	 * @param sprintId sprint id
+	 * @retur sprint description
+	 */
+	public String getSprintDescription(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		return _sprintbacklogModelCommon.getSprintDescription(projectId, sprintId);
+	}
+	
+	/**
+	 * @param sprintId sprint id
+	 * @return team id
+	 */
+	public int getTeam(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		return _sprintbacklogModelCommon.getTeam(projectId, sprintId);
+	}
+	
+	/**
+	 * @param sprintId sprint id
+	 * @return starting date
+	 */
+	public Date getBeginDate(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		return _sprintbacklogModelCommon.getBeginDate(projectId, sprintId); 
+	}
+	
+	/**
+	 * @param sprintId sprint id
+	 * @return sprint end date
+	 */
+	public Date getEndDate(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		return _sprintbacklogModelCommon.getEndDate(projectId, sprintId);
+	}
+	
+	/**
+	 * @param sprintId sprint id
+	 * @return sprint length
+	 */
+	public int getSprintLength(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		return _sprintbacklogModelCommon.getSprintLength(projectId, sprintId);
+	}
+	
+	/**
+	 * @param sprintId sprint id
+	 * @return sprint estimated end date
+	 */
+	public Date getSprintEstimated(int sprintId)
+	{
+		int projectId = _projectModel.getCurrentProjectId();
+		return _sprintbacklogModelCommon.getSprintEstimated(projectId, sprintId);
+	}
+	
+	/**
+	 * Update sprint information
+	 * 
+	 * @param sprintId sprint id
+	 * @param teamId team id
+	 * @param description sprint description
+	 * @param startDate sprint starting date
+	 * @param endDate sprint ending date
+	 * @param estimated sprint estimated end date
+	 * @param length sprint length
+	 */
+	public void updateSprint(int sprintId, int teamId, String description, Date startDate, Date endDate, Date estimated, int length) {
+		int projectId = _projectModel.getCurrentProjectId();
+		if (_sprintbacklogModelCommon.updateSprint(projectId, sprintId, teamId, description, startDate, endDate, estimated, length))
+		{
+			_sprintDescriptionListModel.refresh();
+			_sprintProjectComboBoxModel.refresh();
+		}
 	}
 	
 	/// common sprint backlog related functionality
@@ -154,6 +272,8 @@ public class SprintBacklogModel
 	private DeveloperModelCommon _devModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
+	/// project model
+	private ProjectModel _projectModel;
 	/// SBI combo box model
 	private SBIComboBoxModel _sbiComboBoxModel;
 	/// task combo box model
@@ -174,4 +294,6 @@ public class SprintBacklogModel
 	private Operations.DeveloperOperation _devOperation = new Operations.DeveloperOperation();
 	/// product backlog item operations
 	private Operations.ProductBacklogOperation _pbiOperation = new Operations.ProductBacklogOperation();
+	
+	
 }
