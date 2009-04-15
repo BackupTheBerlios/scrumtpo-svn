@@ -1,6 +1,7 @@
 package scrummer.util;
 
 import scrummer.enumerator.DataOperation;
+import scrummer.listener.AdminDaysListener;
 import scrummer.listener.DeveloperListener;
 import scrummer.listener.ImpedimentListener;
 import scrummer.listener.ProductBacklogListener;
@@ -129,6 +130,31 @@ public class Operations {
 			for (int i = 0; i < _listeners.size(); i++)
 			{
 				ProductBacklogListener listener = _listeners.get(i);
+				listener.operationFailed(type, identifier, message);
+			}
+		}
+	}
+	
+	/**
+	 * Administrative days operation handles administrative days listeners
+	 * @param <Identifier> identifier designates administrative days specific 
+	 */
+	public static class AdminDaysOperation extends Operation<scrummer.enumerator.AdminDaysOperation, AdminDaysListener>
+	{
+		@Override
+		protected void opFailure(DataOperation type, scrummer.enumerator.AdminDaysOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				AdminDaysListener listener = _listeners.get(i);
+				listener.operationSucceeded(type, identifier, message);
+			}
+		}
+
+		@Override
+		protected void opSuccess(DataOperation type, scrummer.enumerator.AdminDaysOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				AdminDaysListener listener = _listeners.get(i);
 				listener.operationFailed(type, identifier, message);
 			}
 		}

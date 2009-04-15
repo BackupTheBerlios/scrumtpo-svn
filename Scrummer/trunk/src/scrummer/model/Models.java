@@ -31,6 +31,7 @@ public class Models {
 		createProductBacklogModel();
 		createSprintBacklogModel();
 		createDBSchemaModel();
+		createAdminDaysModel();
 	}
 	
 	/**
@@ -314,6 +315,31 @@ public class Models {
 		return _dbschemaModel;
 	}
 	
+	/**
+	 * Create administrative days model
+	 * @return created model
+	 */
+	private AdminDaysModel createAdminDaysModel()
+	{
+		if (_admindaysModel == null)	
+		{
+			_admindaysModel = new AdminDaysModel(getConnectionModel());
+		}
+		return _admindaysModel;
+	}
+	
+	/**
+	 * @return administrative days model
+	 */
+	public AdminDaysModel getAdminDaysModel()
+	{
+		if (_admindaysModel == null)
+		{
+			throw new NullPointerException("Administrative days model was not yet created!");
+		}
+		return _admindaysModel;
+	}
+	
 	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
@@ -327,4 +353,5 @@ public class Models {
 	private ProductBacklogModel _productbacklogModel = null;
 	/// schema model contains database schema related data
 	private DBSchemaModel _dbschemaModel = null;
+	private AdminDaysModel _admindaysModel = null;
 }
