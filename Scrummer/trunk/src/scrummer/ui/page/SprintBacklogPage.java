@@ -20,7 +20,7 @@ import scrummer.model.swing.SprintDescriptionListModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
 import scrummer.ui.dialog.SprintAddDialog;
-import scrummer.ui.dialog.SprintBacklogAddDialog;
+import scrummer.ui.dialog.SprintChangeDialog;
 import scrummer.uicomponents.StandardButton;
 
 /**
@@ -30,8 +30,7 @@ import scrummer.uicomponents.StandardButton;
  */
 public class SprintBacklogPage 
 	extends BasePage
-	implements ActionListener
-{
+	implements ActionListener {
 
 	/**
 	 * Constructor
@@ -66,6 +65,7 @@ public class SprintBacklogPage
 				0, k - 6, k, 4));
 		sprintList.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		sprintList.setModel(_sprintDescriptionModel);
+		_sprintList = sprintList;
 			
 		JPanel sprintButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		sprintButtonPanel.setBackground(Color.WHITE);
@@ -133,14 +133,37 @@ public class SprintBacklogPage
 		}
 		else if (cmd == "EditSprint")
 		{
-			
+			int selected = _sprintList.getSelectedIndex();
+			if (selected != -1)				
+			{			
+				int sprintId = _sprintDescriptionModel.getId(selected);
+				
+				SprintChangeDialog dialog = new SprintChangeDialog(getMainFrame(), sprintId);
+				Util.centre(dialog);
+				dialog.setVisible(true);
+			}
+			else
+			{
+				Util.showError(
+					this, 
+					i18n.tr("Cannot display modification dialog. " +
+							"First select a sprint by clicking on it, " +
+							"then click Edit button."), i18n.tr("Error"));
+			}
 		}
 		else if (cmd == "RemoveSprint")
 		{
-			
+			int selected = _sprintList.getSelectedIndex();
+			if (selected != -1)
+			{
+				int sprintId = _sprintDescriptionModel.getId(selected);
+				_sprintBacklogModel.removeSprint(sprintId);
+			}
 		}
 	}
 	
+	/// sprint list
+	private JList _sprintList;
 	/// task link 
 	private scrummer.ui.Link _taskLink;
 	/// hurdle link
