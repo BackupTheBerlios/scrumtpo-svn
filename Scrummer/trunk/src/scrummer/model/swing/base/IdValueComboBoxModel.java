@@ -55,6 +55,25 @@ public class IdValueComboBoxModel extends DefaultComboBoxModel {
 	}
 
 	/**
+	 * Find index of IdValue element with given id
+	 * 
+	 * @param id id of idvalue element
+	 * @return index of row
+	 */
+	public int getIndex(int id)
+	{
+		for (int i = 0; i < _values.size(); i++)
+		{
+			IdValue current = _values.get(i);
+			if (current.Id == id)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	/**
 	 * Set values
 	 * @param values combo box values
 	 */
