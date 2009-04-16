@@ -1,6 +1,7 @@
 package scrummer.util;
 
 import scrummer.enumerator.DataOperation;
+import scrummer.listener.AbsenceTypeListener;
 import scrummer.listener.AdminDaysListener;
 import scrummer.listener.DeveloperListener;
 import scrummer.listener.ImpedimentListener;
@@ -80,6 +81,31 @@ public class Operations {
 			for (int i = 0; i < _listeners.size(); i++)
 			{
 				ImpedimentListener listener = _listeners.get(i);
+				listener.operationFailed(type, identifier, message);
+			}
+		}
+	}
+	
+	/**
+	 * Project operation handles project listeners
+	 * @param <Identifier> identifier designates project specific 
+	 */
+	public static class AbsenceTypeOperation extends Operation<scrummer.enumerator.AbsenceTypeOperation, AbsenceTypeListener>
+	{
+		@Override
+		protected void opFailure(DataOperation type, scrummer.enumerator.AbsenceTypeOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				AbsenceTypeListener listener = _listeners.get(i);
+				listener.operationSucceeded(type, identifier, message);
+			}
+		}
+
+		@Override
+		protected void opSuccess(DataOperation type, scrummer.enumerator.AbsenceTypeOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				AbsenceTypeListener listener = _listeners.get(i);
 				listener.operationFailed(type, identifier, message);
 			}
 		}

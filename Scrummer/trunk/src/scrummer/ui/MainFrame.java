@@ -22,7 +22,11 @@ import scrummer.model.Models;
 import scrummer.model.ProjectModel;
 import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
+import scrummer.ui.dialog.AbsenceTypeAddDialog;
+import scrummer.ui.dialog.AbsenceTypeChangeDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
+import scrummer.ui.dialog.AdminDaysAddDialog;
+import scrummer.ui.dialog.AdminDaysViewDialog;
 import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.ImpedimentsAddDialog;
@@ -113,7 +117,16 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Daily scrum meeting"), KeyEvent.VK_Z, "DailyScrumMeet");
 		fileMenu.addSeparator();
+		addMenuEntry(fileMenu, i18n.tr("View administrative days"), KeyEvent.VK_A, "AdminDaysView");
+		addMenuEntry(fileMenu, i18n.tr("Add administrative day"), KeyEvent.VK_A, "AdminDaysAdd");
+		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
+		
+		JMenu sifrantiMenu = new JMenu(i18n.tr("Sifranti"));
+		sifrantiMenu.setMnemonic(KeyEvent.VK_0);
+		
+		addMenuEntry(sifrantiMenu, i18n.tr("Add absence type"), KeyEvent.VK_1, "AddAbsenceType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_3, "ChangeAbsenceType");
 		
 		JMenu developerMenu = new JMenu(i18n.tr("Employees"));
 		developerMenu.setMnemonic(KeyEvent.VK_E);
@@ -130,6 +143,7 @@ public class MainFrame extends JFrame
 		addMenuEntry(teamMenu, i18n.tr("Remove"),      KeyEvent.VK_R, "RemoveTeam");
 		
 		bar.add(fileMenu);
+		bar.add(sifrantiMenu);
 		bar.add(developerMenu);
 		bar.add(teamMenu);
 		
@@ -266,6 +280,45 @@ public class MainFrame extends JFrame
 		{
 			DailyScrumMeetingDialog dialog = new DailyScrumMeetingDialog(this);
 			dialog.setVisible(true);
+		}
+		else if(cmd.equals("AdminDaysView"))
+		{
+			AdminDaysViewDialog dialog;
+			try {
+				dialog = new AdminDaysViewDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("AdminDaysAdd"))
+		{
+			AdminDaysAddDialog dialog;
+			try {
+				dialog = new AdminDaysAddDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("AddAbsenceType"))
+		{
+			AbsenceTypeAddDialog dialog;
+			try {
+				dialog = new AbsenceTypeAddDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("ChangeAbsenceType"))
+		{
+			AbsenceTypeChangeDialog dialog = new AbsenceTypeChangeDialog(this);
+			dialog.setVisible(true);
+			
 		}
 		else if (cmd.equals("ViewDevelopers"))
 		{

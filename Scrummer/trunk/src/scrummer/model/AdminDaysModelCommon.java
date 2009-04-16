@@ -6,6 +6,7 @@ import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.AdminDaysOperation;
 import scrummer.enumerator.DataOperation;
+import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
@@ -32,7 +33,7 @@ public class AdminDaysModelCommon
 	 * @param absence_type_id absence type
 	 * @param hours_not_worked number of hours not worked
 	 */
-	public void add(int employee_id, int absence_type_id, int hours_not_worked)
+	public void add(int employee_id, int absence_type_id, int hours_not_worked, int measure_day)
 	{
 		 java.sql.Connection conn      = null;
          java.sql.PreparedStatement st = null;
@@ -40,12 +41,15 @@ public class AdminDaysModelCommon
          try {
 			 conn = _connectionModel.getConnection();
 			 String query =
-				"INSERT INTO Administrative_days " +
-			 	"VALUES (?, ?, ?)";
+				"INSERT INTO Administrative_days (" +
+				DBSchemaModel.EmployeeId + ", " + DBSchemaModel.AbsenceTypeId +
+				", " + DBSchemaModel.HoursNotWorked + ", " + DBSchemaModel.measureDay + ") " +
+			 	"VALUES (?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
 			 st.setInt(1, employee_id);
 			 st.setInt(2, absence_type_id);
 			 st.setInt(3, hours_not_worked);
+			 st.setInt(4, measure_day);
 			 st.execute();
 			 
 			 _operation.operationSucceeded(DataOperation.Insert, AdminDaysOperation.Administrative_days, "");
@@ -83,6 +87,79 @@ public class AdminDaysModelCommon
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	public Vector<IdValue> fetchAbsenceTypeNames() 
+	{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) 
+			{
+				Vector<IdValue> res = new Vector<IdValue>();
+				try {
+					result.beforeFirst();
+					while (result.next())
+					{
+						res.add(new IdValue(result.getInt(1), result.getString(2)));
+					}
+					setResult(res);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT * FROM "   + 
+			DBSchemaModel.AbsenceTypeTable);
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	/**
+	 * Remove administrative day by employee id and measure day
+	 * 
+	 * @param id employee id
+	 * @param day measure day
+	 * @return true if administrative day was removed, false otherwise
+	 */
+	public boolean removeImpediment(int id, int day)
+	{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{	
+			@Override
+			public void process() {
+				setResult(true);
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, AdminDaysOperation.Administrative_days, 
+	        		i18n.tr("Could not remove administrative day."));
+			}
+		};
+		q.query("DELETE FROM " + DBSchemaModel.AdminDaysTable + 
+				" WHERE " + DBSchemaModel.EmployeeId + "=" + id + " AND " +
+				DBSchemaModel.measureDay + "=" + day);
+		if (q.getResult() == null)
+		{
+			return false;
 		}
 		else
 		{

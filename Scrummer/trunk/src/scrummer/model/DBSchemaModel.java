@@ -274,6 +274,9 @@ public class DBSchemaModel {
 	public static final String ImpedimentAge = "Impediment_age";
 	
 	public static final String AdminDaysTable = "Administrative_days";
-	public static final String AbsenceTypeId = "Absence_type_id";
 	public static final String HoursNotWorked = "Hours_not_worked";
+	
+	public static final String AbsenceTypeTable = "Absence_type";
+	public static final String AbsenceTypeId = "Absence_type_id";
+	public static final String AbsenceTypeDesc = "Absence_type_description";
 }

@@ -1,19 +1,12 @@
 package scrummer.model;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.listener.ImpedimentListener;
-import scrummer.listener.OperationListener;
-import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.ImpedimentComboBoxModel;
 import scrummer.model.swing.ImpedimentTableModel;
-import scrummer.model.swing.ProductBacklogTableModel;
-import scrummer.model.swing.TeamComboBoxModel;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
 
 /**
@@ -91,15 +84,6 @@ public class ImpedimentModel
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
 		}
-	}
-	
-	/**
-	 * Remove impediment by id
-	 * @param id impediment id
-	 */
-	public void remove(int id)
-	{
-		throw new RuntimeException("Not yet implemented.");
 	}
 	
 	/**

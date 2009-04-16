@@ -102,15 +102,15 @@ public class AdminDaysViewDialog
 		
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(k, k, 2, 2));
 		
-		JButton removeButton = new StandardButton(i18n.tr("Remove"));
-		removeButton.setActionCommand("RemoveButton");
-		removeButton.addActionListener(this);
+		//JButton removeButton = new StandardButton(i18n.tr("Remove"));
+		//removeButton.setActionCommand("RemoveButton");
+		//removeButton.addActionListener(this);
 		
 		JButton closeButton = new StandardButton(i18n.tr("Close"));
 		closeButton.setActionCommand("CloseButton");
 		closeButton.addActionListener(this);
 		
-		bottomPanel.add(removeButton);
+		//bottomPanel.add(removeButton);
 		bottomPanel.add(closeButton);
 		
 		GridBagConstraints bottomGc = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 0.3);

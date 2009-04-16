@@ -32,6 +32,7 @@ public class Models {
 		createSprintBacklogModel();
 		createDBSchemaModel();
 		createAdminDaysModel();
+		createAbsenceTypeModel();
 	}
 	
 	/**
@@ -340,6 +341,24 @@ public class Models {
 		return _admindaysModel;
 	}
 	
+	private AbsenceTypeModel createAbsenceTypeModel()
+	{
+		if (_absencetypeModel == null)	
+		{
+			_absencetypeModel = new AbsenceTypeModel(getConnectionModel());
+		}
+		return _absencetypeModel;
+	}
+	
+	public AbsenceTypeModel getAbsenceTypeModel() 
+	{
+		if (_absencetypeModel == null)
+		{
+			throw new NullPointerException("Absence type model was not yet created!");
+		}
+		return _absencetypeModel;
+	}
+	
 	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
@@ -354,4 +373,5 @@ public class Models {
 	/// schema model contains database schema related data
 	private DBSchemaModel _dbschemaModel = null;
 	private AdminDaysModel _admindaysModel = null;
+	private AbsenceTypeModel _absencetypeModel = null;
 }

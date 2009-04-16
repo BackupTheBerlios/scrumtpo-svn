@@ -1,23 +1,13 @@
 package scrummer.model;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import scrummer.enumerator.AdminDaysOperation;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
-import scrummer.enumerator.ImpedimentOperation;
 import scrummer.listener.AdminDaysListener;
-import scrummer.listener.ImpedimentListener;
-import scrummer.listener.OperationListener;
+import scrummer.model.swing.AbsenceTypeComboBoxModel;
 import scrummer.model.swing.AdminDaysTableModel;
-import scrummer.model.swing.DeveloperTableModel;
-import scrummer.model.swing.ImpedimentComboBoxModel;
-import scrummer.model.swing.ImpedimentTableModel;
-import scrummer.model.swing.ProductBacklogTableModel;
-import scrummer.model.swing.TeamComboBoxModel;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
 
 /**
@@ -42,8 +32,11 @@ public class AdminDaysModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_admindaysModelCommon = new AdminDaysModelCommon(_connectionModel, _operation);
+		_admindaysModelCommon = new AdminDaysModelCommon(_connectionModel, _adminoperation);
 		_admindaysTableModel = new AdminDaysTableModel(connectionModel, _admindaysModelCommon);
+		
+		_absencetypeModelCommon = new AbsenceTypeModelCommon(_connectionModel, _absenceoperation);
+		_absComboBoxModel = new AbsenceTypeComboBoxModel(_absencetypeModelCommon);
 	}
 	
 	/**
@@ -52,7 +45,7 @@ public class AdminDaysModel
 	 * @param absence_type_id type of absence
 	 * @param hours_not_worked number of hours not worked
 	 */
-	public void add(int employee_id, int absence_type_id, int hours_not_worked)
+	public void add(int employee_id, int absence_type_id, int hours_not_worked, int measure_day)
 	{
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
@@ -60,17 +53,20 @@ public class AdminDaysModel
 		try {
 			 conn = _connectionModel.getConnection();
 			 String query =
-				"INSERT INTO Administrative_days " +
-			 	"VALUES (?, ?, ?)";
+				"INSERT INTO Administrative_days (" +
+				DBSchemaModel.EmployeeId + ", " + DBSchemaModel.AbsenceTypeId + 
+				", " + DBSchemaModel.HoursNotWorked + ", " + DBSchemaModel.measureDay + ") " +
+			 	"VALUES (?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
 			 st.setInt(1, employee_id);
 			 st.setInt(2, absence_type_id);
 			 st.setInt(3, hours_not_worked);
+			 st.setInt(4, measure_day);
 			 st.execute();
 			 
-			 _operation.operationSucceeded(DataOperation.Insert, AdminDaysOperation.Administrative_days, "");
+			 _adminoperation.operationSucceeded(DataOperation.Insert, AdminDaysOperation.Administrative_days, "");
 		} catch (SQLException e) {
-			_operation.operationFailed(DataOperation.Insert, AdminDaysOperation.Administrative_days, e.getMessage());
+			_adminoperation.operationFailed(DataOperation.Insert, AdminDaysOperation.Administrative_days, e.getMessage());
 			e.printStackTrace();
 		}
 		finally
@@ -98,7 +94,7 @@ public class AdminDaysModel
 	 */
 	public void addAdminDaysListener(AdminDaysListener listener)
 	{
-		_operation.addListener(listener);
+		_adminoperation.addListener(listener);
 	}
 	
 	/**
@@ -107,15 +103,24 @@ public class AdminDaysModel
 	 */
 	public void removeAdminDaysListener(AdminDaysListener listener)
 	{
-		_operation.removeListener(listener);
+		_adminoperation.removeListener(listener);
+	}
+	
+	public AbsenceTypeComboBoxModel getAbsenceTypeComboBoxModel() {
+		return _absComboBoxModel;
 	}
 		
 	/// common administrative days related functionality
 	private AdminDaysModelCommon _admindaysModelCommon;
+	private AbsenceTypeModelCommon _absencetypeModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// administrative days table model
 	private AdminDaysTableModel _admindaysTableModel;
+	/// absence type combobox model
+	private AbsenceTypeComboBoxModel _absComboBoxModel;
 	/// administrative days operation
-	private Operations.AdminDaysOperation _operation = new Operations.AdminDaysOperation();
+	private Operations.AdminDaysOperation _adminoperation = new Operations.AdminDaysOperation();
+	/// absence type operation
+	private Operations.AbsenceTypeOperation _absenceoperation = new Operations.AbsenceTypeOperation();
 }

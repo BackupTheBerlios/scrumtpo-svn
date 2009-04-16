@@ -7,31 +7,29 @@ import javax.swing.table.DefaultTableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
-import scrummer.model.AdminDaysModelCommon;
+import scrummer.model.AbsenceTypeModelCommon;
 import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
 import scrummer.model.Models;
 import scrummer.util.ObjectRow;
 
 /**
- * Administrative days table synchronization class 
+ * Impediment table synchronization class 
  */
-public class AdminDaysTableModel extends DefaultTableModel 
+public class AbsenceTypeTableModel extends DefaultTableModel 
 {	
 	/**
 	 * Default constructor
 	 */
-	public AdminDaysTableModel(ConnectionModel connectionModel,
-								AdminDaysModelCommon admindaysModelCommon) 
+	public AbsenceTypeTableModel(ConnectionModel connectionModel,
+								AbsenceTypeModelCommon absencetypeModelCommon) 
 	{
 		super();
-		_admindaysModelCommon = admindaysModelCommon;
+		_absencetypeModelCommon = absencetypeModelCommon;
 		
-		_columns.add(i18n.tr("Employee"));
-		_columns.add(i18n.tr("Absence type"));
-		_columns.add(i18n.tr("Hours not worked"));
-		_columns.add(i18n.tr("Measure day"));
-		for (int i = 0; i < 4; i++)
+		_columns.add(i18n.tr("Id"));
+		_columns.add(i18n.tr("Description"));
+		for (int i = 0; i < 2; i++)
 			_realColumns.add("");
 	}
 
@@ -52,7 +50,7 @@ public class AdminDaysTableModel extends DefaultTableModel
 	{
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
-		_realColumns = schemam.getColumns(DBSchemaModel.AdminDaysTable);
+		_realColumns = schemam.getColumns(DBSchemaModel.AbsenceTypeTable);
 	}
 	
 	/**
@@ -60,15 +58,38 @@ public class AdminDaysTableModel extends DefaultTableModel
 	 */
 	private void refreshTableData()
 	{
-		_rows = _admindaysModelCommon.fetchAdminDaysTable();
+		_rows = _absencetypeModelCommon.fetchAbsenceTypeTable();
         _rowCount = _rows.size();
+		
+
 	}
 
 	@Override
 	public boolean isCellEditable(int row, int column) {
 		return true;
 	}
+
+	@Override
+	public void setValueAt(Object value, int row, int column) 
+	{
+		if (_absencetypeModelCommon.setAbsenceTypeDesc(
+				_rows.get(row).get(0).toString(),
+				_realColumns.get(column + 1),
+				value.toString()))
+		{
+			refresh();
+		}
+	}
 	
+	@Override
+	public void removeRow(int row) 
+	{
+		if (_absencetypeModelCommon.removeAbsenceType(_rows.get(row).get(0).toString()))
+		{
+			refresh();
+		}	
+	}
+
 	@Override
 	public int getColumnCount() {
 		return _columnCount;
@@ -81,31 +102,31 @@ public class AdminDaysTableModel extends DefaultTableModel
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		return _rows.get(row).get(column);
+		return _rows.get(row).get(column+1);
 	}
 
 	@Override
 	public String getColumnName(int column) {
-		return _columns.get(column);
+		return _columns.get(column + 1);
 	}
 
 	/// column count
-	private int _columnCount = 4;
+	private int _columnCount = 2;
 	/// row count
 	private int _rowCount = 0;
 	/// column names for display
-	private Vector<String> _columns = new Vector<String>(4);
+	private Vector<String> _columns = new Vector<String>(2);
 	/// real column names for UPDATE-ing
 	private Vector<String> _realColumns = new Vector<String>();
 	/// data rows
 	private Vector<ObjectRow> _rows = new Vector<ObjectRow>();
-	/// common administrative days model operations
-	private AdminDaysModelCommon _admindaysModelCommon;
+	/// common absence type model operations
+	private AbsenceTypeModelCommon _absencetypeModelCommon;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 2334976808166694864L;
 	/// table name
-	public static final String AdminDays = "Administrative_days";
+	public static final String AbsenceType = "Absence_type";
 	
 }
