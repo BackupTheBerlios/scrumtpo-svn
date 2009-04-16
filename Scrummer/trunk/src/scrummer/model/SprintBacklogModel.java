@@ -39,10 +39,12 @@ public class SprintBacklogModel
 			new SprintBacklogModelCommon(_connectionModel, _operation);
 		_sprintbacklogTableModel = 
 			new SprintBacklogTableModel(connectionModel, _sprintbacklogModelCommon);
+		_taskModelCommon =
+			new TaskModelCommon(_connectionModel, _taskoperation);
 		_sbiComboBoxModel = 
 			new SBIComboBoxModel(_sprintbacklogModelCommon);
 		_taskComboBoxModel = 
-			new TaskComboBoxModel(_sprintbacklogModelCommon);
+			new TaskComboBoxModel(_taskModelCommon);
 		_devModelCommon = 
 			new DeveloperModelCommon(_connectionModel, _devOperation);
 		_pbiModelCommon = 
@@ -270,6 +272,7 @@ public class SprintBacklogModel
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	private ProductBacklogModelCommon _pbiModelCommon;
 	private DeveloperModelCommon _devModelCommon;
+	private TaskModelCommon _taskModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// project model
@@ -294,6 +297,7 @@ public class SprintBacklogModel
 	private Operations.DeveloperOperation _devOperation = new Operations.DeveloperOperation();
 	/// product backlog item operations
 	private Operations.ProductBacklogOperation _pbiOperation = new Operations.ProductBacklogOperation();
+	private Operations.TaskOperation _taskoperation = new Operations.TaskOperation();
 	
 	
 }

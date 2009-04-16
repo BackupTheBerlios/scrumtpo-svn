@@ -1,6 +1,6 @@
 package scrummer.model.swing;
 
-import scrummer.model.SprintBacklogModelCommon;
+import scrummer.model.TaskModelCommon;
 import scrummer.model.swing.base.IdValueComboBoxModel;
 
 /**
@@ -12,7 +12,7 @@ public class TaskComboBoxModel extends IdValueComboBoxModel
 	 * Constructor
 	 * @param taskModelCommon common task operations
 	 */
-	public TaskComboBoxModel(SprintBacklogModelCommon taskModelCommon)
+	public TaskComboBoxModel(TaskModelCommon taskModelCommon)
 	{
 		_taskModelCommon = taskModelCommon;
 	}
@@ -22,17 +22,17 @@ public class TaskComboBoxModel extends IdValueComboBoxModel
 	 */
 	public void refresh()
 	{
-		refreshSBIs();
+		refreshTasks();
 		fireContentsChanged(this, 0, getSize());
 	}
 	
-	private void refreshSBIs()
+	private void refreshTasks()
 	{
-		setValues(_taskModelCommon.fetchSBIsNames());
+		setValues(_taskModelCommon.fetchTaskNames());		
 	}
 	
-	/// common impediment operations
-	private SprintBacklogModelCommon _taskModelCommon;
+	/// common task operations
+	private TaskModelCommon _taskModelCommon;
 	/// serialization id
 	private static final long serialVersionUID = 6494898047192792857L;
 

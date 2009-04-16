@@ -279,4 +279,10 @@ public class DBSchemaModel {
 	public static final String AbsenceTypeTable = "Absence_type";
 	public static final String AbsenceTypeId = "Absence_type_id";
 	public static final String AbsenceTypeDesc = "Absence_type_description";
+	
+	public static final String TaskStatusTable = "Task_status";
+	public static final String TaskStatusDesc = "Task_status_description";
+	
+	public static final String TaskTypeTable = "Task_type";
+	public static final String TaskTypeDesc = "Task_type_description";
 }

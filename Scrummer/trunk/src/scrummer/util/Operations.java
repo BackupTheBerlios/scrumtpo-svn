@@ -8,6 +8,9 @@ import scrummer.listener.ImpedimentListener;
 import scrummer.listener.ProductBacklogListener;
 import scrummer.listener.ProjectListener;
 import scrummer.listener.SprintBacklogListener;
+import scrummer.listener.TaskListener;
+import scrummer.listener.TaskStatusListener;
+import scrummer.listener.TaskTypeListener;
 
 public class Operations {
 
@@ -181,6 +184,69 @@ public class Operations {
 			for (int i = 0; i < _listeners.size(); i++)
 			{
 				AdminDaysListener listener = _listeners.get(i);
+				listener.operationFailed(type, identifier, message);
+			}
+		}
+	}
+	
+	public static class TaskStatusOperation extends Operation<scrummer.enumerator.TaskStatusOperation, TaskStatusListener>
+	{
+		@Override
+		protected void opFailure(DataOperation type, scrummer.enumerator.TaskStatusOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				TaskStatusListener listener = _listeners.get(i);
+				listener.operationSucceeded(type, identifier, message);
+			}
+		}
+
+		@Override
+		protected void opSuccess(DataOperation type, scrummer.enumerator.TaskStatusOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				TaskStatusListener listener = _listeners.get(i);
+				listener.operationFailed(type, identifier, message);
+			}
+		}
+	}
+	
+	public static class TaskTypeOperation extends Operation<scrummer.enumerator.TaskTypeOperation, TaskTypeListener>
+	{
+		@Override
+		protected void opFailure(DataOperation type, scrummer.enumerator.TaskTypeOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				TaskTypeListener listener = _listeners.get(i);
+				listener.operationSucceeded(type, identifier, message);
+			}
+		}
+
+		@Override
+		protected void opSuccess(DataOperation type, scrummer.enumerator.TaskTypeOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				TaskTypeListener listener = _listeners.get(i);
+				listener.operationFailed(type, identifier, message);
+			}
+		}
+	}
+	
+	public static class TaskOperation extends Operation<scrummer.enumerator.TaskOperation, TaskListener>
+	{
+		@Override
+		protected void opFailure(DataOperation type, scrummer.enumerator.TaskOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				TaskListener listener = _listeners.get(i);
+				listener.operationSucceeded(type, identifier, message);
+			}
+		}
+
+		@Override
+		protected void opSuccess(DataOperation type, scrummer.enumerator.TaskOperation identifier, String message) {
+			for (int i = 0; i < _listeners.size(); i++)
+			{
+				TaskListener listener = _listeners.get(i);
 				listener.operationFailed(type, identifier, message);
 			}
 		}

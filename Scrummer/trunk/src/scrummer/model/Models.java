@@ -33,6 +33,9 @@ public class Models {
 		createDBSchemaModel();
 		createAdminDaysModel();
 		createAbsenceTypeModel();
+		createTaskTypeModel();
+		createTaskStatusModel();
+		createTaskModel();
 	}
 	
 	/**
@@ -359,6 +362,59 @@ public class Models {
 		return _absencetypeModel;
 	}
 	
+	private TaskStatusModel createTaskStatusModel()
+	{
+		if (_taskstatusModel == null)	
+		{
+			_taskstatusModel = new TaskStatusModel(getConnectionModel());
+		}
+		return _taskstatusModel;
+	}
+	
+	public TaskStatusModel getTaskStatusModel() 
+	{
+		if (_taskstatusModel == null)
+		{
+			throw new NullPointerException("Task status model was not yet created!");
+		}
+		return _taskstatusModel;
+	}
+	
+	private TaskTypeModel createTaskTypeModel()
+	{
+		if (_tasktypeModel == null)	
+		{
+			_tasktypeModel = new TaskTypeModel(getConnectionModel());
+		}
+		return _tasktypeModel;
+	}
+	
+	public TaskTypeModel getTaskTypeModel() 
+	{
+		if (_tasktypeModel == null)
+		{
+			throw new NullPointerException("Task type model was not yet created!");
+		}
+		return _tasktypeModel;
+	}
+	
+	private TaskModel createTaskModel()
+	{
+		if (_taskModel == null)	
+		{
+			_taskModel = new TaskModel(getConnectionModel());
+		}
+		return _taskModel;
+	}
+	
+	public TaskModel getTaskModel() 
+	{
+		if (_taskModel == null)
+		{
+			throw new NullPointerException("Task model was not yet created!");
+		}
+		return _taskModel;
+	}
 	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
@@ -374,4 +430,7 @@ public class Models {
 	private DBSchemaModel _dbschemaModel = null;
 	private AdminDaysModel _admindaysModel = null;
 	private AbsenceTypeModel _absencetypeModel = null;
+	private TaskStatusModel _taskstatusModel = null;
+	private TaskTypeModel _tasktypeModel = null;
+	private TaskModel _taskModel = null;
 }
