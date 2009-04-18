@@ -3,6 +3,7 @@ package scrummer.model;
 import java.util.Date;
 
 import scrummer.listener.SprintBacklogListener;
+import scrummer.model.swing.AllTaskTableModel;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.SBIComboBoxModel;
@@ -10,6 +11,7 @@ import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.SprintDescriptionListModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
+import scrummer.model.swing.TaskTableModel;
 import scrummer.util.Operations;
 
 /**
@@ -57,6 +59,8 @@ public class SprintBacklogModel
 			new SprintProjectComboBoxModel(_sprintbacklogModelCommon, projectModel);
 		_sprintDescriptionListModel =
 			new SprintDescriptionListModel(_sprintbacklogModelCommon, projectModel);
+		_taskTableModel = 
+			new AllTaskTableModel(_connectionModel, _sprintbacklogModelCommon, _projectModel);
 	}
 	
 	/**
@@ -132,6 +136,14 @@ public class SprintBacklogModel
 	}
 	
 	/**
+	 * @return fetch task table model
+	 */
+	public AllTaskTableModel getTaskTableModel()
+	{
+		return _taskTableModel;
+	}
+	
+	/**
 	 * Add sprint backlog data change listener
 	 * 
 	 * @param listener listener to add
@@ -183,8 +195,7 @@ public class SprintBacklogModel
 		_sprintbacklogModelCommon.setTaskMeasures(id, day , sh, rh, oi, ci);
 	}
 	
-	public boolean existsTaskInSBI(int id)
-	{
+	public boolean existsTaskInSBI(int id) {
 		return _sprintbacklogModelCommon.existsTaskInSBI(id);
 	}
 	
@@ -192,8 +203,7 @@ public class SprintBacklogModel
 	 * @param sprintId sprint id
 	 * @retur sprint description
 	 */
-	public String getSprintDescription(int sprintId)
-	{
+	public String getSprintDescription(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
 		return _sprintbacklogModelCommon.getSprintDescription(projectId, sprintId);
 	}
@@ -268,8 +278,19 @@ public class SprintBacklogModel
 		}
 	}
 	
+	/**
+	 * Set current sprint 
+	 * 
+	 * @param sprintId sprint id
+	 */
+	public void setCurrentSprint(int sprintId)
+	{
+		_taskTableModel.setSprintId(sprintId);
+	}
+	
 	/// common sprint backlog related functionality
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
+	/// product backlog model 
 	private ProductBacklogModelCommon _pbiModelCommon;
 	private DeveloperModelCommon _devModelCommon;
 	private TaskModelCommon _taskModelCommon;
@@ -297,7 +318,7 @@ public class SprintBacklogModel
 	private Operations.DeveloperOperation _devOperation = new Operations.DeveloperOperation();
 	/// product backlog item operations
 	private Operations.ProductBacklogOperation _pbiOperation = new Operations.ProductBacklogOperation();
+	/// task table model
+	private AllTaskTableModel _taskTableModel;
 	private Operations.TaskOperation _taskoperation = new Operations.TaskOperation();
-	
-	
 }
