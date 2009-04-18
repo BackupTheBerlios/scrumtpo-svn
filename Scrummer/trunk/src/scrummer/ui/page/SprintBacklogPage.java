@@ -11,6 +11,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.model.Models;
@@ -30,7 +33,7 @@ import scrummer.uicomponents.StandardButton;
  */
 public class SprintBacklogPage 
 	extends BasePage
-	implements ActionListener {
+	implements ActionListener, ListSelectionListener {
 
 	/**
 	 * Constructor
@@ -65,7 +68,9 @@ public class SprintBacklogPage
 				0, k - 6, k, 4));
 		sprintList.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		sprintList.setModel(_sprintDescriptionModel);
+		sprintList.addListSelectionListener(this);
 		_sprintList = sprintList;
+		
 			
 		JPanel sprintButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		sprintButtonPanel.setBackground(Color.WHITE);
@@ -162,6 +167,15 @@ public class SprintBacklogPage
 		}
 	}
 	
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		int selection = _sprintList.getSelectedIndex();
+		if (selection != -1) {
+			_sprintBacklogModel.setCurrentSprint(
+				_sprintDescriptionModel.getId(selection));
+		}
+	}
+	
 	/// sprint list
 	private JList _sprintList;
 	/// task link 
@@ -176,5 +190,4 @@ public class SprintBacklogPage
 	private I18n i18n = Scrummer.getI18n(getClass());	
 	/// serialization id 
 	private static final long serialVersionUID = 5602237842513235459L;
-	
 }
