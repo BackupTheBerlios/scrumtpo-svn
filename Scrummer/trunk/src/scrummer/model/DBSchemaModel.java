@@ -236,7 +236,6 @@ public class DBSchemaModel {
 	public static final String SprintLength = "Sprint_length";
 	public static final String SprintEstimated = "Sprint_estimated_date";
 	
-	public static final String Sprint_PBITable = "Sprint_PBI";
 	public static final String TaskTable = "Task";
 	public static final String TaskStatusId = "Task_status_id";
 	public static final String TaskTypeId = "Task_type_id";
@@ -244,6 +243,9 @@ public class DBSchemaModel {
 	public static final String TaskDate = "Task_date";
 	public static final String TaskActive = "Task_active";
 	public static final String TaskId = "Task_id";
+	public static final String TaskEmployeeId = EmployeeId;
+	public static final String TaskTeamId = TeamId;
+	
 	public static final String HoursSpent = "Hours_spent";
 	public static final String HoursRemaining = "Hours_remaining";
 	public static final String NbOpenImped = "NbOpenImped";
@@ -272,6 +274,17 @@ public class DBSchemaModel {
 	public static final String ImpedimentStart = "Impediment_start";
 	public static final String ImpedimentEnd = "Impediment_end";
 	public static final String ImpedimentAge = "Impediment_age";
+	
+	public static final String SprintPBITable = "Sprint_PBI";
+	public static final String SprintPBIMeasureDay = "Measure_day";
+	public static final String SprintPBIPBIId = PBIId;
+	public static final String SprintPBITaskId = TaskId;
+	public static final String SprintPBISprintId = SprintId;
+	public static final String SprintPBIEmployeeId = EmployeeId;
+	public static final String SprintPBIHourseSpent = "Hours_spent";
+	public static final String SprintPBIHoursRemaining = "Hours_remaining";
+	public static final String SprintPBINbOpenImped	= "NbOpenImped";
+	public static final String SprintPBINbClosedImped = "NbClosedImped";
 	
 	public static final String AdminDaysTable = "Administrative_days";
 	public static final String HoursNotWorked = "Hours_not_worked";
