@@ -25,6 +25,7 @@ import scrummer.model.ResourceModel;
 import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
 import scrummer.ui.page.SprintBacklogPage;
+import scrummer.ui.page.TaskPage;
 
 /**
  * Navigation grid is a panel that contains a fixed grid i.e. it doesn't scale
@@ -128,7 +129,11 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		repaint();
 	}
 	
-	private void showSprintBacklogTasks(JPanel panel) {}
+	private void showSprintBacklogTasks(JPanel panel) {
+		panel.setLayout(new GridLayout(1,1));
+		TaskPage page = new TaskPage(_mainFrame);
+		panel.add(page);		
+	}
 
 	private void showSprintBacklogMetric(JPanel panel) {}
 
@@ -141,44 +146,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	//iteracijski
 	private void showSprintBacklog(JPanel panel) {
-		
 		panel.setLayout(new GridLayout(1,1));
-		
 		SprintBacklogPage page = new SprintBacklogPage(_mainFrame);
 		panel.add(page);
-		
-		/*		
-		panel.setLayout(new BorderLayout());
-
-		int length = 280;
-		// distance between two rows vertically
-		int vertAdd = 30;
-		
-		JPanel box = new JPanel();
-		box.setLayout(new GridLayout(2, 2, 0, vertAdd));
-		box.setPreferredSize(new Dimension(length, 90));
-		box.setMaximumSize(new Dimension(length, 90));
-		box.setAlignmentX(CENTER_ALIGNMENT);
-		box.setAlignmentY(CENTER_ALIGNMENT);
-		box.setBackground(Color.WHITE);
-		
-		Util.addLink(box, NavigationModel.Link.SprintBacklogTasks);
-		Util.addLink(box, NavigationModel.Link.SprintBacklogMetric);
-		Util.addLink(box, NavigationModel.Link.SprintBacklogAbsent);
-		Util.addLink(box, NavigationModel.Link.SprintBacklogHurdles);
-		
-		box.setMaximumSize(new Dimension(length, 150 + vertAdd));
-		
-		Box horCentreBox = new Box(BoxLayout.X_AXIS);
-		horCentreBox.setAlignmentX(CENTER_ALIGNMENT);
-		horCentreBox.setMaximumSize(new Dimension(length, 1600));
-		horCentreBox.add(box);
-		
-		Box vertBox = new Box(BoxLayout.Y_AXIS);
-		vertBox.add(horCentreBox);
-		
-		panel.add(vertBox, BorderLayout.CENTER);
-		*/	
 	}
 
 	private void showProject(JPanel panel) {
