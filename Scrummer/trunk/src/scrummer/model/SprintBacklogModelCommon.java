@@ -61,7 +61,7 @@ public class SprintBacklogModelCommon
 		 
         	 st = null;
         	 String query3 =
-        		 "INSERT INTO " + DBSchemaModel.Sprint_PBITable + " " +
+        		 "INSERT INTO " + DBSchemaModel.SprintPBITable + " " +
         		 "(" + DBSchemaModel.measureDay + "," + 
         		 DBSchemaModel.PBIId + "," +
         		 DBSchemaModel.TaskId + "," +
@@ -161,7 +161,7 @@ public class SprintBacklogModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT Measure_day, PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.Sprint_PBITable + " JOIN " + DBSchemaModel.TaskTable);
+		q.queryResult("SELECT Measure_day, PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.SprintPBITable + " JOIN " + DBSchemaModel.TaskTable);
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();
@@ -193,7 +193,7 @@ public class SprintBacklogModelCommon
 			}
 		};
 		
-		q.query("UPDATE " + DBSchemaModel.Sprint_PBITable + 
+		q.query("UPDATE " + DBSchemaModel.SprintPBITable + 
 				" SET " + column + "='" + value + "' " +
 				"WHERE " + DBSchemaModel.PBIId + "='" + pbiid + "' AND " + DBSchemaModel.TaskId + "='" + taskid + "' AND " + DBSchemaModel.SprintId + "='" + sprintid + "' AND" + DBSchemaModel.measureDay + "='" + day + "'");
 		
@@ -228,7 +228,7 @@ public class SprintBacklogModelCommon
 	        		i18n.tr("Could not remove Sprint Backlog item."));
 			}
 		};
-		q.query("DELETE FROM " + DBSchemaModel.Sprint_PBITable + 
+		q.query("DELETE FROM " + DBSchemaModel.SprintPBITable + 
 				" WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 		if (q.getResult() == null)
 		{
@@ -256,7 +256,7 @@ public class SprintBacklogModelCommon
 			
 		};
 		q.query(
-			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
 			"SET " + DBSchemaModel.measureDay + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
@@ -277,7 +277,7 @@ public class SprintBacklogModelCommon
 			
 		};
 		q.query(
-			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
 			"SET " + DBSchemaModel.HoursSpent + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
@@ -298,7 +298,7 @@ public class SprintBacklogModelCommon
 			
 		};
 		q.query(
-			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
 			"SET " + DBSchemaModel.HoursRemaining + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
@@ -319,7 +319,7 @@ public class SprintBacklogModelCommon
 			
 		};
 		q.query(
-			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
 			"SET " + DBSchemaModel.NbOpenImped + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
@@ -340,7 +340,7 @@ public class SprintBacklogModelCommon
 			
 		};
 		q.query(
-			"UPDATE " + DBSchemaModel.Sprint_PBITable + " " +
+			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
 			"SET " + DBSchemaModel.NbClosedImped + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
@@ -360,7 +360,7 @@ public class SprintBacklogModelCommon
 				
 			};
 			q.query(
-				"INSERT INTO " + DBSchemaModel.Sprint_PBITable + " " +
+				"INSERT INTO " + DBSchemaModel.SprintPBITable + " " +
 				"(Measure_day, PBI_id, Task_id, Sprint_id, Employee_id) VALUES(" +
 				1 + ", " + pbi_id + ", " + taskId + ", " + newSprint + ", " + emp_id + ") ");
 	}
@@ -370,7 +370,7 @@ public class SprintBacklogModelCommon
         java.sql.PreparedStatement st = null;
 		String q1 = 
 			"SELECT " + DBSchemaModel.EmployeeId + " AS empid, " + DBSchemaModel.SprintId + " AS sprintid, " + DBSchemaModel.PBIId +
-			" AS pbiid FROM " + DBSchemaModel.Sprint_PBITable + " WHERE " + DBSchemaModel.TaskId + "=" + id;
+			" AS pbiid FROM " + DBSchemaModel.SprintPBITable + " WHERE " + DBSchemaModel.TaskId + "=" + id;
    	 	
 			try {
 				st = _connectionModel.getConnection().prepareStatement(q1);
@@ -393,7 +393,7 @@ public class SprintBacklogModelCommon
 						
 				};
 				
-				q2.query("INSERT INTO " + DBSchemaModel.Sprint_PBITable +
+				q2.query("INSERT INTO " + DBSchemaModel.SprintPBITable +
 						" (" + DBSchemaModel.measureDay + "," + 
 		       		 	DBSchemaModel.PBIId + "," +
 		       		 	DBSchemaModel.TaskId + "," +
@@ -427,7 +427,7 @@ public class SprintBacklogModelCommon
 				_operation.operationFailed(DataOperation.Select, SprintBacklogOperation.Task, ex.getMessage());
 			}		
 		};
-		q.query("SELECT * FROM " + DBSchemaModel.Sprint_PBITable +
+		q.query("SELECT * FROM " + DBSchemaModel.SprintPBITable +
 				" WHERE " + DBSchemaModel.TaskId + " = " + id);
 		if(q.equals(null))
 			return false;
@@ -764,13 +764,62 @@ public class SprintBacklogModelCommon
 		return q.getResult();
 	}
 	
+	
+	
+	/**
+	 * Get tasks table for given project and sprint
+	 * 
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @return object rows
+	 */
+	public Vector<ObjectRow> fetchTaskTable(int projectId, int sprintId) {
+		
+		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(ObjectRow.fetchRows(result)); 
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult("SELECT " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskEmployeeId + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTeamId + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskStatusId + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTypeId + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDescription + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDate + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskActive + " FROM " + DBSchemaModel.TaskTable +
+			" JOIN " +
+			DBSchemaModel.SprintPBITable + " ON " + 
+			DBSchemaModel.SprintPBITable + "." + DBSchemaModel.SprintPBITaskId + "=" +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + 
+			" JOIN " +
+			DBSchemaModel.SprintTable + " ON " +
+			DBSchemaModel.SprintTable + "." + DBSchemaModel.SprintProjectId + "=" + projectId + " AND " +
+			DBSchemaModel.SprintTable + "." + DBSchemaModel.SprintId + "=" + sprintId);
+					  
+		if (q.getResult() == null)
+		{
+			return new Vector<ObjectRow>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operations.SprintBacklogOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
-	
-	
 }
 
