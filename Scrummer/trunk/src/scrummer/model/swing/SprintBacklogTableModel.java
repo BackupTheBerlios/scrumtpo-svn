@@ -77,13 +77,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	{
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
-		_realColumns = schemam.getColumns(DBSchemaModel.Sprint_PBITable);
-		/*Vector<String> taskColumns = schemam.getColumns(DBSchemaModel.TaskTable);
-		_realColumns.add(taskColumns.elementAt(3));
-		_realColumns.add(taskColumns.elementAt(4));
-		_realColumns.add(taskColumns.elementAt(5));
-		_realColumns.add(taskColumns.elementAt(6));
-		_realColumns.add(taskColumns.elementAt(7));*/
+		_realColumns = schemam.getColumns(DBSchemaModel.SprintPBITable);		
 	}
 	
 	/**
@@ -159,43 +153,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
 		{
 			refresh();
-		}	
-		/*
-		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
-		{
-			refresh();
-		}	
-		*/
-	
-		/*String idColumnName = _realColumns.get(0);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"DELETE FROM " + Sprint_PBI + " WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-            st = conn.createStatement();
-            st.execute(query);
-           
-            // update cell after all the fuss
-            refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Remove, 
-        		SprintBacklogOperation.SprintBacklog, 
-        		i18n.tr("Could not remove sprint backlog item."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
+		}			
 	}
 
 	@Override
