@@ -40,57 +40,10 @@ public class DevelopersAddDialog extends JDialog implements MouseListener
 		
 		setLayout(new BorderLayout());
 		
-		/*String[] columnNames = {"Team member ID","Name","Surname","Address"};  
-		
-		Object[][] data = {
-			    {"1", "Katja", "Cetinski", "Brestova pot 4 Ko�evje"},
-			     {"2","Simon","Mihevc","Logatec"},
-			     {"3","Matej","Klun","Obirska 23 Ljubljana"},
-			     {"4","Da�a","Gelze","Lo�ki potok"},
-			     {"5","Tadej","�ertanc","Celov�ka 285 Ljubljana"},
-			     {"6","Anja","�ahuk","Trata XIV/20 Ko�evje"}
-			};
-		final java.sql.Connection con = ConnectionModel.getConnection();
-		java.sql.Statement stmt = con.createStatement();
-		
-		int j = 0;
-	    while (rs.next()) 
-	    {
-	        int x = rs.getInt("Employee_id");
-	        String s = rs.getString("Employee_description");
-	        System.out.println("ROW " + ++j + ": " +
-	          x + "; " + s + "; " + ".");
-	      }
-
-		
-		TableModel model1 = new DefaultTableModel(data,columnNames);*/
-		
-		/*
-		Models m = Scrummer.getModels();
-		final java.sql.Connection con = m.getConnectionModel().getConnection();
-		java.sql.Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Employee");
-		
-		int id;
-		String name;
-		*/
 		String surname;
 		String address;
 		DefaultTableModel model = new DefaultTableModel(null, new Object[]{"Team member ID", "Name", "Surname", "Address"});
-		/*
-		while(rs.next())
-		{
-			id = rs.getInt("Employee_id");
-			name = rs.getString("Employee_name");
-			surname = rs.getString("Employee_surname");
-			address = rs.getString("Employee_address");
-			model.addRow(new Object[]{id,name,surname,address}); 
-		}
 		
-		rs.close();    // All done with that resultset
-	    stmt.close();  // All done with that statement
-	    con.close();  // All done with that DB connection
-		*/
 		JTable table = new JTable(model);
 		
 		table.setSize(250, 170);

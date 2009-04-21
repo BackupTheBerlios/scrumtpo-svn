@@ -35,6 +35,7 @@ import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.ListInterchangePanel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedFormattedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -56,7 +57,7 @@ public class TeamOverviewDialog extends TwoButtonDialog
 		_developerModel.addDeveloperListener(this);
 		_developerTeamListModel = _developerModel.getDeveloperTeamListModel();
 		_developerNonTeamListModel = _developerModel.getDeveloperNonTeamListModel();
-		_teamComboBoxModel      = _developerModel.getTeamComboBoxModel();
+		_teamComboBoxModel      = _developerModel.getTeamComboBoxModel();		
 		
 		Panel.setLayout(new GridBagLayout());
 		
@@ -67,14 +68,13 @@ public class TeamOverviewDialog extends TwoButtonDialog
 		GridBagConstraints topPanelC = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 1.0);
 		
 		JLabel teamLbl = new JLabel(i18n.tr("Team") + ":");
-		JComboBox teamCbbx = new JComboBox();
-		teamCbbx.setModel(_teamComboBoxModel);
-		_teamComboBoxModel.refresh();
-		teamCbbx.addItemListener(this);
-		_teamInput = teamCbbx;
+		_teamInput = new StandardComboBox();
+		
+		_developerTeamListModel.refresh();
+		_developerNonTeamListModel.refresh();
 		
 		topPanel.add(teamLbl);		
-		topPanel.add(teamCbbx);
+		topPanel.add(_teamInput);
 		
 		ListInterchangePanel interchangePanel = 
 			new ListInterchangePanel(
@@ -110,17 +110,19 @@ public class TeamOverviewDialog extends TwoButtonDialog
 		ListPanel.MoveLeftButton.addActionListener(this);
 		ListPanel.MoveRightButton.addActionListener(this);
 		
+		_teamInput.addItemListener(this);
+		_teamInput.setIVModel(_teamComboBoxModel);
+		
 		setSize(new Dimension(440, 280));
 	}
 	
 	@Override
-	public void itemStateChanged(ItemEvent e) {		
+	public void itemStateChanged(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED)
 		{
-			int index = _teamInput.getSelectedIndex();
-			if (index != -1)
+			if (_teamInput.isSelected())
 			{
-				int newTeam = _teamComboBoxModel.getId(index);
+				int newTeam = _teamInput.getSelectedId();
 				_developerTeamListModel.setTeam(newTeam);
 				_developerNonTeamListModel.setTeam(newTeam);
 					
@@ -133,19 +135,7 @@ public class TeamOverviewDialog extends TwoButtonDialog
 	@Override
 	public void setVisible(boolean b) {
 	
-		if (b)
-		{
-			if (_teamComboBoxModel.getSize() > 0)
-			{
-				_teamInput.setEnabled(true);
-				_teamInput.setSelectedIndex(0);
-			}
-			else
-			{
-				_teamInput.setEnabled(false);
-			}
-		}
-		else
+		if (!b)		
 		{
 			_developerModel.removeDeveloperListener(this);
 		}
@@ -199,7 +189,7 @@ public class TeamOverviewDialog extends TwoButtonDialog
 	public void operationSucceeded(DataOperation type, DeveloperOperation identifier, String message) {}
 		
 	/// team input box
-	private JComboBox _teamInput;
+	private StandardComboBox _teamInput;
 	/// developer model
 	private DeveloperModel _developerModel;
 	/// all developers not on given team

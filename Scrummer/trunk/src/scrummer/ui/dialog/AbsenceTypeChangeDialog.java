@@ -18,6 +18,7 @@ import scrummer.model.AbsenceTypeModel;
 import scrummer.model.swing.AbsenceTypeComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 public class AbsenceTypeChangeDialog 
@@ -45,10 +46,9 @@ public class AbsenceTypeChangeDialog
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
 		JLabel absLbl = new JLabel(i18n.tr("Absence type") + ":");
-		JComboBox absInput = new JComboBox();
-		absInput.setModel(_absencetypeComboModel);
+		StandardComboBox absInput = new StandardComboBox();
+		absInput.setIVModel(_absencetypeComboModel);
 		_absInput = absInput;
-		_absencetypeComboModel.refresh();
 		
 		Panel.add(absLbl);
 		Panel.add(absInput);
@@ -87,11 +87,9 @@ public class AbsenceTypeChangeDialog
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
 			String desc = _descInput.getText().trim();
-			int selected = _absInput.getSelectedIndex();
-			if (selected != -1)
-			{
-				int id = _absencetypeComboModel.getId(selected);
-				_absencetypeModel.setNewDesc(id, desc);
+			if (_absInput.isSelected())
+			{			
+				_absencetypeModel.setNewDesc(_absInput.getSelectedId(), desc);
 			}
 			else
 			{
@@ -147,18 +145,6 @@ public class AbsenceTypeChangeDialog
 		{
 			_absencetypeModel.removeAbsenceTypeListener(this);
 		}
-		else
-		{
-			if (_absencetypeComboModel.getSize() == 0)
-			{
-				_absInput.setEnabled(false);
-			}
-			else
-			{
-				_absInput.setEnabled(true);
-				_absInput.setSelectedIndex(0);
-			}
-		}
 		
 		super.setVisible(b);
 	}
@@ -170,7 +156,7 @@ public class AbsenceTypeChangeDialog
 	/// description new name input
 	private JTextField _descInput;
 	/// absence type input combo box
-	private JComboBox _absInput;
+	private StandardComboBox _absInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

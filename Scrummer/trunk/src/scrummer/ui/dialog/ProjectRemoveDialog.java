@@ -20,6 +20,7 @@ import scrummer.model.ProjectModel;
 import scrummer.model.swing.ProjectComboBoxModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -53,8 +54,7 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 		
 		_formBuilder = new FormBuilder(Panel);
 		_projectInput = _formBuilder.addComboBoxInput(i18n.tr("Project") + ":");	
-		_projectInput.setModel(_projectComboBoxModel);
-		_projectComboBoxModel.refresh();
+		_projectInput.setIVModel(_projectComboBoxModel);
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, k, k, k));
 		
@@ -67,11 +67,9 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 		String cmd = e.getActionCommand();
 		if (cmd == "StandardDialog.OK")
 		{
-			int index = _projectInput.getSelectedIndex(); 
-			if (index != -1)	
-			{
-				int projectId = _projectComboBoxModel.getId(index);
-				_projectModel.removeProject(projectId);
+			if (_projectInput.isSelected())
+			{				
+				_projectModel.removeProject(_projectInput.getSelectedId());
 			}
 			else
 			{
@@ -111,19 +109,7 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 	@Override
 	public void setVisible(boolean b) {
 		
-		if (b)
-		{
-			if (_projectComboBoxModel.getSize() > 0)
-			{
-				_projectInput.setEnabled(true);
-				_projectInput.setSelectedIndex(0);
-			}
-			else
-			{
-				_projectInput.setEnabled(false);
-			}
-		}
-		else
+		if (!b)
 		{
 			_projectModel.removeProjectListener(this);
 		}
@@ -132,7 +118,7 @@ public class ProjectRemoveDialog extends TwoButtonDialog
 	}
 	
 	/// project input combo box
-	private JComboBox _projectInput;
+	private StandardComboBox _projectInput;
 	/// project model
 	private ProjectModel _projectModel;
 	/// project combo box model

@@ -20,6 +20,7 @@ import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.FormBuilder;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -47,8 +48,7 @@ public class TeamRemoveDialog extends TwoButtonDialog
 		
 		_formBuilder = new FormBuilder(Panel);
 		_teamInput = _formBuilder.addComboBoxInput(i18n.tr("Team") + ":");
-		_teamInput.setModel(_teamComboBoxModel);
-		_teamComboBoxModel.refresh();
+		_teamInput.setIVModel(_teamComboBoxModel);
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 6));
 		
@@ -60,10 +60,9 @@ public class TeamRemoveDialog extends TwoButtonDialog
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
-			int selected =_teamInput.getSelectedIndex(); 
-			if (selected != (-1))
+			if (_teamInput.isSelected())
 			{
-				_developerModel.removeTeam(_teamComboBoxModel.getId(selected));
+				_developerModel.removeTeam(_teamInput.getSelectedId());
 			}
 			else
 			{
@@ -117,19 +116,7 @@ public class TeamRemoveDialog extends TwoButtonDialog
 		{
 			_developerModel.removeDeveloperListener(this);
 			_teamInput.setSelectedIndex(-1);
-		}
-		else
-		{
-			if (_teamComboBoxModel.getSize() > 0)
-			{
-				_teamInput.setSelectedIndex(0);
-				_teamInput.setEnabled(true);
-			}
-			else
-			{
-				_teamInput.setEnabled(false);
-			}
-		}
+		}		
 		
 		super.setVisible(b);
 	}
@@ -139,7 +126,7 @@ public class TeamRemoveDialog extends TwoButtonDialog
 	/// team combo box model
 	private TeamComboBoxModel _teamComboBoxModel;
 	/// combo box input
-	private JComboBox _teamInput;
+	private StandardComboBox _teamInput;
 	/// form building class
 	private FormBuilder _formBuilder;
 	/// serialization id

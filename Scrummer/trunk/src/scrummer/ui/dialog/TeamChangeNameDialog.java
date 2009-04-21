@@ -21,6 +21,7 @@ import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -52,8 +53,7 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 		_formBuilder = new FormBuilder(Panel);
 		_formBuilder.setCellSpacing(10, 15);
 		_teamInput = _formBuilder.addComboBoxInput(i18n.tr("Team") + ":");
-		_teamInput.setModel(_teamComboModel);		
-		_teamComboModel.refresh();
+		_teamInput.setIVModel(_teamComboModel);
 		
 		_nameInput = _formBuilder.addSelectedTextInput(i18n.tr("New name") + ":", "NewName");
 		
@@ -71,11 +71,9 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 			String text = _nameInput.getText().trim();
 			if (text.length() > 0)
 			{
-				int selected = _teamInput.getSelectedIndex();
-				if (selected != -1)
+				if (_teamInput.isSelected())
 				{
-					int id = _teamComboModel.getId(selected);
-					_developerModel.setTeamName(id, text);
+					_developerModel.setTeamName(_teamInput.getSelectedId(), text);
 				}
 				else
 				{
@@ -135,19 +133,7 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 		if (!b)
 		{
 			_developerModel.removeDeveloperListener(this);
-		}
-		else
-		{
-			if (_teamComboModel.getSize() == 0)
-			{
-				_teamInput.setEnabled(false);
-			}
-			else
-			{
-				_teamInput.setEnabled(true);
-				_teamInput.setSelectedIndex(0);
-			}
-		}
+		}		
 		
 		super.setVisible(b);
 	}
@@ -159,7 +145,7 @@ public class TeamChangeNameDialog extends TwoButtonDialog
 	/// team new name input
 	private JTextField _nameInput;
 	/// team input combo box
-	private JComboBox _teamInput;
+	private StandardComboBox _teamInput;
 	/// form building class
 	private FormBuilder _formBuilder;
 	/// translation class field

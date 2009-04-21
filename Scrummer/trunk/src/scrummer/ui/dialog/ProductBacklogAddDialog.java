@@ -52,29 +52,6 @@ public class ProductBacklogAddDialog
 	}
 
 	@Override
-	public void setVisible(boolean b) {
-
-		if (b)
-		{
-			_sprintProjectComboBoxModel.refresh();
-			if (_sprintProjectComboBoxModel.getSize() > 0)
-			{
-				_sprintInput.setSelectedIndex(0);
-				_sprintInput.setEnabled(true);
-			}
-			else
-			{
-				_sprintInput.setEnabled(false);
-			}
-		}
-		else
-		{
-		}
-
-		super.setVisible(b);
-	}
-
-	@Override
 	public void operationSucceeded(DataOperation type, ProductBacklogOperation identifier, String message) {
 		switch (type)
 		{

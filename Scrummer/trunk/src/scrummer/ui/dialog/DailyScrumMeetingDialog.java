@@ -1,8 +1,8 @@
 // vstavljanje v del sprint backloga
-// najprej izbereš ustrezni task (glede na task_description)
-// nato izbereš dan za katerega vnašaš porabljene/preostale ure ter ovire
-// nato imaš možnost vnesti "spent_hours", "remaining_hours", "nb_open_imped", "nb_closed_imped"
-// na koncu vse shraniš
+// najprej izbereï¿½ ustrezni task (glede na task_description)
+// nato izbereï¿½ dan za katerega vnaï¿½aï¿½ porabljene/preostale ure ter ovire
+// nato imaï¿½ moï¿½nost vnesti "spent_hours", "remaining_hours", "nb_open_imped", "nb_closed_imped"
+// na koncu vse shraniï¿½
 
 package scrummer.ui.dialog;
 
@@ -24,6 +24,7 @@ import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 public class DailyScrumMeetingDialog 
@@ -51,10 +52,9 @@ public class DailyScrumMeetingDialog
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
 		JLabel taskLbl = new JLabel(i18n.tr("Task") + ":");
-		JComboBox taskInput = new JComboBox();
-		taskInput.setModel(_taskComboModel);
+		StandardComboBox taskInput = new StandardComboBox();
+		taskInput.setIVModel(_taskComboModel);
 		_taskInput = taskInput;
-		_taskComboModel.refresh();
 		
 		Panel.add(taskLbl);
 		Panel.add(taskInput);
@@ -103,10 +103,8 @@ public class DailyScrumMeetingDialog
 				
 				if (day.length() > 0)
 				{
-					int selected = _taskInput.getSelectedIndex();
-					if (selected != -1)
-					{
-						int id = _taskComboModel.getId(selected);
+					if (_taskInput.isSelected()) {
+						int id = _taskInput.getSelectedId();
 						if(hoursspent.length() > 0 && hoursremain.length() > 0 && nbopenimped.length() > 0 && nbclosedimped.length() > 0)
 						{
 							if (_sprintbacklogModel.existsTaskInSBI(id))
@@ -169,19 +167,7 @@ public class DailyScrumMeetingDialog
 		if (!b)
 		{
 			//_sprintbacklogModel.removeSprintBacklogListner(this);
-		}
-		else
-		{
-			if (_taskComboModel.getSize() == 0)
-			{
-				_taskInput.setEnabled(false);
-			}
-			else
-			{
-				_taskInput.setEnabled(true);
-				_taskInput.setSelectedIndex(0);
-			}
-		}
+		}		
 		
 		super.setVisible(b);
 	}
@@ -193,7 +179,7 @@ public class DailyScrumMeetingDialog
 	/// team new name input
 	private JTextField _measuredayInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
 	/// team input combo box
-	private JComboBox _taskInput;
+	private StandardComboBox _taskInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

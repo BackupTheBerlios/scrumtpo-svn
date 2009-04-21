@@ -14,12 +14,15 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.SprintBacklogListener;
+import scrummer.model.DeveloperModel;
+import scrummer.model.Models;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 public class SprintPlanningMeetingDialog 
@@ -37,39 +40,39 @@ public class SprintPlanningMeetingDialog
 
 		setTitle(i18n.tr("Change sprint backlog item"));
 		
-		_sprintbacklogModel = Scrummer.getModels().getSprintBacklogModel();
+		Models m = Scrummer.getModels();
+		_sprintbacklogModel = m.getSprintBacklogModel();
 		_sprintbacklogModel.addSprintBacklogListener(this);
 		_taskComboModel = _sprintbacklogModel.getTaskComboBoxModel();
-		_empComboModel = _sprintbacklogModel.getEmpComboBoxModel();
-		_pbiComboModel = _sprintbacklogModel.getPbiComboBoxModel();
+		
+		DeveloperModel devModel = m.getDeveloperModel();
+		_empComboModel = devModel.getEmployeeComboBoxModel();
+		_pbiComboModel = m.getProductBacklogModel().getPBIComboBoxModel();
 		
 		int k = 10;
 		Panel.setLayout(new GridLayout(6, 6, 10, 12));
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
 		JLabel taskLbl = new JLabel(i18n.tr("Choose task") + ":");
-		JComboBox taskInput = new JComboBox();
-		taskInput.setModel(_taskComboModel);
+		StandardComboBox taskInput = new StandardComboBox();
+		taskInput.setIVModel(_taskComboModel);
 		_taskInput = taskInput;
-		_taskComboModel.refresh();
 		
 		Panel.add(taskLbl);
 		Panel.add(taskInput);
 		
 		JLabel empLbl = new JLabel(i18n.tr("Choose employee") + ":");
-		JComboBox empInput = new JComboBox();
-		empInput.setModel(_empComboModel);
+		StandardComboBox empInput = new StandardComboBox();
+		empInput.setIVModel(_empComboModel);
 		_empInput = empInput;
-		_empComboModel.refresh();
 		
 		Panel.add(empLbl);
 		Panel.add(empInput);
 		
 		JLabel pbiLbl = new JLabel(i18n.tr("Choose product backlog item") + ":");
-		JComboBox pbiInput = new JComboBox();
-		pbiInput.setModel(_pbiComboModel);
+		StandardComboBox pbiInput = new StandardComboBox();
+		pbiInput.setIVModel(_pbiComboModel);
 		_pbiInput = pbiInput;
-		_pbiComboModel.refresh();
 		
 		Panel.add(pbiLbl);
 		Panel.add(pbiInput);
@@ -112,20 +115,18 @@ public class SprintPlanningMeetingDialog
 				
 				if (pbi.length() > 0)
 				{
-					int selected = _taskInput.getSelectedIndex();
-					int selected_pbi = _pbiInput.getSelectedIndex();
-					int selected_emp = _empInput.getSelectedIndex();
-					if (selected != -1 && selected_pbi != -1 && selected_emp != -1)
+					if (_taskInput.isSelected() && 
+						_pbiInput.isSelected() && 
+						_empInput.isSelected())
 					{
-						int id = _taskComboModel.getId(selected);
-						int pbi_id = _pbiComboModel.getId(selected_pbi);
-						int emp_id = _empComboModel.getId(selected_emp);
+						int id = _taskInput.getSelectedId();
+						int pbi_id = _pbiInput.getSelectedId();
+						int emp_id = _empInput.getSelectedId();
 						if(sprint.length() > 0)
 						{
 							if(employee.length() > 0)
 							{
-								
-									_sprintbacklogModel.setTaskProp(id, pbi_id, sprint, emp_id);
+								_sprintbacklogModel.setTaskProp(id, pbi_id, sprint, emp_id);
 							}
 							else
 							{
@@ -196,18 +197,6 @@ public class SprintPlanningMeetingDialog
 		{
 			//_sprintbacklogModel.removeSprintBacklogListner(this);
 		}
-		else
-		{
-			if (_taskComboModel.getSize() == 0)
-			{
-				_taskInput.setEnabled(false);
-			}
-			else
-			{
-				_taskInput.setEnabled(true);
-				_taskInput.setSelectedIndex(0);
-			}
-		}
 		
 		super.setVisible(b);
 	}
@@ -223,7 +212,7 @@ public class SprintPlanningMeetingDialog
 	/// team new name input
 	private JTextField _sprintInput;
 	/// team input combo box
-	private JComboBox _taskInput, _empInput, _pbiInput;
+	private StandardComboBox _taskInput, _empInput, _pbiInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

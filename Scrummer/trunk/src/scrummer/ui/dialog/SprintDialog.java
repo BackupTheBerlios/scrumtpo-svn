@@ -15,6 +15,7 @@ import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -36,7 +37,6 @@ public class SprintDialog extends TwoButtonDialog implements SprintBacklogListen
 		Models m = Scrummer.getModels();
 		
 		_teamComboBoxModel = m.getDeveloperModel().getTeamComboBoxModel();
-		_teamComboBoxModel.refresh();
 		_sprintBacklogModel = m.getSprintBacklogModel();
 		_sprintBacklogModel.addSprintBacklogListener(this);
 		
@@ -52,7 +52,7 @@ public class SprintDialog extends TwoButtonDialog implements SprintBacklogListen
 			fb.addSelectedTextInput(i18n.tr("Description") + ":", "Description");
 		_teamInput = 
 			fb.addComboBoxInput(i18n.tr("Team") + ":");
-		_teamInput.setModel(_teamComboBoxModel);
+		_teamInput.setIVModel(_teamComboBoxModel);
 		_startDateInput = 
 			fb.addSelectedTextInput(i18n.tr("Start") + ":", "StartingDate");
 		_estimatedInput = 
@@ -92,7 +92,7 @@ public class SprintDialog extends TwoButtonDialog implements SprintBacklogListen
 	/// various input fields
 	protected SelectedTextField _descriptionInput, _startDateInput, _endDateInput, _lengthInput, _estimatedInput;
 	/// team combo box
-	protected JComboBox _teamInput;
+	protected StandardComboBox _teamInput;
 	/// team dropdown box
 	protected TeamComboBoxModel _teamComboBoxModel;
 	/// translation class field

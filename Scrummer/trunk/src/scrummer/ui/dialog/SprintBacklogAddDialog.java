@@ -27,6 +27,7 @@ import scrummer.model.ProductBacklogModel;
 import scrummer.model.SprintBacklogModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -57,7 +58,7 @@ public class SprintBacklogAddDialog
 		_taskdateTextField = addEntry(i18n.tr("Task date") + ":", "Task active");
 		JLabel label = new JLabel("Task active:");
 		String[] yesno = {"Yes","No"};
-		_taskactiveComboBox = new JComboBox(yesno);
+		_taskactiveComboBox = new StandardComboBox(yesno);
 		Panel.add(label);
 		Panel.add(_taskactiveComboBox);
 		
@@ -161,7 +162,7 @@ public class SprintBacklogAddDialog
 	/// product backlog model
 	private SprintBacklogModel _sprintbacklogModel;
 	/// combo boxes
-	private JComboBox _taskactiveComboBox;
+	private StandardComboBox _taskactiveComboBox;
 	/// name text field
 	private JTextField _taskdescriptionTextField, _tasktypeTextField, _taskstatusTextField, _taskdateTextField, _taskactiveTextField, _measuredayTextField, _PBIidTextField, _sprintTextField, _employeeTextField, _hoursspentTextField, _hoursremainingTextField, _nbopenimpedTextField, _nbclosedimpedTextField;
 	/// serialization id

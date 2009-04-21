@@ -20,6 +20,7 @@ import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 public class SprintBacklogChangeDialog 
@@ -47,10 +48,9 @@ public class SprintBacklogChangeDialog
 		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
 		
 		JLabel sbiLbl = new JLabel(i18n.tr("Sprint backlog item") + ":");
-		JComboBox sbiInput = new JComboBox();
-		sbiInput.setModel(_sprintbacklogComboModel);
+		StandardComboBox sbiInput = new StandardComboBox();
+		sbiInput.setIVModel(_sprintbacklogComboModel);
 		_sbiInput = sbiInput;
-		_sprintbacklogComboModel.refresh();
 		
 		Panel.add(sbiLbl);
 		Panel.add(sbiInput);
@@ -274,20 +274,8 @@ public class SprintBacklogChangeDialog
 		
 		if (!b)
 		{
-			//_sprintbacklogModel.removeSprintBacklogListner(this);
-		}
-		else
-		{
-			if (_sprintbacklogComboModel.getSize() == 0)
-			{
-				_sbiInput.setEnabled(false);
-			}
-			else
-			{
-				_sbiInput.setEnabled(true);
-				_sbiInput.setSelectedIndex(0);
-			}
-		}
+			// _sprintbacklogModel.removeSprintBacklogListner(this);
+		}		
 		
 		super.setVisible(b);
 	}
@@ -299,7 +287,7 @@ public class SprintBacklogChangeDialog
 	/// team new name input
 	private JTextField _measuredayInput, _pbiInput,  _taskInput, _sprintInput, _employeeInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
 	/// team input combo box
-	private JComboBox _sbiInput;
+	private StandardComboBox _sbiInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id

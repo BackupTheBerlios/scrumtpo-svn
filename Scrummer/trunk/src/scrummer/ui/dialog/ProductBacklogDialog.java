@@ -26,6 +26,7 @@ import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 public class ProductBacklogDialog extends TwoButtonDialog {
@@ -42,7 +43,7 @@ public class ProductBacklogDialog extends TwoButtonDialog {
 		fb.setCellSpacing(0, 10);
 		_sprintInput = 
 			fb.addComboBoxInput(i18n.tr("Sprint") + ":");
-		_sprintInput.setModel(_sprintProjectComboBoxModel);
+		_sprintInput.setIVModel(_sprintProjectComboBoxModel);
 		
 		_descriptionTextField = 
 			fb.addSelectedTextInput(i18n.tr("Description") + ":", "Description");
@@ -99,7 +100,7 @@ public class ProductBacklogDialog extends TwoButtonDialog {
 	/// product backlog model
 	protected ProductBacklogModel _productbacklogModel;
 	/// sprint input combo box
-	protected JComboBox _sprintInput;
+	protected StandardComboBox _sprintInput;
 	/// name text field
 	protected SelectedTextField _descriptionTextField;
 	/// formatted text fields

@@ -21,11 +21,14 @@ import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.AdminDaysListener;
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.AdminDaysModel;
+import scrummer.model.DeveloperModel;
+import scrummer.model.Models;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.AbsenceTypeComboBoxModel;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -45,19 +48,20 @@ public class AdminDaysAddDialog
 		// set translated title
 		setTitle(i18n.tr("Add administrative day"));
 		
-		_admindaysModel = Scrummer.getModels().getAdminDaysModel();
+		Models m = Scrummer.getModels();
+		_admindaysModel = m.getAdminDaysModel();
 		_admindaysModel.addAdminDaysListener(this);
+		DeveloperModel devModel = m.getDeveloperModel(); 
 		
 		_sbModel = Scrummer.getModels().getSprintBacklogModel();
 		_sbModel.addSprintBacklogListener(this);
 		
-		_empComboModel = _sbModel.getEmpComboBoxModel();
+		_empComboModel = devModel.getEmployeeComboBoxModel();
 		
 		JLabel empLbl = new JLabel(i18n.tr("Choose employee") + ":");
-		JComboBox empInput = new JComboBox();
-		empInput.setModel(_empComboModel);
+		StandardComboBox empInput = new StandardComboBox();
+		empInput.setIVModel(_empComboModel);
 		_empInput = empInput;
-		_empComboModel.refresh();
 		
 		Panel.add(empLbl);
 		Panel.add(empInput);
@@ -65,10 +69,9 @@ public class AdminDaysAddDialog
 		_absComboModel = _admindaysModel.getAbsenceTypeComboBoxModel();
 		
 		JLabel absLbl = new JLabel(i18n.tr("Choose absence type") + ":");
-		JComboBox absInput = new JComboBox();
-		absInput.setModel(_absComboModel);
+		StandardComboBox absInput = new StandardComboBox();
+		absInput.setIVModel(_absComboModel);
 		_absInput = absInput;
-		_absComboModel.refresh();
 		
 		Panel.add(absLbl);
 		Panel.add(absInput);
@@ -118,8 +121,8 @@ public class AdminDaysAddDialog
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
 			int employee, absence, hours, day;
-			employee = _empComboModel.getId(_empInput.getSelectedIndex());
-			absence = _absComboModel.getId(_absInput.getSelectedIndex());
+			employee = _empInput.getSelectedId();
+			absence = _absInput.getSelectedId();
 			hours = Integer.parseInt(_hoursnotworkedTextField.getText().trim());
 			day = Integer.parseInt(_dayTextField.getText().trim());
 			_admindaysModel.add(employee, absence, hours, day);
@@ -177,7 +180,7 @@ public class AdminDaysAddDialog
 	/// sprint backlog model
 	private SprintBacklogModel _sbModel;
 	/// combo box models
-	private JComboBox _empInput, _absInput;
+	private StandardComboBox _empInput, _absInput;
 	/// all employeed in combo box
 	private EmployeeComboBoxModel _empComboModel;
 	/// all absence types in combo box
