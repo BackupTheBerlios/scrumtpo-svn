@@ -1,17 +1,14 @@
 package scrummer.model;
 
 import java.util.Vector;
-
-import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.DeveloperListener;
-import scrummer.listener.OperationListener;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.model.swing.DeveloperNonTeamListModel;
 import scrummer.model.swing.DeveloperTableModel;
 import scrummer.model.swing.DeveloperTeamListModel;
+import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.EmployeeListModel;
 import scrummer.model.swing.TeamComboBoxModel;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
 
 /**
@@ -50,6 +47,8 @@ public class DeveloperModel {
 			new DeveloperTeamListModel(0, _developerModelCommon);
 		_developerNonTeamListModel =
 			new DeveloperNonTeamListModel(0, _developerModelCommon);
+		_empComboBoxModel = 
+			new EmployeeComboBoxModel(_developerModelCommon);
 	}
 	
 	/**
@@ -220,6 +219,13 @@ public class DeveloperModel {
 	{
 		return _developerNonTeamListModel;
 	}
+
+	/*
+	 * Fetch employee combo box model
+	 */
+	public EmployeeComboBoxModel getEmployeeComboBoxModel() {		
+		return _empComboBoxModel;
+	}
 	
 	/**
 	 * Add developer data change listener
@@ -256,6 +262,8 @@ public class DeveloperModel {
 	private DeveloperNonTeamListModel _developerNonTeamListModel;
 	/// team combo box model
 	private TeamComboBoxModel _teamComboBoxModel;
+	/// employee combo box model
+	private EmployeeComboBoxModel _empComboBoxModel;
 	/// developer operation
 	private Operations.DeveloperOperation _operation = new Operations.DeveloperOperation();
 }
