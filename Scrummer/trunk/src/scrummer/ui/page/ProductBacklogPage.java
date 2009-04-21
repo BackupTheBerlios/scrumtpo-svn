@@ -1,7 +1,6 @@
 package scrummer.ui.page;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +9,7 @@ import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import scrummer.Scrummer;
@@ -22,13 +19,13 @@ import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
 import scrummer.ui.dialog.ProductBacklogChangeDialog;
+import scrummer.uicomponents.AddEditRemovePanel;
 import scrummer.uicomponents.NiceTable;
-import scrummer.uicomponents.StandardButton;
 
 /**
  * This page contains product backlog table and buttons for adding/editing selected row
  */
-public class ProductBacklogPage 
+public class ProductBacklogPage
 	extends BasePage
 	implements MouseListener, ActionListener {
 
@@ -48,25 +45,8 @@ public class ProductBacklogPage
 		int k = 1;
 		box.setBorder(BorderFactory.createEmptyBorder(k, k, k, k));
 		
-		JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		toolbar.setBackground(Color.WHITE);
-		toolbar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
-		
-		JButton addButton = new StandardButton(i18n.tr("Add"));
-		addButton.setActionCommand("Add");
-		addButton.addActionListener(this);
-		
-		JButton editButton = new StandardButton(i18n.tr("Edit"));
-		editButton.setActionCommand("Edit");
-		editButton.addActionListener(this);
-		
-		JButton removeButton = new StandardButton(i18n.tr("Remove"));
-		removeButton.setActionCommand("Remove");
-		removeButton.addActionListener(this);
-		
-		toolbar.add(addButton);
-		toolbar.add(editButton);
-		toolbar.add(removeButton);
+		AddEditRemovePanel toolbar = new AddEditRemovePanel();
+		toolbar.addActionListener(this);
 		
 		NiceTable table = new NiceTable();
 		table.setModel(_productBacklogTableModel);
@@ -78,7 +58,8 @@ public class ProductBacklogPage
 		tableScroll.setBackground(Color.WHITE);
 		table.addMouseListener(this);
 		_productBacklogTable = table;
-		table.setAdjacentComponents(addButton, removeButton);
+		table.setAdjacentComponents
+			(toolbar.Add, toolbar.Remove);
 				
 		box.add(toolbar);
 		box.add(tableScroll);
@@ -125,16 +106,13 @@ public class ProductBacklogPage
 
 	@Override
 	public void mouseEntered(MouseEvent e) {}
-
 	@Override
 	public void mouseExited(MouseEvent e) {}
-
 	@Override
 	public void mousePressed(MouseEvent e) {}
-
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
