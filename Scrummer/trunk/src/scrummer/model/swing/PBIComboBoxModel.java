@@ -35,5 +35,4 @@ public class PBIComboBoxModel extends IdValueComboBoxModel
 	private ProductBacklogModelCommon _productbacklogModelCommon;
 	/// serialization id
 	private static final long serialVersionUID = 6494898047192792857L;
-
 }
