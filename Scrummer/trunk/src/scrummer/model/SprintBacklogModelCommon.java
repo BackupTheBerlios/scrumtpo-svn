@@ -788,6 +788,7 @@ public class SprintBacklogModelCommon
 		};
 		q.queryResult("SELECT " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + ", " +
+			DBSchemaModel.PBITable +  "." + DBSchemaModel.PBIDesc + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskEmployeeId + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTeamId + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskStatusId + ", " +
@@ -796,13 +797,13 @@ public class SprintBacklogModelCommon
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDate + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskActive + " FROM " + DBSchemaModel.TaskTable +
 			" JOIN " +
-			DBSchemaModel.SprintPBITable + " ON " + 
-			DBSchemaModel.SprintPBITable + "." + DBSchemaModel.SprintPBITaskId + "=" +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + 
-			" JOIN " +
-			DBSchemaModel.SprintTable + " ON " +
-			DBSchemaModel.SprintTable + "." + DBSchemaModel.SprintProjectId + "=" + projectId + " AND " +
-			DBSchemaModel.SprintTable + "." + DBSchemaModel.SprintId + "=" + sprintId);
+			DBSchemaModel.PBITable + " ON " + 
+			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskPBIId + 
+			" AND " +
+			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIProject + "=" + projectId +
+			" AND " +
+			DBSchemaModel.PBITable + "." + DBSchemaModel.PBISprint + "=" + sprintId);			
 					  
 		if (q.getResult() == null)
 		{
