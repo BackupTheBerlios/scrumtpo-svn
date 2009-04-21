@@ -243,6 +243,7 @@ public class DBSchemaModel {
 	public static final String TaskDate = "Task_date";
 	public static final String TaskActive = "Task_active";
 	public static final String TaskId = "Task_id";
+	public static final String TaskPBIId = "PBI_id";
 	public static final String TaskEmployeeId = EmployeeId;
 	public static final String TaskTeamId = TeamId;
 	
