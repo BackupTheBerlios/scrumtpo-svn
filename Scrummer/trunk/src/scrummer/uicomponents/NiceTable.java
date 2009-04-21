@@ -2,18 +2,11 @@ package scrummer.uicomponents;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.DefaultFocusTraversalPolicy;
-import java.awt.Rectangle;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.Vector;
-
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
@@ -51,6 +44,8 @@ public class NiceTable extends JTable {
 		
 		/// colour of every other line
 		private Color _color;
+		/// serialization id
+		private static final long serialVersionUID = -2673793561513970296L;
 	}
 	
 	public NiceTable() {
