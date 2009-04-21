@@ -15,6 +15,7 @@ import scrummer.model.Models;
 import scrummer.model.NavigationModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
+import scrummer.ui.Validate;
 
 /**
  * @brief Application starting class
@@ -47,8 +48,6 @@ public class Scrummer {
 			e.printStackTrace();
 		}
         
-        
-		
         _logger = new LoggingModel();
         IO.setLogger(_logger);
 
@@ -64,6 +63,9 @@ public class Scrummer {
 		Util.centre(mf);
 		mf.showLogin();
 		mf.setVisible(true);
+		
+		/// set translation instances to static classes
+		Validate.setI18n(getI18n(Validate.class));
 		
 		// go to homepage
 		NavigationModel nm = _models.getNavigationModel();
