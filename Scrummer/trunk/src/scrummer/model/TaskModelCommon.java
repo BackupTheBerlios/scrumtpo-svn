@@ -2,6 +2,7 @@ package scrummer.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -16,6 +17,69 @@ import scrummer.util.ResultQuery;
  */
 public class TaskModelCommon 
 {	
+	/**
+	 * Data row for updating data
+	 */
+	public static class Row extends DataRow
+	{
+		/**
+		 * Constructor
+		 * 
+		 * @param result result from which to get data
+		 */
+		public Row(ResultSet result)
+		{
+			try {
+				result.beforeFirst();
+				
+				TaskId = 
+					result.getInt(1);
+				EmployeeId = 
+					result.getInt(2);
+				PBIId = 
+					result.getInt(3);
+				TeamId = 
+					result.getInt(4);
+				TaskParentId = 
+					result.getInt(5);
+				TaskStatus = 
+					result.getInt(6);
+				TaskType =
+					result.getInt(7);
+				TaskDescription =
+					result.getString(8);
+				TaskDate =
+					result.getDate(9);
+				TaskActive = 
+					result.getBoolean(10);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/**
+		 * Does key equal 
+		 * @param taskId
+		 * @return
+		 */
+		public boolean keyEquals(int taskId)
+		{
+			return (TaskId == taskId);
+		}
+		
+		public int TaskId;
+		public int EmployeeId;
+		public int PBIId;
+		public int TeamId;
+		public int TaskParentId;
+		public int TaskStatus;
+		public int TaskType;
+		public String TaskDescription;
+		public Date TaskDate;
+		public boolean TaskActive;
+	}
+	
 	/**
 	 * Constructor
 	 * 
@@ -169,7 +233,40 @@ public class TaskModelCommon
 			return q.getResult();
 		}
 	}
+	
+	/**
+	 * Fetch task row
+	 */
+	public Row getRow(int taskId)
+	{	
+		ResultQuery<Row> q = new ResultQuery<Row>(_connectionModel)
+		{	
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(new Row(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(null);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, TaskOperation.Task, 
+	        		i18n.tr("Could not remove task."));
+			}
+		};
+		q.queryResult("SELECT * FROM " + DBSchemaModel.TaskTable);
 		
+		if (q.getResult() == null)
+		{
+			return null;
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
+	/// last gotten row
+	private Row _lastRow = null;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// task data operation notifier
