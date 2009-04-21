@@ -10,6 +10,8 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 
 import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
+import sun.nio.cs.StandardCharsets;
 
 /**
  * Helper class for building forms
@@ -77,13 +79,13 @@ public class FormBuilder {
 	 * @param labelText label text
 	 * @return created combo box
 	 */
-	public JComboBox addComboBoxInput(String labelText)
+	public StandardComboBox addComboBoxInput(String labelText)
 	{
 		_addedElements += 2;
 		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
 		
 		JLabel label = new JLabel(labelText);
-		JComboBox textBox = new JComboBox();
+		StandardComboBox textBox = new StandardComboBox();
 		
 		_panel.add(label);
 		_panel.add(textBox);
