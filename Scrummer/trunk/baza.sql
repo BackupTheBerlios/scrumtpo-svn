@@ -253,12 +253,14 @@ create table Task
 (
    Task_id              integer  	AUTO_INCREMENT 	   not null,
    Employee_id          integer                        null,
+   PBI_id				integer						   not null,
    Team_id              integer                        null,
+   Task_parent_id		integer						   null,
    Task_status_id       integer                        not null,
    Task_type_id         integer                        not null,
    Task_description     text                           not null,
-   Task_date            text                           null,
-   Task_active          text			   not null,
+   Task_date            DATE                           null,
+   Task_active          BOOLEAN			   not null,
    constraint PK_TASK primary key (Task_id)
 ) CHARACTER SET utf8;
 
@@ -467,6 +469,18 @@ alter table Task
 alter table Task
    add constraint FK_TASK_RELATIONS_TEAM_MEM foreign key (Employee_id, Team_id)
       references Team_member (Employee_id, Team_id)
+      on update restrict
+      on delete restrict;
+
+alter table Task
+   add constraint FK_TASK_PROJECT_ID foreign key (PBI_id)
+      references PBI (PBI_id)
+      on update restrict
+      on delete restrict;
+
+alter table Task
+   add constraint FK_TASK_PARENT_ID foreign key (Task_parent_id)
+      references Task (Task_id)
       on update restrict
       on delete restrict;
 
