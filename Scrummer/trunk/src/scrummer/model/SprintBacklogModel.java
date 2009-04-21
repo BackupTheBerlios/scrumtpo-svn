@@ -4,14 +4,12 @@ import java.util.Date;
 
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.AllTaskTableModel;
-import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.SprintDescriptionListModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
-import scrummer.model.swing.TaskTableModel;
 import scrummer.util.Operations;
 
 /**
@@ -51,10 +49,6 @@ public class SprintBacklogModel
 			new DeveloperModelCommon(_connectionModel, _devOperation);
 		_pbiModelCommon = 
 			new ProductBacklogModelCommon(_connectionModel, _pbiOperation);
-		_empComboBoxModel = 
-			new EmployeeComboBoxModel(_devModelCommon);
-		_pbiComboBoxModel = 
-			new PBIComboBoxModel(_pbiModelCommon);
 		_sprintProjectComboBoxModel = 
 			new SprintProjectComboBoxModel(_sprintbacklogModelCommon, projectModel);
 		_sprintDescriptionListModel =
@@ -174,15 +168,7 @@ public class SprintBacklogModel
 	public TaskComboBoxModel getTaskComboBoxModel() {
 		return _taskComboBoxModel;
 	}
-	
-	public EmployeeComboBoxModel getEmpComboBoxModel() {
-		return _empComboBoxModel;
-	}
-	
-	public PBIComboBoxModel getPbiComboBoxModel() {
-		return _pbiComboBoxModel;
-	}
-	
+		
 	public SprintDescriptionListModel getSprintDescriptionListModel() {
 		return _sprintDescriptionListModel;
 	}
@@ -302,10 +288,6 @@ public class SprintBacklogModel
 	private SBIComboBoxModel _sbiComboBoxModel;
 	/// task combo box model
 	private TaskComboBoxModel _taskComboBoxModel;
-	/// pbi combo box model
-	private PBIComboBoxModel _pbiComboBoxModel;
-	/// employee combo box model
-	private EmployeeComboBoxModel _empComboBoxModel;
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// model that displays sprint id's on only one project
