@@ -31,6 +31,7 @@ public class AllTaskTableModel extends DefaultTableModel {
 		_sprintbacklogModelCommon = sprintbacklogModelCommon;
 				
 		_columns.add(i18n.tr("Task id"));
+		_columns.add(i18n.tr("PBI"));
 		_columns.add(i18n.tr("Employee"));
 		_columns.add(i18n.tr("Team"));
 		
@@ -63,7 +64,7 @@ public class AllTaskTableModel extends DefaultTableModel {
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
 		_realColumns = schemam.getColumns(DBSchemaModel.TaskTable);
-		_columnCount = _realColumns.size();
+		_columnCount = _columns.size();
 	}
 	
 	/**
