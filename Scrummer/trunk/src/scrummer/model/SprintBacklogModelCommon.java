@@ -779,7 +779,11 @@ public class SprintBacklogModelCommon
 		{
 			@Override
 			public void processResult(ResultSet result) {
-				setResult(ObjectRow.fetchRows(result)); 
+				Vector<ObjectRow> res = ObjectRow.fetchRows(result);
+				ObjectRow.convertDate(res, 7);
+				ObjectRow.convertEnum(res, 5, DBSchemaModel.TaskStatusTable);
+				ObjectRow.convertEnum(res, 6, DBSchemaModel.TaskTypeTable);
+				setResult(res); 
 			}
 			@Override
 			public void handleException(SQLException ex) {
@@ -788,12 +792,13 @@ public class SprintBacklogModelCommon
 		};
 		q.queryResult("SELECT " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + ", " +
-			DBSchemaModel.PBITable +  "." + DBSchemaModel.PBIDesc + ", " +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskEmployeeId + ", " +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTeamId + ", " +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskStatusId + ", " +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTypeId + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDescription + ", " +
+			DBSchemaModel.PBITable +  "." + DBSchemaModel.PBIDesc + ", " +
+			"CONCAT(" + DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeName + " , ' ', " +
+						DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeSurname + "), " +
+			DBSchemaModel.TeamTable + "." + DBSchemaModel.TeamName + ", " +
+			DBSchemaModel.TaskStatusTable + "." + DBSchemaModel.TaskStatusId + ", " +
+			DBSchemaModel.TaskTypeTable + "." + DBSchemaModel.TaskTypeId	 + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDate + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskActive + " FROM " + DBSchemaModel.TaskTable +
 			" JOIN " +
@@ -803,7 +808,23 @@ public class SprintBacklogModelCommon
 			" AND " +
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIProject + "=" + projectId +
 			" AND " +
-			DBSchemaModel.PBITable + "." + DBSchemaModel.PBISprint + "=" + sprintId);			
+			DBSchemaModel.PBITable + "." + DBSchemaModel.PBISprint + "=" + sprintId +
+			" JOIN " +
+			DBSchemaModel.EmployeeTable + " ON " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskEmployeeId + "=" +
+			DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + 
+			" JOIN " +
+			DBSchemaModel.TeamTable + " ON " +
+			DBSchemaModel.TeamTable + "." + DBSchemaModel.TeamId + "=" +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTeamId +
+			" JOIN " + 
+			DBSchemaModel.TaskStatusTable + " ON " +
+			DBSchemaModel.TaskStatusTable + "." + DBSchemaModel.TaskStatusId + "=" +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskStatusId +
+			" JOIN " +
+			DBSchemaModel.TaskTypeTable + " ON " +
+			DBSchemaModel.TaskTypeTable + "." + DBSchemaModel.TaskTypeId + "=" + 
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskTypeId);
 					  
 		if (q.getResult() == null)
 		{
