@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import org.xnap.commons.i18n.I18n;
@@ -20,6 +19,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.listener.OperationListener;
+import scrummer.model.Models;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.Util;
@@ -42,10 +42,11 @@ public class DailyScrumMeetingDialog
 
 		setTitle(i18n.tr("Daily scrum meeting"));
 		
-		_sprintbacklogModel = Scrummer.getModels().getSprintBacklogModel();
+		Models m = Scrummer.getModels();
+		_sprintbacklogModel = m.getSprintBacklogModel();
 		//_sprintbacklogModel.addSprintBacklogListener(this);
 		
-		_taskComboModel = _sprintbacklogModel.getTaskComboBoxModel();
+		_taskComboModel = m.getTaskModel().getTaskComboBoxModel();
 		
 		int k = 10;
 		Panel.setLayout(new GridLayout(6, 6, 10, 12));
@@ -159,18 +160,7 @@ public class DailyScrumMeetingDialog
 			}
 			break;
 		}
-	}
-
-	@Override
-	public void setVisible(boolean b) {
-		
-		if (!b)
-		{
-			//_sprintbacklogModel.removeSprintBacklogListner(this);
-		}		
-		
-		super.setVisible(b);
-	}
+	}	
 
 	/// sprint backlog model
 	private SprintBacklogModel _sprintbacklogModel;
