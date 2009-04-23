@@ -31,7 +31,7 @@ public class TaskAddDialog extends TaskDialog {
 			gc.get(Calendar.YEAR);
 		_dateInput.setText(todayStr.toString());
 		
-		this.OK.setText(i18n.tr("Add"));
+		OK.setText(i18n.tr("Add"));
 	}
 	
 	@Override
@@ -51,15 +51,16 @@ public class TaskAddDialog extends TaskDialog {
 			
 			if (taskDate == null) { _dateInput.grabFocus(); return; }
 			
-			/*
 			_taskModel.add(
-				_taskEmployeeInput.getSelectedId(), 
-				_taskTeamInput.getSelectedId(), 
-				_taskStatusInput.getSelectedId(), 
-				_taskTypeInput.getSelectedId(), 
-				description, 
-				taskDate, true);
-			*/
+				description,
+				(_parentInput.isSelected() ? _parentInput.getSelectedId() : null),
+				(_pbiInput.isSelected() ? _pbiInput.getSelectedId() : null),
+				_taskEmployeeInput.getSelectedId(),
+				_taskTeamInput.getSelectedId(),
+				_taskStatusInput.getSelectedId(),
+				_taskTypeInput.getSelectedId(),
+				taskDate, 
+				_taskActiveInput.getSelectedIndex() == 0);
 		}	
 		else
 		{
