@@ -43,8 +43,6 @@ public class SprintBacklogModel
 			new TaskModelCommon(_connectionModel, _taskoperation);
 		_sbiComboBoxModel = 
 			new SBIComboBoxModel(_sprintbacklogModelCommon);
-		_taskComboBoxModel = 
-			new TaskComboBoxModel(_taskModelCommon);
 		_devModelCommon = 
 			new DeveloperModelCommon(_connectionModel, _devOperation);
 		_pbiModelCommon = 
@@ -164,10 +162,6 @@ public class SprintBacklogModel
 	{
 		return _sbiComboBoxModel;
 	}
-	
-	public TaskComboBoxModel getTaskComboBoxModel() {
-		return _taskComboBoxModel;
-	}
 		
 	public SprintDescriptionListModel getSprintDescriptionListModel() {
 		return _sprintDescriptionListModel;
@@ -271,9 +265,20 @@ public class SprintBacklogModel
 	 */
 	public void setCurrentSprint(int sprintId)
 	{
+		_currentSprint = sprintId;
 		_taskTableModel.setSprintId(sprintId);
 	}
 	
+	/** 
+	 * @return Currently active sprint 
+	 */
+	public int getCurrentSprint()
+	{
+		return _currentSprint;
+	}
+	
+	/// currently selected sprint
+	private int _currentSprint = -1;
 	/// common sprint backlog related functionality
 	private SprintBacklogModelCommon _sprintbacklogModelCommon;
 	/// product backlog model 
@@ -286,8 +291,6 @@ public class SprintBacklogModel
 	private ProjectModel _projectModel;
 	/// SBI combo box model
 	private SBIComboBoxModel _sbiComboBoxModel;
-	/// task combo box model
-	private TaskComboBoxModel _taskComboBoxModel;
 	/// developer table model
 	private SprintBacklogTableModel _sprintbacklogTableModel;
 	/// model that displays sprint id's on only one project
