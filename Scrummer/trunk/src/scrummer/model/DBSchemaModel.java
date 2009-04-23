@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Vector;
 
+import com.sun.org.apache.xml.internal.security.utils.I18n;
+
+import scrummer.Scrummer;
 import scrummer.util.Query;
 
 /**
@@ -202,10 +205,68 @@ public class DBSchemaModel {
 		}
 	}
 	
+	/**
+	 * Set translation object
+	 * @param value vlaue to set
+	 */
+	public static void setI18n(org.xnap.commons.i18n.I18n value)
+	{
+		i18n = value;
+	}
+	
 	/// mapping from table names to table column names
 	private HashMap<String, Vector<String>> _tableColumnsMap = new HashMap<String, Vector<String>>();
 	/// connection model
 	private ConnectionModel _connectionModel;
+	/// translation class field
+	private static org.xnap.commons.i18n.I18n i18n;
+	
+	/**
+	 * Convert enum to it's string representation(includes translations)
+	 * @param tableName enum table name
+	 * @param id enum id
+	 */
+	public static String convertEnum(String tableName, int id)
+	{
+		if (tableName == TaskTypeTable)
+		{
+			switch (id)
+			{
+			case 1: return i18n.tr("analysis");
+			case 2: return i18n.tr("design");
+			case 3: return i18n.tr("coding");
+			case 4: return i18n.tr("testing");
+			case 5: return i18n.tr("documentation");
+			case 6: return i18n.tr("rework due to error reported by the customer");
+			case 7: return i18n.tr("rework due to change in requirements");			
+			case 8: return i18n.tr("rework due to inaccurat specifications");
+			case 9: return i18n.tr("rework due to incomplete impact assessment");
+			case 10: return i18n.tr("rework due to inadequate change specifications");
+			case 11: return i18n.tr("rework due to inadequate testing");
+			case 12: return i18n.tr("other");
+			}
+			return null;
+		}
+		else if (tableName == TaskStatusTable)
+		{
+			switch (id)
+			{
+			case 1: return i18n.tr("not started");
+			case 2: return i18n.tr("in progress");
+			case 3: return i18n.tr("completed");
+			case 4: return i18n.tr("omitted");
+			case 5: return i18n.tr("moved into next sprint");
+			case 6: return i18n.tr("split/divided");
+			case 7: return i18n.tr("not completed due to incorrect feasibility assumptions");			
+			case 8: return i18n.tr("other");
+			}
+			return null;
+		}
+		else
+		{
+			return null; 
+		}
+	}
 	
 	public static final String ProjectTable = "Project";
 	public static final String ProjectId = "Project_id";
@@ -243,6 +304,7 @@ public class DBSchemaModel {
 	public static final String TaskDate = "Task_date";
 	public static final String TaskActive = "Task_active";
 	public static final String TaskId = "Task_id";
+	public static final String TaskParentId = "Task_parent_id";
 	public static final String TaskPBIId = "PBI_id";
 	public static final String TaskEmployeeId = EmployeeId;
 	public static final String TaskTeamId = TeamId;
@@ -298,5 +360,5 @@ public class DBSchemaModel {
 	public static final String TaskStatusDesc = "Task_status_description";
 	
 	public static final String TaskTypeTable = "Task_type";
-	public static final String TaskTypeDesc = "Task_type_description";
+	public static final String TaskTypeDesc = "Task_type_description";	
 }
