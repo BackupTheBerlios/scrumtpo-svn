@@ -2,10 +2,12 @@ package scrummer.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.TaskOperation;
 import scrummer.listener.TaskListener;
+import scrummer.model.swing.ProjectSprintTaskComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.model.swing.TaskTableModel;
 import scrummer.util.Operations;
@@ -23,8 +25,10 @@ public class TaskModel
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
+	 * @param projectModel project model
+	 * @param sprintModel sprint model
 	 */
-	public TaskModel(ConnectionModel connectionModel)
+	public TaskModel(ConnectionModel connectionModel, ProjectModel projectModel, SprintBacklogModel sprintModel)
 	{
 		if (connectionModel == null)
 		{
@@ -32,46 +36,34 @@ public class TaskModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_taskModelCommon = new TaskModelCommon(_connectionModel, _operation);
-		_taskTableModel = new TaskTableModel(connectionModel, _taskModelCommon);
-		_taskComboBoxModel = new TaskComboBoxModel(_taskModelCommon);
+		_projectModel = projectModel;
+		_sprintBacklogModel = sprintModel;
+		_taskModelCommon = 
+			new TaskModelCommon(_connectionModel, _operation);
+		_taskTableModel = 
+			new TaskTableModel(connectionModel, _taskModelCommon);
+		_taskComboBoxModel = 
+			new TaskComboBoxModel(_taskModelCommon);
+		_projectSprintTaskComboBoxModel = 
+			new ProjectSprintTaskComboBoxModel(_taskModelCommon);
 	}
 	
 	/**
 	 * Add task
+	 * 
+	 * @param description task description
+	 * @param parent parent task (if any)
+	 * @param pbi related pbi(a task does not exist without one)
+	 * @param employee responsible employee
+	 * @param team team
+	 * @param status task status
+	 * @param type task type
+	 * @param date end date
+	 * @param active is task active
 	 */
-	public void add(int emp, int team, int status, int type, String desc, java.sql.Date date, String active)
+	public void add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
 	{
-		java.sql.Connection conn      = null;
-		java.sql.PreparedStatement st = null;
-		ResultSet res = null;
-		try {
-			 conn = _connectionModel.getConnection();
-			 String query =
-				"INSERT INTO " + DBSchemaModel.TaskTable +
-			 	"(Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) " +
-			 	"VALUES (?, ?, ?, ?, ?, ?, ?)";
-			 st = conn.prepareStatement(query);
-			 st.setInt(1, emp);
-			 st.setInt(2, team);
-			 st.setInt(3, status);
-			 st.setInt(4, type);
-			 st.setString(5, desc);
-			 st.setDate(6, date);
-			 st.setString(7, active);
-			 st.execute();
-			 
-			 _operation.operationSucceeded(DataOperation.Insert, TaskOperation.Task, "");
-		} catch (SQLException e) {
-			_operation.operationFailed(DataOperation.Insert, TaskOperation.Task, e.getMessage());
-			e.printStackTrace();
-		}
-		finally
-		{
-			res  = _connectionModel.close(res);
-			st   = _connectionModel.close(st);
-			conn = _connectionModel.close(conn);
-		}
+		_taskModelCommon.add(description, parent, pbi, employee, team, status, type, date, active);
 	}
 	
 	/**
@@ -82,7 +74,7 @@ public class TaskModel
 	public TaskTableModel getTaskTableModel()
 	{
 		return _taskTableModel;
-	}
+	}	
 	
 	/**
 	 * Add task data change listener
@@ -103,7 +95,6 @@ public class TaskModel
 		_operation.removeListener(listener);
 	}
 	
-
 	/**
 	 * Fetch task combo box model
 	 * @return model
@@ -112,13 +103,29 @@ public class TaskModel
 	{
 		return _taskComboBoxModel;
 	}
-		
+	
+	/**
+	 * @return project/sprint based task combo box model
+	 */
+	public ProjectSprintTaskComboBoxModel getProjectSprintTaskComboBoxModel()
+	{
+		_projectSprintTaskComboBoxModel.setProject(_projectModel.getCurrentProjectId());
+		_projectSprintTaskComboBoxModel.setSprint(_sprintBacklogModel.getCurrentSprint());
+		return _projectSprintTaskComboBoxModel;
+	}
+			
+	/// project model
+	private ProjectModel _projectModel;
+	/// sprint backlog model
+	private SprintBacklogModel _sprintBacklogModel;
 	/// common task related functionality
 	private TaskModelCommon _taskModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// task combo box model
 	private TaskComboBoxModel _taskComboBoxModel;
+	/// all task descriptions on given project and sprint
+	private ProjectSprintTaskComboBoxModel _projectSprintTaskComboBoxModel;
 	/// task table model
 	private TaskTableModel _taskTableModel;
 	/// task operation
