@@ -30,6 +30,9 @@ public class Models {
 		createImpedimentModel();
 		createProductBacklogModel();
 		createSprintBacklogModel();
+		
+		getProductBacklogModel().setSprintBacklogModel(getSprintBacklogModel());
+		
 		createDBSchemaModel();
 		createAdminDaysModel();
 		createAbsenceTypeModel();
@@ -252,7 +255,8 @@ public class Models {
 	{
 		if (_productbacklogModel == null)	
 		{
-			_productbacklogModel = new ProductBacklogModel(getConnectionModel(), getProjectModel());
+			_productbacklogModel = 
+				new ProductBacklogModel(getConnectionModel(), getProjectModel());
 		}
 		return _productbacklogModel;
 	}
@@ -402,7 +406,8 @@ public class Models {
 	{
 		if (_taskModel == null)	
 		{
-			_taskModel = new TaskModel(getConnectionModel());
+			_taskModel = 
+				new TaskModel(getConnectionModel(), getProjectModel(), getSprintBacklogModel());
 		}
 		return _taskModel;
 	}
