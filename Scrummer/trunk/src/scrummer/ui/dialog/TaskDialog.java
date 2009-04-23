@@ -33,6 +33,8 @@ public class TaskDialog extends TwoButtonDialog {
 		super(owner, ModalityType.APPLICATION_MODAL);
 	
 		Models m = Scrummer.getModels();
+		_taskModel = 
+			m.getTaskModel();
 		_employeeModel = 
 			m.getDeveloperModel();
 		_employeeComboBoxModel = 
@@ -58,6 +60,8 @@ public class TaskDialog extends TwoButtonDialog {
 			fb.addSelectedTextInput(i18n.tr("Description") + ":", "Description");
 		_pbiInput =
 			fb.addComboBoxInput(i18n.tr("PBI") + ":");
+		_parentInput =
+			fb.addComboBoxInput(i18n.tr("Parent") + ":");
 		_taskEmployeeInput = 
 			fb.addComboBoxInput(i18n.tr("Employee") + ":");		
 		_taskTeamInput = 
@@ -71,7 +75,8 @@ public class TaskDialog extends TwoButtonDialog {
 		_taskActiveInput = 
 			fb.addComboBoxInput(i18n.tr("Active") + ":");
 		
-		_pbiInput.setIVModel(m.getProductBacklogModel().getPBIComboBoxModel());
+		_pbiInput.setIVModel(m.getProductBacklogModel().getProjectSprintPBIComboBoxModel());
+		_parentInput.setIVModel(m.getTaskModel().getProjectSprintTaskComboBoxModel());
 		_taskEmployeeInput.setIVModel(_employeeComboBoxModel);
 		_taskTeamInput.setIVModel(_teamComboBoxModel);
 		_taskTypeInput.setIVModel(_taskTypeComboBoxModel);
@@ -82,13 +87,13 @@ public class TaskDialog extends TwoButtonDialog {
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 18, 7));
 		
-		setSize(new Dimension(300, 360));
+		setSize(new Dimension(300, 390));
 	}
 	
 	/// description and status gui inputs
 	protected JTextField _descriptionInput, _dateInput;
 	/// combo box inputs
-	protected StandardComboBox _pbiInput, _taskActiveInput, _taskEmployeeInput, _taskTeamInput, _taskTypeInput, _taskStatusInput; 
+	protected StandardComboBox _parentInput, _pbiInput, _taskActiveInput, _taskEmployeeInput, _taskTeamInput, _taskTypeInput, _taskStatusInput; 
 	/// is task active combo box model
 	protected BooleanComboBoxModel _taskActiveModel;
 	/// developer model
