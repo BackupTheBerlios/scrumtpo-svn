@@ -10,6 +10,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
+
+import scrummer.model.DBSchemaModel;
 import scrummer.model.LoggingModel;
 import scrummer.model.Models;
 import scrummer.model.NavigationModel;
@@ -66,6 +68,7 @@ public class Scrummer {
 		
 		/// set translation instances to static classes
 		Validate.setI18n(getI18n(Validate.class));
+		DBSchemaModel.setI18n(getI18n(DBSchemaModel.class));
 		
 		// go to homepage
 		NavigationModel nm = _models.getNavigationModel();
