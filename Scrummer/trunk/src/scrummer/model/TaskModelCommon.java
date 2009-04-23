@@ -91,10 +91,23 @@ public class TaskModelCommon
 		_operation 		 = operation;
 	}
 	
+	
+	
+	
 	/**
 	 * Add task
+	 * 
+	 * @param description task description
+	 * @param parent parent task (if any)
+	 * @param pbi related pbi(a task does not exist without one)
+	 * @param employee responsible employee
+	 * @param team team
+	 * @param status task status
+	 * @param type task type
+	 * @param date end date
+	 * @param active is task active
 	 */
-	public void add(int emp, int team, int status, int type, String desc, java.sql.Date date, String active)
+	public void add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
 	{
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
@@ -103,29 +116,37 @@ public class TaskModelCommon
 			 conn = _connectionModel.getConnection();
 			 String query =
 				"INSERT INTO " + DBSchemaModel.TaskTable +
-			 	"(Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) " +
-			 	"VALUES (?, ?, ?, ?, ?, ?, ?)";
+			 	"(" + DBSchemaModel.TaskEmployeeId + ", " +
+			 		  DBSchemaModel.TaskPBIId + ", " +
+			 		  DBSchemaModel.TaskTeamId + ", " + 
+			 		  DBSchemaModel.TaskParentId + ", " +
+			 		  DBSchemaModel.TaskStatusId + ", " +
+			 		  DBSchemaModel.TaskTypeId + ", " + 
+			 		  DBSchemaModel.TaskDescription + ", " +
+			 		  DBSchemaModel.TaskDate + ", " +
+			 		  DBSchemaModel.TaskActive + ") " +
+			 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
-			 st.setInt(1, emp);
-			 st.setInt(2, team);
-			 st.setInt(3, status);
-			 st.setInt(4, type);
-			 st.setString(5, desc);
-			 st.setDate(6, date);
-			 st.setString(7, active);
+			 st.setInt(1, employee);
+			 if (pbi == null) { st.setNull(2, java.sql.Types.INTEGER); } else { st.setInt(2, pbi); }
+			 st.setInt(3, team);
+			 if (parent == null) { st.setNull(4, java.sql.Types.INTEGER); } else { st.setInt(4, parent); }
+			 st.setInt(5, status);
+			 st.setInt(6, type);
+			 st.setString(7, description);
+			 st.setDate(8, new java.sql.Date(date.getTime()));
+			 st.setBoolean(9, active);
 			 st.execute();
 			 
 			 _operation.operationSucceeded(DataOperation.Insert, TaskOperation.Task, "");
 		} catch (SQLException e) {
 			_operation.operationFailed(DataOperation.Insert, TaskOperation.Task, e.getMessage());
 			e.printStackTrace();
-		}
-		finally
-		{
+		} finally {
 			res  = _connectionModel.close(res);
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
-		}
+		}		
 	}
 	
 	/**
@@ -265,6 +286,61 @@ public class TaskModelCommon
 		}
 	}
 	
+	/**
+	 * Fetch task names for given sprint and project
+	 * 
+	 * @param project project id
+	 * @param sprint sprint id
+	 * 
+	 * @return task names
+	 */
+	public Vector<IdValue> fetchTaskNames(int project, int sprint) {
+		
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) 
+			{
+				Vector<IdValue> res = new Vector<IdValue>();
+				try {
+					result.beforeFirst();
+					while (result.next())
+					{
+						res.add(new IdValue(result.getInt(1), result.getString(2)));
+					}
+					setResult(res);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.TaskId + ", " +
+						DBSchemaModel.TaskDescription +
+			" FROM "   + DBSchemaModel.TaskTable + 
+			" JOIN " +
+			DBSchemaModel.PBITable + " ON " + 
+			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + 
+			" AND " +
+			DBSchemaModel.PBIProject + "=" + project + 
+			" AND " +
+			DBSchemaModel.PBISprint + "=" + sprint);
+		if (q.getResult() == null)
+		{
+			return new Vector<IdValue>();
+		}
+		else
+		{
+			return q.getResult();
+		}
+	}
+	
 	/// last gotten row
 	private Row _lastRow = null;
 	/// connection model
@@ -273,4 +349,5 @@ public class TaskModelCommon
 	private Operations.TaskOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
+	
 }
