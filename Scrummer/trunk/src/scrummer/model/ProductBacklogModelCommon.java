@@ -291,6 +291,39 @@ public class ProductBacklogModelCommon {
 	}
 	
 	/**
+	 * Fetch all pbi names on given project and sprint
+	 * @param project project
+	 * @param sprint sprint
+	 * @return a list of pbi descriptions
+	 */
+	public Vector<IdValue> fetchPBIsNames(int project, int sprint) {
+	
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
+		{
+			@Override
+			public void processResult(ResultSet result) 
+			{
+				setResult(IdValue.fetchValues(result));		
+			}
+			@Override
+			public void handleException(SQLException ex) 
+			{
+				setResult(new Vector<IdValue>());
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.PBIId + ", " +
+			DBSchemaModel.PBIDesc +
+			" FROM "   + DBSchemaModel.PBITable + " WHERE " +
+			DBSchemaModel.PBIProject + "=" + project + 
+			" AND " +
+			DBSchemaModel.PBISprint + "=" + sprint);
+		
+		return q.getResult();
+	}
+	
+	/**
 	 * Set pbi project
 	 * 
 	 * @param id pbi id
