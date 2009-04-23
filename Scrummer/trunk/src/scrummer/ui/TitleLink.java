@@ -71,13 +71,16 @@ public class TitleLink extends GrowingLabel implements NavigationListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		super.mouseClicked(e);
-		
-		switch (_endpoint)
+		if (isEnabled())
 		{
-		case Back: _navigationModel.back(); break;
-		case Home: _navigationModel.home(); break;
-		case Up: break;
+			super.mouseClicked(e);
+			
+			switch (_endpoint)
+			{
+			case Back: _navigationModel.back(); break;
+			case Home: _navigationModel.home(); break;
+			case Up: break;
+			}
 		}
 	}
 
@@ -87,4 +90,6 @@ public class TitleLink extends GrowingLabel implements NavigationListener {
 	private Endpoint _endpoint;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
+	/// serialization id
+	private static final long serialVersionUID = 5460261965829718211L;
 }
