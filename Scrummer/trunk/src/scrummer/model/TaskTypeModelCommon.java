@@ -75,7 +75,9 @@ public class TaskTypeModelCommon
 					result.beforeFirst();
 					while (result.next())
 					{
-						res.add(new IdValue(result.getInt(1), result.getString(2)));
+						int id = result.getInt(1);
+						String name = DBSchemaModel.convertEnum(DBSchemaModel.TaskTypeTable, id);
+						res.add(new IdValue(id, (name == null) ? result.getString(2) : name));
 					}
 					setResult(res);
 				} catch (SQLException e) {
