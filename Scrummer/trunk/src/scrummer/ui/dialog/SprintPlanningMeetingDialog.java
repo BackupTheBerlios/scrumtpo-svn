@@ -43,7 +43,7 @@ public class SprintPlanningMeetingDialog
 		Models m = Scrummer.getModels();
 		_sprintbacklogModel = m.getSprintBacklogModel();
 		_sprintbacklogModel.addSprintBacklogListener(this);
-		_taskComboModel = _sprintbacklogModel.getTaskComboBoxModel();
+		_taskComboModel = m.getTaskModel().getTaskComboBoxModel();
 		
 		DeveloperModel devModel = m.getDeveloperModel();
 		_empComboModel = devModel.getEmployeeComboBoxModel();
