@@ -31,13 +31,13 @@ public class AllTaskTableModel extends DefaultTableModel {
 		_sprintbacklogModelCommon = sprintbacklogModelCommon;
 				
 		_columns.add(i18n.tr("Task id"));
+		_columns.add(i18n.tr("Task description"));
 		_columns.add(i18n.tr("PBI"));
 		_columns.add(i18n.tr("Employee"));
 		_columns.add(i18n.tr("Team"));
 		
-		_columns.add(i18n.tr("Task description"));
-		_columns.add(i18n.tr("Task type"));
 		_columns.add(i18n.tr("Task status"));
+		_columns.add(i18n.tr("Task type"));
 		
 		_columns.add(i18n.tr("Task date"));
 		_columns.add(i18n.tr("Task active"));		
