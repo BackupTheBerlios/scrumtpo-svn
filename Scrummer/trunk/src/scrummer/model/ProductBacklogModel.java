@@ -1,19 +1,10 @@
 package scrummer.model;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import scrummer.Scrummer;
-import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.ProductBacklogOperation;
-import scrummer.listener.OperationListener;
 import scrummer.listener.ProductBacklogListener;
-import scrummer.model.swing.DeveloperTableModel;
-import scrummer.model.swing.ImpedimentComboBoxModel;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.ProductBacklogTableModel;
-import scrummer.util.Operation;
+import scrummer.model.swing.ProjectSprintPBIComboBoxModel;
 import scrummer.util.Operations;
 
 /**
@@ -38,10 +29,24 @@ public class ProductBacklogModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_projectModel = projectModel;
-		_productbacklogModelCommon = new ProductBacklogModelCommon(_connectionModel, _operation);
-		_productbacklogTableModel = new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon, projectModel);
-		_productbacklogComboBoxModel = new PBIComboBoxModel(_productbacklogModelCommon);
+		_projectModel = projectModel;		
+		_productbacklogModelCommon = 
+			new ProductBacklogModelCommon(_connectionModel, _operation);
+		_productbacklogTableModel = 
+			new ProductBacklogTableModel(connectionModel, _productbacklogModelCommon, projectModel);
+		_productbacklogComboBoxModel = 
+			new PBIComboBoxModel(_productbacklogModelCommon);
+		_projectSprintPBIComboBoxModel =
+			new ProjectSprintPBIComboBoxModel(_productbacklogModelCommon);
+	}
+	
+	/**
+	 * Sprint backlog model should be set after construction to avoid infinite recursion
+	 * @param sprintBacklogModel
+	 */
+	public void setSprintBacklogModel(SprintBacklogModel sprintBacklogModel)
+	{
+		_sprintBacklogModel = sprintBacklogModel;
 	}
 	
 	/**
@@ -75,6 +80,13 @@ public class ProductBacklogModel
 	public ProductBacklogTableModel getProductBacklogTableModel()
 	{
 		return _productbacklogTableModel;
+	}
+
+	public ProjectSprintPBIComboBoxModel getProjectSprintPBIComboBoxModel()
+	{
+		_projectSprintPBIComboBoxModel.setProject(_projectModel.getCurrentProjectId());
+		_projectSprintPBIComboBoxModel.setSprint(_sprintBacklogModel.getCurrentSprint());
+		return _projectSprintPBIComboBoxModel; 
 	}
 	
 	/**
@@ -207,8 +219,12 @@ public class ProductBacklogModel
 	private ConnectionModel _connectionModel;
 	/// product backlog table model
 	private ProductBacklogTableModel _productbacklogTableModel;
+	/// combo box model of all pbi descriptions on current project and sprint
+	private ProjectSprintPBIComboBoxModel _projectSprintPBIComboBoxModel;
 	/// project model
 	private ProjectModel _projectModel;
+	/// sprint backlog model
+	private SprintBacklogModel _sprintBacklogModel;
 	/// product backlog operation
 	private Operations.ProductBacklogOperation _operation = new Operations.ProductBacklogOperation();
 
