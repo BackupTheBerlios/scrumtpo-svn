@@ -74,7 +74,7 @@ public class Validate {
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		Date ret = null;
 		try {
-			ret = df.parse(message);
+			ret = df.parse(input.getText());
 		} catch (ParseException e) {
 			Util.showError(parent, message, i18n.tr("Error"));
 			ret = null;
