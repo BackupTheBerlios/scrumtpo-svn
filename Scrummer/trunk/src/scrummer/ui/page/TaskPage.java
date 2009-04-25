@@ -12,10 +12,13 @@ import javax.swing.JScrollPane;
 import scrummer.Scrummer;
 import scrummer.model.Models;
 import scrummer.model.SprintBacklogModel;
+import scrummer.model.TaskModel;
+import scrummer.model.TaskModelCommon;
 import scrummer.model.swing.AllTaskTableModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
 import scrummer.ui.dialog.TaskAddDialog;
+import scrummer.ui.dialog.TaskChangeDialog;
 import scrummer.uicomponents.AddEditRemovePanel;
 import scrummer.uicomponents.NiceTable;
 
@@ -38,6 +41,7 @@ public class TaskPage
 		
 		Models m = Scrummer.getModels();
 		_sprintBacklogModel = m.getSprintBacklogModel();
+		_taskModel = m.getTaskModel();
 		_taskTableModel = _sprintBacklogModel.getTaskTableModel();
 		_taskTableModel.refresh();
 		
@@ -53,6 +57,7 @@ public class TaskPage
 		taskTable.setBackground(Color.WHITE);
 		taskTable.setAdjacentComponents
 			(toolbar.Add, toolbar.Remove);
+		_taskTable = taskTable;
 		
 		JScrollPane scrollPane = new JScrollPane(taskTable);				
 		scrollPane.setBackground(Color.WHITE);
@@ -77,16 +82,32 @@ public class TaskPage
 		}
 		else if (cmd == "Edit")
 		{
-			
+			int selection = _taskTable.getSelectedRow();
+			if (selection != -1)
+			{
+				int id = _taskTableModel.getPrimaryKey(selection);
+				TaskChangeDialog dialog = new TaskChangeDialog(getMainFrame(), id);
+				Util.centre(dialog);
+				dialog.setVisible(true);
+			}
 		}
 		else if (cmd == "Remove")
 		{
-			
+			int selection = _taskTable.getSelectedRow();
+			if (selection != -1)
+			{
+				int id = _taskTableModel.getPrimaryKey(selection);
+				_taskModel.remove(id);
+			}
 		}
 	}
 	
+	/// task table widget
+	private NiceTable _taskTable;
 	/// sprint backlog model
 	private SprintBacklogModel _sprintBacklogModel;
+	/// task model
+	private TaskModel _taskModel;
 	/// task table model
 	private AllTaskTableModel _taskTableModel;
 	/// serialization id
