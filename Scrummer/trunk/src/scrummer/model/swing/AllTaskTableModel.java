@@ -117,6 +117,11 @@ public class AllTaskTableModel extends DefaultTableModel {
 		return _columns.get(column);
 	}
 	
+	public int getPrimaryKey(int row)
+	{
+		return (Integer)_rows.get(row).get(0);
+	}
+	
 	/**
 	 * Set sprint id that will be displayed by this table
 	 * @param value value to set
