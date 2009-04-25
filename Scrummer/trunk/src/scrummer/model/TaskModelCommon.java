@@ -20,17 +20,15 @@ public class TaskModelCommon
 	/**
 	 * Data row for updating data
 	 */
-	public static class Row extends DataRow
-	{
+	public static class Row extends DataRow {
 		/**
 		 * Constructor
 		 * 
 		 * @param result result from which to get data
 		 */
-		public Row(ResultSet result)
-		{
+		public Row(ResultSet result) {
 			try {
-				result.beforeFirst();
+				result.beforeFirst(); result.next();
 				
 				TaskId = 
 					result.getInt(1);
@@ -52,7 +50,6 @@ public class TaskModelCommon
 					result.getDate(9);
 				TaskActive = 
 					result.getBoolean(10);
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -68,13 +65,7 @@ public class TaskModelCommon
 			return (TaskId == taskId);
 		}
 		
-		public int TaskId;
-		public int EmployeeId;
-		public int PBIId;
-		public int TeamId;
-		public int TaskParentId;
-		public int TaskStatus;
-		public int TaskType;
+		public int TaskId, EmployeeId, PBIId, TeamId, TaskParentId, TaskStatus, TaskType;
 		public String TaskDescription;
 		public Date TaskDate;
 		public boolean TaskActive;
@@ -90,10 +81,7 @@ public class TaskModelCommon
 		_connectionModel = connectionModel;
 		_operation 		 = operation;
 	}
-	
-	
-	
-	
+		
 	/**
 	 * Add task
 	 * 
@@ -106,9 +94,11 @@ public class TaskModelCommon
 	 * @param type task type
 	 * @param date end date
 	 * @param active is task active
+	 * @return true if task added, false otherwise
 	 */
-	public void add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
+	public boolean add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
 	{
+		boolean ret = false;
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet res = null;
@@ -138,6 +128,7 @@ public class TaskModelCommon
 			 st.setBoolean(9, active);
 			 st.execute();
 			 
+			 ret = true;
 			 _operation.operationSucceeded(DataOperation.Insert, TaskOperation.Task, "");
 		} catch (SQLException e) {
 			_operation.operationFailed(DataOperation.Insert, TaskOperation.Task, e.getMessage());
@@ -146,7 +137,8 @@ public class TaskModelCommon
 			res  = _connectionModel.close(res);
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
-		}		
+		}
+		return ret;
 	}
 	
 	/**
@@ -161,21 +153,12 @@ public class TaskModelCommon
 			@Override
 			public void processResult(ResultSet result) 
 			{
-				Vector<IdValue> res = new Vector<IdValue>();
-				try {
-					result.beforeFirst();
-					while (result.next())
-					{
-						res.add(new IdValue(result.getInt(1), result.getString(2)));
-					}
-					setResult(res);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				setResult(IdValue.fetchValues(result));
 			}
 			@Override
 			public void handleException(SQLException ex) 
 			{
+				setResult(new Vector<IdValue>());
 				ex.printStackTrace();
 			}
 		};
@@ -183,14 +166,7 @@ public class TaskModelCommon
 			"SELECT " + DBSchemaModel.TaskId + ", " +
 			DBSchemaModel.TaskDescription +
 			" FROM "   + DBSchemaModel.TaskTable);
-		if (q.getResult() == null)
-		{
-			return new Vector<IdValue>();
-		}
-		else
-		{
-			return q.getResult();
-		}
+		return q.getResult();
 	}
 	
 	/**
@@ -208,28 +184,15 @@ public class TaskModelCommon
 			}
 			@Override
 			public void handleException(SQLException ex) {
+				setResult(new Vector<ObjectRow>());
 				ex.printStackTrace();
 			}
 		};
 		q.queryResult("SELECT * FROM " + DBSchemaModel.TaskTable);
-		if (q.getResult() == null)
-		{
-			return new Vector<ObjectRow>();
-		}
-		else
-		{
-			return q.getResult();
-		}
+		return q.getResult();
 	}
 	
-	/**
-	 * Remove task by id
-	 * 
-	 * @param id task id
-	 * @return true if task was removed, false otherwise
-	 */
-	public boolean removeTask(String id)
-	{
+	public boolean removeTask(int taskId) {
 		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
 		{	
 			@Override
@@ -238,21 +201,15 @@ public class TaskModelCommon
 			}
 			@Override
 			public void handleException(SQLException ex) {
+				setResult(false);
 				ex.printStackTrace();
 	        	_operation.operationFailed(DataOperation.Remove, TaskOperation.Task, 
 	        		i18n.tr("Could not remove task."));
 			}
 		};
 		q.query("DELETE FROM " + DBSchemaModel.TaskTable + 
-				" WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
-		if (q.getResult() == null)
-		{
-			return false;
-		}
-		else
-		{
-			return q.getResult();
-		}
+				" WHERE " + DBSchemaModel.TaskId + "='" + taskId + "'");
+		return q.getResult();
 	}
 	
 	/**
@@ -274,16 +231,10 @@ public class TaskModelCommon
 	        		i18n.tr("Could not remove task."));
 			}
 		};
-		q.queryResult("SELECT * FROM " + DBSchemaModel.TaskTable);
-		
-		if (q.getResult() == null)
-		{
-			return null;
-		}
-		else
-		{
-			return q.getResult();
-		}
+		q.queryResult(
+			"SELECT * FROM " + DBSchemaModel.TaskTable + 
+			" WHERE " + DBSchemaModel.TaskId + "=" + taskId);
+		return q.getResult();
 	}
 	
 	/**
@@ -299,23 +250,13 @@ public class TaskModelCommon
 		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
 		{
 			@Override
-			public void processResult(ResultSet result) 
-			{
-				Vector<IdValue> res = new Vector<IdValue>();
-				try {
-					result.beforeFirst();
-					while (result.next())
-					{
-						res.add(new IdValue(result.getInt(1), result.getString(2)));
-					}
-					setResult(res);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			public void processResult(ResultSet result) {
+				setResult(IdValue.fetchValues(result));
 			}
 			@Override
 			public void handleException(SQLException ex) 
 			{
+				setResult(new Vector<IdValue>());
 				ex.printStackTrace();
 			}
 		};
@@ -331,14 +272,7 @@ public class TaskModelCommon
 			DBSchemaModel.PBIProject + "=" + project + 
 			" AND " +
 			DBSchemaModel.PBISprint + "=" + sprint);
-		if (q.getResult() == null)
-		{
-			return new Vector<IdValue>();
-		}
-		else
-		{
-			return q.getResult();
-		}
+		return q.getResult();
 	}
 	
 	/// last gotten row
@@ -349,5 +283,5 @@ public class TaskModelCommon
 	private Operations.TaskOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
-	
+
 }
