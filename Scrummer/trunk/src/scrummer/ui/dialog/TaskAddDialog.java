@@ -9,12 +9,18 @@ import java.util.GregorianCalendar;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.TaskOperation;
+import scrummer.listener.TaskListener;
+import scrummer.ui.Util;
 import scrummer.ui.Validate;
 
 /**
  * Task add dialog
  */
-public class TaskAddDialog extends TaskDialog {
+public class TaskAddDialog 
+	extends TaskDialog 
+	implements TaskListener {
 
 	/**
 	 * Constructor
@@ -24,12 +30,8 @@ public class TaskAddDialog extends TaskDialog {
 		super(owner);
 		setTitle(i18n.tr("Add Task"));
 		
-		GregorianCalendar gc = new GregorianCalendar();
-		String todayStr = 
-			gc.get(Calendar.DAY_OF_MONTH) + "." + 
-			(gc.get(Calendar.MONTH) - Calendar.JANUARY + 1) + "." + 
-			gc.get(Calendar.YEAR);
-		_dateInput.setText(todayStr.toString());
+		_taskModel.addTaskListener(this);
+		_dateInput.setText(Util.today());
 		
 		OK.setText(i18n.tr("Add"));
 	}
@@ -68,8 +70,50 @@ public class TaskAddDialog extends TaskDialog {
 		}
 	}
 
+	@Override
+	public void operationFailed(DataOperation type, TaskOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			switch (identifier)
+			{
+			case Task:
+				Util.showError(this, i18n.tr("Error while adding task: " + message), i18n.tr("Error"));
+				break;
+			}
+		break;
+		}
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, TaskOperation identifier, String message) {
+		switch (type)
+		{
+		case Insert:
+			switch (identifier)
+			{
+			case Task:
+				setVisible(false);				
+				break;
+			}
+			break;
+		}
+	}
+	
+	@Override
+	public void setVisible(boolean b) {
+
+		if (!b)
+		{
+			_taskModel.removeTaskListener(this);
+		}
+		
+		super.setVisible(b);
+	}
+
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = -678805712571722387L;
+	
 }
