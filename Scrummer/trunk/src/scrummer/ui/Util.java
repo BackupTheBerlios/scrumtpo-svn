@@ -9,6 +9,9 @@ import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.BorderFactory;
@@ -166,5 +169,18 @@ public class Util {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * Get todays date as string
+	 * @return date string
+	 */
+	public static String today()
+	{
+		GregorianCalendar gc = new GregorianCalendar();
+		return  
+			gc.get(Calendar.DAY_OF_MONTH) + "." + 
+			(gc.get(Calendar.MONTH) - Calendar.JANUARY + 1) + "." + 
+			gc.get(Calendar.YEAR);		
 	}
 }
