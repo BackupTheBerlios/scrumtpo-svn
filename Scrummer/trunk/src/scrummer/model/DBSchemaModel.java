@@ -361,4 +361,29 @@ public class DBSchemaModel {
 	
 	public static final String TaskTypeTable = "Task_type";
 	public static final String TaskTypeDesc = "Task_type_description";	
+	
+	// these enumerations were generated using extract.py script
+	public enum AbsenceTypeEnum { AbsenceTypeId, AbsenceTypeDescription }
+	public enum AdministrativeDaysEnum { EmployeeId, AbsenceTypeId, HoursNotWorked, MeasureDay }
+	public enum EmployeeEnum { EmployeeId, EmployeeName, EmployeeSurname, EmployeeAddress }
+	public enum ImpedimentEnum { ImpedimentId, TeamId, SprintId, EmployeeId, TaskId, ImpedimentDescription, ImpedimentType, ImpedimentStatus, ImpedimentStart, ImpedimentEnd, ImpedimentAge }
+	public enum MeasureEnum { MeasureId, MeasureName, MeasureDescription }
+	public enum PBIEnum { PBIId, ProjectId, SprintId, PBIDescription, PBIPriority, PBIInitialEstimate, PBIAdjustmentFactor }
+	public enum PBIMeasurementResultEnum { MeasureId, PBIId, MeasurementResult, Datum }
+	public enum ProjectEnum { ProjectId, ProjectName, ProjectDescription }
+	public enum FinalReleaseEnum { ReleaseId, ReleaseDescription }
+	public enum ReleasePBIEnum { PBIId, ReleaseId }
+	public enum ReleaseMeasurementResultEnum { MeasureId, ReleaseId, MeasurementResult, Datum }
+	public enum SprintEnum { SprintId, ProjectId, TeamId, SprintDescription, SprintBeginDate, SprintEndDate, SprintLength, SprintEstimatedDate }
+	public enum SprintPBIEnum { MeasureDay, PBIId, TaskId, SprintId, EmployeeId, HoursSpent, HoursRemaining, NbOpenImped, NbClosedImped }
+	public enum SprintMeasurementResultEnum { SprintId, MeasureId, MeasurementResult, Datum }
+	public enum SprintTeamEnum { TeamId, SprintId }
+	public enum TaskEnum { TaskId, EmployeeId, PBIId, TeamId, TaskParentId, TaskStatusId, TaskTypeId, TaskDescription, TaskDate, TaskActive }
+	public enum TaskMeasurementResultEnum { MeasureId, TaskId, MeasurementResult, Datum }
+	public enum TaskStatusEnum { TaskStatusId, TaskStatusDescription }
+	public enum TaskTypeEnum { TaskTypeId, TaskTypeDescription }
+	public enum TeamEnum { TeamId, TeamDescription }
+	public enum TeamMemberEnum { EmployeeId, TeamId }
+
+
 }
