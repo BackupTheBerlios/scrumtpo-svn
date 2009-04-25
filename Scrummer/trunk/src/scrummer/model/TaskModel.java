@@ -1,11 +1,7 @@
 package scrummer.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
-
-import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.TaskOperation;
+import scrummer.exception.DBMap;
 import scrummer.listener.TaskListener;
 import scrummer.model.swing.ProjectSprintTaskComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
@@ -63,7 +59,67 @@ public class TaskModel
 	 */
 	public void add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
 	{
-		_taskModelCommon.add(description, parent, pbi, employee, team, status, type, date, active);
+		if (_taskModelCommon.add(description, parent, pbi, employee, team, status, type, date, active))
+		{
+			_taskTableModel.refresh();
+			_sprintBacklogModel.getTaskTableModel().refresh();
+		}
+	}
+	
+	public Integer getInteger(DBSchemaModel.TaskEnum enumId, int taskId)
+	{
+		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
+		switch (enumId)
+		{
+		case TaskId: 
+			return row.TaskId;
+		case EmployeeId: 
+			return row.EmployeeId;
+		case PBIId:
+			return row.PBIId;
+		case TaskParentId:
+			return row.TaskParentId;
+		case TaskStatusId:
+			return row.TaskStatus;
+		case TaskTypeId:
+			return row.TaskType;
+		case TeamId:
+			return row.TeamId; 
+		}
+		throw new DBMap(enumId);
+	}
+	
+	public String getString(DBSchemaModel.TaskEnum enumId, int taskId)
+	{
+		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
+		switch (enumId)
+		{
+		case TaskDescription:
+			return row.TaskDescription;
+		}
+		throw new DBMap(enumId);
+	}
+	
+	public Date getDate(DBSchemaModel.TaskEnum enumId, int taskId)
+	{
+		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
+		switch (enumId)
+		{
+		case TaskDate:
+			return row.TaskDate;
+		}
+		throw new DBMap(enumId);
+	}
+	
+	public Boolean getBoolean(DBSchemaModel.TaskEnum enumId, int taskId)
+	{
+		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
+		switch (enumId)
+		{
+		case TaskActive:
+			return row.TaskActive;
+		}
+		throw new DBMap(enumId);
 	}
 	
 	/**
@@ -113,6 +169,18 @@ public class TaskModel
 		_projectSprintTaskComboBoxModel.setSprint(_sprintBacklogModel.getCurrentSprint());
 		return _projectSprintTaskComboBoxModel;
 	}
+	
+	/**
+	 * Remove task with given id
+	 * @param id task id
+	 */
+	public void remove(int id) {
+		if (_taskModelCommon.removeTask(id))
+		{
+			_taskTableModel.refresh();
+			_sprintBacklogModel.getTaskTableModel().refresh();
+		}
+	}
 			
 	/// project model
 	private ProjectModel _projectModel;
@@ -130,4 +198,6 @@ public class TaskModel
 	private TaskTableModel _taskTableModel;
 	/// task operation
 	private Operations.TaskOperation _operation = new Operations.TaskOperation();
+
+	
 }
