@@ -78,7 +78,8 @@ public class TaskTableModel extends DefaultTableModel
 	@Override
 	public void removeRow(int row) 
 	{
-		if (_taskModelCommon.removeTask(_rows.get(row).get(0).toString()))
+		int id = getPrimaryKey(row);
+		if (_taskModelCommon.removeTask(id))
 		{
 			refresh();
 		}	
@@ -102,6 +103,11 @@ public class TaskTableModel extends DefaultTableModel
 	@Override
 	public String getColumnName(int column) {
 		return _columns.get(column + 1);
+	}
+	
+	public int getPrimaryKey(int row)
+	{
+		return (Integer)_rows.get(row).get(0);
 	}
 
 	/// column count
