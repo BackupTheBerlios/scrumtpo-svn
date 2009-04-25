@@ -63,8 +63,7 @@ public class Query {
 	 * @return result set
 	 */
 	public void queryResult(String query)
-	{
-		// System.out.println(query);
+	{		
 		try
 		{
 			// fetch connection
