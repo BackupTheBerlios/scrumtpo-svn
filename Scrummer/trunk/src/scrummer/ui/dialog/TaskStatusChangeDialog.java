@@ -11,34 +11,34 @@ import javax.swing.JTextField;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.TaskTypeOperation;
-import scrummer.listener.TaskTypeListener;
-import scrummer.model.TaskTypeModel;
-import scrummer.model.swing.TaskTypeComboBoxModel;
+import scrummer.enumerator.TaskStatusOperation;
+import scrummer.listener.TaskStatusListener;
+import scrummer.model.TaskStatusModel;
+import scrummer.model.swing.TaskStatusComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
-public class TaskTypeChangeDialog 
+public class TaskStatusChangeDialog 
 	extends TwoButtonDialog
-	implements TaskTypeListener 
+	implements TaskStatusListener 
 	{
 	/**
 	 * Constructor
 	 * 
 	 * @param owner owner form
 	 */
-	public TaskTypeChangeDialog(Frame owner)
+	public TaskStatusChangeDialog(Frame owner)
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 
 		setTitle(i18n.tr("Change absence type"));
 		
-		_tasktypeModel = Scrummer.getModels().getTaskTypeModel();
-		_tasktypeModel.addTaskTypeListener(this);
+		_taskstatusModel = Scrummer.getModels().getTaskStatusModel();
+		_taskstatusModel.addTaskStatusListener(this);
 		
-		_tasktypeComboModel = _tasktypeModel.getTaskTypeComboBoxModel();
+		_taskstatusComboModel = _taskstatusModel.getTaskStatusComboBoxModel();
 		
 		int k = 10;
 		Panel.setLayout(new GridLayout(6, 6, 10, 12));
@@ -46,7 +46,7 @@ public class TaskTypeChangeDialog
 		
 		JLabel absLbl = new JLabel(i18n.tr("Task type") + ":");
 		StandardComboBox absInput = new StandardComboBox();
-		absInput.setIVModel(_tasktypeComboModel);
+		absInput.setIVModel(_taskstatusComboModel);
 		_absInput = absInput;
 		
 		Panel.add(absLbl);
@@ -88,11 +88,11 @@ public class TaskTypeChangeDialog
 			String desc = _descInput.getText().trim();
 			if (_absInput.isSelected())
 			{			
-				_tasktypeModel.setNewDesc(_absInput.getSelectedId(), desc);
+				_taskstatusModel.setNewDesc(_absInput.getSelectedId(), desc);
 			}
 			else
 			{
-				Util.showError(this, i18n.tr("Some task type must be selected to change it's description."), i18n.tr("Error"));
+				Util.showError(this, i18n.tr("Some task status must be selected to change it's description."), i18n.tr("Error"));
 			}
 		}
 		else
@@ -102,15 +102,15 @@ public class TaskTypeChangeDialog
 	}
 
 	@Override
-	public void operationSucceeded(DataOperation type, TaskTypeOperation identifier, String message) {
+	public void operationSucceeded(DataOperation type, TaskStatusOperation identifier, String message) {
 		switch (type)
 		{
 		case Update:
 		
 			switch (identifier)
 			{
-			case TaskType:
-				_tasktypeComboModel.refresh();
+			case TaskStatus:
+				_taskstatusComboModel.refresh();
 				_absInput.setSelectedIndex(0);
 				setVisible(false);
 				break;
@@ -120,7 +120,7 @@ public class TaskTypeChangeDialog
 	}
 	
 	@Override
-	public void operationFailed(DataOperation type, TaskTypeOperation identifier, String message) 
+	public void operationFailed(DataOperation type, TaskStatusOperation identifier, String message) 
 	{
 		
 		switch (type)
@@ -128,7 +128,7 @@ public class TaskTypeChangeDialog
 		case Update:
 			switch (identifier)
 			{
-			case TaskType:
+			case TaskStatus:
 				Util.showError(this, 
 					i18n.tr("An error has occurred when setting description") + ": " + message, 
 					i18n.tr("Error"));
@@ -143,19 +143,19 @@ public class TaskTypeChangeDialog
 		
 		if (!b)
 		{
-			_tasktypeModel.removeTaskTypeListener(this);
+			_taskstatusModel.removeTaskStatusListener(this);
 		}
 		
 		super.setVisible(b);
 	}
 
-	/// task type model
-	private TaskTypeModel _tasktypeModel;
-	/// all task types in combo box
-	private TaskTypeComboBoxModel _tasktypeComboModel;
+	/// task status model
+	private TaskStatusModel _taskstatusModel;
+	/// all task statuses in combo box
+	private TaskStatusComboBoxModel _taskstatusComboModel;
 	/// description new name input
 	private JTextField _descInput;
-	/// absence type input combo box
+	/// task status input combo box
 	private StandardComboBox _absInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());

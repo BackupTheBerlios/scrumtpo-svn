@@ -112,6 +112,11 @@ public class AbsenceTypeModel
 	{
 		_absencetypeModelCommon.setNewDesc(id, desc);
 	}
+	
+	public void removeAbsenceType(String selectedId) 
+	{
+		_absencetypeModelCommon.removeAbsenceType(selectedId);
+	}
 		
 	/// common absence type related functionality
 	private AbsenceTypeModelCommon _absencetypeModelCommon;

@@ -112,6 +112,11 @@ public class TaskStatusModel
 	{
 		_taskstatusModelCommon.setNewDesc(id, desc);
 	}
+	
+	public void removeTaskStatus(String selectedId) 
+	{
+		_taskstatusModelCommon.removeTaskStatus(selectedId);
+	}
 		
 	/// common absence type related functionality
 	private TaskStatusModelCommon _taskstatusModelCommon;

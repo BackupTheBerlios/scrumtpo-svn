@@ -24,6 +24,7 @@ import scrummer.model.PropertyModel;
 import scrummer.ui.dialog.AboutBoxDialog;
 import scrummer.ui.dialog.AbsenceTypeAddDialog;
 import scrummer.ui.dialog.AbsenceTypeChangeDialog;
+import scrummer.ui.dialog.AbsenceTypeRemoveDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
 import scrummer.ui.dialog.AdminDaysAddDialog;
 import scrummer.ui.dialog.AdminDaysViewDialog;
@@ -36,11 +37,16 @@ import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.ProjectNewDialog;
 import scrummer.ui.dialog.ProjectOpenDialog;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
-import scrummer.ui.dialog.ProductBacklogChangeDialog;
 import scrummer.ui.dialog.ProductBacklogViewDialog;
 import scrummer.ui.dialog.ProjectRemoveDialog;
 import scrummer.ui.dialog.SprintBacklogViewDialog;
 import scrummer.ui.dialog.SprintPlanningMeetingDialog;
+import scrummer.ui.dialog.TaskStatusAddDialog;
+import scrummer.ui.dialog.TaskStatusChangeDialog;
+import scrummer.ui.dialog.TaskStatusRemoveDialog;
+import scrummer.ui.dialog.TaskTypeAddDialog;
+import scrummer.ui.dialog.TaskTypeChangeDialog;
+import scrummer.ui.dialog.TaskTypeRemoveDialog;
 import scrummer.ui.dialog.TeamAddDialog;
 import scrummer.ui.dialog.TeamOverviewDialog;
 import scrummer.ui.dialog.TeamChangeNameDialog;
@@ -126,7 +132,14 @@ public class MainFrame extends JFrame
 		sifrantiMenu.setMnemonic(KeyEvent.VK_0);
 		
 		addMenuEntry(sifrantiMenu, i18n.tr("Add absence type"), KeyEvent.VK_1, "AddAbsenceType");
-		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_3, "ChangeAbsenceType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_2, "ChangeAbsenceType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove absence type"), KeyEvent.VK_3, "RemoveAbsenceType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Add task type"), KeyEvent.VK_4, "AddTaskType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change task type"), KeyEvent.VK_5, "ChangeTaskType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove task type"), KeyEvent.VK_6, "RemoveTaskType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Add task status"), KeyEvent.VK_7, "AddTaskStatus");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change task status"), KeyEvent.VK_8, "ChangeTaskStatus");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove task status"), KeyEvent.VK_9, "RemoveTaskStatus");
 		
 		JMenu developerMenu = new JMenu(i18n.tr("Employees"));
 		developerMenu.setMnemonic(KeyEvent.VK_E);
@@ -319,6 +332,55 @@ public class MainFrame extends JFrame
 			AbsenceTypeChangeDialog dialog = new AbsenceTypeChangeDialog(this);
 			dialog.setVisible(true);
 			
+		}
+		else if(cmd.equals("RemoveAbsenceType"))
+		{
+			AbsenceTypeRemoveDialog dialog = new AbsenceTypeRemoveDialog(this);
+			dialog.setVisible(true);
+		}
+		else if(cmd.equals("AddTaskType"))
+		{
+			TaskTypeAddDialog dialog;
+			try {
+				dialog = new TaskTypeAddDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("ChangeTaskType"))
+		{
+			TaskTypeChangeDialog dialog = new TaskTypeChangeDialog(this);
+			dialog.setVisible(true);
+			
+		}
+		else if(cmd.equals("RemoveTaskType"))
+		{
+			TaskTypeRemoveDialog dialog = new TaskTypeRemoveDialog(this);
+			dialog.setVisible(true);
+		}
+		else if(cmd.equals("AddTaskStatus"))
+		{
+			TaskStatusAddDialog dialog;
+			try {
+				dialog = new TaskStatusAddDialog(this);
+				dialog.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(cmd.equals("ChangeTaskStatus"))
+		{
+			TaskStatusChangeDialog dialog = new TaskStatusChangeDialog(this);
+			dialog.setVisible(true);
+			
+		}
+		else if(cmd.equals("RemoveTaskStatus"))
+		{
+			TaskStatusRemoveDialog dialog = new TaskStatusRemoveDialog(this);
+			dialog.setVisible(true);
 		}
 		else if (cmd.equals("ViewDevelopers"))
 		{

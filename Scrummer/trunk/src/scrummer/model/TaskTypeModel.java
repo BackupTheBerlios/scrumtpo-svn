@@ -49,7 +49,7 @@ public class TaskTypeModel
 		try {
 			 conn = _connectionModel.getConnection();
 			 String query =
-				"INSERT INTO" + DBSchemaModel.TaskTypeTable +
+				"INSERT INTO " + DBSchemaModel.TaskTypeTable +
 			 	"(Task_type_description) " +
 			 	"VALUES (?)";
 			 st = conn.prepareStatement(query);
@@ -110,6 +110,11 @@ public class TaskTypeModel
 	public void setNewDesc(int id, String desc) 
 	{
 		_tasktypeModelCommon.setNewDesc(id, desc);
+	}
+	
+	public void removeTaskType(String selectedId) 
+	{
+		_tasktypeModelCommon.removeTaskType(selectedId);
 	}
 		
 	/// common task type related functionality
