@@ -8,6 +8,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.TaskOperation;
 import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.ui.dialog.TaskDialog;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
@@ -274,6 +275,63 @@ public class TaskModelCommon
 			DBSchemaModel.PBISprint + "=" + sprint);
 		return q.getResult();
 	}
+	
+	/**
+	 * Update task
+	 * 
+	 * @param taskId task id
+	 * @param description task description
+	 * @param pbiId pbi id
+	 * @param parentId parent
+	 * @param employeeId employee
+	 * @param teamId team 
+	 * @param taskTypeId task type
+	 * @param taskStatusId task status
+	 * @param date task end date
+	 * @param active is task active?
+	 * 
+	 * @return true if task update, false otherwise
+	 */
+	public boolean updateTask(
+		int taskId,
+		String description, int pbiId, int parentId, int employeeId, int teamId,
+		int taskTypeId, int taskStatusId, Date date, boolean active) {
+
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{
+			@Override
+			public void process() {
+				_operation.operationSucceeded(DataOperation.Update, TaskOperation.Task, "");
+				setResult(true);
+			}
+
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+				_operation.operationFailed(DataOperation.Update, TaskOperation.Task, ex.getMessage());
+			}
+			
+		};
+		q.query(
+			"UPDATE " + 
+			DBSchemaModel.TaskTable + " " +
+			"SET " + 
+			DBSchemaModel.TaskDescription + "='" + description + "', " +
+			DBSchemaModel.TaskPBIId + "='" + pbiId + "', " +
+			DBSchemaModel.TaskParentId + "='" + parentId + "', " +
+			DBSchemaModel.TaskEmployeeId + "='" + employeeId + "', " +
+			DBSchemaModel.TaskTeamId + "='" + teamId + "', " +
+			DBSchemaModel.TaskTypeId + "='" + taskTypeId + "', " +
+			DBSchemaModel.TaskStatusId + "='" + taskStatusId + "', " +
+			DBSchemaModel.TaskDate + "='" + new java.sql.Date(date.getTime()) + "', " +
+			DBSchemaModel.TaskActive + "='" + (active ? 1 : 0) + "' " +
+			"WHERE " + 
+			DBSchemaModel.TaskId+ "='" + taskId + "'");
+		
+		return q.getResult();		
+	}
+
 	
 	/// last gotten row
 	private Row _lastRow = null;

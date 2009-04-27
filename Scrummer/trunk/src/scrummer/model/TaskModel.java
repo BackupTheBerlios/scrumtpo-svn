@@ -66,6 +66,30 @@ public class TaskModel
 		}
 	}
 	
+	
+	/**
+	 * Update task 
+	 * 
+	 * @param taskId task id
+	 * @param description task description 
+	 * @param pbiId task parent pbi
+	 * @param employeeId task employee
+	 * @param teamId task responsible team
+	 * @param taskTypeId type of task
+	 * @param taskStatusId task status
+	 * @param date task date
+	 * @param active task active?
+	 */
+	public void updateTask(int taskId, String description, int parentId, int pbiId, int employeeId, int teamId, int taskTypeId, int taskStatusId, Date date, boolean active) {
+		if (_taskModelCommon.updateTask(
+			taskId, description, parentId, pbiId, employeeId, 
+			teamId, taskTypeId, taskStatusId, date, active))
+		{
+			_taskTableModel.refresh();
+			_sprintBacklogModel.getTaskTableModel().refresh();
+		}
+	}
+	
 	public Integer getInteger(DBSchemaModel.TaskEnum enumId, int taskId)
 	{
 		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
@@ -198,6 +222,7 @@ public class TaskModel
 	private TaskTableModel _taskTableModel;
 	/// task operation
 	private Operations.TaskOperation _operation = new Operations.TaskOperation();
+	
 
 	
 }

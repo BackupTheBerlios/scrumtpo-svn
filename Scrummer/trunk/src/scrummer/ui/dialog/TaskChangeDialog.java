@@ -1,6 +1,7 @@
 package scrummer.ui.dialog;
 
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.xnap.commons.i18n.I18n;
@@ -10,6 +11,7 @@ import scrummer.enumerator.TaskOperation;
 import scrummer.listener.TaskListener;
 import scrummer.model.DBSchemaModel.TaskEnum;
 import scrummer.ui.Util;
+import scrummer.ui.Validate;
 
 /**
  * Task modification dialog
@@ -26,6 +28,7 @@ public class TaskChangeDialog
 	public TaskChangeDialog(Frame owner, int taskId) {
 		super(owner);
 	
+		_taskId = taskId;
 		setTitle(i18n.tr("Change Task"));
 		_taskModel.addTaskListener(this);
 		
@@ -71,6 +74,51 @@ public class TaskChangeDialog
 		super.setVisible(b);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String cmd = e.getActionCommand(); 
+		if (cmd == "StandardDialog.OK")
+		{	
+			if (!Validate.empty(_descriptionInput, this)) { return; }
+			
+			int pbiId = 
+				_pbiInput.getSelectedId();
+			int parentId =
+				_parentInput.getSelectedId();
+			int employeeId = 
+				_taskEmployeeInput.getSelectedId();
+			int teamId = 
+				_taskTeamInput.getSelectedId();
+			int taskTypeId = 
+				_taskTypeInput.getSelectedId();
+			int taskStatusId = 
+				_taskStatusInput.getSelectedId();
+			Date date = 
+				Validate.date(_dateInput, i18n.tr("Wrong task end date formatting."), this);
+			if (date == null) { return; }
+			boolean active = 
+				_taskActiveInput.getSelectedIndex() == 0;
+			
+			_taskModel.updateTask(
+				_taskId, 
+				_descriptionInput.getText(),
+				parentId,
+				pbiId,
+				employeeId,
+				teamId,
+				taskTypeId,
+				taskStatusId,
+				date,
+				active);
+		}
+		else
+		{
+			super.actionPerformed(e);
+		}
+	}
+
+	/// task id
+	private int _taskId;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
