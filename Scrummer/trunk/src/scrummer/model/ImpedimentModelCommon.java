@@ -2,16 +2,14 @@ package scrummer.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
-import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
 /**
@@ -19,6 +17,62 @@ import scrummer.util.ResultQuery;
  */
 public class ImpedimentModelCommon 
 {	
+	/**
+	 * Data row for updating data
+	 */
+	public static class Row extends DataRow 
+	{
+		/**
+		 * Constructor
+		 * 
+		 * @param result result from which to get data
+		 */
+		public Row(ResultSet result) {
+			try {
+				result.beforeFirst(); result.next();
+				
+				ImpedimentId = 
+					result.getInt(1);
+				TeamId = 
+					result.getInt(2);
+				SprintId = 
+					result.getInt(3);
+				EmployeeId = 
+					result.getInt(4);
+				TaskId = 
+					result.getInt(5);
+				ImpedimentDescription = 
+					result.getString(6);
+				ImpedimentType =
+					result.getInt(7);
+				ImpedimentStatus =
+					result.getInt(8);
+				ImpedimentStart =
+					result.getDate(9);
+				ImpedimentEnd = 
+					result.getDate(10);
+				ImpedimentAge = 
+					result.getInt(11);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/**
+		 * Does key equal 
+		 * @param taskId
+		 * @return
+		 */
+		public boolean keyEquals(int taskId)
+		{
+			return (TaskId == taskId);
+		}
+		
+		public int ImpedimentId, TeamId, SprintId, EmployeeId, TaskId, ImpedimentType, ImpedimentStatus, ImpedimentAge;
+		public String ImpedimentDescription;
+		public Date ImpedimentStart, ImpedimentEnd;
+	}
+	
 	/**
 	 * Constructor
 	 * 
@@ -194,7 +248,7 @@ public class ImpedimentModelCommon
 	 * @param id impediment id
 	 * @return true if impediment was removed, false otherwise
 	 */
-	public boolean removeImpediment(String id)
+	public boolean removeImpediment(int id)
 	{
 		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
 		{	
@@ -491,6 +545,31 @@ public class ImpedimentModelCommon
 			"UPDATE " + DBSchemaModel.ImpedimentTable + " " +
 			"SET " + DBSchemaModel.ImpedimentAge + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.ImpedimentId + "='" + id + "'");
+	}
+	
+	/**
+	 * Fetch impediment row
+	 */
+	public Row getRow(int impId)
+	{	
+		ResultQuery<Row> q = new ResultQuery<Row>(_connectionModel)
+		{	
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(new Row(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(null);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, ImpedimentOperation.Impediment, 
+	        		i18n.tr("Could not remove impediment."));
+			}
+		};
+		q.queryResult(
+			"SELECT * FROM " + DBSchemaModel.ImpedimentTable + 
+			" WHERE " + DBSchemaModel.ImpedimentId + "=" + impId);
+		return q.getResult();
 	}
 	
 	/// connection model

@@ -109,6 +109,18 @@ public class AdminDaysModel
 	public AbsenceTypeComboBoxModel getAbsenceTypeComboBoxModel() {
 		return _absComboBoxModel;
 	}
+	
+	/**
+	 * Remove administrative day with given ids
+	 * @param emp employee id
+	 * @param day measure day
+	 */
+	public void remove(int emp, int day) {
+		if (_admindaysModelCommon.removeImpediment(emp, day))
+		{
+			_admindaysTableModel.refresh();
+		}
+	}
 		
 	/// common administrative days related functionality
 	private AdminDaysModelCommon _admindaysModelCommon;

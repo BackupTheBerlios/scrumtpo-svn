@@ -13,7 +13,6 @@ import scrummer.Scrummer;
 import scrummer.model.Models;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.TaskModel;
-import scrummer.model.TaskModelCommon;
 import scrummer.model.swing.AllTaskTableModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;

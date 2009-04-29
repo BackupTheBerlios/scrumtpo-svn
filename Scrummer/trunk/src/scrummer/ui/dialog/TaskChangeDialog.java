@@ -25,7 +25,8 @@ public class TaskChangeDialog
 	 * @param owner owning frame
 	 * @param taskId task id
 	 */
-	public TaskChangeDialog(Frame owner, int taskId) {
+	public TaskChangeDialog(Frame owner, int taskId) 
+	{
 		super(owner);
 	
 		_taskId = taskId;

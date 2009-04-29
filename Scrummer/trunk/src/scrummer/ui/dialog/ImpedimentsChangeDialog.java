@@ -1,77 +1,55 @@
 package scrummer.ui.dialog;
 
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
 import scrummer.listener.ImpedimentListener;
-import scrummer.listener.OperationListener;
 import scrummer.model.ImpedimentModel;
+import scrummer.model.DBSchemaModel.ImpedimentEnum;
 import scrummer.model.swing.ImpedimentComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.TwoButtonDialog;
 
-public class ImpedimentsChangeDialog 
-	extends TwoButtonDialog
-	implements ImpedimentListener {
-
+public class ImpedimentsChangeDialog extends TwoButtonDialog implements ImpedimentListener 
+{
 	/**
 	 * Constructor
 	 * 
 	 * @param owner owner form
 	 */
-	public ImpedimentsChangeDialog(Frame owner)
+	public ImpedimentsChangeDialog(Frame owner, int impId)
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
-
-		setTitle(i18n.tr("Change impediment"));
 		
-		_impedimentModel = Scrummer.getModels().getImpedimentModel();
+		_impId = impId;
+		setTitle(i18n.tr("Change impediment"));
 		_impedimentModel.addImpedimentListener(this);
 		
-		_impedimentComboModel = _impedimentModel.getImpedimentComboBoxModel();
-		
-		int k = 10;
-		Panel.setLayout(new GridLayout(6, 6, 10, 12));
-		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
-		
-		JLabel impLbl = new JLabel(i18n.tr("Impediment") + ":");
-		JComboBox impInput = new JComboBox();
-		impInput.setModel(_impedimentComboModel);
-		_impInput = impInput;
-		_impedimentComboModel.refresh();
-		
-		Panel.add(impLbl);
-		Panel.add(impInput);
-		
-		_teamInput = addEntry(i18n.tr("New team") + ":", "NewTeam");
-		_sprintInput = addEntry(i18n.tr("New sprint") + ":", "NewSprint");
-		_employeeInput = addEntry(i18n.tr("New employee") + ":", "NewEmployee");
-		_taskInput = addEntry(i18n.tr("New task") + ":", "NewTask");
-		_descInput = addEntry(i18n.tr("New description") + ":", "NewDescription");
-		_typeInput = addEntry(i18n.tr("New type") + ":", "NewType");
-		_statusInput = addEntry(i18n.tr("New status") + ":", "NewStatus");
-		_startInput = addEntry(i18n.tr("New start") + ":", "NewStart");
-		_endInput = addEntry(i18n.tr("New end") + ":", "NewEnd");
-		_ageInput = addEntry(i18n.tr("New age") + ":", "NewAge");
-		
-		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
-		
-		OK.setText("Change");
-		setSize(new Dimension(460, 360));
+		_teamInput.setText(_impedimentModel.getString(ImpedimentEnum.TeamId, impId));
+		_sprintInput.setText(_impedimentModel.getString(ImpedimentEnum.SprintId, impId));
+		_sprintInput.setText(_impedimentModel.getString(ImpedimentEnum.EmployeeId, impId));
+		_employeeInput.setText(_impedimentModel.getString(ImpedimentEnum.TaskId, impId));
+		_descInput.setText(_impedimentModel.getString(ImpedimentEnum.ImpedimentDescription, impId));
+		_typeInput.setText(_impedimentModel.getString(ImpedimentEnum.ImpedimentType, impId));
+		_statusInput.setText(_impedimentModel.getString(ImpedimentEnum.ImpedimentStatus, impId));
+		_ageInput.setText(_impedimentModel.getString(ImpedimentEnum.ImpedimentAge, impId));
+			
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date d1 = _impedimentModel.getDate(ImpedimentEnum.ImpedimentStart, impId);
+		_startInput.setText((d1 == null) ? "" : df.format(d1));
+		Date d2 = _impedimentModel.getDate(ImpedimentEnum.ImpedimentEnd, impId);
+		_endInput.setText((d2 == null) ? "" : df.format(d2));
 	}
 	
 	/** 
@@ -318,7 +296,9 @@ public class ImpedimentsChangeDialog
 		
 		super.setVisible(b);
 	}
-
+	
+	/// impediment id
+	private int _impId;
 	/// impediment model
 	private ImpedimentModel _impedimentModel;
 	/// all impediments in combo box

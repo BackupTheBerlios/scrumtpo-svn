@@ -1,9 +1,11 @@
 package scrummer.model;
 
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.exception.DBMap;
 import scrummer.listener.ImpedimentListener;
 import scrummer.model.swing.ImpedimentComboBoxModel;
 import scrummer.model.swing.ImpedimentTableModel;
@@ -224,6 +226,65 @@ public class ImpedimentModel
 	 */
 	public void setImpedimentAge(int impId, String newAge) {
 		_impedimentModelCommon.setImpedimentAge(impId, newAge);
+	}
+	
+	public Integer getInteger(DBSchemaModel.ImpedimentEnum enumId, int impId)
+	{
+		ImpedimentModelCommon.Row row = _impedimentModelCommon.getRow(impId);
+		switch (enumId)
+		{
+		case ImpedimentId: 
+			return row.ImpedimentId;
+		case TeamId:
+			return row.TeamId;
+		case EmployeeId: 
+			return row.EmployeeId;
+		case TaskId:
+			return row.TaskId;
+		case ImpedimentType:
+			return row.ImpedimentType;
+		case ImpedimentStatus:
+			return row.ImpedimentStatus;
+		case ImpedimentAge:
+			return row.ImpedimentAge;
+		}
+		throw new DBMap(enumId);
+	}
+	
+	public String getString(DBSchemaModel.ImpedimentEnum enumId, int impId)
+	{
+		ImpedimentModelCommon.Row row = _impedimentModelCommon.getRow(impId);
+		switch (enumId)
+		{
+		case ImpedimentDescription:
+			return row.ImpedimentDescription;
+		}
+		throw new DBMap(enumId);
+	}
+	
+	public Date getDate(DBSchemaModel.ImpedimentEnum enumId, int impId)
+	{
+		ImpedimentModelCommon.Row row = _impedimentModelCommon.getRow(impId);
+		switch (enumId)
+		{
+			case ImpedimentStart:
+				return row.ImpedimentStart;
+			case ImpedimentEnd:
+				return row.ImpedimentEnd;
+		}
+		throw new DBMap(enumId);
+	}
+	
+	/**
+	 * Remove impediment with given id
+	 * @param id impediment id
+	 */
+	public void remove(int id) 
+	{
+		if (_impedimentModelCommon.removeImpediment(id))
+		{
+			_impedimentTableModel.refresh();
+		}
 	}
 	
 	/// common impediment related functionality

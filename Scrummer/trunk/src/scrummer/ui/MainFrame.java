@@ -30,9 +30,6 @@ import scrummer.ui.dialog.AdminDaysAddDialog;
 import scrummer.ui.dialog.AdminDaysViewDialog;
 import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
-import scrummer.ui.dialog.ImpedimentsAddDialog;
-import scrummer.ui.dialog.ImpedimentsChangeDialog;
-import scrummer.ui.dialog.ImpedimentsViewDialog;
 import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.ProjectNewDialog;
 import scrummer.ui.dialog.ProjectOpenDialog;
@@ -114,10 +111,6 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("Insert into product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Change product backlog item"), KeyEvent.VK_P, "ChangeProductBacklogItem");
-		fileMenu.addSeparator();
-		addMenuEntry(fileMenu, i18n.tr("Add impediment"), KeyEvent.VK_I, "AddImpediment");
-		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
-		addMenuEntry(fileMenu, i18n.tr("Change impediment"), KeyEvent.VK_C, "ChangeImpediment");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
 		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
@@ -246,32 +239,6 @@ public class MainFrame extends JFrame
 			Util.centre(dialog);
 			dialog.setVisible(true);
 			*/
-		}
-		else if(cmd.equals("AddImpediment"))
-		{
-			ImpedimentsAddDialog dialog;
-			try {
-				dialog = new ImpedimentsAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
-		else if(cmd.equals("ViewImpediments"))
-		{
-			ImpedimentsViewDialog dialog;
-			try {
-				dialog = new ImpedimentsViewDialog(this);
-				dialog.setVisible(true);
-			} catch(SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
-		else if(cmd.equals("ChangeImpediment"))
-		{
-			ImpedimentsChangeDialog dialog = new ImpedimentsChangeDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
 		}
 		else if(cmd.equals("SprintPlanMeet"))
 		{

@@ -2,9 +2,7 @@ package scrummer.ui.dialog;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.xnap.commons.i18n.I18n;
 

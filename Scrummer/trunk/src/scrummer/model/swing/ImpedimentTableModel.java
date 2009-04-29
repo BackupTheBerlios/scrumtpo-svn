@@ -1,8 +1,5 @@
 package scrummer.model.swing;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
@@ -10,14 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
-import scrummer.enumerator.ImpedimentOperation;
 import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
 import scrummer.model.ImpedimentModelCommon;
 import scrummer.model.Models;
 import scrummer.util.ObjectRow;
-import scrummer.util.Operation;
-import scrummer.util.Operations;
 
 /**
  * Impediment table synchronization class 
@@ -185,7 +179,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	@Override
 	public void removeRow(int row) 
 	{
-		if (_impedimentModelCommon.removeImpediment(_rows.get(row).get(0).toString()))
+		if (_impedimentModelCommon.removeImpediment(Integer.parseInt(_rows.get(row).get(0).toString())))
 		{
 			refresh();
 		}	
@@ -240,6 +234,10 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	public String getColumnName(int column) {
 		return _columns.get(column + 1);
 	}
+	
+	public int getPrimaryKey(int row) {
+		return (Integer)_rows.get(row).get(0);
+	}
 
 	/// column count
 	private int _columnCount = 10;
@@ -259,5 +257,4 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	private static final long serialVersionUID = 2334976808166694864L;
 	/// table name
 	public static final String Impediment = "Impediment";
-	
 }

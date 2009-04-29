@@ -88,6 +88,16 @@ public class AdminDaysTableModel extends DefaultTableModel
 	public String getColumnName(int column) {
 		return _columns.get(column);
 	}
+	
+	public int getEmployee(int row)
+	{
+		return (Integer)_rows.get(row).get(0);
+	}
+	
+	public int getMeasureDay(int row)
+	{
+		return (Integer)_rows.get(row).get(3);
+	}
 
 	/// column count
 	private int _columnCount = 4;

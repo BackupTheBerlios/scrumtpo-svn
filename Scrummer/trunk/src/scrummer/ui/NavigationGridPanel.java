@@ -16,8 +16,10 @@ import scrummer.listener.NavigationListener;
 import scrummer.model.Models;
 import scrummer.model.NavigationModel;
 import scrummer.model.ProjectModel;
+import scrummer.ui.page.AdminDaysPage;
+import scrummer.ui.page.ImpedimentPage;
+import scrummer.ui.page.MetricsPage;
 import scrummer.ui.page.PBPage;
-import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
 import scrummer.ui.page.SprintBacklogPage;
 import scrummer.ui.page.TaskPage;
@@ -109,7 +111,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 			showSprintBacklog(bottomPanel); 
 			break;
 		case SprintBacklogAbsent:
-			showSprintBacklogAbsent(bottomPanel); 
+			showSprintBacklogAdminDays(bottomPanel); 
 			break;
 		case SprintBacklogHurdles:
 			showSprintBacklogHurdles(bottomPanel);
@@ -133,14 +135,26 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.add(page);		
 	}
 
-	private void showSprintBacklogMetric(JPanel panel) {}
+	private void showSprintBacklogMetric(JPanel panel) 
+	{
+		panel.setLayout(new GridLayout(1,1));
+		MetricsPage page = new MetricsPage(_mainFrame);
+		panel.add(page);
+	}
 
 	private void showSprintBacklogHurdles(JPanel panel) 
 	{
-		
+		panel.setLayout(new GridLayout(1,1));
+		ImpedimentPage page = new ImpedimentPage(_mainFrame);
+		panel.add(page);
 	}
 
-	private void showSprintBacklogAbsent(JPanel panel) {}
+	private void showSprintBacklogAdminDays(JPanel panel) 
+	{
+		panel.setLayout(new GridLayout(1,1));
+		AdminDaysPage page = new AdminDaysPage(_mainFrame);
+		panel.add(page);
+	}
 
 	private void showSprintBacklog(JPanel panel) {
 		panel.setLayout(new GridLayout(1,1));
