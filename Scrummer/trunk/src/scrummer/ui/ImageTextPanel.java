@@ -21,7 +21,6 @@ import scrummer.IO;
 import scrummer.Scrummer;
 import scrummer.model.LoggingModel;
 import scrummer.model.Models;
-import scrummer.model.NavigationModel;
 
 /**
  * A panel with image and text

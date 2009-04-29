@@ -88,9 +88,9 @@ public class SprintBacklogPage
 		removeSprintButton.setActionCommand("RemoveSprint");
 		removeSprintButton.addActionListener(this);
 		
-		sprintButtonPanel.add(addSprintButton);
+		/*sprintButtonPanel.add(addSprintButton);
 		sprintButtonPanel.add(editSprintButton);
-		sprintButtonPanel.add(removeSprintButton);
+		sprintButtonPanel.add(removeSprintButton);*/
 		
 		sprintButtonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 		
@@ -100,13 +100,19 @@ public class SprintBacklogPage
 		Box rightSide = new Box(BoxLayout.Y_AXIS);
 		rightSide.setPreferredSize(new Dimension(300, height));
 
-		Box horizontalRight = new Box(BoxLayout.X_AXIS);
-		horizontalRight.setPreferredSize(new Dimension(300, height));
+		Box horizontalRight1 = new Box(BoxLayout.X_AXIS);
+		horizontalRight1.setPreferredSize(new Dimension(200, height));
 		
-		_taskLink   = Util.addLink(horizontalRight, Link.SprintBacklogTasks);
-		_hurdleLink = Util.addLink(horizontalRight, Link.SprintBacklogHurdles);
+		Box horizontalRight2 = new Box(BoxLayout.X_AXIS);
+		horizontalRight2.setPreferredSize(new Dimension(400, height));
 		
-		rightSide.add(horizontalRight);
+		_taskLink   = Util.addLink(horizontalRight1, Link.SprintBacklogTasks);
+		_metricsLink = Util.addLink(horizontalRight1, Link.SprintBacklogMetric);
+		_hurdleLink = Util.addLink(horizontalRight2, Link.SprintBacklogHurdles);
+		_absentLink = Util.addLink(horizontalRight2, Link.SprintBacklogAbsent);
+		
+		rightSide.add(horizontalRight1);
+		rightSide.add(horizontalRight2);
 		
 		horizontalSplit.add(leftSide);
 		horizontalSplit.add(rightSide);
@@ -120,6 +126,8 @@ public class SprintBacklogPage
 		{
 			_taskLink.setEnabled(false);
 			_hurdleLink.setEnabled(false);
+			_metricsLink.setEnabled(false);
+			_absentLink.setEnabled(false);
 		}
 		else
 		{
@@ -182,6 +190,10 @@ public class SprintBacklogPage
 	private scrummer.ui.Link _taskLink;
 	/// hurdle link
 	private scrummer.ui.Link _hurdleLink;
+	/// absent link
+	private scrummer.ui.Link _absentLink;
+	/// metrics link
+	private scrummer.ui.Link _metricsLink;
 	/// sprint backlog model
 	private SprintBacklogModel _sprintBacklogModel;
 	/// sprint descriptions model

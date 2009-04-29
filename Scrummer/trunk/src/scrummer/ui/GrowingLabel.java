@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 
 import scrummer.exception.ValueInvalid;
-import sun.java2d.loops.FillRect;
 
 /**
  * Label that is drawn smaller than it really is. When user hoovers over it it grows

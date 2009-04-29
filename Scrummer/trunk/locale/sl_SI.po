@@ -646,24 +646,24 @@ msgstr "Dodaj skupino"
 
 #: src/scrummer/ui/dialog/TeamAddDialog.java:65
 msgid "Team name"
-msgstr "Skupinsko ime"
+msgstr "Ime skupine"
 
 #: src/scrummer/ui/dialog/TeamAddDialog.java:78
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:83
 msgid "Team Member"
-msgstr "Skupinski član"
+msgstr "član skupine"
 
 #: src/scrummer/ui/dialog/TeamAddDialog.java:141
 msgid "Team name must contain at least one character."
-msgstr "Ime skupino mora vsebovati vsaj en znak."
+msgstr "Ime skupine mora vsebovati vsaj en znak."
 
 #: src/scrummer/ui/dialog/TeamAddDialog.java:165
 msgid "Could not delete team: "
-msgstr "Skupine se ni dalo zbrisati: "
+msgstr "Skupine ni mogo�e zbrisati: "
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:28
 msgid "Change Sprint"
-msgstr "Uredi oviro"
+msgstr "Uredi iteracijo"
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:51
 msgid "Update"
@@ -675,11 +675,11 @@ msgstr "Napaka pri shranjevanju iteracije"
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:116
 msgid "Wrong sprint length number."
-msgstr "Naoačna iteracijska dolžina."
+msgstr "Napačna dolžina iteracije."
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:119
 msgid "Invalid date entered."
-msgstr "Nepravilen datumski format."
+msgstr "Napačen format datuma."
 
 #: src/scrummer/ui/dialog/TeamRemoveDialog.java:40
 msgid "Remove team"
@@ -966,7 +966,7 @@ msgid ""
 "Cannot remove from Product Backlog because no Product Backlog item is "
 "selected. Click on a table row and then press remove."
 msgstr ""
-"Me da se odstraniti zahteve iz naročnikovega dnevnika, ker ni izbrana. "
+"Ne da se odstraniti zahteve iz naročnikovega dnevnika, ker ni izbrana. "
 "Klikni na vrstico v tabeli, nato klikni na Odstrani."
 
 #: src/scrummer/ui/dialog/TaskChangeDialog.java:19
@@ -998,7 +998,7 @@ msgid ""
 "on Open."
 msgstr ""
 "Projekta se ni dalo odpreti. Najprej izberi projekt s projektnega seznama, "
-"nato klikniOdpri."
+"nato klikni Odpri."
 
 #: src/scrummer/ui/dialog/ProjectOpenDialog.java:184
 msgid "Could not open project"
@@ -1046,7 +1046,7 @@ msgstr "Shrani"
 
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:184
 msgid "An error has occurred when transferring employee from/to team: "
-msgstr "Med prenosom zaposlenega od/na skupino je prišlo do napake: "
+msgstr "Med prenosom zaposlenega iz/na skupino je prišlo do napake: "
 
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:31
 #: src/scrummer/ui/MainFrame.java:110
@@ -1072,7 +1072,7 @@ msgstr "Izbrati moraš en vnos!"
 
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:138
 msgid "Sprint must be at least one character long."
-msgstr "Iteracijsko ime mora vsebovati vsaj en znak."
+msgstr "Ime iteracije mora vsebovati vsaj en znak."
 
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:143
 msgid "Some task must be selected to set it's product backlog item."
@@ -1080,7 +1080,7 @@ msgstr "Naloga mora biti izbrana, da se ji lahko nastavi naročnikovo zahtevo."
 
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:185
 msgid "An error has occurred when setting sprint backlog properties"
-msgstr "Med nastavljanjem iteracijskega imena je prišlo do napake"
+msgstr "Med nastavljanjem imena iteracije je prišlo do napake"
 
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:48
 msgid "View developers"
@@ -1096,7 +1096,7 @@ msgid ""
 "row and then press remove."
 msgstr ""
 "Razvijalca ni mogoče odstraniti, ker nobena vrstica ni izbrana. Klikni na "
-"tabelo razvijalcev, nato klikni na Odstrani."
+"tabelo razvijalcev, nato klikni gumb Odstrani."
 
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:74
 msgid "Requirement data"
@@ -1175,11 +1175,11 @@ msgstr ""
 
 #: src/scrummer/ui/page/ProjectPage.java:57
 msgid "Project Name:"
-msgstr "Projektno ime:"
+msgstr "Ime projekta:"
 
 #: src/scrummer/ui/page/ProjectPage.java:127
 msgid "Error while saving project data"
-msgstr "Napaka pri shranjevanju projektnih podatkov"
+msgstr "Napaka pri shranjevanju podatkov o projektu"
 
 #~ msgid "Developers"
 #~ msgstr "Razvijalci"
@@ -1206,20 +1206,20 @@ msgstr "Napaka pri shranjevanju projektnih podatkov"
 #~ msgstr "Nova prilagojena ocena"
 
 #~ msgid "Some PBI must be selected to change it's sprint."
-#~ msgstr "Zahteva mora biti izbran, da se ji lahko nastavi iteracijo."
+#~ msgstr "Zahteva mora biti izbrana, da se ji lahko nastavi iteracijo."
 
 #~ msgid "Some PBI must be selected to change it's priority."
-#~ msgstr "Zahteva mora biti izbran, da se ji lahko nastavi prioriteto."
+#~ msgstr "Zahteva mora biti izbrana, da se ji lahko nastavi prioriteto."
 
 #~ msgid "Some PBI must be selected to change it's initial estimate."
-#~ msgstr "Zahteva mora biti izbran, da se ji lahko nastavi začetno oceno."
+#~ msgstr "Zahteva mora biti izbrana, da se ji lahko nastavi začetno oceno."
 
 #~ msgid "Some PBI must be selected to change it's adjustment factor."
 #~ msgstr ""
-#~ "Zahteva mora biti izbran, da se ji lahko nastavi prilagoditveni količnik."
+#~ "Zahteva mora biti izbrana, da se ji lahko nastavi prilagoditveni količnik."
 
 #~ msgid "Some PBI must be selected to change it's adjusted estimate."
-#~ msgstr "Zahteva mora biti izbran, da se ji lahko nastavi prilagojeno oceno."
+#~ msgstr "Zahteva mora biti izbrana, da se ji lahko nastavi prilagojeno oceno."
 
 #~ msgid "Project Employee"
 #~ msgstr "Projektni zaposlenec"

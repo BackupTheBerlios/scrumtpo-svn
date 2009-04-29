@@ -7,21 +7,16 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import scrummer.Scrummer;
 import scrummer.listener.NavigationListener;
 import scrummer.model.Models;
 import scrummer.model.NavigationModel;
 import scrummer.model.ProjectModel;
-import scrummer.model.ResourceModel;
+import scrummer.ui.page.PBPage;
 import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
 import scrummer.ui.page.SprintBacklogPage;
@@ -104,6 +99,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		case ProductBacklog:
 			showProductBacklog(bottomPanel); 
 			break;
+		case ProductBacklogItem:
+			showProductBacklogItem(bottomPanel);
+			break;
 		case Project:
 			showProject(bottomPanel); 
 			break;
@@ -144,7 +142,6 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	private void showSprintBacklogAbsent(JPanel panel) {}
 
-	//iteracijski
 	private void showSprintBacklog(JPanel panel) {
 		panel.setLayout(new GridLayout(1,1));
 		SprintBacklogPage page = new SprintBacklogPage(_mainFrame);
@@ -159,7 +156,14 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	private void showProductBacklog(JPanel panel) {
 		panel.setLayout(new GridLayout(1,1));
-		ProductBacklogPage page = new ProductBacklogPage(_mainFrame);
+		PBPage page = new PBPage(_mainFrame);
+		panel.add(page);
+		panel.setBackground(Color.WHITE);
+	}
+	
+	private void showProductBacklogItem(JPanel panel) {
+		panel.setLayout(new GridLayout(1,1));
+		PBPage page = new PBPage(_mainFrame);
 		panel.add(page);
 		panel.setBackground(Color.WHITE);
 	}

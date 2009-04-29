@@ -2,16 +2,13 @@ package scrummer.ui;
 
 import java.awt.GridLayout;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
 import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
-import sun.nio.cs.StandardCharsets;
 
 /**
  * Helper class for building forms

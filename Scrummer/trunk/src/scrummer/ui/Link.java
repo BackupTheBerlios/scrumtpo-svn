@@ -10,8 +10,8 @@ import scrummer.model.NavigationModel;
 /**
  * Link to some connection model page
  */
-public class Link extends GrowingLabel {
-
+public class Link extends GrowingLabel 
+{
 	/**
 	 * Constructor
 	 * 
@@ -36,4 +36,6 @@ public class Link extends GrowingLabel {
 	private NavigationModel.Link _link;
 	/// navigation model instance
 	private NavigationModel _navigationModel;
+	
+	private static final long serialVersionUID = -8733476448050328642L;
 }

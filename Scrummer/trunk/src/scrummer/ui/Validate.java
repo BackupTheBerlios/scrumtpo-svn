@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;

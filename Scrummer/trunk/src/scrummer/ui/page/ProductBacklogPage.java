@@ -12,6 +12,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import scrummer.Scrummer;
 import scrummer.model.ProductBacklogModel;
 import scrummer.model.swing.ProductBacklogTableModel;
@@ -27,7 +30,7 @@ import scrummer.uicomponents.NiceTable;
  */
 public class ProductBacklogPage
 	extends BasePage
-	implements MouseListener, ActionListener {
+	implements MouseListener, ActionListener, ListSelectionListener {
 
 	/**
 	 * Constructor
@@ -156,4 +159,9 @@ public class ProductBacklogPage
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = -3054683430416992071L;
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
