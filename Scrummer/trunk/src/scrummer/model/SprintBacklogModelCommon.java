@@ -2,8 +2,6 @@ package scrummer.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 import scrummer.Scrummer;

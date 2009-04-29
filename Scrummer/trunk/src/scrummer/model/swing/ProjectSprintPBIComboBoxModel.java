@@ -1,10 +1,8 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-
 import scrummer.model.ProductBacklogModelCommon;
 import scrummer.model.swing.base.IdValueComboBoxModel;
-
+ 
 /**
  * All PBI's on given project and sprint
  */

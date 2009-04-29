@@ -18,10 +18,22 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
+import scrummer.enumerator.SprintBacklogOperation;
+import scrummer.enumerator.TaskOperation;
 import scrummer.listener.ImpedimentListener;
+import scrummer.listener.SprintBacklogListener;
+import scrummer.listener.TaskListener;
+import scrummer.model.DeveloperModel;
 import scrummer.model.ImpedimentModel;
+import scrummer.model.SprintBacklogModel;
+import scrummer.model.TaskModel;
+import scrummer.model.swing.EmployeeComboBoxModel;
+import scrummer.model.swing.SprintProjectComboBoxModel;
+import scrummer.model.swing.TaskComboBoxModel;
+import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -29,7 +41,7 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class ImpedimentsAddDialog 
 	extends TwoButtonDialog
-	implements ImpedimentListener {
+	implements ImpedimentListener, SprintBacklogListener, TaskListener {
 	
 	/**
 	 * Constructor
@@ -38,34 +50,90 @@ public class ImpedimentsAddDialog
 	public ImpedimentsAddDialog(JFrame owner) throws SQLException 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
-		// set translated title
 		setTitle(i18n.tr("Add Impediment"));
+		
+		OK.setText(i18n.tr("Add"));
 		
 		_impedimentModel = Scrummer.getModels().getImpedimentModel();
 		_impedimentModel.addImpedimentListener(this);
+
+		_developerModel = Scrummer.getModels().getDeveloperModel(); 
+
+		_sbModel = Scrummer.getModels().getSprintBacklogModel();
+		_sbModel.addSprintBacklogListener(this);
 		
-		/*_developerModel = Scrummer.getModels().getDeveloperModel();
-		_developerModel.addDeveloperListener(new OperationListener<DeveloperOperation>);
+		_taskModel = Scrummer.getModels().getTaskModel();
+		_taskModel.addTaskListener(this);
+		
+		_empComboBoxModel = _developerModel.getEmployeeComboBoxModel();
 		_teamComboBoxModel = _developerModel.getTeamComboBoxModel();
+		_sprintComboBoxModel = _sbModel.getSprintProjectComboBoxModel();
+		_taskComboBoxModel = _taskModel.getTaskComboBoxModel();
 		
-		_teamComboBox.setModel(_teamComboBoxModel);
-		_teamComboBoxModel.refresh();
+		JLabel teamLbl = new JLabel(i18n.tr("Choose team") + ":");
+		StandardComboBox teamInput = new StandardComboBox();
+		teamInput.setIVModel(_teamComboBoxModel);
+		_teamInput = teamInput;
 		
-		Panel.add(_teamComboBox);*/
+		Panel.add(teamLbl);
+		Panel.add(teamInput);
 		
-		Panel.setLayout(new GridLayout(5, 5, 0, 13));
+		JLabel sprintLbl = new JLabel(i18n.tr("Choose sprint") + ":");
+		StandardComboBox sprintInput = new StandardComboBox();
+		sprintInput.setIVModel(_sprintComboBoxModel);
+		_sprintInput = sprintInput;
 		
-		_teamTextField    = addEntry(i18n.tr("Team")    + ":", "Team");
-		_sprintTextField = addEntry(i18n.tr("Sprint") + ":", "Sprint");
-		_employeeTextField = addEntry(i18n.tr("Employee") + ":", "Employee");
-		_taskTextField = addEntry(i18n.tr("Task") + ":", "Task");
+		Panel.add(sprintLbl);
+		Panel.add(sprintInput);
+		
+		JLabel empLbl = new JLabel(i18n.tr("Choose employee") + ":");
+		StandardComboBox empInput = new StandardComboBox();
+		empInput.setIVModel(_empComboBoxModel);
+		_empInput = empInput;
+		
+		Panel.add(empLbl);
+		Panel.add(empInput);
+		
+		JLabel taskLbl = new JLabel(i18n.tr("Choose task") + ":");
+		StandardComboBox taskInput = new StandardComboBox();
+		taskInput.setIVModel(_taskComboBoxModel);
+		_taskInput = taskInput;
+		
+		Panel.add(taskLbl);
+		Panel.add(taskInput);
+		
 		_descriptionTextField = addEntry(i18n.tr("Description") + ":", "Description");
-		_typeTextField = addEntry(i18n.tr("Type") + ":", "Type");
-		_statusTextField = addEntry(i18n.tr("Status") + ":", "Status");
+		
+		JLabel impTypeLbl = new JLabel(i18n.tr("Choose impediment type") + ":");
+		_impTypeInput = new StandardComboBox();
+		_impTypeInput.addItem("Specification problems");
+		_impTypeInput.addItem("Hardware problems");
+		_impTypeInput.addItem("Software problems");
+		_impTypeInput.addItem("Security problems");
+		_impTypeInput.addItem("Teamwork problems");
+		_impTypeInput.addItem("Other");
+		_impTypeInput.setEnabled(true);
+		Panel.add(impTypeLbl);
+		Panel.add(_impTypeInput);
+		
+		JLabel impStatusLbl = new JLabel(i18n.tr("Choose impediment status") + ":");
+		_impStatusInput = new StandardComboBox();
+		_impStatusInput.addItem("Open");
+		_impStatusInput.addItem("Pending");
+		_impStatusInput.addItem("In progress");
+		_impStatusInput.addItem("Closed");
+		_impStatusInput.addItem("Other");
+		_impStatusInput.setEnabled(true);
+		Panel.add(impStatusLbl);
+		Panel.add(_impStatusInput);
+		
 		_startTextField = addEntry(i18n.tr("Start") + ":", "Start");
+		_startTextField.setText(Util.today());
 		_endTextField = addEntry(i18n.tr("End") + ":", "End");
+		//_endTextField.setText(Util.today());
 		_ageTextField = addEntry(i18n.tr("Age") + ":", "Age");
 		
+		Panel.setLayout(new GridLayout(5, 5, 0, 13));
 		
 		int topK = 10;
 		Panel.setBorder(
@@ -113,13 +181,13 @@ public class ImpedimentsAddDialog
 				java.sql.Date sqlDate1 = new java.sql.Date(startI.getTime());
 				java.sql.Date sqlDate2 = new java.sql.Date(endI.getTime());
 				_impedimentModel.add(
-						Integer.parseInt(_teamTextField.getText()),
-						Integer.parseInt(_sprintTextField.getText()), 
-						Integer.parseInt(_employeeTextField.getText()), 
-						Integer.parseInt(_taskTextField.getText()),
+						_teamInput.getSelectedId(),
+						_sprintInput.getSelectedId(), 
+						_empInput.getSelectedId(), 
+						_taskInput.getSelectedId(),
 						_descriptionTextField.getText(),
-						_typeTextField.getText(),
-						_statusTextField.getText(),
+						_impTypeInput.getSelectedItem().toString(),
+						_impStatusInput.getSelectedItem().toString(),
 						sqlDate1,
 						sqlDate2,
 						Integer.parseInt(_ageTextField.getText()));
@@ -160,16 +228,58 @@ public class ImpedimentsAddDialog
 		}
 	}
 	
+	@Override
+	public void operationFailed(DataOperation type,
+			SprintBacklogOperation identifier, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type,
+			SprintBacklogOperation identifier, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void operationFailed(DataOperation type, TaskOperation identifier,
+			String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type,
+			TaskOperation identifier, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/// impediment model
 	private ImpedimentModel _impedimentModel;
 	/// developer model
-	/*private DeveloperModel _developerModel;
+	private DeveloperModel _developerModel;
+	/// sprint backlog model
+	private SprintBacklogModel _sbModel;
+	/// task model
+	private TaskModel _taskModel;
 	/// combo box models
-	private JComboBox _employeeComboBox, _teamComboBox;
+	private StandardComboBox _teamInput, _empInput, _sprintInput, _taskInput, _impTypeInput, _impStatusInput;
 	// team combo box model
-	private TeamComboBoxModel _teamComboBoxModel;*/
+	private TeamComboBoxModel _teamComboBoxModel;
+	/// employee combo box model
+	private EmployeeComboBoxModel _empComboBoxModel;
+	/// sprint combo box model
+	private SprintProjectComboBoxModel _sprintComboBoxModel;
+	/// task combo box model
+	private TaskComboBoxModel _taskComboBoxModel;
+	/// impediment type combo box model
+	
+	///impediment status combo box model
+	
 	/// name text field
-	private JTextField _teamTextField, _sprintTextField, _employeeTextField, _taskTextField, _descriptionTextField, _typeTextField, _statusTextField, _startTextField, _endTextField, _ageTextField;
+	private JTextField _descriptionTextField, _startTextField, _endTextField, _ageTextField;
 	/// serialization id
 	private static final long serialVersionUID = 8159590855907206180L;
 	/// translation class field

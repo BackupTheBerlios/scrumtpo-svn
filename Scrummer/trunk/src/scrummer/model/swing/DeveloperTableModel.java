@@ -6,14 +6,11 @@ import javax.swing.table.DefaultTableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
-import scrummer.enumerator.DeveloperOperation;
 import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
 import scrummer.model.DeveloperModelCommon;
 import scrummer.model.Models;
 import scrummer.util.ObjectRow;
-import scrummer.util.Operation;
-import scrummer.util.Operations;
 
 /**
  * Developer table synchronization class 

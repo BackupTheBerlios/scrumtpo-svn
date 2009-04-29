@@ -1,9 +1,6 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-import javax.swing.DefaultListModel;
 import scrummer.model.ProjectModelCommon;
-import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.model.swing.base.IdValueListModel;
 
 /**

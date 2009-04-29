@@ -1,16 +1,10 @@
 package scrummer.model;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
-import org.omg.CORBA.portable.ValueInputStream;
 
 import scrummer.IO;
 import scrummer.exception.ValueInvalid;

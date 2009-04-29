@@ -4,12 +4,10 @@ import java.util.Date;
 
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.AllTaskTableModel;
-import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.SprintDescriptionListModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
-import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.util.Operations;
 
 /**

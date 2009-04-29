@@ -1,40 +1,31 @@
 package scrummer.ui.dialog;
 
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
-
-import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.DeveloperListener;
-import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.DeveloperNonTeamListModel;
 import scrummer.model.swing.DeveloperTeamListModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.ListInterchangePanel;
 import scrummer.ui.Util;
-import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 

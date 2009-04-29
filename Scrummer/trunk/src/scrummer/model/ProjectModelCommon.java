@@ -6,10 +6,8 @@ import java.util.Vector;
 
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
 import scrummer.enumerator.ProjectOperation;
 import scrummer.model.DBSchemaModel.IdValue;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
 import scrummer.util.Query;
 import scrummer.util.ResultQuery;

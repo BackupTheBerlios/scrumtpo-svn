@@ -1,7 +1,6 @@
 package scrummer.listener;
 
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 
 public interface SprintBacklogListener {

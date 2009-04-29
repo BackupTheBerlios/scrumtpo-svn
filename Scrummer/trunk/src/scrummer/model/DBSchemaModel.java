@@ -5,9 +5,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Vector;
 
-import com.sun.org.apache.xml.internal.security.utils.I18n;
-
-import scrummer.Scrummer;
 import scrummer.util.Query;
 
 /**

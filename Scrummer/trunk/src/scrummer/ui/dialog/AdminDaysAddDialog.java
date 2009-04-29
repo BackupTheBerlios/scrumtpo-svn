@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -45,7 +44,6 @@ public class AdminDaysAddDialog
 	public AdminDaysAddDialog(JFrame owner) throws SQLException 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
-		// set translated title
 		setTitle(i18n.tr("Add administrative day"));
 		
 		Models m = Scrummer.getModels();

@@ -8,8 +8,8 @@ import javax.swing.text.Document;
 /**
  * Text field that selects contents on gotten focus
  */
-public class SelectedTextField extends JTextField {
-
+public class SelectedTextField extends JTextField 
+{
 	public SelectedTextField() {}
 
 	public SelectedTextField(String text) {
@@ -40,4 +40,6 @@ public class SelectedTextField extends JTextField {
 			select(0, 0);
 		}
 	}
+
+	private static final long serialVersionUID = -113124952966116940L;
 }

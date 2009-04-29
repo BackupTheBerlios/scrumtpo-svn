@@ -6,13 +6,10 @@ import java.sql.SQLException;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.ImpedimentOperation;
 import scrummer.enumerator.ProductBacklogOperation;
 import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
-import scrummer.util.Operation;
 import scrummer.util.Operations;
-import scrummer.util.Query;
 import scrummer.util.ResultQuery;
 
 /**

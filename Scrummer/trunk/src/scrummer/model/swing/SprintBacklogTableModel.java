@@ -1,8 +1,5 @@
 package scrummer.model.swing;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
@@ -10,20 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
-import scrummer.enumerator.DataOperation;
-import scrummer.enumerator.DeveloperOperation;
-import scrummer.enumerator.ImpedimentOperation;
-import scrummer.enumerator.ProductBacklogOperation;
-import scrummer.enumerator.SprintBacklogOperation;
-import scrummer.listener.OperationListener;
 import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
-import scrummer.model.DeveloperModelCommon;
 import scrummer.model.Models;
 import scrummer.model.SprintBacklogModelCommon;
-//import scrummer.model.SprintBacklogModelCommon;
 import scrummer.util.ObjectRow;
-import scrummer.util.Operation;
 
 /**
  * Product Backlog table synchronization class 

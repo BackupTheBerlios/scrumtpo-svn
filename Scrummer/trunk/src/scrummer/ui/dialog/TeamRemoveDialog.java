@@ -2,12 +2,9 @@ package scrummer.ui.dialog;
 
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import org.xnap.commons.i18n.I18n;
@@ -16,7 +13,6 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
 import scrummer.listener.DeveloperListener;
-import scrummer.listener.OperationListener;
 import scrummer.model.DeveloperModel;
 import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.ui.FormBuilder;

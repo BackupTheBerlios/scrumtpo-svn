@@ -1,10 +1,6 @@
 package scrummer.model.swing;
 
-import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
 import scrummer.model.SprintBacklogModelCommon;
-import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.model.swing.base.IdValueComboBoxModel;
 
 /**

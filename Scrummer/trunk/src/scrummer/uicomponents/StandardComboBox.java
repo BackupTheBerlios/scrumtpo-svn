@@ -5,7 +5,6 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 
 import scrummer.exception.NullField;
-import scrummer.exception.ValueInvalid;
 import scrummer.model.swing.base.IdValueComboBoxModel;
 
 /**
