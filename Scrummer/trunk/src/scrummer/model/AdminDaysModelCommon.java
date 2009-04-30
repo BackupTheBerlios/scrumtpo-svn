@@ -83,7 +83,11 @@ public class AdminDaysModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT * FROM " + DBSchemaModel.AdminDaysTable);
+		
+		q.queryResult("SELECT CONCAT(Employee_name, ' ', Employee_surname), Absence_type_description, Hours_not_worked, Measure_Day " +
+				"FROM (" + DBSchemaModel.EmployeeTable + " JOIN " + DBSchemaModel.AbsenceTypeTable + ") JOIN " 
+				+ DBSchemaModel.AdminDaysTable + " WHERE Employee.Employee_id = Administrative_days.Employee_id AND " +
+				"Absence_type.Absence_type_id = Administrative_days.Absence_type_id");
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();

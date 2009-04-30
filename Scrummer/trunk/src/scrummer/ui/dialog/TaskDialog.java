@@ -77,6 +77,7 @@ public class TaskDialog extends TwoButtonDialog {
 		
 		_pbiInput.setIVModel(m.getProductBacklogModel().getProjectSprintPBIComboBoxModel());
 		_parentInput.setIVModel(m.getTaskModel().getProjectSprintTaskComboBoxModel());
+		_parentInput.addItem(" ");
 		_taskEmployeeInput.setIVModel(_employeeComboBoxModel);
 		_taskTeamInput.setIVModel(_teamComboBoxModel);
 		_taskTypeInput.setIVModel(_taskTypeComboBoxModel);

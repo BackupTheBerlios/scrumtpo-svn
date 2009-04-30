@@ -92,8 +92,8 @@ public class DailyScrumMeetingDialog
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
+	public void actionPerformed(ActionEvent e) 
+	{	
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{
 				String day = _measuredayInput.getText().trim();

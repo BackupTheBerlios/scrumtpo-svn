@@ -59,7 +59,7 @@ public class Scrummer {
         
 		MainFrame mf = new MainFrame();
 		mf.pack();
-		mf.setSize(new Dimension(640, 480));
+		mf.setSize(new Dimension(1000, 600));
 		Util.centre(mf);
 		mf.showLogin();
 		mf.setVisible(true);

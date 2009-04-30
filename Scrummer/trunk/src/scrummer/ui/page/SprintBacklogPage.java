@@ -176,11 +176,12 @@ public class SprintBacklogPage
 	}
 	
 	@Override
-	public void valueChanged(ListSelectionEvent e) {
+	public void valueChanged(ListSelectionEvent e) 
+	{
 		int selection = _sprintList.getSelectedIndex();
-		if (selection != -1) {
-			_sprintBacklogModel.setCurrentSprint(
-				_sprintDescriptionModel.getId(selection));
+		if (selection != -1) 
+		{
+			_sprintBacklogModel.setCurrentSprint(_sprintDescriptionModel.getId(selection));
 		}
 	}
 	

@@ -8,7 +8,6 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.TaskOperation;
 import scrummer.model.DBSchemaModel.IdValue;
-import scrummer.ui.dialog.TaskDialog;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
@@ -21,7 +20,8 @@ public class TaskModelCommon
 	/**
 	 * Data row for updating data
 	 */
-	public static class Row extends DataRow {
+	public static class Row extends DataRow 
+	{
 		/**
 		 * Constructor
 		 * 
@@ -189,7 +189,12 @@ public class TaskModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT * FROM " + DBSchemaModel.TaskTable);
+		q.queryResult("SELECT Task_id, CONCAT(Employee_name, ' ', Employee_surname), Team_description " +
+				"Task_status_description, Task_type_description, Task_date, Task_active FROM ((((" + 
+				DBSchemaModel.TaskTable + ") JOIN " + DBSchemaModel.EmployeeTable + ") JOIN " + DBSchemaModel.TeamTable +
+				") JOIN " + DBSchemaModel.TaskTypeTable + ") JOIN " + DBSchemaModel.TaskStatusTable + " WHERE " +
+				"Task.Employee_id = Employee.Employee_id AND Task.Team_id = Team.Team_id AND " +
+				"Task.Task_type_id = Task_type.Task_type_id AND Task.Task_status_id = Task_status.Task_status_id");
 		return q.getResult();
 	}
 	

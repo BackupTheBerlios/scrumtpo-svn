@@ -196,7 +196,12 @@ public class ImpedimentModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT * FROM " + DBSchemaModel.ImpedimentTable);
+		q.queryResult("SELECT Impediment_id, Team_description, Sprint_description, CONCAT(Employee_name, ' ', Employee_surname), " +
+				" Task_description, Impediment_description, Impediment_type, Impediment_status, Impediment_start, " +
+				" Impediment_end, Impediment_age FROM (((" + DBSchemaModel.ImpedimentTable + " JOIN " + DBSchemaModel.TeamTable +
+				") JOIN " + DBSchemaModel.EmployeeTable + ") JOIN " + DBSchemaModel.SprintTable + ") JOIN " + DBSchemaModel.TaskTable + 
+				" WHERE Team.Team_id = Impediment.Team_id AND Employee.Employee_id = Impediment.Employee_id AND " +
+				"Sprint.Sprint_id = Impediment.Sprint_id AND Task.Task_id = Impediment.Task_id");
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();

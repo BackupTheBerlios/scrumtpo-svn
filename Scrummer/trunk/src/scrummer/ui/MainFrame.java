@@ -26,8 +26,6 @@ import scrummer.ui.dialog.AbsenceTypeAddDialog;
 import scrummer.ui.dialog.AbsenceTypeChangeDialog;
 import scrummer.ui.dialog.AbsenceTypeRemoveDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
-import scrummer.ui.dialog.AdminDaysAddDialog;
-import scrummer.ui.dialog.AdminDaysViewDialog;
 import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.LoginDialog;
@@ -53,15 +51,14 @@ import scrummer.ui.dialog.TeamRemoveDialog;
  * Main application window
  */
 public class MainFrame extends JFrame 
-					   implements ActionListener, 
-					   			  WindowListener,
-					   			  ProjectListener {
-
+					   implements ActionListener, WindowListener, ProjectListener 
+{
 	/**
 	 * Default constructor
 	 * @throws HeadlessException
 	 */
-	public MainFrame() throws HeadlessException {
+	public MainFrame() throws HeadlessException 
+	{
 		super();
 		// store local model factory instance
 		_models = Scrummer.getModels();
@@ -115,9 +112,6 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
 		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Daily scrum meeting"), KeyEvent.VK_Z, "DailyScrumMeet");
-		fileMenu.addSeparator();
-		addMenuEntry(fileMenu, i18n.tr("View administrative days"), KeyEvent.VK_A, "AdminDaysView");
-		addMenuEntry(fileMenu, i18n.tr("Add administrative day"), KeyEvent.VK_A, "AdminDaysAdd");
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
@@ -260,28 +254,6 @@ public class MainFrame extends JFrame
 		{
 			DailyScrumMeetingDialog dialog = new DailyScrumMeetingDialog(this);
 			dialog.setVisible(true);
-		}
-		else if(cmd.equals("AdminDaysView"))
-		{
-			AdminDaysViewDialog dialog;
-			try {
-				dialog = new AdminDaysViewDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		else if(cmd.equals("AdminDaysAdd"))
-		{
-			AdminDaysAddDialog dialog;
-			try {
-				dialog = new AdminDaysAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		}
 		else if(cmd.equals("AddAbsenceType"))
 		{

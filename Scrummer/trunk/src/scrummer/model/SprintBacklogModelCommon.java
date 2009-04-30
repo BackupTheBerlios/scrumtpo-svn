@@ -159,7 +159,7 @@ public class SprintBacklogModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT Measure_day, PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.SprintPBITable + " JOIN " + DBSchemaModel.TaskTable);
+		q.queryResult("SELECT Measure_day, Task.PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.SprintPBITable + " JOIN " + DBSchemaModel.TaskTable + " WHERE Sprint_PBI.Task_id = Task.Task_id");
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();
@@ -776,7 +776,8 @@ public class SprintBacklogModelCommon
 		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel)
 		{
 			@Override
-			public void processResult(ResultSet result) {
+			public void processResult(ResultSet result) 
+			{
 				Vector<ObjectRow> res = ObjectRow.fetchRows(result);
 				ObjectRow.convertDate(res, 7);
 				ObjectRow.convertEnum(res, 5, DBSchemaModel.TaskStatusTable);
@@ -801,9 +802,9 @@ public class SprintBacklogModelCommon
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskActive + " FROM " + DBSchemaModel.TaskTable +
 			" JOIN " +
 			DBSchemaModel.PBITable + " ON " + 
-			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskPBIId + 
-			" AND " +
+			//DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
+			//DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskPBIId + 
+			//" AND " +
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIProject + "=" + projectId +
 			" AND " +
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBISprint + "=" + sprintId +

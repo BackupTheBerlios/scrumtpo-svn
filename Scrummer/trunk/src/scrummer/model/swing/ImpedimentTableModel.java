@@ -60,37 +60,6 @@ public class ImpedimentTableModel extends DefaultTableModel {
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
 		_realColumns = schemam.getColumns(DBSchemaModel.ImpedimentTable);
-		
-		/*java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='" + Impediment + "'";   
-            	        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            int i = 0;
-            res.beforeFirst();
-            while (res.next())
-            {
-            	_realColumns.set(i, res.getString(1));
-            	i++;
-            }
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 	
 	/**
@@ -100,31 +69,6 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	{
 		_rows = _impedimentModelCommon.fetchImpedimentTable();
         _rowCount = _rows.size();
-		
-		/*java.sql.Connection conn = null;
-        Statement st = null; 
-        ResultSet res = null;
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = "SELECT * FROM " + Impediment;
-        
-            st = conn.createStatement();
-            res = st.executeQuery(query);
-            
-            _rows = ObjectRow.fetchRows(res);
-            _rowCount = _rows.size();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        finally
-        {
-            res = _connectionModel.close(res);
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 
 	@Override
@@ -142,38 +86,6 @@ public class ImpedimentTableModel extends DefaultTableModel {
 		{
 			refresh();
 		}
-		
-		/*String idColumnName = _realColumns.get(0);
-		String columnName = _realColumns.get(column+1);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"UPDATE " + Impediment + " SET " + columnName + "='" + value.toString() + "' " + 
-            	"WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-           st = conn.createStatement();
-           st.execute(query);
-           
-           // update cell after all the fuss
-           refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Update, 
-        		ImpedimentOperation.Impediment, 
-        		i18n.tr("Could not set parameter."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 	
 	@Override
@@ -183,36 +95,6 @@ public class ImpedimentTableModel extends DefaultTableModel {
 		{
 			refresh();
 		}	
-		
-		/*String idColumnName = _realColumns.get(0);
-		
-		java.sql.Connection conn = null;
-        Statement st = null; 
-        try
-        {
-        	conn = _connectionModel.getConnection();
-        
-            String query = 
-            	"DELETE FROM " + Impediment + " WHERE " + idColumnName + "='" + _rows.get(row).get(0) + "'";
-        
-            st = conn.createStatement();
-            st.execute(query);
-           
-            // update cell after all the fuss
-            refresh();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        	_operation.operationFailed(
-        		DataOperation.Remove, 
-        		ImpedimentOperation.Impediment, 
-        		i18n.tr("Could not remove impediment."));
-        }
-        finally
-        {
-            st  = _connectionModel.close(st);
-            conn = _connectionModel.close(conn);
-        }*/
 	}
 
 	@Override

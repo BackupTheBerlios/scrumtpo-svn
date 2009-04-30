@@ -259,7 +259,7 @@ create table Task
    Task_status_id       integer                        not null,
    Task_type_id         integer                        not null,
    Task_description     text                           not null,
-   Task_date            DATE                           null,
+   Task_date            DATE                           not null,
    Task_active          BOOLEAN			   not null,
    constraint PK_TASK primary key (Task_id)
 ) CHARACTER SET utf8;
