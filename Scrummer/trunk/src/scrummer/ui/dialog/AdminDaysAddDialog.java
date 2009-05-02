@@ -41,7 +41,7 @@ public class AdminDaysAddDialog
 	 * Constructor
 	 * @param owner owner of this dialog
 	 */
-	public AdminDaysAddDialog(JFrame owner) throws SQLException 
+	public AdminDaysAddDialog(JFrame owner) 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		setTitle(i18n.tr("Add administrative day"));
