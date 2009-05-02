@@ -63,7 +63,7 @@ public class ProductBacklogViewDialog
 	 * Constructor
 	 * @param owner owner frame
 	 */
-	public ProductBacklogViewDialog(Frame owner) throws SQLException 
+	public ProductBacklogViewDialog(Frame owner) 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
