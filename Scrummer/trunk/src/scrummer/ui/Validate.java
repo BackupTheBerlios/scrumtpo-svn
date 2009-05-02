@@ -19,7 +19,7 @@ public class Validate {
 	 * 
 	 * @param input input field to check
 	 * @param parent parent on which to display err message
-	 * @return
+	 * @return true if field isn't empty, false otherwise
 	 */
 	public static boolean empty(JTextField input, Component parent)
 	{
