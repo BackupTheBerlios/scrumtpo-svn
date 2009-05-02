@@ -8,7 +8,9 @@ import scrummer.enumerator.ImpedimentOperation;
 import scrummer.exception.DBMap;
 import scrummer.listener.ImpedimentListener;
 import scrummer.model.swing.ImpedimentComboBoxModel;
+import scrummer.model.swing.ImpedimentStatusComboBoxModel;
 import scrummer.model.swing.ImpedimentTableModel;
+import scrummer.model.swing.ImpedimentTypeComboBoxModel;
 import scrummer.util.Operations;
 
 /**
@@ -33,9 +35,16 @@ public class ImpedimentModel
 		}
 		/// connection model
 		_connectionModel = connectionModel;
-		_impedimentModelCommon = new ImpedimentModelCommon(_connectionModel, _operation);
-		_impedimentTableModel = new ImpedimentTableModel(connectionModel, _impedimentModelCommon);
-		_impedimentComboBoxModel = new ImpedimentComboBoxModel(_impedimentModelCommon);
+		_impedimentModelCommon = 
+			new ImpedimentModelCommon(_connectionModel, _operation);
+		_impedimentTableModel = 
+			new ImpedimentTableModel(connectionModel, _impedimentModelCommon);
+		_impedimentComboBoxModel = 
+			new ImpedimentComboBoxModel(_impedimentModelCommon);
+		_impedimentStatusComboBoxModel =
+			new ImpedimentStatusComboBoxModel(_impedimentModelCommon);
+		_impedimentTypeComboBoxModel =
+			new ImpedimentTypeComboBoxModel(_impedimentModelCommon);
 	}
 	
 	/**
@@ -106,6 +115,20 @@ public class ImpedimentModel
 	public void addImpedimentListener(ImpedimentListener listener)
 	{
 		_operation.addListener(listener);
+	}
+	
+	/**
+	 * @return impediment status combo box model
+	 */
+	public ImpedimentStatusComboBoxModel getImpedimentStatusComboBoxModel() {
+		return _impedimentStatusComboBoxModel;
+	}
+	
+	/**
+	 * @return impediment type combo box model
+	 */
+	public ImpedimentTypeComboBoxModel getImpedimentTypeComboBoxModel() {
+		return _impedimentTypeComboBoxModel;
 	}
 	
 	/**
@@ -228,6 +251,49 @@ public class ImpedimentModel
 		_impedimentModelCommon.setImpedimentAge(impId, newAge);
 	}
 	
+<<<<<<< .mine
+	/**
+	 * Add impediment status type
+	 * @param description status type description
+	 */
+	public void addStatus(String description) {
+		_impedimentModelCommon.addStatus(description);
+	}
+	
+	/**
+	 * Change impediment status description
+	 * @param statusId status id
+	 * @param description description
+	 */
+	public void changeStatus(int statusId, String description) {
+		_impedimentModelCommon.changeStatus(statusId, description);
+	}
+	
+	/**
+	 * Change impediment type description
+	 * @param typeId type id
+	 * @param description description
+	 */
+	public void changeType(int typeId, String description) {
+		_impedimentModelCommon.changeType(typeId, description);
+	}
+
+	/**
+	 * Remove impediment status
+	 * @param statusId id
+	 */
+	public void removeStatus(int statusId) {
+		_impedimentModelCommon.removeStatus(statusId);
+	}
+	
+	/**
+	 * Remove impediment type
+	 * @param typeId id
+	 */
+	public void removeType(int typeId) {
+		_impedimentModelCommon.removeType(typeId);
+	}
+	
 	public Integer getInteger(DBSchemaModel.ImpedimentEnum enumId, int impId)
 	{
 		ImpedimentModelCommon.Row row = _impedimentModelCommon.getRow(impId);
@@ -286,7 +352,11 @@ public class ImpedimentModel
 			_impedimentTableModel.refresh();
 		}
 	}
-	
+
+	/// impediment statuses
+	private ImpedimentStatusComboBoxModel _impedimentStatusComboBoxModel;
+	/// impediment types
+	private ImpedimentTypeComboBoxModel _impedimentTypeComboBoxModel;
 	/// common impediment related functionality
 	private ImpedimentModelCommon _impedimentModelCommon;
 	/// connection model
