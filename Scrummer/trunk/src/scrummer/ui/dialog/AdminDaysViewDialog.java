@@ -47,7 +47,7 @@ public class AdminDaysViewDialog
 	 * Constructor
 	 * @param owner owner frame
 	 */
-	public AdminDaysViewDialog(Frame owner) throws SQLException 
+	public AdminDaysViewDialog(Frame owner) 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
