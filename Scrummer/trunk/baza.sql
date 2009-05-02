@@ -8,7 +8,8 @@ use scrumtpo;
 alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_ABSENCE_;
 alter table Administrative_days drop foreign key FK_ADMINIST_RELATIONS_EMPLOYEE;
 alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_SPRINT_T;
-alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_EMPLOYEE;
+alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_TYPE;
+alter table Impediment drop foreign key FK_IMPEDIME_RELATIONS_STATUS;
 alter table PBI drop foreign key FK_PBI_RELATIONS_PROJECT;
 alter table PBI_measurement_result drop foreign key FK_PBI_MEAS_RELATIONS_MEASURE;
 alter table PBI_measurement_result drop foreign key FK_PBI_MEAS_RELATIONS_PBI;
@@ -37,6 +38,8 @@ drop table if exists Absence_type;
 drop table if exists Administrative_days;
 drop table if exists Employee;
 drop table if exists Impediment;
+drop table if exists Impediment_type;
+drop table if exists Impediment_status;
 drop table if exists Measure;
 drop table if exists PBI;
 drop table if exists PBI_measurement_result;
@@ -100,14 +103,32 @@ create table Impediment
    Employee_id          integer                not null,
    Task_id				integer				   not null,
    Impediment_description text                 null,
-   Impediment_type		
-   ENUM('Specification problems', 'Hardware problems', 'Software problems', 'Security problems', 'Teamwork problems', 'Other') not null,
-   Impediment_status	
-   ENUM('Open', 'Pending', 'In Progress', 'Closed', 'Other') not null,
+   Impediment_type_id   integer                not null,
+   Impediment_status_id integer                not null,
    Impediment_start		DATE				   null,
    Impediment_end		DATE				   null,
    Impediment_age		integer				   null,
    constraint PK_IMPEDIMENT primary key (Impediment_id)
+) CHARACTER SET utf8;
+
+/*==============================================================*/
+/* Table: Impediment_type                                             */
+/*==============================================================*/
+create table Impediment_type 
+(
+   Impediment_type_id          integer	AUTO_INCREMENT                        not null,
+   Impediment_type_description text                           null,
+   constraint PK_TASK_TYPE primary key (Impediment_type_id)
+) CHARACTER SET utf8;
+
+/*==============================================================*/
+/* Table: Impediment_status                                             */
+/*==============================================================*/
+create table Impediment_status 
+(
+   Impediment_status_id         integer	AUTO_INCREMENT                        not null,
+   Impediment_status_description text                           null,
+   constraint PK_TASK_TYPE primary key (Impediment_status_id)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
@@ -335,6 +356,18 @@ alter table Impediment
       on delete restrict;
 
 alter table Impediment
+   add constraint FK_IMPEDIME_RELATIONS_TYPE foreign key (Impediment_type_id)
+      references Impediment_type (Impediment_type_id)
+      on update restrict
+      on delete restrict;
+
+alter table Impediment
+   add constraint FK_IMPEDIME_RELATIONS_STATUS foreign key (Impediment_status_id)
+      references Impediment_status (Impediment_status_id)
+      on update restrict
+      on delete restrict;
+
+alter table Impediment
    add constraint FK_IMPEDIME_RELATIONS_EMPLOYEE foreign key (Employee_id)
       references Employee (Employee_id)
       on update restrict
@@ -513,6 +546,19 @@ insert into Absence_type (Absence_type_description) values ('transportation');
 insert into Absence_type (Absence_type_description) values ('change of schedule');
 insert into Absence_type (Absence_type_description) values ('health');
 insert into Absence_type (Absence_type_description) values ('other');
+
+insert into Impediment_type (Impediment_type_description) values ('Specification problems');
+insert into Impediment_type (Impediment_type_description) values ('Hardware problems');
+insert into Impediment_type (Impediment_type_description) values ('Software problems');
+insert into Impediment_type (Impediment_type_description) values ('Security problems');
+insert into Impediment_type (Impediment_type_description) values ('Teamwork problems');
+insert into Impediment_type (Impediment_type_description) values ('Other');
+
+insert into Impediment_status (Impediment_status_description) values ('Open');
+insert into Impediment_status (Impediment_status_description) values ('Pending');
+insert into Impediment_status (Impediment_status_description) values ('In Progress');
+insert into Impediment_status (Impediment_status_description) values ('Closed');
+insert into Impediment_status (Impediment_status_description) values ('Other');
 
 insert into Task_status (Task_status_description) values('not started');
 insert into Task_status (Task_status_description) values('in progress');
