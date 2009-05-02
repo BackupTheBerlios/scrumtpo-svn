@@ -33,7 +33,7 @@ public class TaskStatusAddDialog
 	 * Constructor
 	 * @param owner owner of this dialog
 	 */
-	public TaskStatusAddDialog(JFrame owner) throws SQLException 
+	public TaskStatusAddDialog(JFrame owner) 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title

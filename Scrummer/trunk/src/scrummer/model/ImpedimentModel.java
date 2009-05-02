@@ -251,7 +251,6 @@ public class ImpedimentModel
 		_impedimentModelCommon.setImpedimentAge(impId, newAge);
 	}
 	
-<<<<<<< .mine
 	/**
 	 * Add impediment status type
 	 * @param description status type description

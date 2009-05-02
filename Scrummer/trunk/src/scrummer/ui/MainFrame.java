@@ -27,12 +27,15 @@ import scrummer.ui.dialog.AbsenceTypeAddDialog;
 import scrummer.ui.dialog.AbsenceTypeChangeDialog;
 import scrummer.ui.dialog.AbsenceTypeRemoveDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
+import scrummer.ui.dialog.AdminDaysAddDialog;
+import scrummer.ui.dialog.AdminDaysViewDialog;
 import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
 import scrummer.ui.dialog.ImpedimentStatusAdd;
 import scrummer.ui.dialog.ImpedimentStatusChange;
 import scrummer.ui.dialog.ImpedimentStatusRemove;
 import scrummer.ui.dialog.ImpedimentTypeAdd;
+import scrummer.ui.dialog.ImpedimentTypeChange;
 import scrummer.ui.dialog.ImpedimentTypeRemove;
 import scrummer.ui.dialog.ImpedimentsAddDialog;
 import scrummer.ui.dialog.ImpedimentsChangeDialog;
@@ -220,24 +223,17 @@ public class MainFrame extends JFrame
 		String cmd = e.getActionCommand();
 		if (cmd.equals("NewProject")) {
 			showIt(new ProjectNewDialog(this));
-		}
-		else if (cmd.equals("OpenProject")) {
+		} else if (cmd.equals("OpenProject")) {
 			showIt(new ProjectOpenDialog(this));
-		}
-		else if (cmd == "RemoveProject") {
+		} else if (cmd == "RemoveProject") {
 			showIt(new ProjectRemoveDialog(this));
-		}
-		else if (cmd.equals("CloseProject")) {
+		} else if (cmd.equals("CloseProject")) {
 			_projectModel.closeProject();
-		}
-		else if (cmd.equals("ViewProductBacklog")) {
+		} else if (cmd.equals("ViewProductBacklog")) {
 			showIt(new ProductBacklogViewDialog(this));
-		}
-		else if(cmd.equals("AddProductBacklog")) {
+		} else if(cmd.equals("AddProductBacklog")) {
 			showIt(new ProductBacklogAddDialog(this));
-		}
-		else if(cmd.equals("ChangeProductBacklogItem"))
-		{
+		} else if(cmd.equals("ChangeProductBacklogItem")) {
 			/*
 			ProductBacklogChangeDialog dialog = new ProductBacklogChangeDialog(this, 2);
 			Util.centre(dialog);
@@ -245,138 +241,72 @@ public class MainFrame extends JFrame
 			*/
 		}
 		else if(cmd.equals("AddImpediment")) {
-			showIt(new ImpedimentsAddDialog(this));
-		}
-		else if(cmd.equals("ViewImpediments")) {
+			showIt(new ImpedimentsAddDialog(this)); 
+		} else if(cmd.equals("ViewImpediments")) {
 			showIt(new ImpedimentsViewDialog(this));
-		}
-		else if(cmd.equals("ChangeImpediment")) {
-			showIt(new ImpedimentsChangeDialog(this));
-		}
-		else if(cmd.equals("AddImpedimentType")) {
+		} else if(cmd.equals("ChangeImpediment")) {
+			// showIt(new ImpedimentsChangeDialog(this));
+		} else if(cmd.equals("AddImpedimentType")) {
 			showIt(new ImpedimentTypeAdd(this));
-		}
-		else if(cmd.equals("ChangeImpedimentType")) {
-			showIt(new ImpedimentsChangeDialog(this));
-		}
-		else if(cmd.equals("RemoveImpedimentType")) {
+		} else if(cmd.equals("ChangeImpedimentType")) {
+			showIt(new ImpedimentTypeChange(this));
+		} else if(cmd.equals("RemoveImpedimentType")) {
 			showIt(new ImpedimentTypeRemove(this));
-		}
-		else if(cmd.equals("AddImpedimentStatus")) {
+		} else if(cmd.equals("AddImpedimentStatus")) {
 			showIt(new ImpedimentStatusAdd(this));
-		else if(cmd.equals("AddAbsenceType"))
-		{
-			AbsenceTypeAddDialog dialog;
-			try {
-				dialog = new AbsenceTypeAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		else if(cmd.equals("ChangeImpedimentStatus")) {
-			showIt(new ImpedimentStatusChange(this));
-		else if(cmd.equals("ChangeAbsenceType"))
-		{
-			AbsenceTypeChangeDialog dialog = new AbsenceTypeChangeDialog(this);
-			dialog.setVisible(true);
-		}
-		else if(cmd.equals("RemoveAbsenceType"))
-		{
-			AbsenceTypeRemoveDialog dialog = new AbsenceTypeRemoveDialog(this);
-			dialog.setVisible(true);
-		}
-		else if(cmd.equals("AddTaskType"))
-		{
-			TaskTypeAddDialog dialog;
-			try {
-				dialog = new TaskTypeAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		else if(cmd.equals("RemoveImpedimentStatus")) {
-			showIt(new ImpedimentStatusRemove(this));
-		else if(cmd.equals("ChangeTaskType"))
-		{
-			TaskTypeChangeDialog dialog = new TaskTypeChangeDialog(this);
-			dialog.setVisible(true);
-		}
-		else if(cmd.equals("RemoveTaskType"))
-		{
-			TaskTypeRemoveDialog dialog = new TaskTypeRemoveDialog(this);
-			dialog.setVisible(true);
-		}
-		else if(cmd.equals("AddTaskStatus"))
-		{
-			TaskStatusAddDialog dialog;
-			try {
-				dialog = new TaskStatusAddDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		else if(cmd.equals("SprintPlanMeet")) {
-			showIt(new SprintPlanningMeetingDialog(this));
-		else if(cmd.equals("ChangeTaskStatus"))
-		{
-			TaskStatusChangeDialog dialog = new TaskStatusChangeDialog(this);
-			dialog.setVisible(true);
-		}
-		else if(cmd.equals("ViewSprintBacklog")) {
-			showIt(new SprintBacklogViewDialog(this));
-		else if(cmd.equals("RemoveTaskStatus"))
-		{
-			TaskStatusRemoveDialog dialog = new TaskStatusRemoveDialog(this);
-			dialog.setVisible(true);
-		}
-		else if (cmd.equals("ViewDevelopers"))
-		{
-			DevelopersViewDialog dialog = new DevelopersViewDialog(this);
-			dialog.setVisible(true);
-		}
-		else if(cmd.equals("DailyScrumMeet")) {
-			showIt(new DailyScrumMeetingDialog(this));
-		}
-		else if(cmd.equals("AdminDaysView")) {
-			showIt(new AdminDaysViewDialog(this));
-		}
-		else if(cmd.equals("AdminDaysAdd")) {
-			showIt(new AdminDaysAddDialog(this));
-		}
-		else if(cmd.equals("AddAbsenceType")) {
+		} else if(cmd.equals("AddAbsenceType")) {
 			showIt(new AbsenceTypeAddDialog(this));
-		}
-		else if(cmd.equals("ChangeAbsenceType")) {
-			showIt(new AbsenceTypeChangeDialog(this));			
-		}
-		else if (cmd.equals("ViewDevelopers")) {
+		} else if(cmd.equals("ChangeImpedimentStatus")) {
+			showIt(new ImpedimentStatusChange(this));
+		} else if(cmd.equals("ChangeAbsenceType")) {
+			showIt(new AbsenceTypeChangeDialog(this));
+		} else if(cmd.equals("RemoveAbsenceType")) {
+			showIt(new AbsenceTypeRemoveDialog(this));
+		} else if(cmd.equals("AddTaskType")) {
+			showIt(new TaskTypeAddDialog(this));
+		} else if(cmd.equals("RemoveImpedimentStatus")) {
+			showIt(new ImpedimentStatusRemove(this));
+		} else if(cmd.equals("ChangeTaskType")) {
+			showIt(new TaskTypeChangeDialog(this));
+		} else if(cmd.equals("RemoveTaskType")) {
+			showIt(new TaskTypeRemoveDialog(this));
+		} else if(cmd.equals("AddTaskStatus")) {
+			showIt(new TaskStatusAddDialog(this));
+		} else if(cmd.equals("SprintPlanMeet")) {
+			showIt(new SprintPlanningMeetingDialog(this));
+		} else if(cmd.equals("ChangeTaskStatus")) {
+			showIt(new TaskStatusChangeDialog(this));
+		} else if(cmd.equals("ViewSprintBacklog")) {
+			showIt(new SprintBacklogViewDialog(this));
+		} else if(cmd.equals("RemoveTaskStatus")) {
+			showIt(new TaskStatusRemoveDialog(this));
+		} else if (cmd.equals("ViewDevelopers")) {
 			showIt(new DevelopersViewDialog(this));
-		}
-		else if(cmd.equals("AddDeveloper")) {
+		} else if(cmd.equals("DailyScrumMeet")) {
+			showIt(new DailyScrumMeetingDialog(this));
+		} else if(cmd.equals("AdminDaysView")) {
+			showIt(new AdminDaysViewDialog(this));
+		} else if(cmd.equals("AdminDaysAdd")) {
+			showIt(new AdminDaysAddDialog(this));
+		} else if(cmd.equals("AddAbsenceType")) {
+			showIt(new AbsenceTypeAddDialog(this));
+		} else if(cmd.equals("ChangeAbsenceType")) {
+			showIt(new AbsenceTypeChangeDialog(this));			
+		} else if (cmd.equals("ViewDevelopers")) {
+			showIt(new DevelopersViewDialog(this));
+		} else if(cmd.equals("AddDeveloper")) {
 			showIt(new AddDeveloperDialog(this));			
-		}
-		else if (cmd.equals("AddTeam"))	{
+		} else if (cmd.equals("AddTeam"))	{
 			showIt(new TeamAddDialog(this));			
-		}
-		else if (cmd.equals("ViewTeam")) {
+		} else if (cmd.equals("ViewTeam")) {
 			showIt(new TeamOverviewDialog(this));			
-		}
-		else if (cmd.equals("ChangeName")) {
+		} else if (cmd.equals("ChangeName")) {
 			showIt(new TeamChangeNameDialog(this));
-		}
-		else if (cmd.equals("RemoveTeam")) {
+		} else if (cmd.equals("RemoveTeam")) {
 			showIt(new TeamRemoveDialog(this));
-		}
-		else if (cmd.equals("Exit")) {
+		} else if (cmd.equals("Exit")) {
 			dispose();
-		}
-		else if (cmd.equals("About")) {
+		} else if (cmd.equals("About")) {
 			showIt(new AboutBoxDialog(this));
 		}
 	}

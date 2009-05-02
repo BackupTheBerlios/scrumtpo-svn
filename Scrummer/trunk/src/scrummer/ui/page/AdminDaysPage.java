@@ -71,19 +71,11 @@ public class AdminDaysPage
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd == "Add")
-		{
-			AdminDaysAddDialog dialog;
-			try {
-				dialog = new AdminDaysAddDialog(getMainFrame());
-				Util.centre(dialog);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		else if (cmd == "Edit")
+		if (cmd == "Add") {
+			AdminDaysAddDialog dialog = new AdminDaysAddDialog(getMainFrame());
+			Util.centre(dialog);
+			dialog.setVisible(true);
+		} else if (cmd == "Edit")
 		{
 		
 		}

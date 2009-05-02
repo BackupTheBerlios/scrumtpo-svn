@@ -66,15 +66,9 @@ public class ImpedimentPage extends BasePage implements ActionListener
 		String cmd = e.getActionCommand();
 		if (cmd == "Add")
 		{
-			ImpedimentsAddDialog dialog;
-			try {
-				dialog = new ImpedimentsAddDialog(getMainFrame());
-				Util.centre(dialog);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			ImpedimentsAddDialog dialog = new ImpedimentsAddDialog(getMainFrame());
+			Util.centre(dialog);
+			dialog.setVisible(true);			
 		}
 		else if (cmd == "Edit")
 		{
