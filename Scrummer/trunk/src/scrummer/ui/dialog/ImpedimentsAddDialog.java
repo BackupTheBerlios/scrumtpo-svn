@@ -47,7 +47,7 @@ public class ImpedimentsAddDialog
 	 * Constructor
 	 * @param owner owner of this dialog
 	 */
-	public ImpedimentsAddDialog(JFrame owner) throws SQLException 
+	public ImpedimentsAddDialog(JFrame owner) 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		setTitle(i18n.tr("Add Impediment"));
