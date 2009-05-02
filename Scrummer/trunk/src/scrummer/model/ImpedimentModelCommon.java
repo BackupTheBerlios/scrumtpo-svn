@@ -553,6 +553,186 @@ public class ImpedimentModelCommon
 	}
 	
 	/**
+	 * Add impediment status type
+	 * 
+	 * @param description impediment status description
+	 */
+	public void addStatus(String description) {
+		 java.sql.Connection conn      = null;
+         java.sql.PreparedStatement st = null;
+         ResultSet res = null;
+         try {
+			 conn = _connectionModel.getConnection();
+			 String query =
+				"INSERT INTO " + DBSchemaModel.ImpedimentStatusTable + " " +
+			 	"(" +DBSchemaModel.ImpedimentStatusDescription + ") " +
+			 	"VALUES (?)";
+			 st = conn.prepareStatement(query);
+			 st.setString(1, description);			 
+			 st.execute();
+			 _operation.operationSucceeded(DataOperation.Insert, ImpedimentOperation.ImpedimentStatus, "");
+		} catch (SQLException e) {
+			_operation.operationFailed(DataOperation.Insert, ImpedimentOperation.ImpedimentStatus, e.getMessage());
+			e.printStackTrace();
+		} finally {
+			res  = _connectionModel.close(res);
+			st   = _connectionModel.close(st);
+			conn = _connectionModel.close(conn);
+		}
+	}
+	
+	/**
+	 * Fetch all impediment types from db
+	 * 
+	 * @return project id's and names
+	 */
+	public Vector<IdValue> fetchTypes() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));
+			}
+			
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}					
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.ImpedimentTypeId + ", " +
+						DBSchemaModel.ImpedimentTypeDescription + 
+			" FROM " + DBSchemaModel.ImpedimentTypeTable);
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch all impediment statuses from db
+	 * 
+	 * @return project id's and names
+	 */
+	public Vector<IdValue> fetchStatuses() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));
+			}
+			
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}					
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.ImpedimentStatusId + ", " +
+						DBSchemaModel.ImpedimentStatusDescription + 
+			" FROM " + DBSchemaModel.ImpedimentStatusTable);
+		return q.getResult();
+	}
+		
+	/**
+	 * Change impediment status description
+	 * @param statusId status id
+	 * @param description description
+	 */
+	public boolean changeStatus(int statusId, String description) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {	
+			@Override
+			public void process() {
+	            setResult(true);
+	            _operation.operationSucceeded(
+	            	DataOperation.Update, ImpedimentOperation.ImpedimentStatus, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.ImpedimentStatus, 
+		        		i18n.tr("Could not set parameter."));
+				ex.printStackTrace();	        	
+			}
+		};
+		
+		q.query("UPDATE " + DBSchemaModel.ImpedimentStatusTable + 
+				" SET " + DBSchemaModel.ImpedimentStatusDescription + "='" + description + "' " +
+				"WHERE " + DBSchemaModel.ImpedimentStatusId + "='" + statusId + "'");
+		return q.getResult();
+	}
+	
+	/**
+	 * Change impediment type description
+	 * @param typeId type id
+	 * @param description description
+	 */
+	public boolean changeType(int typeId, String description) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {	
+			@Override
+			public void process() {
+	            setResult(true);
+	            _operation.operationSucceeded(
+	            	DataOperation.Update, ImpedimentOperation.ImpedimentType, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				_operation.operationFailed(DataOperation.Update, ImpedimentOperation.ImpedimentType, 
+		        		i18n.tr("Could not set parameter."));
+				ex.printStackTrace();	        	
+			}
+		};
+		q.query("UPDATE " + DBSchemaModel.ImpedimentTypeTable + 
+				" SET " + DBSchemaModel.ImpedimentTypeDescription + "='" + description + "' " +
+				"WHERE " + DBSchemaModel.ImpedimentTypeId + "='" + typeId + "'");
+		return q.getResult();
+	}
+	
+	/**
+	 * Remove impediment status
+	 * @param statusId id
+	 */
+	public boolean removeStatus(int statusId) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {	
+			@Override
+			public void process() {
+				setResult(true);
+				_operation.operationSucceeded(DataOperation.Remove, ImpedimentOperation.ImpedimentStatus, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, ImpedimentOperation.ImpedimentStatus, 
+	        		i18n.tr("Could not remove impediment."));
+			}
+		};
+		q.query("DELETE FROM " + DBSchemaModel.ImpedimentStatusTable + 
+				" WHERE " + DBSchemaModel.ImpedimentStatusId + "='" + statusId + "'");
+		return q.getResult();
+	}
+	
+	/**
+	 * Remove impediment type
+	 * @param typeId type
+	 */
+	public boolean removeType(int typeId) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {	
+			@Override
+			public void process() {
+				setResult(true);
+				_operation.operationSucceeded(DataOperation.Remove, ImpedimentOperation.ImpedimentType, "");
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Remove, ImpedimentOperation.ImpedimentType, 
+	        		i18n.tr("Could not remove impediment."));
+			}
+		};
+		q.query("DELETE FROM " + DBSchemaModel.ImpedimentTypeTable + 
+				" WHERE " + DBSchemaModel.ImpedimentTypeId + "='" + typeId + "'");
+		return q.getResult();
+	}
+		
+	/**
 	 * Fetch impediment row
 	 */
 	public Row getRow(int impId)
@@ -583,4 +763,5 @@ public class ImpedimentModelCommon
 	private Operations.ImpedimentOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
+	
 }
