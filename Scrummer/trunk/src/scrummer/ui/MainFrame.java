@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -28,6 +29,14 @@ import scrummer.ui.dialog.AbsenceTypeRemoveDialog;
 import scrummer.ui.dialog.AddDeveloperDialog;
 import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.ui.dialog.DevelopersViewDialog;
+import scrummer.ui.dialog.ImpedimentStatusAdd;
+import scrummer.ui.dialog.ImpedimentStatusChange;
+import scrummer.ui.dialog.ImpedimentStatusRemove;
+import scrummer.ui.dialog.ImpedimentTypeAdd;
+import scrummer.ui.dialog.ImpedimentTypeRemove;
+import scrummer.ui.dialog.ImpedimentsAddDialog;
+import scrummer.ui.dialog.ImpedimentsChangeDialog;
+import scrummer.ui.dialog.ImpedimentsViewDialog;
 import scrummer.ui.dialog.LoginDialog;
 import scrummer.ui.dialog.ProjectNewDialog;
 import scrummer.ui.dialog.ProjectOpenDialog;
@@ -108,6 +117,12 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("Insert into product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Change product backlog item"), KeyEvent.VK_P, "ChangeProductBacklogItem");
+		/*
+		fileMenu.addSeparator();
+		addMenuEntry(fileMenu, i18n.tr("Add impediment"), KeyEvent.VK_I, "AddImpediment");
+		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
+		addMenuEntry(fileMenu, i18n.tr("Change impediment"), KeyEvent.VK_C, "ChangeImpediment");
+		*/
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
 		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
@@ -120,6 +135,7 @@ public class MainFrame extends JFrame
 		
 		addMenuEntry(sifrantiMenu, i18n.tr("Add absence type"), KeyEvent.VK_1, "AddAbsenceType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_2, "ChangeAbsenceType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_2, "ChangeAbsenceType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Remove absence type"), KeyEvent.VK_3, "RemoveAbsenceType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Add task type"), KeyEvent.VK_4, "AddTaskType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change task type"), KeyEvent.VK_5, "ChangeTaskType");
@@ -127,6 +143,18 @@ public class MainFrame extends JFrame
 		addMenuEntry(sifrantiMenu, i18n.tr("Add task status"), KeyEvent.VK_7, "AddTaskStatus");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change task status"), KeyEvent.VK_8, "ChangeTaskStatus");
 		addMenuEntry(sifrantiMenu, i18n.tr("Remove task status"), KeyEvent.VK_9, "RemoveTaskStatus");
+		
+		sifrantiMenu.addSeparator();
+		
+		addMenuEntry(sifrantiMenu, i18n.tr("Add impediment type"), KeyEvent.VK_I, "AddImpedimentType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change impediment type"), KeyEvent.VK_M, "ChangeImpedimentType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove impediment type"), KeyEvent.VK_M, "RemoveImpedimentType");
+		
+		sifrantiMenu.addSeparator();
+		
+		addMenuEntry(sifrantiMenu, i18n.tr("Add impediment status"), KeyEvent.VK_I, "AddImpedimentStatus");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change impediment status"), KeyEvent.VK_M, "ChangeImpedimentStatus");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove impediment status"), KeyEvent.VK_M, "RemoveImpedimentStatus");
 		
 		JMenu developerMenu = new JMenu(i18n.tr("Employees"));
 		developerMenu.setMnemonic(KeyEvent.VK_E);
@@ -190,41 +218,23 @@ public class MainFrame extends JFrame
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd.equals("NewProject"))
-		{
-			ProjectNewDialog dialog = new ProjectNewDialog(this);
-			dialog.setVisible(true);
+		if (cmd.equals("NewProject")) {
+			showIt(new ProjectNewDialog(this));
 		}
-		else if (cmd.equals("OpenProject"))
-		{
-			ProjectOpenDialog dialog = new ProjectOpenDialog(this);
-			dialog.setVisible(true);
+		else if (cmd.equals("OpenProject")) {
+			showIt(new ProjectOpenDialog(this));
 		}
-		else if (cmd == "RemoveProject")
-		{
-			ProjectRemoveDialog dialog = new ProjectRemoveDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if (cmd == "RemoveProject") {
+			showIt(new ProjectRemoveDialog(this));
 		}
-		else if (cmd.equals("CloseProject"))
-		{
+		else if (cmd.equals("CloseProject")) {
 			_projectModel.closeProject();
 		}
-		else if (cmd.equals("ViewProductBacklog"))
-		{
-			ProductBacklogViewDialog dialog;
-			try {
-				dialog = new ProductBacklogViewDialog(this);
-				dialog.setVisible(true);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+		else if (cmd.equals("ViewProductBacklog")) {
+			showIt(new ProductBacklogViewDialog(this));
 		}
-		else if(cmd.equals("AddProductBacklog"))
-		{
-			ProductBacklogAddDialog dialog = new ProductBacklogAddDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if(cmd.equals("AddProductBacklog")) {
+			showIt(new ProductBacklogAddDialog(this));
 		}
 		else if(cmd.equals("ChangeProductBacklogItem"))
 		{
@@ -234,27 +244,26 @@ public class MainFrame extends JFrame
 			dialog.setVisible(true);
 			*/
 		}
-		else if(cmd.equals("SprintPlanMeet"))
-		{
-			SprintPlanningMeetingDialog dialog = new SprintPlanningMeetingDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if(cmd.equals("AddImpediment")) {
+			showIt(new ImpedimentsAddDialog(this));
 		}
-		else if(cmd.equals("ViewSprintBacklog"))
-		{
-			SprintBacklogViewDialog dialog;
-			try {
-				dialog = new SprintBacklogViewDialog(this);
-				dialog.setVisible(true);
-			} catch(SQLException e1) {
-				e1.printStackTrace();
-			}
+		else if(cmd.equals("ViewImpediments")) {
+			showIt(new ImpedimentsViewDialog(this));
 		}
-		else if(cmd.equals("DailyScrumMeet"))
-		{
-			DailyScrumMeetingDialog dialog = new DailyScrumMeetingDialog(this);
-			dialog.setVisible(true);
+		else if(cmd.equals("ChangeImpediment")) {
+			showIt(new ImpedimentsChangeDialog(this));
 		}
+		else if(cmd.equals("AddImpedimentType")) {
+			showIt(new ImpedimentTypeAdd(this));
+		}
+		else if(cmd.equals("ChangeImpedimentType")) {
+			showIt(new ImpedimentsChangeDialog(this));
+		}
+		else if(cmd.equals("RemoveImpedimentType")) {
+			showIt(new ImpedimentTypeRemove(this));
+		}
+		else if(cmd.equals("AddImpedimentStatus")) {
+			showIt(new ImpedimentStatusAdd(this));
 		else if(cmd.equals("AddAbsenceType"))
 		{
 			AbsenceTypeAddDialog dialog;
@@ -266,11 +275,12 @@ public class MainFrame extends JFrame
 				e1.printStackTrace();
 			}
 		}
+		else if(cmd.equals("ChangeImpedimentStatus")) {
+			showIt(new ImpedimentStatusChange(this));
 		else if(cmd.equals("ChangeAbsenceType"))
 		{
 			AbsenceTypeChangeDialog dialog = new AbsenceTypeChangeDialog(this);
 			dialog.setVisible(true);
-			
 		}
 		else if(cmd.equals("RemoveAbsenceType"))
 		{
@@ -288,11 +298,12 @@ public class MainFrame extends JFrame
 				e1.printStackTrace();
 			}
 		}
+		else if(cmd.equals("RemoveImpedimentStatus")) {
+			showIt(new ImpedimentStatusRemove(this));
 		else if(cmd.equals("ChangeTaskType"))
 		{
 			TaskTypeChangeDialog dialog = new TaskTypeChangeDialog(this);
 			dialog.setVisible(true);
-			
 		}
 		else if(cmd.equals("RemoveTaskType"))
 		{
@@ -310,12 +321,15 @@ public class MainFrame extends JFrame
 				e1.printStackTrace();
 			}
 		}
+		else if(cmd.equals("SprintPlanMeet")) {
+			showIt(new SprintPlanningMeetingDialog(this));
 		else if(cmd.equals("ChangeTaskStatus"))
 		{
 			TaskStatusChangeDialog dialog = new TaskStatusChangeDialog(this);
 			dialog.setVisible(true);
-			
 		}
+		else if(cmd.equals("ViewSprintBacklog")) {
+			showIt(new SprintBacklogViewDialog(this));
 		else if(cmd.equals("RemoveTaskStatus"))
 		{
 			TaskStatusRemoveDialog dialog = new TaskStatusRemoveDialog(this);
@@ -326,45 +340,54 @@ public class MainFrame extends JFrame
 			DevelopersViewDialog dialog = new DevelopersViewDialog(this);
 			dialog.setVisible(true);
 		}
-		else if(cmd.equals("AddDeveloper"))
-		{
-			AddDeveloperDialog dialog = new AddDeveloperDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if(cmd.equals("DailyScrumMeet")) {
+			showIt(new DailyScrumMeetingDialog(this));
 		}
-		else if (cmd.equals("AddTeam"))
-		{
-			TeamAddDialog dialog = new TeamAddDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if(cmd.equals("AdminDaysView")) {
+			showIt(new AdminDaysViewDialog(this));
 		}
-		else if (cmd.equals("ViewTeam"))
-		{
-			TeamOverviewDialog dialog = new TeamOverviewDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if(cmd.equals("AdminDaysAdd")) {
+			showIt(new AdminDaysAddDialog(this));
 		}
-		else if (cmd.equals("ChangeName"))
-		{
-			TeamChangeNameDialog dialog = new TeamChangeNameDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);	
+		else if(cmd.equals("AddAbsenceType")) {
+			showIt(new AbsenceTypeAddDialog(this));
 		}
-		else if (cmd.equals("RemoveTeam"))
-		{
-			TeamRemoveDialog dialog = new TeamRemoveDialog(this);
-			Util.centre(dialog);
-			dialog.setVisible(true);
+		else if(cmd.equals("ChangeAbsenceType")) {
+			showIt(new AbsenceTypeChangeDialog(this));			
 		}
-		else if (cmd.equals("Exit"))
-		{
+		else if (cmd.equals("ViewDevelopers")) {
+			showIt(new DevelopersViewDialog(this));
+		}
+		else if(cmd.equals("AddDeveloper")) {
+			showIt(new AddDeveloperDialog(this));			
+		}
+		else if (cmd.equals("AddTeam"))	{
+			showIt(new TeamAddDialog(this));			
+		}
+		else if (cmd.equals("ViewTeam")) {
+			showIt(new TeamOverviewDialog(this));			
+		}
+		else if (cmd.equals("ChangeName")) {
+			showIt(new TeamChangeNameDialog(this));
+		}
+		else if (cmd.equals("RemoveTeam")) {
+			showIt(new TeamRemoveDialog(this));
+		}
+		else if (cmd.equals("Exit")) {
 			dispose();
 		}
-		else if (cmd.equals("About"))
-		{
-			AboutBoxDialog box = new AboutBoxDialog(this);
-			box.setVisible(true);
+		else if (cmd.equals("About")) {
+			showIt(new AboutBoxDialog(this));
 		}
+	}
+	
+	/**
+	 * Centre and display dialog applicatino modally
+	 * @param dialog dialog to display
+	 */
+	private void showIt(JDialog dialog) {
+		Util.centre(dialog);
+		dialog.setVisible(true);
 	}
 	
 	@Override
