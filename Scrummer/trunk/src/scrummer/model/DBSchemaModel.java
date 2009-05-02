@@ -330,10 +330,18 @@ public class DBSchemaModel {
 	public static final String ImpedimentEmployee = "Employee_id";
 	public static final String ImpedimentTask = "Task_id";
 	public static final String ImpedimentType = "Impediment_type";
-	public static final String ImpedimentStatus = "Impediment_status";
-	public static final String ImpedimentStart = "Impediment_start";
+	public static final String ImpedimentStatus = "Impediment_status_id";
+	public static final String ImpedimentStart = "Impediment_start_id";
 	public static final String ImpedimentEnd = "Impediment_end";
 	public static final String ImpedimentAge = "Impediment_age";
+	
+	public static final String ImpedimentStatusTable = "Impediment_status";
+	public static final String ImpedimentStatusId = "Impediment_status_id";
+	public static final String ImpedimentStatusDescription = "Impediment_status_description";
+		
+	public static final String ImpedimentTypeTable = "Impediment_type";
+	public static final String ImpedimentTypeId = "Impediment_type_id";
+	public static final String ImpedimentTypeDescription = "Impediment_type_description";
 	
 	public static final String SprintPBITable = "Sprint_PBI";
 	public static final String SprintPBIMeasureDay = "Measure_day";
@@ -364,6 +372,8 @@ public class DBSchemaModel {
 	public enum AdministrativeDaysEnum { EmployeeId, AbsenceTypeId, HoursNotWorked, MeasureDay }
 	public enum EmployeeEnum { EmployeeId, EmployeeName, EmployeeSurname, EmployeeAddress }
 	public enum ImpedimentEnum { ImpedimentId, TeamId, SprintId, EmployeeId, TaskId, ImpedimentDescription, ImpedimentType, ImpedimentStatus, ImpedimentStart, ImpedimentEnd, ImpedimentAge }
+	public enum ImpedimentStatusEnum { StatusId, Description }; 
+	public enum ImpedimentTypeEnum { TypeId, Description };
 	public enum MeasureEnum { MeasureId, MeasureName, MeasureDescription }
 	public enum PBIEnum { PBIId, ProjectId, SprintId, PBIDescription, PBIPriority, PBIInitialEstimate, PBIAdjustmentFactor }
 	public enum PBIMeasurementResultEnum { MeasureId, PBIId, MeasurementResult, Datum }
