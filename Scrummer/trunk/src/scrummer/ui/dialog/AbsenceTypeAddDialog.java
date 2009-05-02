@@ -33,7 +33,7 @@ public class AbsenceTypeAddDialog
 	 * Constructor
 	 * @param owner owner of this dialog
 	 */
-	public AbsenceTypeAddDialog(JFrame owner) throws SQLException 
+	public AbsenceTypeAddDialog(JFrame owner) 
 	{
 		super(owner, ModalityType.APPLICATION_MODAL);
 		// set translated title
