@@ -40,7 +40,7 @@ public class SprintBacklogViewDialog
 	 * Constructor
 	 * @param owner owner frame
 	 */
-	public SprintBacklogViewDialog(Frame owner) throws SQLException
+	public SprintBacklogViewDialog(Frame owner)
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
