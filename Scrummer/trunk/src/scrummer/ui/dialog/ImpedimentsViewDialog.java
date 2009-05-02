@@ -62,7 +62,7 @@ public class ImpedimentsViewDialog
 	 * Constructor
 	 * @param owner owner frame
 	 */
-	public ImpedimentsViewDialog(Frame owner) throws SQLException 
+	public ImpedimentsViewDialog(Frame owner) 
 	{	
 		super(owner, ModalityType.APPLICATION_MODAL);
 		
