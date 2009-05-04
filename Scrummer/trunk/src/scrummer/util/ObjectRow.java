@@ -104,13 +104,34 @@ public class ObjectRow {
 		for (int i = 0; i < rows.size(); i++)
 		{
 			ObjectRow row = rows.get(i);
-						
-			java.sql.Date date = (java.sql.Date)row.get(column);
-			Date d = new Date(date.getTime()); 
 			
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			String res = df.format(d);		
-			row.set(column, res);
+			try
+			{
+				Object o = row.get(column);
+				if (o != null)
+				{
+					java.sql.Date date = (java.sql.Date)o;
+					if (date != null)
+					{
+						Date d = new Date(date.getTime()); 
+						
+						SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+						String res = df.format(d);		
+						row.set(column, res);
+					}
+					else
+					{
+						row.set(column, "");
+					}
+				}
+				else
+				{
+					row.set(column, "");
+				}
+			}
+			catch (Exception ex) {
+				row.set(column, "");
+			}
 		}
 	}
 	
