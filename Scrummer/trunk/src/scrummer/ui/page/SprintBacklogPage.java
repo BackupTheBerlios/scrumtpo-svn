@@ -88,9 +88,9 @@ public class SprintBacklogPage
 		removeSprintButton.setActionCommand("RemoveSprint");
 		removeSprintButton.addActionListener(this);
 		
-		/*sprintButtonPanel.add(addSprintButton);
+		sprintButtonPanel.add(addSprintButton);
 		sprintButtonPanel.add(editSprintButton);
-		sprintButtonPanel.add(removeSprintButton);*/
+		sprintButtonPanel.add(removeSprintButton);
 		
 		sprintButtonPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 		
