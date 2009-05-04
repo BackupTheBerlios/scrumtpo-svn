@@ -20,6 +20,7 @@ import scrummer.ui.page.AdminDaysPage;
 import scrummer.ui.page.ImpedimentPage;
 import scrummer.ui.page.MetricsPage;
 import scrummer.ui.page.PBPage;
+import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
 import scrummer.ui.page.SprintBacklogPage;
 import scrummer.ui.page.TaskPage;
@@ -170,7 +171,8 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 
 	private void showProductBacklog(JPanel panel) {
 		panel.setLayout(new GridLayout(1,1));
-		PBPage page = new PBPage(_mainFrame);
+		ProductBacklogPage page = new ProductBacklogPage(_mainFrame);
+		// PBPage page = new PBPage(_mainFrame);
 		panel.add(page);
 		panel.setBackground(Color.WHITE);
 	}
