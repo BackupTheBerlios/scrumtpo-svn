@@ -4,6 +4,7 @@ import java.util.Date;
 
 import scrummer.listener.SprintBacklogListener;
 import scrummer.model.swing.AllTaskTableModel;
+import scrummer.model.swing.ImpedimentTableModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.SprintDescriptionListModel;
@@ -51,6 +52,15 @@ public class SprintBacklogModel
 			new SprintDescriptionListModel(_sprintbacklogModelCommon, projectModel);
 		_taskTableModel = 
 			new AllTaskTableModel(_connectionModel, _sprintbacklogModelCommon, _projectModel);
+	}
+	
+	/**
+	 * Set impediment table model
+	 * @param value value to set
+	 */
+	public void setImpedimentTableModel(ImpedimentTableModel value)
+	{
+		_impedimentTableModel = value;
 	}
 	
 	/**
@@ -265,6 +275,7 @@ public class SprintBacklogModel
 	{
 		_currentSprint = sprintId;
 		_taskTableModel.setSprintId(sprintId);
+		_impedimentTableModel.setSprintId(sprintId);
 	}
 	
 	/** 
@@ -295,6 +306,8 @@ public class SprintBacklogModel
 	private SprintProjectComboBoxModel _sprintProjectComboBoxModel;
 	/// sprint descriptiona list model
 	private SprintDescriptionListModel _sprintDescriptionListModel;
+	/// impediment table model
+	private ImpedimentTableModel _impedimentTableModel;
 	/// developer operation
 	private Operations.SprintBacklogOperation _operation = new Operations.SprintBacklogOperation();
 	/// developer operations
