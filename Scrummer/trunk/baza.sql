@@ -594,10 +594,10 @@ insert into Project (Project_name, Project_description) values ('Testni projekt'
 insert into Project (Project_name, Project_description) values ('Bolnišnica', 'aplikacija za vodenje bolnišnice');
 insert into Project (Project_name, Project_description) values ('Igrica', 'igrica hexagon');
 
-insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (1, 1, 'prvi sprint', '01.01.2009', '31.01.2009', 30, '31.01.2009');
-insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (1, 1, 'drugi sprint', '01.02.2009', '21.02.2009', 20, '21.02.2009');
-insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (2, 2, 'prvi sprint', '01.03.2009', '31.03.2009', 30, '31.03.2009');
-insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (2, 2, 'drugi sprint', '01.04.2009', '30.04.2009', 29, '30.04.2009');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (1, 1, 'prvi sprint', '2009-01-01', '2009-01-01', 30, '2009-03-01');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (1, 1, 'drugi sprint', '2009-01-02', '2009-01-02', 20, '2009-02-02');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (2, 2, 'prvi sprint', '2009-01-03', '2009-04-03', 30, '2009-03-03');
+insert into Sprint (Project_id, Team_id, Sprint_description, Sprint_begin_date, Sprint_end_date, Sprint_length, Sprint_estimated_date) values (2, 2, 'drugi sprint', '2009-01-04', '2009-03-04', 29, '2009-03-04');
 
 insert into Team (Team_description) values ('lisice');
 insert into Team (Team_description) values ('medvedi');
@@ -612,7 +612,7 @@ insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initi
 insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor) values(1, 1, 'tretji pbi', 2, 40, 1);
 insert into PBI (Project_id, Sprint_id, PBI_description, PBI_priority, PBI_initial_estimate, PBI_adjustment_factor) values(1, 1, 'cetrti pbi', 2, 10, 2);
 
-insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (1, 1, 1, 1, 'obrazec', 'yes');
-insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (2, 1, 2, 1, 'meni', 'yes');
-insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (1, 1, 3, 2, 'ikone', 'yes');
-insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_active) values (2, 1, 2, 3, 'modeli', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (1, 1, 1, 1, 'obrazec', '2009-04-30', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (2, 1, 2, 1, 'meni', '2009-04-30', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (1, 1, 3, 2, 'ikone', '2009-04-30', 'yes');
+insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (2, 1, 2, 3, 'modeli', '2009-04-30', 'yes');
