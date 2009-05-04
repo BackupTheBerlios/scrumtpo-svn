@@ -28,6 +28,7 @@ import scrummer.model.ImpedimentModel;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.TaskModel;
 import scrummer.model.swing.EmployeeComboBoxModel;
+import scrummer.model.swing.ProjectSprintTaskComboBoxModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.model.swing.TeamComboBoxModel;
@@ -68,7 +69,7 @@ public class ImpedimentsAddDialog
 		_empComboBoxModel = _developerModel.getEmployeeComboBoxModel();
 		_teamComboBoxModel = _developerModel.getTeamComboBoxModel();
 		_sprintComboBoxModel = _sbModel.getSprintProjectComboBoxModel();
-		_taskComboBoxModel = _taskModel.getTaskComboBoxModel();
+		_taskComboBoxModel = _taskModel.getProjectSprintTaskComboBoxModel();
 		
 		JLabel teamLbl = new JLabel(i18n.tr("Choose team") + ":");
 		StandardComboBox teamInput = new StandardComboBox();
@@ -77,14 +78,6 @@ public class ImpedimentsAddDialog
 		
 		Panel.add(teamLbl);
 		Panel.add(teamInput);
-		
-		JLabel sprintLbl = new JLabel(i18n.tr("Choose sprint") + ":");
-		StandardComboBox sprintInput = new StandardComboBox();
-		sprintInput.setIVModel(_sprintComboBoxModel);
-		_sprintInput = sprintInput;
-		
-		Panel.add(sprintLbl);
-		Panel.add(sprintInput);
 		
 		JLabel empLbl = new JLabel(i18n.tr("Choose employee") + ":");
 		StandardComboBox empInput = new StandardComboBox();
@@ -106,24 +99,14 @@ public class ImpedimentsAddDialog
 		
 		JLabel impTypeLbl = new JLabel(i18n.tr("Choose impediment type") + ":");
 		_impTypeInput = new StandardComboBox();
-		_impTypeInput.addItem("Specification problems");
-		_impTypeInput.addItem("Hardware problems");
-		_impTypeInput.addItem("Software problems");
-		_impTypeInput.addItem("Security problems");
-		_impTypeInput.addItem("Teamwork problems");
-		_impTypeInput.addItem("Other");
-		_impTypeInput.setEnabled(true);
+		_impTypeInput.setIVModel(_impedimentModel.getImpedimentTypeComboBoxModel());
+				
 		Panel.add(impTypeLbl);
 		Panel.add(_impTypeInput);
 		
 		JLabel impStatusLbl = new JLabel(i18n.tr("Choose impediment status") + ":");
 		_impStatusInput = new StandardComboBox();
-		_impStatusInput.addItem("Open");
-		_impStatusInput.addItem("Pending");
-		_impStatusInput.addItem("In progress");
-		_impStatusInput.addItem("Closed");
-		_impStatusInput.addItem("Other");
-		_impStatusInput.setEnabled(true);
+		_impStatusInput.setIVModel(_impedimentModel.getImpedimentStatusComboBoxModel());;
 		Panel.add(impStatusLbl);
 		Panel.add(_impStatusInput);
 		
@@ -181,13 +164,12 @@ public class ImpedimentsAddDialog
 				java.sql.Date sqlDate1 = new java.sql.Date(startI.getTime());
 				java.sql.Date sqlDate2 = new java.sql.Date(endI.getTime());
 				_impedimentModel.add(
-						_teamInput.getSelectedId(),
-						_sprintInput.getSelectedId(), 
+						_teamInput.getSelectedId(), 
 						_empInput.getSelectedId(), 
 						_taskInput.getSelectedId(),
 						_descriptionTextField.getText(),
-						_impTypeInput.getSelectedItem().toString(),
-						_impStatusInput.getSelectedItem().toString(),
+						_impTypeInput.getSelectedId(),
+						_impStatusInput.getSelectedId(),
 						sqlDate1,
 						sqlDate2,
 						Integer.parseInt(_ageTextField.getText()));
@@ -207,7 +189,7 @@ public class ImpedimentsAddDialog
 		
 		if (!b)
 		{
-			// _impedimentModel.
+			_impedimentModel.removeImpedimentListener(this);
 		}
 
 		super.setVisible(b);
@@ -229,32 +211,16 @@ public class ImpedimentsAddDialog
 	}
 	
 	@Override
-	public void operationFailed(DataOperation type,
-			SprintBacklogOperation identifier, String message) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void operationFailed(DataOperation type, SprintBacklogOperation identifier, String message) {}
 
 	@Override
-	public void operationSucceeded(DataOperation type,
-			SprintBacklogOperation identifier, String message) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void operationSucceeded(DataOperation type, SprintBacklogOperation identifier, String message) {}
 
 	@Override
-	public void operationFailed(DataOperation type, TaskOperation identifier,
-			String message) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void operationFailed(DataOperation type, TaskOperation identifier, String message) {}
 
 	@Override
-	public void operationSucceeded(DataOperation type,
-			TaskOperation identifier, String message) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void operationSucceeded(DataOperation type, TaskOperation identifier, String message) {}
 	
 	/// impediment model
 	private ImpedimentModel _impedimentModel;
@@ -265,7 +231,7 @@ public class ImpedimentsAddDialog
 	/// task model
 	private TaskModel _taskModel;
 	/// combo box models
-	private StandardComboBox _teamInput, _empInput, _sprintInput, _taskInput, _impTypeInput, _impStatusInput;
+	private StandardComboBox _teamInput, _empInput, _taskInput, _impTypeInput, _impStatusInput;
 	// team combo box model
 	private TeamComboBoxModel _teamComboBoxModel;
 	/// employee combo box model
@@ -273,7 +239,7 @@ public class ImpedimentsAddDialog
 	/// sprint combo box model
 	private SprintProjectComboBoxModel _sprintComboBoxModel;
 	/// task combo box model
-	private TaskComboBoxModel _taskComboBoxModel;
+	private ProjectSprintTaskComboBoxModel _taskComboBoxModel;
 	/// impediment type combo box model
 	
 	///impediment status combo box model
