@@ -26,8 +26,9 @@ public class ImpedimentModel
 	 * Constructor
 	 * 
 	 * @param connectionModel connection model
+	 * @param sprintBacklogModel sprint model
 	 */
-	public ImpedimentModel(ConnectionModel connectionModel)
+	public ImpedimentModel(ConnectionModel connectionModel, SprintBacklogModel sprintBacklogModel)
 	{
 		if (connectionModel == null)
 		{
@@ -45,12 +46,13 @@ public class ImpedimentModel
 			new ImpedimentStatusComboBoxModel(_impedimentModelCommon);
 		_impedimentTypeComboBoxModel =
 			new ImpedimentTypeComboBoxModel(_impedimentModelCommon);
+		_sprintBacklogModel = sprintBacklogModel;
+			
 	}
 	
 	/**
 	 * Add impediment
 	 * @param team employee's team
-	 * @param sprint sprint when impediment occurred
 	 * @param employee employee who experienced impediment
 	 * @param task task which has to do with impediment
 	 * @param desc description of impediment
@@ -60,8 +62,10 @@ public class ImpedimentModel
 	 * @param end date when impediment was resolved
 	 * @param age number of days when impediment was active
 	 */
-	public void add(int team, int sprint, int employee, int task, String desc, String type, String status, java.sql.Date start, java.sql.Date end, int age)
+	public void add(int team, int employee, int task, String desc, int type, int status, java.sql.Date start, java.sql.Date end, int age)
 	{
+		int sprint = _sprintBacklogModel.getCurrentSprint();
+		
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
 		ResultSet res = null;
@@ -73,12 +77,12 @@ public class ImpedimentModel
 			 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
 			 st.setInt(1, team);
-			 st.setInt(2,sprint);
-			 st.setInt(3,employee);
-			 st.setInt(4,task);
+			 st.setInt(2, sprint);
+			 st.setInt(3, employee);
+			 st.setInt(4, task);
 			 st.setString(5, desc);
-			 st.setString(6, type);
-			 st.setString(7, status);
+			 st.setInt(6, type);
+			 st.setInt(7, status);
 			 st.setDate(8, start);
 			 st.setDate(9, end);
 			 st.setInt(10, age);
@@ -386,6 +390,8 @@ public class ImpedimentModel
 	private ImpedimentModelCommon _impedimentModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
+	/// sprint backlog model
+	private SprintBacklogModel _sprintBacklogModel;
 	/// impediment combo box model
 	private ImpedimentComboBoxModel _impedimentComboBoxModel;
 	/// developer table model
