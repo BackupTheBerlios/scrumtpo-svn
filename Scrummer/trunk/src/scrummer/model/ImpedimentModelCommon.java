@@ -557,7 +557,8 @@ public class ImpedimentModelCommon
 	 * 
 	 * @param description impediment status description
 	 */
-	public void addStatus(String description) {
+	public boolean addStatus(String description) {
+		 boolean ret = false;
 		 java.sql.Connection conn      = null;
          java.sql.PreparedStatement st = null;
          ResultSet res = null;
@@ -571,6 +572,7 @@ public class ImpedimentModelCommon
 			 st.setString(1, description);			 
 			 st.execute();
 			 _operation.operationSucceeded(DataOperation.Insert, ImpedimentOperation.ImpedimentStatus, "");
+			 ret = true;
 		} catch (SQLException e) {
 			_operation.operationFailed(DataOperation.Insert, ImpedimentOperation.ImpedimentStatus, e.getMessage());
 			e.printStackTrace();
@@ -579,6 +581,38 @@ public class ImpedimentModelCommon
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
 		}
+		return ret;
+	}
+	
+	/**
+	 * Add type
+	 * @param description type name
+	 */
+	public boolean addType(String description) {
+		boolean ret = false;
+		java.sql.Connection conn      = null;
+        java.sql.PreparedStatement st = null;
+        ResultSet res = null;
+        try {
+			 conn = _connectionModel.getConnection();
+			 String query =
+				"INSERT INTO " + DBSchemaModel.ImpedimentTypeTable + " " +
+			 	"(" +DBSchemaModel.ImpedimentTypeDescription + ") " +
+			 	"VALUES (?)";
+			 st = conn.prepareStatement(query);
+			 st.setString(1, description);			 
+			 st.execute();
+			 _operation.operationSucceeded(DataOperation.Insert, ImpedimentOperation.ImpedimentType, "");
+			 ret = true;
+		} catch (SQLException e) {
+			_operation.operationFailed(DataOperation.Insert, ImpedimentOperation.ImpedimentType, e.getMessage());
+			e.printStackTrace();
+		} finally {
+			res  = _connectionModel.close(res);
+			st   = _connectionModel.close(st);
+			conn = _connectionModel.close(conn);
+		}		
+		return ret;
 	}
 	
 	/**
@@ -763,5 +797,6 @@ public class ImpedimentModelCommon
 	private Operations.ImpedimentOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
+	
 	
 }

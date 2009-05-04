@@ -256,7 +256,21 @@ public class ImpedimentModel
 	 * @param description status type description
 	 */
 	public void addStatus(String description) {
-		_impedimentModelCommon.addStatus(description);
+		if (_impedimentModelCommon.addStatus(description))
+		{
+			_impedimentStatusComboBoxModel.refresh();
+		}
+	}
+	
+	/**
+	 * Add impediment type
+	 * @param description type name
+	 */
+	public void addType(String description) {
+		if (_impedimentModelCommon.addType(description))
+		{
+			_impedimentTypeComboBoxModel.refresh();
+		}
 	}
 	
 	/**
@@ -265,7 +279,10 @@ public class ImpedimentModel
 	 * @param description description
 	 */
 	public void changeStatus(int statusId, String description) {
-		_impedimentModelCommon.changeStatus(statusId, description);
+		if (_impedimentModelCommon.changeStatus(statusId, description))
+		{
+			_impedimentStatusComboBoxModel.refresh();
+		}
 	}
 	
 	/**
@@ -274,7 +291,10 @@ public class ImpedimentModel
 	 * @param description description
 	 */
 	public void changeType(int typeId, String description) {
-		_impedimentModelCommon.changeType(typeId, description);
+		if (_impedimentModelCommon.changeType(typeId, description))
+		{
+			_impedimentTypeComboBoxModel.refresh();
+		}
 	}
 
 	/**
@@ -282,7 +302,10 @@ public class ImpedimentModel
 	 * @param statusId id
 	 */
 	public void removeStatus(int statusId) {
-		_impedimentModelCommon.removeStatus(statusId);
+		if (_impedimentModelCommon.removeStatus(statusId))
+		{
+			_impedimentStatusComboBoxModel.refresh();
+		}
 	}
 	
 	/**
@@ -290,7 +313,10 @@ public class ImpedimentModel
 	 * @param typeId id
 	 */
 	public void removeType(int typeId) {
-		_impedimentModelCommon.removeType(typeId);
+		if (_impedimentModelCommon.removeType(typeId))
+		{
+			_impedimentTypeComboBoxModel.refresh();
+		}
 	}
 	
 	public Integer getInteger(DBSchemaModel.ImpedimentEnum enumId, int impId)
@@ -366,4 +392,5 @@ public class ImpedimentModel
 	private ImpedimentTableModel _impedimentTableModel;
 	/// developer operation
 	private Operations.ImpedimentOperation _operation = new Operations.ImpedimentOperation();
+
 }
