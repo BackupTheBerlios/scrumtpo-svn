@@ -29,7 +29,6 @@ public class ImpedimentTableModel extends DefaultTableModel {
 		
 		_columns.add(i18n.tr("ID"));
 		_columns.add(i18n.tr("Team"));
-		_columns.add(i18n.tr("Sprint"));
 		_columns.add(i18n.tr("Employee"));
 		_columns.add(i18n.tr("Task"));
 		_columns.add(i18n.tr("Description"));
@@ -38,7 +37,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
 		_columns.add(i18n.tr("Start"));
 		_columns.add(i18n.tr("End"));
 		_columns.add(i18n.tr("Age"));
-		for (int i = 0; i < 11; i++)
+		for (int i = 0; i < 10; i++)
 			_realColumns.add("");
 	}
 
@@ -67,13 +66,13 @@ public class ImpedimentTableModel extends DefaultTableModel {
 	 */
 	private void refreshTableData()
 	{
-		_rows = _impedimentModelCommon.fetchImpedimentTable();
+		_rows = _impedimentModelCommon.fetchImpedimentTable(_sprint);
         _rowCount = _rows.size();
 	}
 
 	@Override
 	public boolean isCellEditable(int row, int column) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -114,13 +113,21 @@ public class ImpedimentTableModel extends DefaultTableModel {
 
 	@Override
 	public String getColumnName(int column) {
-		return _columns.get(column + 1);
+		return _columns.get(column);
 	}
 	
 	public int getPrimaryKey(int row) {
 		return (Integer)_rows.get(row).get(0);
 	}
+	
+	public void setSprintId(int value)
+	{
+		_sprint = value;
+		refresh();
+	}
 
+	/// current sprint
+	int _sprint = 0;
 	/// column count
 	private int _columnCount = 10;
 	/// row count
