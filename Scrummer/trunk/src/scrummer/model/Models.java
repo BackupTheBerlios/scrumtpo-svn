@@ -27,9 +27,12 @@ public class Models {
 		createNavigationModel();
 		createResourceModel();
 		createDeveloperModel();
-		createImpedimentModel();
 		createProductBacklogModel();
+		
 		createSprintBacklogModel();
+		createImpedimentModel();
+		
+		_sprintbacklogModel.setImpedimentTableModel(_impedimentModel.getImpedimentTableModel());
 		
 		getProductBacklogModel().setSprintBacklogModel(getSprintBacklogModel());
 		
@@ -230,7 +233,7 @@ public class Models {
 	{
 		if (_impedimentModel == null)	
 		{
-			_impedimentModel = new ImpedimentModel(getConnectionModel());
+			_impedimentModel = new ImpedimentModel(getConnectionModel(), getSprintBacklogModel());
 		}
 		return _impedimentModel;
 	}
