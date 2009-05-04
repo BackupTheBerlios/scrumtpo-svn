@@ -1,7 +1,8 @@
 package scrummer.ui.dialog;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -46,6 +47,7 @@ public class ImpedimentStatusChange
 		_impedimentStatusInput     = fb.addComboBoxInput(i18n.tr("Status") + ":");
 		_impedimentStatusInput.setIVModel(_impedimentModel.getImpedimentStatusComboBoxModel());
 		_impedimentDescriptionInput = fb.addSelectedTextInput(i18n.tr("Description") + ":", "");
+		_impedimentDescriptionInput.addKeyListener(this);
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, k, k + 2, k - 3));
 		
@@ -58,7 +60,7 @@ public class ImpedimentStatusChange
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if (cmd.equals("StandardDialog.OK")) {
-			if (!Validate.empty(_impedimentDescriptionInput, this)) {
+			if (Validate.empty(_impedimentDescriptionInput, this)) {
 				_impedimentModel.changeStatus(
 					_impedimentStatusInput.getSelectedId(), 
 					_impedimentDescriptionInput.getText());
@@ -90,7 +92,7 @@ public class ImpedimentStatusChange
 			_impedimentModel.removeImpedimentListener(this);
 		}
 		super.setVisible(b);
-	}
+	}	
 
 	/// impediment model
 	protected ImpedimentModel _impedimentModel;
@@ -101,5 +103,6 @@ public class ImpedimentStatusChange
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
-	private static final long serialVersionUID = -8485320210444043566L;	
+	private static final long serialVersionUID = -8485320210444043566L;
+	
 }

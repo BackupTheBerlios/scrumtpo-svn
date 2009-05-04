@@ -44,6 +44,7 @@ public class ImpedimentStatusAdd
 		
 		FormBuilder fb = new FormBuilder(Panel);
 		_impedimentStatusInput = fb.addSelectedTextInput(i18n.tr("Description") + ":", "");
+		_impedimentStatusInput.addKeyListener(this);
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, k, k, k - 4));
 		setSize(300, 145);
