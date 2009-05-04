@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -23,7 +25,9 @@ import scrummer.ui.Util;
  * Standardni dialog ima nekje na dnu gumbe za Vredu/Prekliči
  * @author simon
  */
-public class TwoButtonDialog extends JDialog implements ActionListener {
+public class TwoButtonDialog 
+	extends JDialog 
+	implements ActionListener, KeyListener {
 
 	/// zapisovalni id
 	private static final long serialVersionUID = 4671414325425563526L;
@@ -151,6 +155,20 @@ public class TwoButtonDialog extends JDialog implements ActionListener {
 			setVisible(false);
 		}
 	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			OK.doClick();
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {}
 	
 	/// zgornji del dialoga(na to dodajaš kontrole) 
 	public JPanel Panel;
