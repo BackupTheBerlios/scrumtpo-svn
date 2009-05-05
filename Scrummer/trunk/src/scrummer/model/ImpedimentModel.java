@@ -73,7 +73,7 @@ public class ImpedimentModel
 			 conn = _connectionModel.getConnection();
 			 String query =
 				"INSERT INTO Impediment " +
-			 	"(Team_id, Sprint_id, Employee_id, Task_id, Impediment_description, Impediment_type, Impediment_status, Impediment_start, Impediment_end, Impediment_age) " +
+			 	"(Team_id, Sprint_id, Employee_id, Task_id, Impediment_description, Impediment_type_id, Impediment_status_id, Impediment_start, Impediment_end, Impediment_age) " +
 			 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
 			 st.setInt(1, team);
@@ -89,6 +89,7 @@ public class ImpedimentModel
 			 st.execute();
 			 
 			 _operation.operationSucceeded(DataOperation.Insert, ImpedimentOperation.Impediment, "");
+			 _impedimentTableModel.refresh();
 		} catch (SQLException e) {
 			_operation.operationFailed(DataOperation.Insert, ImpedimentOperation.Impediment, e.getMessage());
 			e.printStackTrace();
@@ -98,6 +99,46 @@ public class ImpedimentModel
 			res  = _connectionModel.close(res);
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
+		}
+	}
+	
+	/**
+	 * Modify impediment
+	 * 
+	 * @param impediment impediment id
+	 * @param team new team
+	 * @param employee new employee
+	 * @param task related task
+	 * @param description impediment description
+	 * @param impedimentType impediment type 
+	 * @param impedimentStatus impediment status
+	 * @param start start of impediment	
+	 * @param end end of impediment
+	 * @param age impediment age
+	 */
+	public void update(int impediment, int team, int employee, Integer task, String description, int impedimentType, int impedimentStatus, Date start, Date end, int age)
+	{
+		int sprint = _sprintBacklogModel.getCurrentSprint();
+		if (_impedimentModelCommon.update(
+				impediment, sprint, team, employee, 
+				task, description, impedimentType, 
+				impedimentStatus, 
+				new java.sql.Date(start.getTime()), 
+				new java.sql.Date(end.getTime()), age))
+		{
+			_impedimentTableModel.refresh();
+		}
+	}
+	
+	/**
+	 * Remove impediment with given id
+	 * @param id impediment id
+	 */
+	public void remove(int id) 
+	{
+		if (_impedimentModelCommon.removeImpediment(id))
+		{
+			_impedimentTableModel.refresh();
 		}
 	}
 	
@@ -160,9 +201,9 @@ public class ImpedimentModel
 	 * @param impId impediment id
 	 * @param newTeam team to set
 	 */
-	public void setImpedimentTeam(int impId, String newTeam)
+	public void setImpedimentTeam(int impId, Integer newTeam)
 	{
-		_impedimentModelCommon.setImpedimentTeam(impId, newTeam);
+		_impedimentModelCommon.setImpedimentTeam(impId, newTeam.toString());
 	}
 	
 	/**
@@ -181,8 +222,8 @@ public class ImpedimentModel
 	 * @param impId impediment id
 	 * @param newEmployee employee to set
 	 */
-	public void setImpedimentEmployee(int impId, String newEmployee) {
-		_impedimentModelCommon.setImpedimentEmployee(impId, newEmployee);
+	public void setImpedimentEmployee(int impId, Integer newEmployee) {
+		_impedimentModelCommon.setImpedimentEmployee(impId, newEmployee.toString());
 	}
 	
 	/**
@@ -191,8 +232,8 @@ public class ImpedimentModel
 	 * @param impId impediment id
 	 * @param newTask task to set
 	 */
-	public void setImpedimentTask(int impId, String newTask) {
-		_impedimentModelCommon.setImpedimentTask(impId, newTask);
+	public void setImpedimentTask(int impId, Integer newTask) {
+		_impedimentModelCommon.setImpedimentTask(impId, newTask.toString());
 	}
 	
 	/**
@@ -211,8 +252,8 @@ public class ImpedimentModel
 	 * @param impId impediment id
 	 * @param newType type to set
 	 */
-	public void setImpedimentType(int impId, String newType) {
-		_impedimentModelCommon.setImpedimentType(impId, newType);
+	public void setImpedimentType(int impId, Integer newType) {
+		_impedimentModelCommon.setImpedimentType(impId, newType.toString());
 	}
 	
 	/**
@@ -221,8 +262,8 @@ public class ImpedimentModel
 	 * @param impId impediment id
 	 * @param newStatus status to set
 	 */
-	public void setImpedimentStatus(int impId, String newStatus) {
-		_impedimentModelCommon.setImpedimentStatus(impId, newStatus);
+	public void setImpedimentStatus(int impId, Integer newStatus) {
+		_impedimentModelCommon.setImpedimentStatus(impId, newStatus.toString());
 	}
 	
 	/**
@@ -251,8 +292,8 @@ public class ImpedimentModel
 	 * @param impId impediment id
 	 * @param newAge age to set
 	 */
-	public void setImpedimentAge(int impId, String newAge) {
-		_impedimentModelCommon.setImpedimentAge(impId, newAge);
+	public void setImpedimentAge(int impId, Integer newAge) {
+		_impedimentModelCommon.setImpedimentAge(impId, newAge.toString());
 	}
 	
 	/**
@@ -369,19 +410,7 @@ public class ImpedimentModel
 		}
 		throw new DBMap(enumId);
 	}
-	
-	/**
-	 * Remove impediment with given id
-	 * @param id impediment id
-	 */
-	public void remove(int id) 
-	{
-		if (_impedimentModelCommon.removeImpediment(id))
-		{
-			_impedimentTableModel.refresh();
-		}
-	}
-
+		
 	/// impediment statuses
 	private ImpedimentStatusComboBoxModel _impedimentStatusComboBoxModel;
 	/// impediment types
