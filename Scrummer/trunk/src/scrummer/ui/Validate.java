@@ -21,7 +21,7 @@ public class Validate {
 	 * @param parent parent on which to display err message
 	 * @return true if field isn't empty, false otherwise
 	 */
-	public static boolean empty(JTextField input, Component parent)
+	public static boolean emptyMsg(JTextField input, Component parent)
 	{
 		String trimmed = input.getText().trim();
 		if (trimmed.length() > 0)
@@ -34,6 +34,26 @@ public class Validate {
 				i18n.tr("Input field cannot be an empty string. " +
 						"Please enter a word with at least one character."), 
 				i18n.tr("Error"));
+			return false;
+		}
+	}
+	
+	/**
+	 * Check if text field is not empty.
+	 * 
+	 * @param input input field to check
+	 * @param parent parent on which to display err message
+	 * @return true if field isn't empty, false otherwise
+	 */
+	public static boolean empty(JTextField input, Component parent)
+	{
+		String trimmed = input.getText().trim();
+		if (trimmed.length() > 0)
+		{
+			return true;
+		}
+		else
+		{			
 			return false;
 		}
 	}
@@ -59,7 +79,7 @@ public class Validate {
 			return null;
 		}
 	}
-	
+		
 	/**
 	 * Check whether contents of input field is date
 	 * 
@@ -78,6 +98,22 @@ public class Validate {
 			Util.showError(parent, message, i18n.tr("Error"));
 			ret = null;
 		}
+		return ret;
+	}
+	
+	/**
+	 * Check if given field contains a number
+	 * @param input input field
+	 * @return number or 0 if field is empty
+	 */
+	public static int number(JTextField input)
+	{
+		int ret = 0;
+		try
+		{
+			ret = Integer.parseInt(input.getText().trim());
+		}
+		catch (NumberFormatException ex) {}
 		return ret;
 	}
 	
