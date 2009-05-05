@@ -108,7 +108,7 @@ public class ImpedimentTableModel extends DefaultTableModel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		return _rows.get(row).get(column+1);
+		return _rows.get(row).get(column);
 	}
 
 	@Override
