@@ -190,7 +190,22 @@ public class ImpedimentModelCommon
 		{
 			@Override
 			public void processResult(ResultSet result) {
-				setResult(ObjectRow.fetchRows(result)); 
+				Vector<ObjectRow> rows = ObjectRow.fetchRows(result); 
+				for (int i = 0; i < rows.size(); i++)
+				{
+					ObjectRow current = rows.get(i);
+					current.set(
+						5, 
+						DBSchemaModel.convertEnum(
+							DBSchemaModel.ImpedimentTypeTable, 
+							(Integer)current.get(5)));
+					current.set(
+						6, 
+						DBSchemaModel.convertEnum(
+							DBSchemaModel.ImpedimentStatusTable, 
+							(Integer)current.get(6)));
+				}					
+				setResult(rows); 
 			}
 			@Override
 			public void handleException(SQLException ex) {
@@ -204,8 +219,8 @@ public class ImpedimentModelCommon
 			"CONCAT(Employee_name, ' ', Employee_surname), " +
 			"Task_description, " +
 			"Impediment_description, " +
-			"Impediment_type_description, " +
-			"Impediment_status_description, " +
+			DBSchemaModel.ImpedimentTable + "." + DBSchemaModel.ImpedimentTypeId + ", " +
+			DBSchemaModel.ImpedimentTable + "." + DBSchemaModel.ImpedimentStatusId + ", " +
 			"Impediment_start, " +
 			"Impediment_end, " +
 			"Impediment_age " +
@@ -651,7 +666,13 @@ public class ImpedimentModelCommon
 		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
-				setResult(IdValue.fetchValues(result));
+				Vector<IdValue> idvals = IdValue.fetchValues(result);
+				for (int i = 0; i < idvals.size(); i++)
+				{
+					IdValue current = idvals.get(i);
+					current.Value = DBSchemaModel.convertEnum(DBSchemaModel.ImpedimentTypeTable, current.Id);
+				}
+				setResult(idvals);
 			}
 			
 			@Override
@@ -675,7 +696,13 @@ public class ImpedimentModelCommon
 		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
-				setResult(IdValue.fetchValues(result));
+				Vector<IdValue> idvals = IdValue.fetchValues(result);
+				for (int i = 0; i < idvals.size(); i++)
+				{
+					IdValue current = idvals.get(i);
+					current.Value = DBSchemaModel.convertEnum(DBSchemaModel.ImpedimentStatusTable, current.Id);
+				}
+				setResult(idvals);
 			}
 			
 			@Override
@@ -818,12 +845,60 @@ public class ImpedimentModelCommon
 		return q.getResult();
 	}
 	
+	/**
+	 * Update impediment
+	 * 
+	 * @param impediment impediment id
+	 * @param sprint sprint id
+	 * @param team team 
+	 * @param employee employee id
+	 * @param task related task
+	 * @param description impediment description
+	 * @param impedimentType impediment type
+	 * @param impedimentStatus impediment status
+	 * @param start starting date
+	 * @param end ending date
+	 * @param age impediment age
+	 * @return true if impediment was changed, false otherwise
+	 */
+	public boolean update(int impediment, int sprint, int team, int employee, Integer task, String description, int impedimentType, int impedimentStatus, java.sql.Date start, java.sql.Date end, int age) {
+	
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
+		{	
+			@Override
+			public void process() {
+	            setResult(true);
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+	        	_operation.operationFailed(DataOperation.Update, ImpedimentOperation.Impediment, 
+	        		i18n.tr("Could not set parameters: ") + ex.getMessage());
+			}
+		};
+		
+		q.query("UPDATE " + DBSchemaModel.ImpedimentTable + 
+				" SET " + 
+				DBSchemaModel.ImpedimentTeam + "='" + team + "', " +
+				DBSchemaModel.ImpedimentSprint + "='" + sprint + "', " +
+				DBSchemaModel.ImpedimentEmployee + "='" + employee + "', " +
+				DBSchemaModel.ImpedimentTask + "='" + task + "', " +
+				DBSchemaModel.ImpedimentDesc + "='" + description + "', " +
+				DBSchemaModel.ImpedimentTypeId + "='" + impedimentType + "', " +
+				DBSchemaModel.ImpedimentStatusId + "='" + impedimentStatus + "', " +
+				DBSchemaModel.ImpedimentStart + "='" + start + "', " +
+				DBSchemaModel.ImpedimentEnd + "='" + end + "', " +
+				DBSchemaModel.ImpedimentAge + "='" + age + "' " +	
+				"WHERE " + DBSchemaModel.ImpedimentId + "='" + impediment + "'");
+		
+		return q.getResult();
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operations.ImpedimentOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
-	
-	
 }
