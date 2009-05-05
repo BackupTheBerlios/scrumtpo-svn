@@ -73,7 +73,15 @@ public class StandardComboBox extends JComboBox {
 			throw new NullField("Could not get selection id because IdValue model was not set. " +
 					"Call setIVModel before this function.");
 		}
-		return _idValueModel.getId(getSelectedIndex());
+		int selectedIndex = getSelectedIndex();
+		if (selectedIndex == -1)
+		{
+			return -1;
+		}
+		else
+		{
+			return _idValueModel.getId(selectedIndex);
+		}
 	}
 	
 	/**
