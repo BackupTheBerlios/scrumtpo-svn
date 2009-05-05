@@ -273,7 +273,7 @@ public class TaskModelCommon
 			" JOIN " +
 			DBSchemaModel.PBITable + " ON " + 
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
-			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + 
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskPBIId + 
 			" AND " +
 			DBSchemaModel.PBIProject + "=" + project + 
 			" AND " +
@@ -286,8 +286,8 @@ public class TaskModelCommon
 	 * 
 	 * @param taskId task id
 	 * @param description task description
-	 * @param pbiId pbi id
 	 * @param parentId parent
+	 * @param pbiId pbi id
 	 * @param employeeId employee
 	 * @param teamId team 
 	 * @param taskTypeId task type
@@ -299,7 +299,7 @@ public class TaskModelCommon
 	 */
 	public boolean updateTask(
 		int taskId,
-		String description, int pbiId, int parentId, int employeeId, int teamId,
+		String description, int parentId, int pbiId, int employeeId, int teamId,
 		int taskTypeId, int taskStatusId, Date date, boolean active) {
 
 		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
