@@ -8,179 +8,231 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-23 20:14+0200\n"
+"POT-Creation-Date: 2009-05-05 15:53+0200\n"
 "PO-Revision-Date: 2009-03-17 23:03+0000\n"
 "Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
 "Language-Team: slovenski <not@available>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:26
 #: src/scrummer/ui/dialog/TaskAddDialog.java:34
 #: src/scrummer/ui/dialog/SprintAddDialog.java:48
 #: src/scrummer/ui/dialog/SprintDialog.java:66
-#: src/scrummer/ui/dialog/TeamAddDialog.java:95
-#: src/scrummer/ui/MainFrame.java:134 src/scrummer/ui/MainFrame.java:140
+#: src/scrummer/ui/dialog/TeamAddDialog.java:91
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:57
+#: src/scrummer/ui/MainFrame.java:165 src/scrummer/ui/MainFrame.java:171
+#: src/scrummer/ui/page/PBPage.java:79
 #: src/scrummer/ui/page/SprintBacklogPage.java:79
 msgid "Add"
 msgstr "Dodaj"
 
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:30
+#: src/scrummer/ui/page/PBPage.java:83
 #: src/scrummer/ui/page/SprintBacklogPage.java:83
 msgid "Edit"
 msgstr "Uredi"
 
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:34
+#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:47
 #: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:120
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:98
+#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:46
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:121
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:99
-#: src/scrummer/ui/MainFrame.java:143
+#: src/scrummer/ui/MainFrame.java:174 src/scrummer/ui/page/PBPage.java:87
 #: src/scrummer/ui/page/SprintBacklogPage.java:87
 msgid "Remove"
 msgstr "Odstrani"
 
-#: src/scrummer/uicomponents/TwoButtonDialog.java:131
+#: src/scrummer/uicomponents/TwoButtonDialog.java:135
 msgid "OK"
 msgstr "Potrdi"
 
-#: src/scrummer/uicomponents/TwoButtonDialog.java:137
+#: src/scrummer/uicomponents/TwoButtonDialog.java:141
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: src/scrummer/model/DBSchemaModel.java:235
+#: src/scrummer/model/DBSchemaModel.java:234
 msgid "analysis"
 msgstr "Analiza"
 
-#: src/scrummer/model/DBSchemaModel.java:236
+#: src/scrummer/model/DBSchemaModel.java:235
 msgid "design"
 msgstr "Načrtovanje"
 
-#: src/scrummer/model/DBSchemaModel.java:237
+#: src/scrummer/model/DBSchemaModel.java:236
 msgid "coding"
 msgstr "Implementacija"
 
-#: src/scrummer/model/DBSchemaModel.java:238
+#: src/scrummer/model/DBSchemaModel.java:237
 msgid "testing"
 msgstr "Testiranje"
 
-#: src/scrummer/model/DBSchemaModel.java:239
+#: src/scrummer/model/DBSchemaModel.java:238
 msgid "documentation"
 msgstr "Dokumentiranje"
 
-#: src/scrummer/model/DBSchemaModel.java:240
+#: src/scrummer/model/DBSchemaModel.java:239
 msgid "rework due to error reported by the customer"
 msgstr "Popravek zaradi prijavljene napake"
 
-#: src/scrummer/model/DBSchemaModel.java:241
+#: src/scrummer/model/DBSchemaModel.java:240
 msgid "rework due to change in requirements"
 msgstr "Popravek zaradi spremembe zahtev"
 
-#: src/scrummer/model/DBSchemaModel.java:242
+#: src/scrummer/model/DBSchemaModel.java:241
 msgid "rework due to inaccurat specifications"
 msgstr "Popravek zaradi nenatančnosti specifikacije"
 
-#: src/scrummer/model/DBSchemaModel.java:243
+#: src/scrummer/model/DBSchemaModel.java:242
 msgid "rework due to incomplete impact assessment"
 msgstr "Popravek zaradi nepopolnega "
 
-#: src/scrummer/model/DBSchemaModel.java:244
+#: src/scrummer/model/DBSchemaModel.java:243
 msgid "rework due to inadequate change specifications"
 msgstr "Popravek zaradi nepopolne specifikacije zahteve"
 
-#: src/scrummer/model/DBSchemaModel.java:245
+#: src/scrummer/model/DBSchemaModel.java:244
 msgid "rework due to inadequate testing"
 msgstr "Popravek zaradi neprimernega testiranja"
 
-#: src/scrummer/model/DBSchemaModel.java:246
-#: src/scrummer/model/DBSchemaModel.java:261
+#: src/scrummer/model/DBSchemaModel.java:245
+#: src/scrummer/model/DBSchemaModel.java:260
 msgid "other"
 msgstr "Ostalo"
 
-#: src/scrummer/model/DBSchemaModel.java:254
+#: src/scrummer/model/DBSchemaModel.java:253
 msgid "not started"
 msgstr "Nezačeto"
 
-#: src/scrummer/model/DBSchemaModel.java:255
+#: src/scrummer/model/DBSchemaModel.java:254
 msgid "in progress"
 msgstr "V teku"
 
-#: src/scrummer/model/DBSchemaModel.java:256
+#: src/scrummer/model/DBSchemaModel.java:255
 msgid "completed"
 msgstr "Zaključeno"
 
-#: src/scrummer/model/DBSchemaModel.java:257
+#: src/scrummer/model/DBSchemaModel.java:256
 msgid "omitted"
 msgstr "Izpuščena"
 
-#: src/scrummer/model/DBSchemaModel.java:258
+#: src/scrummer/model/DBSchemaModel.java:257
 msgid "moved into next sprint"
 msgstr "Premaknjena naprej"
 
-#: src/scrummer/model/DBSchemaModel.java:259
+#: src/scrummer/model/DBSchemaModel.java:258
 msgid "split/divided"
 msgstr "Razdeljena"
 
-#: src/scrummer/model/DBSchemaModel.java:260
+#: src/scrummer/model/DBSchemaModel.java:259
 msgid "not completed due to incorrect feasibility assumptions"
 msgstr "Nedokončana zaradi nepravilne ocene izvedljivosti"
 
-#: src/scrummer/model/SprintBacklogModelCommon.java:192
-#: src/scrummer/model/SprintBacklogModelCommon.java:671
-#: src/scrummer/model/SprintBacklogModelCommon.java:710
-#: src/scrummer/model/DeveloperModelCommon.java:166
-#: src/scrummer/model/ProductBacklogModelCommon.java:169
-#: src/scrummer/model/ProductBacklogModelCommon.java:198
-#: src/scrummer/model/ImpedimentModelCommon.java:173
-#: src/scrummer/model/ProjectModelCommon.java:229
+#: src/scrummer/model/DBSchemaModel.java:268
+msgid "Specification problems"
+msgstr "Specifikacijski problemi"
+
+#: src/scrummer/model/DBSchemaModel.java:269
+msgid "Hardware problems"
+msgstr "Strojne težave"
+
+#: src/scrummer/model/DBSchemaModel.java:270
+msgid "Software problems"
+msgstr "Aplikacijske težave"
+
+#: src/scrummer/model/DBSchemaModel.java:271
+msgid "Security problems"
+msgstr "Varnostne težave"
+
+#: src/scrummer/model/DBSchemaModel.java:272
+msgid "Teamwork problems"
+msgstr "Skupinske težave"
+
+#: src/scrummer/model/DBSchemaModel.java:273
+#: src/scrummer/model/DBSchemaModel.java:285
+msgid "Other"
+msgstr "Ostalo"
+
+#: src/scrummer/model/DBSchemaModel.java:281
+msgid "Open"
+msgstr "Odprto"
+
+#: src/scrummer/model/DBSchemaModel.java:282
+msgid "Pending"
+msgstr "Na čakanju"
+
+#: src/scrummer/model/DBSchemaModel.java:283
+msgid "In Progress"
+msgstr "V teku"
+
+#: src/scrummer/model/DBSchemaModel.java:284
+msgid "Closed"
+msgstr "Zaprto"
+
+#: src/scrummer/model/SprintBacklogModelCommon.java:190
+#: src/scrummer/model/SprintBacklogModelCommon.java:669
+#: src/scrummer/model/SprintBacklogModelCommon.java:708
+#: src/scrummer/model/DeveloperModelCommon.java:161
+#: src/scrummer/model/ProductBacklogModelCommon.java:166
+#: src/scrummer/model/ProductBacklogModelCommon.java:195
+#: src/scrummer/model/ImpedimentModelCommon.java:274
+#: src/scrummer/model/ImpedimentModelCommon.java:737
+#: src/scrummer/model/ImpedimentModelCommon.java:765
+#: src/scrummer/model/ProjectModelCommon.java:227
 msgid "Could not set parameter."
 msgstr "Parametra se ni dalo nastaviti."
 
-#: src/scrummer/model/SprintBacklogModelCommon.java:228
-#: src/scrummer/model/SprintBacklogModelCommon.java:577
+#: src/scrummer/model/SprintBacklogModelCommon.java:226
+#: src/scrummer/model/SprintBacklogModelCommon.java:575
 msgid "Could not remove Sprint Backlog item."
 msgstr "Iteracijskega dnevnika se ni dalo odstraniti."
 
-#: src/scrummer/model/NavigationModel.java:54
+#: src/scrummer/model/NavigationModel.java:56
 msgid "Blank"
 msgstr "Prazno"
 
-#: src/scrummer/model/NavigationModel.java:55
+#: src/scrummer/model/NavigationModel.java:57
 msgid "Overview"
 msgstr "Pregled"
 
-#: src/scrummer/model/NavigationModel.java:56
+#: src/scrummer/model/NavigationModel.java:58
 msgid "Product Backlog"
 msgstr "Naročnikov dnevnik"
 
-#: src/scrummer/model/NavigationModel.java:57
+#: src/scrummer/model/NavigationModel.java:59
+msgid "Naronikove zahteve"
+msgstr "Naročnikove zahteve"
+
+#: src/scrummer/model/NavigationModel.java:60
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:56
 msgid "Project"
 msgstr "Projekt"
 
-#: src/scrummer/model/NavigationModel.java:58
+#: src/scrummer/model/NavigationModel.java:61
 msgid "Sprint Backlog"
 msgstr "Iteracijski dnevnik"
 
-#: src/scrummer/model/NavigationModel.java:59
+#: src/scrummer/model/NavigationModel.java:62
 msgid "Absent"
 msgstr "Odsotnost"
 
-#: src/scrummer/model/NavigationModel.java:60
+#: src/scrummer/model/NavigationModel.java:63
 msgid "Hurdles"
 msgstr "Ovire"
 
-#: src/scrummer/model/NavigationModel.java:61
+#: src/scrummer/model/NavigationModel.java:64
 msgid "Metrics"
 msgstr "Metrike"
 
-#: src/scrummer/model/NavigationModel.java:62
+#: src/scrummer/model/NavigationModel.java:65
 msgid "Tasks"
 msgstr "Naloge"
 
-#: src/scrummer/model/TaskModelCommon.java:243
-#: src/scrummer/model/TaskModelCommon.java:274
+#: src/scrummer/model/TaskModelCommon.java:213
+#: src/scrummer/model/TaskModelCommon.java:237
 msgid "Could not remove task."
 msgstr "Naloge se ni dalo odstraniti."
 
@@ -188,11 +240,11 @@ msgstr "Naloge se ni dalo odstraniti."
 msgid "Could not remove absence type."
 msgstr "Odsotnostne vrste se ni dalo odstraniti."
 
-#: src/scrummer/model/DeveloperModelCommon.java:202
+#: src/scrummer/model/DeveloperModelCommon.java:197
 msgid "Could not remove developer."
 msgstr "Razvijalca se ni dalo odstraniti."
 
-#: src/scrummer/model/ProductBacklogModelCommon.java:234
+#: src/scrummer/model/ProductBacklogModelCommon.java:231
 msgid "Could not remove product backlog item."
 msgstr "Naročnikove zahteve se ni dalo odstraniti."
 
@@ -204,28 +256,33 @@ msgid "Id"
 msgstr "Id"
 
 #: src/scrummer/model/swing/TaskTypeTableModel.java:31
-#: src/scrummer/model/swing/ImpedimentTableModel.java:41
+#: src/scrummer/model/swing/ImpedimentTableModel.java:34
 #: src/scrummer/model/swing/AbsenceTypeTableModel.java:31
 #: src/scrummer/model/swing/TaskStatusTableModel.java:31
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:43
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:34
 #: src/scrummer/model/swing/TaskTableModel.java:31
+#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:46
 #: src/scrummer/ui/dialog/SprintDialog.java:52
 #: src/scrummer/ui/dialog/TaskDialog.java:60
 #: src/scrummer/ui/dialog/TaskTypeAddDialog.java:47
+#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:46
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:48
 #: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:47
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:72
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:72
+#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:47
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:49
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:49
 #: src/scrummer/ui/page/ProjectPage.java:66
 msgid "Description"
 msgstr "Opis"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:33
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:47
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:35
 msgid "Task id"
 msgstr "Id naloge"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:34
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:48
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:36
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:55
 msgid "Task description"
 msgstr "Opis naloge"
@@ -236,187 +293,189 @@ msgid "PBI"
 msgstr "PBI"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:36
-#: src/scrummer/model/swing/ImpedimentTableModel.java:39
+#: src/scrummer/model/swing/ImpedimentTableModel.java:32
 #: src/scrummer/model/swing/AdminDaysTableModel.java:30
 #: src/scrummer/ui/dialog/TaskDialog.java:66
-#: src/scrummer/ui/dialog/TeamAddDialog.java:77
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:70
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:82
+#: src/scrummer/ui/dialog/TeamAddDialog.java:73
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:73
 msgid "Employee"
 msgstr "Zaposleni"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:37
-#: src/scrummer/model/swing/ImpedimentTableModel.java:37
+#: src/scrummer/model/swing/ImpedimentTableModel.java:31
 #: src/scrummer/ui/dialog/SprintDialog.java:54
 #: src/scrummer/ui/dialog/TaskDialog.java:68
-#: src/scrummer/ui/dialog/TeamRemoveDialog.java:50
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:55
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:68
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:70
-#: src/scrummer/ui/MainFrame.java:137
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:46
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:49
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:61
+#: src/scrummer/ui/MainFrame.java:168
 msgid "Team"
 msgstr "Skupina"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:39
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:50
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:38
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:53
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:57
 msgid "Task status"
 msgstr "Stanje naloge"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:40
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:49
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:37
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:47
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:47
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:56
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:53
 msgid "Task type"
 msgstr "Vrsta naloge"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:42
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:51
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:39
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:58
 msgid "Task date"
 msgstr "Datum naloge"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:43
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:52
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:40
 msgid "Task active"
 msgstr "Aktivnost naloge"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:36
-#: src/scrummer/model/swing/DeveloperTableModel.java:33
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:42
+#: src/scrummer/model/swing/ImpedimentTableModel.java:30
+#: src/scrummer/model/swing/DeveloperTableModel.java:30
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:33
 msgid "ID"
 msgstr "ID"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:38
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:48
-#: src/scrummer/ui/dialog/SprintDialog.java:47
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:69
-#: src/scrummer/ui/dialog/ProductBacklogDialog.java:45
-msgid "Sprint"
-msgstr "Iteracija"
-
-#: src/scrummer/model/swing/ImpedimentTableModel.java:40
+#: src/scrummer/model/swing/ImpedimentTableModel.java:33
 #: src/scrummer/ui/dialog/TaskDialog.java:53
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:71
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:55
 msgid "Task"
 msgstr "Naloga"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:42
+#: src/scrummer/model/swing/ImpedimentTableModel.java:35
 #: src/scrummer/ui/dialog/TaskDialog.java:70
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:73
 msgid "Type"
-msgstr "Vrsta naloge"
+msgstr "Vrsta"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:43
+#: src/scrummer/model/swing/ImpedimentTableModel.java:36
+#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:42
 #: src/scrummer/ui/dialog/TaskDialog.java:72
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:74
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:45
+#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:41
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:47
 msgid "Status"
 msgstr "Stanje"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:44
+#: src/scrummer/model/swing/ImpedimentTableModel.java:37
 #: src/scrummer/ui/dialog/SprintDialog.java:57
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:75
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:87
 msgid "Start"
 msgstr "Začetek"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:45
+#: src/scrummer/model/swing/ImpedimentTableModel.java:38
 #: src/scrummer/ui/dialog/SprintDialog.java:61
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:76
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:89
 msgid "End"
 msgstr "Konec"
 
-#: src/scrummer/model/swing/ImpedimentTableModel.java:46
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:77
+#: src/scrummer/model/swing/ImpedimentTableModel.java:39
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:91
 msgid "Age"
 msgstr "Starost"
 
 #: src/scrummer/model/swing/AdminDaysTableModel.java:31
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:53
 #: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:48
 msgid "Absence type"
 msgstr "Odsotnost"
 
 #: src/scrummer/model/swing/AdminDaysTableModel.java:32
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:81
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:79
 msgid "Hours not worked"
 msgstr "Nedelovnik"
 
 #: src/scrummer/model/swing/AdminDaysTableModel.java:33
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:63
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:82
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:80
 msgid "Measure day"
 msgstr "Merilni dan"
 
-#: src/scrummer/model/swing/DeveloperTableModel.java:34
+#: src/scrummer/model/swing/DeveloperTableModel.java:31
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:51
 msgid "Name"
 msgstr "Ime"
 
-#: src/scrummer/model/swing/DeveloperTableModel.java:35
+#: src/scrummer/model/swing/DeveloperTableModel.java:32
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:53
 msgid "Surname"
 msgstr "Priimek"
 
-#: src/scrummer/model/swing/DeveloperTableModel.java:36
+#: src/scrummer/model/swing/DeveloperTableModel.java:33
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:55
 msgid "Address"
 msgstr "Naslov"
 
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:44
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:35
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:53
 msgid "Priority"
 msgstr "Prioriteta"
 
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:45
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:36
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:63
 msgid "Initial estimate"
 msgstr "Začetna ocena"
 
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:46
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:37
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:67
 msgid "Adjustment factor"
 msgstr "Prilagoditveni količnik"
 
-#: src/scrummer/model/swing/ProductBacklogTableModel.java:47
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:38
 msgid "Adjusted estimate"
 msgstr "Prilagojena ocena"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:44
+#: src/scrummer/model/swing/ProductBacklogTableModel.java:39
+#: src/scrummer/ui/dialog/SprintDialog.java:47
+#: src/scrummer/ui/dialog/ProductBacklogDialog.java:45
+msgid "Sprint"
+msgstr "Iteracija"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:32
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:66
 msgid "Day"
 msgstr "Dan"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:45
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:33
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:67
 msgid "PBI id"
 msgstr "PBI"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:46
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:34
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:68
 msgid "Sprint id"
 msgstr "Iteracija"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:53
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:41
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:69
 msgid "Employee id"
 msgstr "Zaposlenec"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:54
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:42
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:70
 msgid "Hours spent"
 msgstr "Porabljenih ur"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:55
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:43
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:71
 msgid "Hours remaining"
 msgstr "Preostalo ur"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:56
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:44
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:72
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:66
 msgid "Number of open impediments"
 msgstr "Število aktualnih ovir"
 
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:57
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:45
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:73
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:67
 msgid "Number of closed impediments"
@@ -426,15 +485,22 @@ msgstr "Število zaključenih ovir"
 msgid "Could not remove task type."
 msgstr "Vrste naloge se ni dalo odstraniti: "
 
-#: src/scrummer/model/ImpedimentModelCommon.java:209
+#: src/scrummer/model/ImpedimentModelCommon.java:310
+#: src/scrummer/model/ImpedimentModelCommon.java:791
+#: src/scrummer/model/ImpedimentModelCommon.java:815
+#: src/scrummer/model/ImpedimentModelCommon.java:839
 msgid "Could not remove impediment."
 msgstr "Ovire se ni dalo odstraniti."
 
-#: src/scrummer/model/AdminDaysModelCommon.java:154
+#: src/scrummer/model/ImpedimentModelCommon.java:877
+msgid "Could not set parameters: "
+msgstr "Parametra se ni dalo nastaviti."
+
+#: src/scrummer/model/AdminDaysModelCommon.java:158
 msgid "Could not remove administrative day."
 msgstr "Dneva se ni dalo odstraniti."
 
-#: src/scrummer/model/ProjectModelCommon.java:195
+#: src/scrummer/model/ProjectModelCommon.java:193
 msgid "Could not set parameter"
 msgstr "Parametra se ni dalo nastaviti."
 
@@ -463,7 +529,7 @@ msgstr "Dodaj razvijalce"
 msgid "Add row"
 msgstr "Dodaj vrstico"
 
-#: src/scrummer/ui/dialog/TaskAddDialog.java:25
+#: src/scrummer/ui/dialog/TaskAddDialog.java:29
 msgid "Add Task"
 msgstr "Dodaj skupino"
 
@@ -474,6 +540,121 @@ msgstr "Opis naloge mora vsebovati vsaj en znak."
 #: src/scrummer/ui/dialog/TaskAddDialog.java:49
 msgid "Task date must be a valid date."
 msgstr "Datum naloge je nepravilen."
+
+#: src/scrummer/ui/dialog/TaskAddDialog.java:79
+msgid "Error while adding task: "
+msgstr "Napaka pri dodajanju naloge: "
+
+#: src/scrummer/ui/dialog/TaskAddDialog.java:79
+#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:70
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:95
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:134
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:80
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:107
+#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:63
+#: src/scrummer/ui/dialog/TaskTypeAddDialog.java:108
+#: src/scrummer/ui/dialog/ProjectNewDialog.java:132
+#: src/scrummer/ui/dialog/LoginDialog.java:282
+#: src/scrummer/ui/dialog/TeamAddDialog.java:138
+#: src/scrummer/ui/dialog/TeamAddDialog.java:162
+#: src/scrummer/ui/dialog/SprintChangeDialog.java:64
+#: src/scrummer/ui/dialog/SprintChangeDialog.java:116
+#: src/scrummer/ui/dialog/SprintChangeDialog.java:119
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:68
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:103
+#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:70
+#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:96
+#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:134
+#: src/scrummer/ui/dialog/AddDeveloperDialog.java:101
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:84
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:152
+#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:204
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:74
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:79
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:117
+#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:265
+#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:66
+#: src/scrummer/ui/dialog/AdminDaysViewDialog.java:137
+#: src/scrummer/ui/dialog/AdminDaysViewDialog.java:189
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:80
+#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:106
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:80
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:107
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:126
+#: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:108
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:129
+#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:180
+#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:63
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:153
+#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:205
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:55
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:95
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:134
+#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:108
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:149
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:104
+#: src/scrummer/ui/dialog/ProjectOpenDialog.java:122
+#: src/scrummer/ui/dialog/ProjectOpenDialog.java:185
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:114
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:119
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:158
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:147
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:80
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:107
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:85
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:176
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:102
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:133
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:138
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:143
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:148
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:186
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:130
+#: src/scrummer/ui/dialog/DevelopersViewDialog.java:181
+#: src/scrummer/ui/Validate.java:36 src/scrummer/ui/Validate.java:78
+#: src/scrummer/ui/Validate.java:98 src/scrummer/ui/page/PBPage.java:154
+#: src/scrummer/ui/page/ProductBacklogPage.java:142
+#: src/scrummer/ui/page/SprintBacklogPage.java:164
+#: src/scrummer/ui/page/ProjectPage.java:128
+msgid "Error"
+msgstr "Napaka"
+
+#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:32
+msgid "Add Impediment Type"
+msgstr "Dodaj vrsto ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:42
+#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:38
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:40
+msgid "Impediment Type"
+msgstr "Vrsta ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:69
+msgid "Could not add impediment type: "
+msgstr "Ovire se ni dalo dodati: "
+
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:36
+#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:37
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:36
+#: src/scrummer/ui/MainFrame.java:140 src/scrummer/ui/MainFrame.java:141
+msgid "Change absence type"
+msgstr "Spremeni vrsto odsotnosti"
+
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:55
+#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:56
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:55
+msgid "New description"
+msgstr "Nov opis"
+
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:95
+msgid "Some task status must be selected to change it's description."
+msgstr "Stanje zahteve mora biti izbrano, da se ji lahko nastavi opis."
+
+#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:133
+#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:133
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:133
+msgid "An error has occurred when setting description"
+msgstr "Med nastavljanjem skupinskega imena je priÅ¡lo do napake"
 
 #: src/scrummer/ui/dialog/SprintAddDialog.java:30
 #: src/scrummer/ui/dialog/SprintDialog.java:35
@@ -488,6 +669,35 @@ msgstr "Ocenjeno"
 msgid "Length"
 msgstr "Dolžina"
 
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:142
+msgid "Remove absence type"
+msgstr "Odstrani vrsto odsotnosti"
+
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:49
+msgid "Select absence type"
+msgstr "Dodaj vrsto odsotnosti"
+
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:78
+msgid ""
+"Could not delete absence type. Select one absence type first, then click on "
+"Remove button."
+msgstr ""
+"Vrste odsotnosti se ni dalo odstraniti, ker ni izbran. Najprej jo izberi, nato "
+"klikni Odstrani."
+
+#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:107
+msgid "Could not remove absence type: "
+msgstr "Vrste odsotnosti se ni dalo odstraniti."
+
+#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:28
+msgid "Remove Impediment Type"
+msgstr "Odstrani vrsto ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:62
+msgid "Could not remove impediment type: "
+msgstr "Vrste ovire se ni dalo odstraniti."
+
 #: src/scrummer/ui/dialog/TaskDialog.java:64
 msgid "Parent"
 msgstr "Skupna naloga"
@@ -500,83 +710,19 @@ msgstr "Datum"
 msgid "Active"
 msgstr "Aktivna"
 
-#: src/scrummer/ui/dialog/TaskDialog.java:85
+#: src/scrummer/ui/dialog/TaskDialog.java:86
 msgid "Yes"
 msgstr "Da"
 
-#: src/scrummer/ui/dialog/TaskDialog.java:85
+#: src/scrummer/ui/dialog/TaskDialog.java:86
 msgid "No"
 msgstr "Ne"
 
 #: src/scrummer/ui/dialog/TaskTypeAddDialog.java:40
 #: src/scrummer/ui/dialog/TaskTypeAddDialog.java:53
+#: src/scrummer/ui/MainFrame.java:143
 msgid "Add task type"
 msgstr "Dodaj vrsto naloge"
-
-#: src/scrummer/ui/dialog/TaskTypeAddDialog.java:108
-#: src/scrummer/ui/dialog/ProjectNewDialog.java:132
-#: src/scrummer/ui/dialog/LoginDialog.java:282
-#: src/scrummer/ui/dialog/TeamAddDialog.java:142
-#: src/scrummer/ui/dialog/TeamAddDialog.java:166
-#: src/scrummer/ui/dialog/SprintChangeDialog.java:64
-#: src/scrummer/ui/dialog/SprintChangeDialog.java:116
-#: src/scrummer/ui/dialog/SprintChangeDialog.java:119
-#: src/scrummer/ui/dialog/TeamRemoveDialog.java:72
-#: src/scrummer/ui/dialog/TeamRemoveDialog.java:107
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:96
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:134
-#: src/scrummer/ui/dialog/AddDeveloperDialog.java:101
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:152
-#: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:204
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:80
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:85
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:123
-#: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:265
-#: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:66
-#: src/scrummer/ui/dialog/AdminDaysViewDialog.java:137
-#: src/scrummer/ui/dialog/AdminDaysViewDialog.java:189
-#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:80
-#: src/scrummer/ui/dialog/ProjectRemoveDialog.java:106
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:123
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:136
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:149
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:162
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:175
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:188
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:201
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:216
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:231
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:244
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:292
-#: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:108
-#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:129
-#: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:180
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:153
-#: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:205
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:149
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:160
-#: src/scrummer/ui/dialog/ProjectOpenDialog.java:122
-#: src/scrummer/ui/dialog/ProjectOpenDialog.java:185
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:114
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:119
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:158
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:149
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:185
-#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:102
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:133
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:138
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:143
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:148
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:186
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:130
-#: src/scrummer/ui/dialog/DevelopersViewDialog.java:181
-#: src/scrummer/ui/Validate.java:37 src/scrummer/ui/Validate.java:59
-#: src/scrummer/ui/Validate.java:79
-#: src/scrummer/ui/page/ProductBacklogPage.java:139
-#: src/scrummer/ui/page/SprintBacklogPage.java:156
-#: src/scrummer/ui/page/ProjectPage.java:128
-msgid "Error"
-msgstr "Napaka"
 
 #: src/scrummer/ui/dialog/ProjectNewDialog.java:41
 msgid "Create New Project"
@@ -604,11 +750,11 @@ msgstr "Prijava"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:122
 msgid "Connect to server"
-msgstr "Poveži se na strežnik"
+msgstr "PoveÅ¾i se na streÅ¾nik"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:125
 msgid "Username"
-msgstr "Uporabniško ime"
+msgstr "UporabniÅ¡ko ime"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:132
 msgid "Password"
@@ -616,7 +762,7 @@ msgstr "Geslo"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:136
 msgid "Hostname"
-msgstr "Strežnik"
+msgstr "StreÅ¾nik"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:143
 msgid "Port"
@@ -628,38 +774,38 @@ msgstr "Podatkovna zbirka"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:183
 msgid "Connect"
-msgstr "Poveži se"
+msgstr "PoveÅ¾i se"
 
 #: src/scrummer/ui/dialog/LoginDialog.java:280
 msgid "Error while connecting to database server"
 msgstr "Napaka pri povezavi na podatkovno zbirko"
 
 #: src/scrummer/ui/dialog/AboutBoxDialog.java:21
-#: src/scrummer/ui/MainFrame.java:152
+#: src/scrummer/ui/MainFrame.java:183
 msgid "About"
 msgstr "O programu"
 
-#: src/scrummer/ui/dialog/TeamAddDialog.java:49
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:54
+#: src/scrummer/ui/dialog/TeamAddDialog.java:45
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:45
 msgid "Add Team"
 msgstr "Dodaj skupino"
 
-#: src/scrummer/ui/dialog/TeamAddDialog.java:65
+#: src/scrummer/ui/dialog/TeamAddDialog.java:61
 msgid "Team name"
 msgstr "Ime skupine"
 
-#: src/scrummer/ui/dialog/TeamAddDialog.java:78
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:83
+#: src/scrummer/ui/dialog/TeamAddDialog.java:74
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:74
 msgid "Team Member"
 msgstr "član skupine"
 
-#: src/scrummer/ui/dialog/TeamAddDialog.java:141
+#: src/scrummer/ui/dialog/TeamAddDialog.java:137
 msgid "Team name must contain at least one character."
 msgstr "Ime skupine mora vsebovati vsaj en znak."
 
-#: src/scrummer/ui/dialog/TeamAddDialog.java:165
+#: src/scrummer/ui/dialog/TeamAddDialog.java:161
 msgid "Could not delete team: "
-msgstr "Skupine ni mogo�e zbrisati: "
+msgstr "Skupine ni mogoèe zbrisati: "
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:28
 msgid "Change Sprint"
@@ -667,7 +813,7 @@ msgstr "Uredi iteracijo"
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:51
 msgid "Update"
-msgstr "Osveži"
+msgstr "OsveÅ¾i"
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:63
 msgid "Error while saving sprint information"
@@ -675,49 +821,61 @@ msgstr "Napaka pri shranjevanju iteracije"
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:116
 msgid "Wrong sprint length number."
-msgstr "Napačna dolžina iteracije."
+msgstr "Napačna dolÅ¾ina iteracije."
 
 #: src/scrummer/ui/dialog/SprintChangeDialog.java:119
 msgid "Invalid date entered."
 msgstr "Napačen format datuma."
 
-#: src/scrummer/ui/dialog/TeamRemoveDialog.java:40
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:36
 msgid "Remove team"
 msgstr "Odstrani skupino"
 
-#: src/scrummer/ui/dialog/TeamRemoveDialog.java:71
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:67
 msgid "No team has been selected. Select team then click Remove."
 msgstr "Nobena skupina ni izbrana. Izberi jo in klikni na Odstrani"
 
-#: src/scrummer/ui/dialog/TeamRemoveDialog.java:106
+#: src/scrummer/ui/dialog/TeamRemoveDialog.java:102
 msgid "Could not remove team: "
 msgstr "Skupine se ni dalo odstraniti: "
 
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:37
-#: src/scrummer/ui/MainFrame.java:129
-msgid "Change absence type"
-msgstr "Spremeni vrsto odsotnosti"
+#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:32
+msgid "Add Impediment Status"
+msgstr "Dodaj stanje ovire"
 
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:56
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:64
-msgid "New description"
-msgstr "Nov opis"
+#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:42
+#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:37
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:42
+msgid "Impediment Status"
+msgstr "Stanje ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:69
+msgid "Could not add new impediment status: "
+msgstr "Stanja ovire se ni dalo nastaviti: "
 
 #: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:96
 msgid "Some absence type must be selected to change it's description."
 msgstr "Zahteva mora biti izbrana, da se ji lahko nastavi opis."
-
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:133
-msgid "An error has occurred when setting description"
-msgstr "Med nastavljanjem skupinskega imena je prišlo do napake"
 
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:44
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:62
 msgid "Add Developer"
 msgstr "Dodaj razvijalca"
 
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:30
+msgid "Change Impediment Type"
+msgstr "Uredi vrsto ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:53
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:54
+msgid "Change"
+msgstr "Spremeni"
+
+#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:83
+msgid "Could not update impediment status: "
+msgstr "Stanja ovire se ni dalo osvežiti: "
+
 #: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:69
-#: src/scrummer/ui/MainFrame.java:113
 msgid "View impediments"
 msgstr "Poglej ovire"
 
@@ -729,7 +887,7 @@ msgstr "Tabela ovir"
 #: src/scrummer/ui/dialog/AdminDaysViewDialog.java:109
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:102
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:125
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:108
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:99
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:103
 msgid "Close"
 msgstr "Zapri"
@@ -742,29 +900,28 @@ msgstr ""
 "Ovire ni mogoče odstraniti, ker nobena vrstica ni izbrana. Klikni na vrstico "
 "tabele, nato klikni na Odstrani."
 
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:42
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:36
 msgid "Change team name"
 msgstr "Spremeni skupinsko ime"
 
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:58
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:52
 msgid "New name"
 msgstr "Novo ime"
 
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:80
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:74
 msgid "Some team must be selected to change it's name."
 msgstr "Skupina mora biti izbrani, da se ji lahko spremeni ime."
 
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:85
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:79
 msgid "Team must be at least one character long."
 msgstr "Ime skupine mora vsebovati vsaj en znak."
 
-#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:122
+#: src/scrummer/ui/dialog/TeamChangeNameDialog.java:116
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:264
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:291
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:157
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:101
 msgid "An error has occurred when setting team name"
-msgstr "Med nastavljanjem skupinskega imena je prišlo do napake"
+msgstr "Med nastavljanjem skupinskega imena je priÅ¡lo do napake"
 
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:39
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:41
@@ -784,17 +941,14 @@ msgid "New product backlog item"
 msgstr "Nova zahteva naročnikovega dnevnika"
 
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:60
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:63
 msgid "New task"
 msgstr "Nova naloga"
 
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:61
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:61
 msgid "New sprint"
 msgstr "Nova iteracija"
 
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:62
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:62
 msgid "New employee"
 msgstr "Nov zaposleni"
 
@@ -812,14 +966,13 @@ msgstr "Nove aktualne ovire"
 
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:66
 msgid "New number of closed impediments"
-msgstr "Novo število zaprtih ovir"
+msgstr "Novo Å¡tevilo zaprtih ovir"
 
 #: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:30
 msgid "Insert into Product Backlog"
 msgstr "Vstavi v naročnikov dnevnik"
 
 #: src/scrummer/ui/dialog/AdminDaysViewDialog.java:54
-#: src/scrummer/ui/MainFrame.java:120
 msgid "View administrative days"
 msgstr "Poglej administrativne dneve"
 
@@ -832,11 +985,11 @@ msgid ""
 "Cannot remove administrative day because no administrative day is selected. "
 "Click on a table row and then press remove."
 msgstr ""
-"Administrativnega dneva ni mogoče odstraniti, ker nobena vrstica ni izbrana. Klikni na vrstico "
-"tabele, nato klikni na Odstrani."
+"Administrativnega dneva ni mogoče odstraniti, ker nobena vrstica ni izbrana. "
+"Klikni na vrstico tabele, nato klikni na Odstrani."
 
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:40
-#: src/scrummer/ui/MainFrame.java:104
+#: src/scrummer/ui/MainFrame.java:116
 msgid "Remove Project"
 msgstr "Odstrani projekt"
 
@@ -856,87 +1009,51 @@ msgstr ""
 msgid "Could not remove project: "
 msgstr "Projekta se ni dalo odstraniti: "
 
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:40
-#: src/scrummer/ui/MainFrame.java:114
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:148
+msgid "Remove task status"
+msgstr "Odstrani stanje naloge"
+
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:49
+msgid "Select task status"
+msgstr "Izberi stanje naloge"
+
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:78
+msgid ""
+"Could not delete task status. Select one task status first, then click on "
+"Remove button."
+msgstr ""
+"Projekta se ni dalo odstraniti, ker ni izbran. Najprej ga izberi, nato "
+"klikni Odstrani."
+
+#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:107
+msgid "Could not remove task status: "
+msgstr "Stanja naloge se ni dalo odstraniti: "
+
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:36
 msgid "Change impediment"
 msgstr "Uredi oviro"
 
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:51
-msgid "Impediment"
-msgstr "Ovira"
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:95
+msgid "Wrong starting date"
+msgstr "Napačen začetni datum"
 
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:60
-msgid "New team"
-msgstr "Nova skupina"
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:96
+msgid "Wrong ending date."
+msgstr "Napačen končni datum."
 
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:65
-msgid "New type"
-msgstr "Nova vrsta"
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:66
-msgid "New status"
-msgstr "Novo stanje"
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:67
-msgid "New start"
-msgstr "Nov začetek"
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:68
-msgid "New end"
-msgstr "Nov konec"
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:69
-msgid "New age"
-msgstr "Nova starost"
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:123
-msgid "Some impediment must be selected to change it's team."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti skupino."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:136
-msgid "Some impediment must be selected to change it's sprint."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti iteracijo."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:149
-msgid "Some impediment must be selected to change it's employee."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti zaposlenca."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:162
-msgid "Some impediment must be selected to change it's task."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti nalogo."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:175
-msgid "Some impediment must be selected to change it's description."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti opis."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:188
-msgid "Some impediment must be selected to change it's type."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti vrsto."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:201
-msgid "Some impediment must be selected to change it's status."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti stanje."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:216
-msgid "Some impediment must be selected to change it's start."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti začetek."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:231
-msgid "Some impediment must be selected to change it's end."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti konec."
-
-#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:244
-msgid "Some impediment must be selected to change it's age."
-msgstr "Ovira mora biti izbrana, da se ji da nastaviti starost."
+#: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:125
+msgid "An error has occurred when setting updating impediment"
+msgstr "Med osveževanjem podatkov o oviri je prišlo do napake"
 
 #: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:40
 #: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:128
+#: src/scrummer/ui/MainFrame.java:139
 msgid "Add absence type"
-msgstr "Dodaj vrso odsotnosti"
+msgstr "Dodaj vrsto odsotnosti"
 
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:47
-#: src/scrummer/ui/MainFrame.java:117
+#: src/scrummer/ui/MainFrame.java:131
 msgid "View Sprint Backlog"
 msgstr "Poglej iteracijski dnevnik"
 
@@ -952,6 +1069,14 @@ msgstr ""
 "Dela iteracijskega dnevnika se ni dalo odstraniti, ker nobena vrstica ni "
 "izbrana. Klikni na vrstico tabele, nato klikni na Odstrani."
 
+#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:27
+msgid "Remove Impediment Status"
+msgstr "Odstrani stanje ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:62
+msgid "Could not remove impediment status: "
+msgstr "Stanja ovire se ni dalo odstraniti: "
+
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:70
 msgid "View Product Backlog"
 msgstr "Poglej naročnikov dnevnik"
@@ -961,7 +1086,7 @@ msgid "Product Backlog table"
 msgstr "Tabela z naročnikovim dnevnikom"
 
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:151
-#: src/scrummer/ui/page/ProductBacklogPage.java:137
+#: src/scrummer/ui/page/ProductBacklogPage.java:140
 msgid ""
 "Cannot remove from Product Backlog because no Product Backlog item is "
 "selected. Click on a table row and then press remove."
@@ -969,22 +1094,71 @@ msgstr ""
 "Ne da se odstraniti zahteve iz naročnikovega dnevnika, ker ni izbrana. "
 "Klikni na vrstico v tabeli, nato klikni na Odstrani."
 
-#: src/scrummer/ui/dialog/TaskChangeDialog.java:19
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:33
 msgid "Change Task"
 msgstr "Spremeni nalogo"
+
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:55
+msgid "Error while updating task: "
+msgstr "Napaka pri osveževanju naloge: "
+
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:98
+msgid "Wrong task end date formatting."
+msgstr "Napačno formatiranje končnega datuma."
+
+#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:95
+msgid "Some task type must be selected to change it's description."
+msgstr "Naloga mora biti izbrana, da se ji lahko nastavi opis."
+
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:48
+msgid "Choose team"
+msgstr "Izberi skupino"
+
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:56
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:59
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:64
+msgid "Choose employee"
+msgstr "Izberi zaposlenca"
+
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:64
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:56
+msgid "Choose task"
+msgstr "Izberi nalogo"
+
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:74
+msgid "Choose impediment type"
+msgstr "Izberi vrsto"
+
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:81
+msgid "Choose impediment status"
+msgstr "Izberi stanje"
+
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:99
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:56
+msgid "Add Impediment"
+msgstr "Dodaj oviro"
+
+#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:40
+#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:53
+#: src/scrummer/ui/MainFrame.java:146
+msgid "Add task status"
+msgstr "Dodaj stanje naloge"
 
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:48
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:79
 msgid "Insert into Sprint Backlog"
 msgstr "Vstavi v iteracijski dnevnik"
 
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:52
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:84
-msgid "Add Impediment"
-msgstr "Dodaj oviro"
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:65
+msgid "Wrong starting date."
+msgstr "Napačen začetni datum"
+
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:66
+msgid "Wrong end date."
+msgstr "Napačen zaključni datum"
 
 #: src/scrummer/ui/dialog/ProjectOpenDialog.java:53
-#: src/scrummer/ui/MainFrame.java:103
+#: src/scrummer/ui/MainFrame.java:115
 msgid "Open Project"
 msgstr "Odpri projekt"
 
@@ -1005,7 +1179,7 @@ msgid "Could not open project"
 msgstr "Projekta se ni dalo odpreti"
 
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:43
-#: src/scrummer/ui/MainFrame.java:118
+#: src/scrummer/ui/MainFrame.java:132
 msgid "Daily scrum meeting"
 msgstr "Dnevni sestanek"
 
@@ -1025,37 +1199,56 @@ msgstr "Najprej dodaj nalogo v iteracijski dnevnik, nato ji nastavi mere!"
 msgid "Some task must be selected to set it's measures."
 msgstr "Skupina mora biti izbrana, da se ji lahko spremeni ime."
 
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:49
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:88
-#: src/scrummer/ui/MainFrame.java:121
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:47
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:86
 msgid "Add administrative day"
 msgstr "Dodaj administrativni dan"
 
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:61
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:64
-msgid "Choose employee"
-msgstr "Nov zaposlenec"
-
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:71
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:69
 msgid "Choose absence type"
 msgstr "Izberi vrsto odsotnosti"
 
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:100
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:145
+msgid "Remove task type"
+msgstr "Odstrani vrsto naloge"
+
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:49
+msgid "Select task type"
+msgstr "Izberi vrsto naloge"
+
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:78
+msgid ""
+"Could not delete task type. Select one task type first, then click on Remove "
+"button."
+msgstr ""
+"Vrste naloge se ni dalo odstraniti, ker ni izbran. Najprej jo izberi, nato "
+"klikni Odstrani."
+
+#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:107
+msgid "Could not remove task type: "
+msgstr "Vrste naloge se ni dalo odstraniti: "
+
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:32
+msgid "Change Impediment Status"
+msgstr "Uredi stanje ovire"
+
+#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:84
+msgid "Could not add or update impediment status: "
+msgstr "Stanja ovire se ni dalo dodati ali osvežiti"
+
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:91
 msgid "Save"
 msgstr "Shrani"
 
-#: src/scrummer/ui/dialog/TeamOverviewDialog.java:184
+#: src/scrummer/ui/dialog/TeamOverviewDialog.java:175
 msgid "An error has occurred when transferring employee from/to team: "
-msgstr "Med prenosom zaposlenega iz/na skupino je prišlo do napake: "
+msgstr "Med prenosom zaposlenega iz/na skupino je priÅ¡lo do napake: "
 
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:31
-#: src/scrummer/ui/MainFrame.java:110
+#: src/scrummer/ui/MainFrame.java:122
 msgid "Change product backlog item"
 msgstr "Spremeni zahtevo v naročnikovem dnevniku"
-
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:56
-msgid "Choose task"
-msgstr "Izberi nalogo"
 
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:72
 msgid "Choose product backlog item"
@@ -1068,7 +1261,7 @@ msgstr "Nastavi iteracijo"
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:133
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:148
 msgid "You have to select one item!"
-msgstr "Izbrati moraš en vnos!"
+msgstr "Izbrati moraÅ¡ en vnos!"
 
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:138
 msgid "Sprint must be at least one character long."
@@ -1080,7 +1273,7 @@ msgstr "Naloga mora biti izbrana, da se ji lahko nastavi naročnikovo zahtevo."
 
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:185
 msgid "An error has occurred when setting sprint backlog properties"
-msgstr "Med nastavljanjem imena iteracije je prišlo do napake"
+msgstr "Med nastavljanjem imena iteracije je priÅ¡lo do napake"
 
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:48
 msgid "View developers"
@@ -1102,76 +1295,105 @@ msgstr ""
 msgid "Requirement data"
 msgstr "Zahteve"
 
-#: src/scrummer/ui/Validate.java:35
+#: src/scrummer/ui/Validate.java:34
 msgid ""
 "Input field cannot be an empty string. Please enter a word with at least one "
 "character."
-msgstr ""
-"Vnosno polje ne sme biti prazno. Prosim vpiši vsaj en znak"
+msgstr "Vnosno polje ne sme biti prazno. Prosim vpiÅ¡i vsaj en znak"
 
-#: src/scrummer/ui/MainFrame.java:100
+#: src/scrummer/ui/MainFrame.java:112
 msgid "File"
 msgstr "Datoteka"
 
-#: src/scrummer/ui/MainFrame.java:102
+#: src/scrummer/ui/MainFrame.java:114
 msgid "New Project"
 msgstr "Ustvari projekt"
 
-#: src/scrummer/ui/MainFrame.java:105
+#: src/scrummer/ui/MainFrame.java:117
 msgid "Close Project"
 msgstr "Zapri projekt"
 
-#: src/scrummer/ui/MainFrame.java:108
+#: src/scrummer/ui/MainFrame.java:120
 msgid "Insert into product backlog"
 msgstr "Vstavi v naročnikov dnevnik"
 
-#: src/scrummer/ui/MainFrame.java:109
+#: src/scrummer/ui/MainFrame.java:121
 msgid "View product backlog"
 msgstr "Poglej naročnikov dnevnik"
 
-#: src/scrummer/ui/MainFrame.java:112
-msgid "Add impediment"
-msgstr "Dodaj oviro"
-
-#: src/scrummer/ui/MainFrame.java:116
+#: src/scrummer/ui/MainFrame.java:130
 msgid "Sprint planning meeting"
 msgstr "Iteracijski načrtovalni sestanek"
 
-#: src/scrummer/ui/MainFrame.java:123
+#: src/scrummer/ui/MainFrame.java:134
 msgid "Exit"
 msgstr "Izhod"
 
-#: src/scrummer/ui/MainFrame.java:125
+#: src/scrummer/ui/MainFrame.java:136
 msgid "Sifranti"
 msgstr "Šifranti"
 
-#: src/scrummer/ui/MainFrame.java:131
+#: src/scrummer/ui/MainFrame.java:144
+msgid "Change task type"
+msgstr "Spremeni vrsto naloge"
+
+#: src/scrummer/ui/MainFrame.java:147
+msgid "Change task status"
+msgstr "Spremeni stanje naloge"
+
+#: src/scrummer/ui/MainFrame.java:152
+msgid "Add impediment type"
+msgstr "Dodaj vrsto ovire"
+
+#: src/scrummer/ui/MainFrame.java:153
+msgid "Change impediment type"
+msgstr "Uredi vrsto ovire"
+
+#: src/scrummer/ui/MainFrame.java:154
+msgid "Remove impediment type"
+msgstr "Odstrani vrsto ovire"
+
+#: src/scrummer/ui/MainFrame.java:158
+msgid "Add impediment status"
+msgstr "Dodaj stanje naloge"
+
+#: src/scrummer/ui/MainFrame.java:159
+msgid "Change impediment status"
+msgstr "Uredi stanje"
+
+#: src/scrummer/ui/MainFrame.java:160
+msgid "Remove impediment status"
+msgstr "Odstrani stanje ovire"
+
+#: src/scrummer/ui/MainFrame.java:162
 msgid "Employees"
 msgstr "Zaposleni"
 
-#: src/scrummer/ui/MainFrame.java:135 src/scrummer/ui/MainFrame.java:141
+#: src/scrummer/ui/MainFrame.java:166 src/scrummer/ui/MainFrame.java:172
 msgid "View"
 msgstr "Pregled"
 
-#: src/scrummer/ui/MainFrame.java:142
+#: src/scrummer/ui/MainFrame.java:173
 msgid "Change Name"
 msgstr "Spremeni ime"
 
-#: src/scrummer/ui/MainFrame.java:150
+#: src/scrummer/ui/MainFrame.java:181
 msgid "Help"
 msgstr "Pomoč"
 
+#: src/scrummer/ui/page/PBPage.java:67
 #: src/scrummer/ui/page/SprintBacklogPage.java:67
 msgid "Sprints"
 msgstr "Iteracije"
 
-#: src/scrummer/ui/page/SprintBacklogPage.java:154
+#: src/scrummer/ui/page/PBPage.java:152
+#: src/scrummer/ui/page/SprintBacklogPage.java:162
 msgid ""
 "Cannot display modification dialog. First select a sprint by clicking on it, "
 "then click Edit button."
 msgstr ""
-"Ne da se prikazati obrazca, ker iteracija ni izbrana. Najprej izberi iteracijo, tako da klikneš na tabelo, "
-"nato izberi Uredi gumb."
+"Ne da se prikazati obrazca, ker iteracija ni izbrana. Najprej izberi "
+"iteracijo, tako da klikneÅ¡ na tabelo, nato izberi Uredi gumb."
 
 #: src/scrummer/ui/page/ProjectPage.java:57
 msgid "Project Name:"
@@ -1180,6 +1402,54 @@ msgstr "Ime projekta:"
 #: src/scrummer/ui/page/ProjectPage.java:127
 msgid "Error while saving project data"
 msgstr "Napaka pri shranjevanju podatkov o projektu"
+
+#~ msgid "New team"
+#~ msgstr "Nova skupina"
+
+#~ msgid "New type"
+#~ msgstr "Nova vrsta"
+
+#~ msgid "New status"
+#~ msgstr "Novo stanje"
+
+#~ msgid "New start"
+#~ msgstr "Nov začetek"
+
+#~ msgid "New end"
+#~ msgstr "Nov konec"
+
+#~ msgid "New age"
+#~ msgstr "Nova starost"
+
+#~ msgid "Some impediment must be selected to change it's team."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti skupino."
+
+#~ msgid "Some impediment must be selected to change it's sprint."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti iteracijo."
+
+#~ msgid "Some impediment must be selected to change it's employee."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti zaposlenca."
+
+#~ msgid "Some impediment must be selected to change it's task."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti nalogo."
+
+#~ msgid "Some impediment must be selected to change it's description."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti opis."
+
+#~ msgid "Some impediment must be selected to change it's type."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti vrsto."
+
+#~ msgid "Some impediment must be selected to change it's status."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti stanje."
+
+#~ msgid "Some impediment must be selected to change it's start."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti začetek."
+
+#~ msgid "Some impediment must be selected to change it's end."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti konec."
+
+#~ msgid "Some impediment must be selected to change it's age."
+#~ msgstr "Ovira mora biti izbrana, da se ji da nastaviti starost."
 
 #~ msgid "Developers"
 #~ msgstr "Razvijalci"
@@ -1219,7 +1489,8 @@ msgstr "Napaka pri shranjevanju podatkov o projektu"
 #~ "Zahteva mora biti izbrana, da se ji lahko nastavi prilagoditveni količnik."
 
 #~ msgid "Some PBI must be selected to change it's adjusted estimate."
-#~ msgstr "Zahteva mora biti izbrana, da se ji lahko nastavi prilagojeno oceno."
+#~ msgstr ""
+#~ "Zahteva mora biti izbrana, da se ji lahko nastavi prilagojeno oceno."
 
 #~ msgid "Project Employee"
 #~ msgstr "Projektni zaposlenec"
