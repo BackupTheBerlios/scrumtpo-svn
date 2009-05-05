@@ -85,7 +85,7 @@ public class TaskChangeDialog
 			int pbiId = 
 				_pbiInput.getSelectedId();
 			int parentId =
-				_parentInput.getSelectedId();
+				(_parentInput.isSelected()) ? _parentInput.getSelectedId() : 0;
 			int employeeId = 
 				_taskEmployeeInput.getSelectedId();
 			int teamId = 
