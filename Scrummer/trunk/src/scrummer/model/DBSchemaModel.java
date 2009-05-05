@@ -261,6 +261,31 @@ public class DBSchemaModel {
 			}
 			return null;
 		}
+		else if (tableName.equals(DBSchemaModel.ImpedimentTypeTable))
+		{
+			switch (id)
+			{
+			case 1: return i18n.tr("Specification problems");
+			case 2: return i18n.tr("Hardware problems");
+			case 3: return i18n.tr("Software problems");
+			case 4: return i18n.tr("Security problems");
+			case 5: return i18n.tr("Teamwork problems");
+			case 6: return i18n.tr("Other");
+			}
+			return null;
+		}
+		else if (tableName.equals(DBSchemaModel.ImpedimentStatusTable))
+		{
+			switch (id)
+			{
+			case 1: return i18n.tr("Open");
+			case 2: return i18n.tr("Pending");
+			case 3: return i18n.tr("In Progress");
+			case 4: return i18n.tr("Closed");
+			case 5: return i18n.tr("Other");
+			}
+			return null;
+		}
 		else
 		{
 			return null; 
@@ -331,9 +356,9 @@ public class DBSchemaModel {
 	public static final String ImpedimentSprint = "Sprint_id";
 	public static final String ImpedimentEmployee = "Employee_id";
 	public static final String ImpedimentTask = "Task_id";
-	public static final String ImpedimentType = "Impediment_type";
+	public static final String ImpedimentType = "Impediment_type_id";
 	public static final String ImpedimentStatus = "Impediment_status_id";
-	public static final String ImpedimentStart = "Impediment_start_id";
+	public static final String ImpedimentStart = "Impediment_start";
 	public static final String ImpedimentEnd = "Impediment_end";
 	public static final String ImpedimentAge = "Impediment_age";
 	
