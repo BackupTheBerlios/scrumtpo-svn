@@ -189,8 +189,6 @@ public class DBSchemaModel {
 					}
 				}
 			};
-			// q.queryResult("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='" + table + "'");
-			
 			q.queryResult("SHOW COLUMNS FROM " + table);
 			 
 			if (_tableColumnsMap.containsKey(table))
