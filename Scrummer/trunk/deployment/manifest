@@ -1,0 +1,3 @@
+Main-Class: scrummer.Scrummer
+Class-Path: gettext-commons-0.9.6.jar mysql-connector-java-5.1.7-bin.jar
+
