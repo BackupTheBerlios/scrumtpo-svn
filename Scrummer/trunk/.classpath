@@ -3,9 +3,11 @@
 	<classpathentry excluding=".svn*" kind="src" path="src"/>
 	<classpathentry kind="src" path="image"/>
 	<classpathentry kind="src" path="jar"/>
+	<classpathentry kind="src" path="unittest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="jar/mysql-connector-java-5.1.7-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="jar/gettext-commons-0.9.6.jar"/>
 	<classpathentry kind="lib" path="i18n"/>
+	<classpathentry kind="lib" path="jar/junit-4.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
