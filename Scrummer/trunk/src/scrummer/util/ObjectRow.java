@@ -32,8 +32,29 @@ public class ObjectRow {
 				_cells.add(result.getObject(i+1));	
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Constructor
+	 * @param columns columns 
+	 */
+	public ObjectRow(int columns) {
+		if (columns < 0)
+		{
+			throw new IndexOutOfBoundsException("Cannot have negative columns.");
+		}
+		
+		_columnCount = columns;
+		if (columns > 0) {
+			_cells = new Vector<Object>(columns);
+		} else {
+			_cells = new Vector<Object>();
+		}
+		
+		for (int i = 0; i < columns; i++) {
+			_cells.add(null);
 		}
 	}
 	
@@ -52,10 +73,8 @@ public class ObjectRow {
 	 * @param column column index
 	 * @return object in given column
 	 */
-	public Object get(int column)
-	{
-		if ((column < 0) || (column >= _columnCount))
-		{
+	public Object get(int column) {
+		if ((column < 0) || (column >= _columnCount)) {
 			throw new IndexOutOfBoundsException("Index out of range: [" + 0 + "," + _columnCount + "].");
 		}
 		return _cells.get(column);
@@ -66,8 +85,7 @@ public class ObjectRow {
 	 * @param column column
 	 * @param value value to set
 	 */
-	public void set(int column, Object value)
-	{
+	public void set(int column, Object value) {
 		_cells.set(column, value);
 	}
 	
@@ -76,21 +94,17 @@ public class ObjectRow {
 	 * @param result result set
 	 * @return rows
 	 */
-	public static Vector<ObjectRow> fetchRows(ResultSet result)
-	{
+	public static Vector<ObjectRow> fetchRows(ResultSet result) {
 		Vector<ObjectRow> rows = new Vector<ObjectRow>();
-		
 		try {
 			result.beforeFirst();
-	        while (result.next())
-	        {
+	        while (result.next()) {
 	        	ObjectRow row = new ObjectRow(result);
 	        	rows.add(row);
 	        }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return rows;
 	}
 	
@@ -99,37 +113,26 @@ public class ObjectRow {
 	 * @param rows rows
 	 * @param column column to format
 	 */
-	public static void convertDate(Vector<ObjectRow> rows, int column)
-	{
-		for (int i = 0; i < rows.size(); i++)
-		{
+	public static void convertDate(Vector<ObjectRow> rows, int column) {
+		for (int i = 0; i < rows.size(); i++) {
 			ObjectRow row = rows.get(i);
-			
-			try
-			{
+			try {
 				Object o = row.get(column);
-				if (o != null)
-				{
+				if (o != null) {
 					java.sql.Date date = (java.sql.Date)o;
-					if (date != null)
-					{
+					if (date != null) {
 						Date d = new Date(date.getTime()); 
 						
 						SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 						String res = df.format(d);		
 						row.set(column, res);
-					}
-					else
-					{
+					} else {
 						row.set(column, "");
 					}
-				}
-				else
-				{
+				} else {
 					row.set(column, "");
 				}
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				row.set(column, "");
 			}
 		}
@@ -143,10 +146,8 @@ public class ObjectRow {
 	 * @param column column which should be changed
 	 * @param enumTable table
 	 */
-	public static void convertEnum(Vector<ObjectRow> rows, int column, String enumTable)
-	{
-		for (int i = 0; i < rows.size(); i++)
-		{
+	public static void convertEnum(Vector<ObjectRow> rows, int column, String enumTable) {
+		for (int i = 0; i < rows.size(); i++) {
 			ObjectRow row = rows.get(i);
 						
 			Integer enumValue = (Integer)row.get(column);		
