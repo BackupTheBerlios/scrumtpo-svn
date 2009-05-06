@@ -835,6 +835,42 @@ public class SprintBacklogModelCommon
 		}
 	}
 	
+	/**
+	 * Fetch chronologically ordered logged daily metrics on given sprint, for pbi and employee 
+	 * 
+	 * @param sprintId sprint id
+	 * @param pbiId pbi id
+	 * @param employeeId employee id
+	 */
+	public Vector<ObjectRow> getSprintPBIs(int sprintId, int pbiId, int employeeId)
+	{
+		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel) {
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(ObjectRow.fetchRows(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(new Vector<ObjectRow>());
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + 
+			DBSchemaModel.SprintPBIMeasureDay + ", " +
+			DBSchemaModel.SprintPBIHourseSpent + ", " +
+			DBSchemaModel.SprintPBIHoursRemaining + ", " +
+			DBSchemaModel.SprintPBINbOpenImped + ", " +
+			DBSchemaModel.SprintPBINbClosedImped + 
+			" FROM " + 
+			"WHERE " +
+			DBSchemaModel.SprintPBISprintId + "=" + sprintId + 
+			" AND " +
+			DBSchemaModel.SprintPBIPBIId + "=" + pbiId + 
+			" AND " +
+			DBSchemaModel.SprintPBIEmployeeId + "=" + employeeId);
+		return q.getResult();	
+	}
 	
 	/// connection model
 	private ConnectionModel _connectionModel;
