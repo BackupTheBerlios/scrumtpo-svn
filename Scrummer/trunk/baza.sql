@@ -235,14 +235,13 @@ create table Sprint_PBI
 (
    Measure_day	integer	not null,
    PBI_id	integer	not null,
-   Task_id	integer not null,
    Sprint_id	integer	not null,
    Employee_id	integer	not null,
    Hours_spent	integer	default '0' null,
    Hours_remaining integer default '0' null,
    NbOpenImped	integer	default '0' null,
    NbClosedImped	integer	default '0'	null,
-   constraint PK_MEASURE primary key (Task_id, Measure_day)
+   constraint PK_MEASURE primary key (Sprint_id, PBI_id, Measure_day)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
@@ -436,12 +435,6 @@ alter table Sprint
 alter table Sprint
    add constraint FK_SPRINT_RELATIONS_PROJECT foreign key (Project_id)
       references Project (Project_id)
-      on update restrict
-      on delete restrict;
-
-alter table Sprint_PBI
-   add constraint FK_SPRINT_P_REFERENCE_TASK foreign key (Task_id)
-      references Task (Task_id)
       on update restrict
       on delete restrict;
 
