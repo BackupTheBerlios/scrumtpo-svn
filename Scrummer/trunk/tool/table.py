@@ -70,9 +70,6 @@ class Table(object):
 			print "\t\tst.setString(" + str(i) + ", " + self.__fields[i-1].toMethodFieldName() + ");"
 			i = i + 1
 		
-		print "\t\tst.setString(1, description);"
-
-
 		print "\t\tst.execute();"
 		print "\t\t_operation.operationSucceeded(DataOperation.Insert, , \"\");"
 		print "\t\tret = true;"
@@ -88,6 +85,38 @@ class Table(object):
 		print "\treturn ret;"
 
 		print "}"
+
+	def generateDelete(self):
+		lst = [f.toJavaString() for f in self.__primary]
+		print "public boolean remove(" + ", ".join(lst) + ") {"
+		print "ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
+		print "@Override"
+		print "public void process() {"
+		print "setResult(true);"
+		print "_operation.operationSucceeded(DataOperation.Remove, , "");"
+		print "}"
+		print "@Override"
+		print "public void handleException(SQLException ex) {"
+		print "setResult(false);"
+		print "ex.printStackTrace();"
+		print "_operation.operationFailed(DataOperation.Remove, , "
+		print "i18n.tr(""));"
+		print "}"
+		print "};"
+		print "q.query(\"DELETE FROM \" + DBSchemaModel." + substUnder(self.Name) + " + "
+		print "\" WHERE \" + " + 
+
+		keys = ["\t\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
+		nkeys = []
+		i = 0
+		for k in keys:
+			nkeys.append(keys[i] + self.__primary[i].toMethodFieldName())
+			i=i+1
+		print " + \",\" + \n".join(nkeys)
+		print "\t\t\")\""
+
+		print "return q.getResult();"
+		
 
 	## add primary key to table schema representation
 	def addPrimary(self, value):
