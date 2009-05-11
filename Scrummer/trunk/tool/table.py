@@ -45,14 +45,14 @@ class Table(object):
 		print "\ttry {"
 		print "\t\tconn = _connectionModel.getConnection();"
 		print "\t\tString query ="
-		print "\t\t\"INSERT INTO \" + " + "DBSchemaModel." + substUnder(self.Name) + " +"
+		print "\t\t\"INSERT INTO \" + " + "DBSchemaModel." + substUnder(self.Name) + "Table +"
 		print "\t\t\"(\" +" 
 		
 		inserts = ["\t\t" + f.toDbName() for f in self.__fields]
-		print ",\n".join(inserts)
-		print "\t\t\")\""
+		print " + \",\" + \n".join(inserts) + " + "
+		print "\t\t\")\" + "
 
-		print "\t\t WHERE \" + " 
+		print "\t\t\" WHERE \" + " 
 
 		keys = ["\t\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
 		nkeys = []
@@ -60,14 +60,14 @@ class Table(object):
 		for k in keys:
 			nkeys.append(keys[i] + self.__primary[i].toMethodFieldName())
 			i=i+1
-		print " + \",\" + \n".join(nkeys)
-		print "\t\t\")\""
+		print " + \",\" + \n".join(nkeys) + " + "
+		print "\t\t\")\";"
 
 		print "\t\tst = conn.prepareStatement(query);"
 
 		i = 1
 		for f in self.__fields:
-			print "\t\tst.setString(" + str(i) + ", " + self.__fields[i-1].toMethodFieldName() + ");"
+			print "\t\tst." + f.toRSSetter(i, self.__fields[i-1].toMethodFieldName()) + ";"
 			i = i + 1
 		
 		print "\t\tst.execute();"
@@ -88,11 +88,12 @@ class Table(object):
 
 	## Generate update statements
 	def generateUpdate(self):
-		#self.generateUpdateRow()
-		#self.generateRowGetter()
+		self.generateInsert()
+		self.generateUpdateRow()
+		self.generateRowGetter()
 		self.generateRowUpdater()
-		#self.generateUpdateGet()
-		#self.generateUpdateSet()
+		self.generateUpdateGet()
+		self.generateUpdateSet()
 
 	def generateUpdateRow(self):
 		print "public static class Row extends DataRow {"
@@ -186,7 +187,8 @@ class Table(object):
 	## this thing generates a general row update function(updates some column with certain value)
 	def generateRowUpdater(self):
 	
-		args = [f.toMethodFieldName() for f in self.__primary]
+		# args = [f.toMethodFieldName() for f in self.__primary]
+		args = [f.toJavaString() for f in self.__primary]
 		print "public boolean updateCell(" + ", ".join(args) + ", String column, String value) {"
 		print "\tResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
 		print "\t@Override"
@@ -203,13 +205,18 @@ class Table(object):
 		print "\t\tex.printStackTrace();"
 		print "\t}"
 		print "\t};"
-		print "q.query(\"UPDATE \" + DBSchemaModel." + self.Name + "Table + "
-		print "\" SET \" + column" + "='" + "value" + "' "
-		print "\" WHERE \" + "
+		print "\tq.query(\"UPDATE \" + DBSchemaModel." + self.Name + "Table + "
+		print "\t\" SET \" + column + \"='\" + value + \"'\" + "
+		print "\t\" WHERE \" + "
 
+		pklst = []
+		i = 0
+		for f in self.__primary:
+			pklst.append("\t" + f.toDbName() + " + \"=\" + " + self.__primary[i].toMethodFieldName())
+			i = i + 1			
+		
+		print " + \" AND \" + \n".join(pklst) + ");";
 
-
-		# print "WHERE " + DBSchemaModel.ImpedimentTypeId + "='" + typeId + "'");"
 		print "\treturn q.getResult();"
 		print "};"
 
@@ -226,10 +233,13 @@ class Table(object):
 
 		for f in self.__fields:
 			# generate common header(primary key)
-			args = [f.toJavaString() for f in self.__primary]
-			fieldNames = [f.toMethodFieldName() for f in self.__primary]
-			print "public boolean get" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
-			print "\treturn getRow(" + ", ".join(fieldNames) + ")." + substUnder(f.Name) + ";"
+			args = [g.toJavaString() for g in self.__primary]
+			args.append("String value")
+			fieldNames = [g.toMethodFieldName() for g in self.__primary]
+			fieldNames.append("\"DBSchemaModel." + substUnder(f.Name) + "\"")
+
+			print "public boolean set" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
+			print "\tupdateCell(" + ", ".join(fieldNames) + ");"
 			print "}"
 
 	def generateDelete(self):
@@ -385,6 +395,36 @@ class Field(object):
 		else:
 			raise Exception, "Unknown sql type: " + sqlType
 
+	## Generate setter for this type
+	# @return string that can be use to set something in resultset
+	def toRSSetter(self, sequence, value):
+		sequence = str(sequence)
+		sqlType = self.__type.lower()
+		if sqlType in ("integer", "tinyint", "smallint", "mediumint", "int", "bigint"):
+			return "setInt(" + sequence + ", " + value + ")"
+		elif sqlType == "long":
+			return "setLong(" + sequence + ", " + value + ")"
+		elif sqlType == "boolean":
+			return "setBoolean(" + sequence + ", " + value + ")"
+		elif sqlType == "numeric":
+			return "setBigDecimnal(" + sequence + ", " + value + ")"
+		elif sqlType == "decimal":
+			return "setBigDecimnal(" + sequence + ", " + value + ")"
+		elif sqlType == "float":
+			return "setFloat(" + sequence + ", " + value + ")"
+		elif sqlType == "real":
+			return "setFloat(" + sequence + ", " + value + ")"
+		elif sqlType == "date":
+			return "setDate(" + sequence + ", " + value + ")"
+		elif sqlType == "char" or (sqlType.find("char") != -1):
+			return "setString(" + sequence + ", " + value + ")"
+		elif sqlType == "varchar" or (sqlType.find("varchar") != -1):
+			return "setString(" + sequence + ", " + value + ")"
+		elif sqlType == "text" or (sqlType.find("text") != -1):
+			return "setString(" + sequence + ", " + value + ")"
+		else:
+			raise Exception, "Unknown sql type: " + sqlType
+
 	def __str__(self):
 		pk = ""
 		if self.__isPk:
@@ -417,6 +457,8 @@ else:
 		f = open(sys.argv[1])
 		if len(sys.argv) > 2:
 			table = sys.argv[2]
+		else:
+			table = None
 
 		TABLE, NOTABLE = range(2)
 
@@ -435,13 +477,13 @@ else:
 			else:				
 				if line[0] == ")":
 					state = NOTABLE
-					# if currentTable.Name == table:
-					# currentTable.generateDelete()
-					currentTable.generateUpdate()
-					# print "člani: ", currentMembers
-					# print ", ".join(currentMembers), "}"
+					if table != None:
+						print table, currentTable.Name
+						if table == currentTable.Name:
+							currentTable.generateUpdate()
+					else:
+						currentTable.generateUpdate()
 				elif (line.find("constraint") != -1):
-					# splitted = line.strip().split()
 					# get everything inbetween parentheses
 					i1 = line.find("(")
 					i2 = line.find(")")
@@ -457,9 +499,6 @@ else:
 				else:
 					fi = Field(line)
 					currentTable.addField(fi)
-					# print f
-					# splitted = line.strip().split()
-					# currentMembers.append(substUnder(splitted[0]))
 
 		f.close()
 	except Exception, msg:
