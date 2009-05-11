@@ -86,36 +86,54 @@ class Table(object):
 
 		print "}"
 
+	## Generate update statements
+	def generateUpdate(self):
+		generateUpdateRow()
+		generateUpdateGet();
+		generateUpdateSet();
+
+	def generateUpdateRow(self):
+
+		
+		pass
+		
+	def generateUpdateGet(self):
+		pass
+
+	def generateUpdateSet(self):
+		pass
+
 	def generateDelete(self):
 		lst = [f.toJavaString() for f in self.__primary]
 		print "public boolean remove(" + ", ".join(lst) + ") {"
-		print "ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
-		print "@Override"
-		print "public void process() {"
-		print "setResult(true);"
-		print "_operation.operationSucceeded(DataOperation.Remove, , "");"
-		print "}"
-		print "@Override"
-		print "public void handleException(SQLException ex) {"
-		print "setResult(false);"
-		print "ex.printStackTrace();"
-		print "_operation.operationFailed(DataOperation.Remove, , "
-		print "i18n.tr(""));"
-		print "}"
-		print "};"
-		print "q.query(\"DELETE FROM \" + DBSchemaModel." + substUnder(self.Name) + " + "
-		print "\" WHERE \" + " + 
+		print "\tResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
+		print "\t@Override"
+		print "\tpublic void process() {"
+		print "\t\tsetResult(true);"
+		print "\t\t_operation.operationSucceeded(DataOperation.Remove, , "");"
+		print "\t}"
+		print "\t@Override"
+		print "\tpublic void handleException(SQLException ex) {"
+		print "\t\tsetResult(false);"
+		print "\t\tex.printStackTrace();"
+		print "\t\t_operation.operationFailed(DataOperation.Remove, , "
+		print "\t\ti18n.tr(""));"
+		print "\t}"
+		print "\t};"
+		print "\tq.query(\"DELETE FROM \" + DBSchemaModel." + substUnder(self.Name) + " + "
+		print "\t\" WHERE \" + " 
 
-		keys = ["\t\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
+		keys = ["\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
 		nkeys = []
 		i = 0
 		for k in keys:
 			nkeys.append(keys[i] + self.__primary[i].toMethodFieldName())
 			i=i+1
 		print " + \",\" + \n".join(nkeys)
-		print "\t\t\")\""
+		print "\t);"
 
-		print "return q.getResult();"
+		print "\treturn q.getResult();"
+		print "}"
 
 	## add primary key to table schema representation
 	def addPrimary(self, value):
