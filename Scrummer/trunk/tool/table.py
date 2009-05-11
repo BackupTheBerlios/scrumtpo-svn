@@ -88,20 +88,149 @@ class Table(object):
 
 	## Generate update statements
 	def generateUpdate(self):
-		generateUpdateRow()
-		generateUpdateGet();
-		generateUpdateSet();
+		#self.generateUpdateRow()
+		#self.generateRowGetter()
+		self.generateRowUpdater()
+		#self.generateUpdateGet()
+		#self.generateUpdateSet()
 
 	def generateUpdateRow(self):
+		print "public static class Row extends DataRow {"
+		print "\t/**"
+		print "\t * Constructor"
+		print "\t * "
+		print "\t * @param result result from which to get data"
+		print "\t */"
+		print "\tpublic Row(ResultSet result) {"
+		print "\t\ttry {"
+		print "\t\t\tresult.beforeFirst(); result.next();"
 
+		lst = []
+		i = 1
+		for f in self.__primary:
+			add = "\t\t\t" + f.toJavaString() + " =\n\t\t\t\t" + f.toRSGetter(i)
+			lst.append(add)
+			i = i + 1
+		for f in self.__fields:
+			add = "\t\t\t" + f.toJavaString() + " =\n\t\t\t\t" + f.toRSGetter(i)
+			lst.append(add)
+			i = i + 1
+
+		print "\n".join(lst)
+
+		print "\t\t} catch (SQLException e) {"
+		print "\t\t\te.printStackTrace();"
+		print "\t\t}"
+		print "\t}"
+		print ""
+		print "\t/**"
+		print "\t * Does key equal" 
+		print "\t * @param taskId"
+		print "\t * @return true if row key equals this row"
+		print "\t */"
+		args = [f.toMethodFieldName() for f in self.__primary]
+		print "\tpublic boolean keyEquals(" + ", ".join(args) + ") {"
 		
-		pass
-		
+		if len(args) == 0:
+			print "\t\treturn true;"
+		elif len(args) == 1:
+			print "\t\tif (" + self.__primary[0].toMethodFieldName() + " == " + self.__primary[0].toJavaString() + ") {"
+			print "\t\t\treturn true;"
+			print "\t\t} else {"
+			print "\t\t\treturn false;"
+			print "\t\t}"
+		else:
+			lst = []
+			i = 0
+			for f in self.__primary:
+				lst.append("(" + f.toMethodFieldName() + " == " + f.toJavaString() + ")")
+			print "\t\tif (" + " &&\n\t\t    ".join(lst) + ") {"
+			print "\t\t\treturn true;"
+			print "\t\t} else {"
+			print "\t\t\treturn false;"
+			print "\t\t}"
+		print "\t}"
+		print "}"
+
+	## generate row getter
+	def generateRowGetter(self):
+		args = [f.toJavaString() for f in self.__primary]
+		print "public Row getRow(" + ", ".join(args) + ") {" 
+		print "{"
+		print "\tResultQuery<Row> q = new ResultQuery<Row>(_connectionModel) {"
+		print "\t@Override"
+		print "\tpublic void processResult(ResultSet result) {"
+		print "\t\tsetResult(new Row(result));"
+		print "\t}"
+		print "\t@Override"
+		print "\tpublic void handleException(SQLException ex) {"
+		print "\t\tsetResult(null);"
+		print "\t\tex.printStackTrace();"
+		print "\t\t_operation.operationFailed(DataOperation.Remove, , "
+		print "\t\ti18n.tr(\"\"));"
+		print "\t}"
+		print "\t};"
+		print "\tq.queryResult("
+		print "\t\"SELECT * FROM \" + DBSchemaModel." + substUnder(self.Name) + " + \" WHERE \" + "
+		keys = ["\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
+		nkeys = []
+		i = 0
+		for k in keys:
+			nkeys.append(keys[i] + self.__primary[i].toMethodFieldName())
+			i=i+1
+		print " + \",\" + \n".join(nkeys) + ");"
+
+		print "\treturn q.getResult();"
+		print "}"
+	
+	## this thing generates a general row update function(updates some column with certain value)
+	def generateRowUpdater(self):
+	
+		args = [f.toMethodFieldName() for f in self.__primary]
+		print "public boolean updateCell(" + ", ".join(args) + ", String column, String value) {"
+		print "\tResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
+		print "\t@Override"
+		print "\tpublic void process() {"
+		print "\t\tsetResult(true);"
+		print "\t\t_operation.operationSucceeded("
+		print "\t\tDataOperation.Update, ImpedimentOperation.ImpedimentType, \"\");"
+		print "\t}"
+		print "\t@Override"
+		print "\tpublic void handleException(SQLException ex) {"
+		print "\t\tsetResult(false);"
+		print "\t\t_operation.operationFailed(DataOperation.Update, , "
+		print "\t\ti18n.tr(\"\"));"
+		print "\t\tex.printStackTrace();"
+		print "\t}"
+		print "\t};"
+		print "q.query(\"UPDATE \" + DBSchemaModel." + self.Name + "Table + "
+		print "\" SET \" + column" + "='" + "value" + "' "
+		print "\" WHERE \" + "
+
+
+
+		# print "WHERE " + DBSchemaModel.ImpedimentTypeId + "='" + typeId + "'");"
+		print "\treturn q.getResult();"
+		print "};"
+
 	def generateUpdateGet(self):
-		pass
+		for f in self.__fields:
+			# generate common header(primary key)
+			args = [f.toJavaString() for f in self.__primary]
+			fieldNames = [f.toMethodFieldName() for f in self.__primary]
+			print "public boolean get" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
+			print "\treturn getRow(" + ", ".join(fieldNames) + ")." + substUnder(f.Name) + ";"
+			print "}"
 
 	def generateUpdateSet(self):
-		pass
+
+		for f in self.__fields:
+			# generate common header(primary key)
+			args = [f.toJavaString() for f in self.__primary]
+			fieldNames = [f.toMethodFieldName() for f in self.__primary]
+			print "public boolean get" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
+			print "\treturn getRow(" + ", ".join(fieldNames) + ")." + substUnder(f.Name) + ";"
+			print "}"
 
 	def generateDelete(self):
 		lst = [f.toJavaString() for f in self.__primary]
@@ -184,7 +313,6 @@ class Field(object):
 
 	## Convert field to java description
 	def toJavaString(self):	
-		print self.__type + " " + self.__name
 		return self.sqlToJavaType(self.__type) + " " + self.toMethodFieldName()
 
 	def toDbName(self):
@@ -224,6 +352,36 @@ class Field(object):
 			return "String"
 		elif sqlType == "text" or (sqlType.find("text") != -1):
 			return "String"
+		else:
+			raise Exception, "Unknown sql type: " + sqlType
+
+	## Generate getter for this type
+	# @return string that can be use to get something from resultset
+	def toRSGetter(self, sequence):
+		sequence = str(sequence)
+		sqlType = self.__type.lower()
+		if sqlType in ("integer", "tinyint", "smallint", "mediumint", "int", "bigint"):
+			return "getInt(" + sequence + ")"
+		elif sqlType == "long":
+			return "getLong(" + sequence + ")"
+		elif sqlType == "boolean":
+			return "getBoolean(" + sequence + ")"
+		elif sqlType == "numeric":
+			return "getBigDecimnal(" + sequence + ")"
+		elif sqlType == "decimal":
+			return "getBigDecimnal(" + sequence + ")"
+		elif sqlType == "float":
+			return "getFloat(" + sequence + ")"
+		elif sqlType == "real":
+			return "getFloat(" + sequence + ")"
+		elif sqlType == "date":
+			return "getDate(" + sequence + ")"
+		elif sqlType == "char" or (sqlType.find("char") != -1):
+			return "getString(" + sequence + ")"
+		elif sqlType == "varchar" or (sqlType.find("varchar") != -1):
+			return "getString(" + sequence + ")"
+		elif sqlType == "text" or (sqlType.find("text") != -1):
+			return "getString(" + sequence + ")"
 		else:
 			raise Exception, "Unknown sql type: " + sqlType
 
@@ -278,7 +436,8 @@ else:
 				if line[0] == ")":
 					state = NOTABLE
 					# if currentTable.Name == table:
-					currentTable.generateDelete()
+					# currentTable.generateDelete()
+					currentTable.generateUpdate()
 					# print "člani: ", currentMembers
 					# print ", ".join(currentMembers), "}"
 				elif (line.find("constraint") != -1):
