@@ -116,7 +116,6 @@ class Table(object):
 		print "\t\t\")\""
 
 		print "return q.getResult();"
-		
 
 	## add primary key to table schema representation
 	def addPrimary(self, value):
@@ -261,7 +260,7 @@ else:
 				if line[0] == ")":
 					state = NOTABLE
 					# if currentTable.Name == table:
-					currentTable.generateInsert()
+					currentTable.generateDelete()
 					# print "člani: ", currentMembers
 					# print ", ".join(currentMembers), "}"
 				elif (line.find("constraint") != -1):
