@@ -335,7 +335,7 @@ public class DBSchemaModel {
 	public static final String HoursRemaining = "Hours_remaining";
 	public static final String NbOpenImped = "NbOpenImped";
 	public static final String NbClosedImped = "NbClosedImped";
-	public static final String measureDay = "Measure_day";
+	public static final String MeasureDay = "Measure_day";
 	
 	public static final String PBITable = "PBI";
 	public static final String PBIId = "PBI_id";
