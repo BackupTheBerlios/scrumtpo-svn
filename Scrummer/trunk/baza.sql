@@ -241,7 +241,7 @@ create table Sprint_PBI
    Hours_remaining integer default '0' null,
    NbOpenImped	integer	default '0' null,
    NbClosedImped	integer	default '0'	null,
-   constraint PK_MEASURE primary key (Sprint_id, PBI_id, Measure_day)
+   constraint PK_MEASURE primary key (Sprint_id, PBI_id, Measure_day, Employee_id)
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
