@@ -1,5 +1,6 @@
 package scrummer.ui;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -16,13 +17,33 @@ import scrummer.uicomponents.StandardComboBox;
 public class FormBuilder {
 
 	/**
+	 * Layout type of this builder
+	 */
+	public static enum Layout {
+		/// two column layout(left side - labels, right side - inputs)
+		Form,
+		/// left to right layout(label, input, label, input, ...)
+		LeftToRight
+	}
+	
+	/**
 	 * Constructor
 	 * 
 	 * @param panel panel on which form will be built
 	 */
-	public FormBuilder(JPanel panel)
-	{
+	public FormBuilder(JPanel panel) {
 		_panel = panel;
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param panel panel
+	 * @param layout layout type
+	 */
+	public FormBuilder(JPanel panel, Layout layout) {
+		_panel = panel;
+		_layout = layout;
 	}
 	
 	/**
@@ -33,8 +54,7 @@ public class FormBuilder {
 	 * 
 	 * @return added text field
 	 */
-	public SelectedTextField addSelectedTextInput(String labelText, String textActionCmd)
-	{
+	public SelectedTextField addSelectedTextInput(String labelText, String textActionCmd) {
 		_addedElements += 2;
 		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
 		
@@ -56,8 +76,7 @@ public class FormBuilder {
 	 * 
 	 * @return added text field
 	 */
-	public SelectedFormattedTextField addSelectedFormattedTextInput(String labelText, String textActionCmd, AbstractFormatter formatter)
-	{
+	public SelectedFormattedTextField addSelectedFormattedTextInput(String labelText, String textActionCmd, AbstractFormatter formatter) {
 		_addedElements += 2;
 		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
 		
@@ -76,8 +95,7 @@ public class FormBuilder {
 	 * @param labelText label text
 	 * @return created combo box
 	 */
-	public StandardComboBox addComboBoxInput(String labelText)
-	{
+	public StandardComboBox addComboBoxInput(String labelText) {
 		_addedElements += 2;
 		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
 		
@@ -95,8 +113,7 @@ public class FormBuilder {
 	 * @param horizontal
 	 * @param vertical
 	 */
-	public void setCellSpacing(int horizontal, int vertical)
-	{
+	public void setCellSpacing(int horizontal, int vertical) {
 		_horizontal = horizontal;
 		_vertical = vertical;
 		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
@@ -110,12 +127,19 @@ public class FormBuilder {
 	 * @param horizontalSpacing horizontal intercell spacing
 	 * @param verticalSpacing vertical intercell spacing
 	 */
-	private void adjustPanelLayout(JPanel panel, int elementCount, int horizontalSpacing, int verticalSpacing)
-	{
-		panel.setLayout(
-			new GridLayout(elementCount / 2, 2, horizontalSpacing, verticalSpacing));
+	private void adjustPanelLayout(JPanel panel, int elementCount, int horizontalSpacing, int verticalSpacing) {
+		if (_layout == Layout.Form) {
+			panel.setLayout(
+				new GridLayout(elementCount / 2, 2, horizontalSpacing, verticalSpacing));	
+		} else {
+			panel.setLayout(
+				new FlowLayout(FlowLayout.LEFT, horizontalSpacing, verticalSpacing));
+		}
+		
 	}
 	
+	/// layout type
+	private Layout _layout = Layout.Form;
 	/// horizontal intercell spacing
 	private int _horizontal = 0;
 	/// vertical intercell spacing
