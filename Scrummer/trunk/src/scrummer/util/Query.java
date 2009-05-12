@@ -62,19 +62,15 @@ public class Query {
 	 * @param query database query
 	 * @return result set
 	 */
-	public void queryResult(String query)
-	{		
-		try
-		{
+	public void queryResult(String query) {		
+		try {
 			// fetch connection
 			_connection = _connectionModel.getConnection();
 			
 			_statement = _connection.createStatement();
 			_resultSet = _statement.executeQuery(query);
 			processResult(_resultSet);
-		}
-		catch (SQLException ex)
-		{
+		} catch (SQLException ex) {
 			handleException(ex);
 		}
 		finally
@@ -89,10 +85,8 @@ public class Query {
 	 * @param query database query
 	 * @return result set
 	 */
-	public void query(String query)
-	{
-		try
-		{
+	public void query(String query) {
+		try {
 			// fetch connection
 			_connection = _connectionModel.getConnection();
 			// create statement
@@ -101,13 +95,9 @@ public class Query {
 			_statement.execute(query);
 			// final call
 			process();
-		}
-		catch (SQLException ex)
-		{
+		} catch (SQLException ex) {
 			handleException(ex);
-		}
-		finally
-		{
+		} finally {
 			dispose();
 		}
 	}
