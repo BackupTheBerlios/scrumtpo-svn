@@ -43,7 +43,7 @@ public class AdminDaysModelCommon
 			 String query =
 				"INSERT INTO Administrative_days (" +
 				DBSchemaModel.EmployeeId + ", " + DBSchemaModel.AbsenceTypeId +
-				", " + DBSchemaModel.HoursNotWorked + ", " + DBSchemaModel.measureDay + ") " +
+				", " + DBSchemaModel.HoursNotWorked + ", " + DBSchemaModel.MeasureDay + ") " +
 			 	"VALUES (?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
 			 st.setInt(1, employee_id);
@@ -160,7 +160,7 @@ public class AdminDaysModelCommon
 		};
 		q.query("DELETE FROM " + DBSchemaModel.AdminDaysTable + 
 				" WHERE " + DBSchemaModel.EmployeeId + "=" + id + " AND " +
-				DBSchemaModel.measureDay + "=" + day);
+				DBSchemaModel.MeasureDay + "=" + day);
 		if (q.getResult() == null)
 		{
 			return false;
