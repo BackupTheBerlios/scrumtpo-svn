@@ -8,6 +8,7 @@ import scrummer.model.swing.ImpedimentTableModel;
 import scrummer.model.swing.SBIComboBoxModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.SprintDescriptionListModel;
+import scrummer.model.swing.SprintPBITableModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.util.Operations;
 
@@ -52,6 +53,8 @@ public class SprintBacklogModel
 			new SprintDescriptionListModel(_sprintbacklogModelCommon, projectModel);
 		_taskTableModel = 
 			new AllTaskTableModel(_connectionModel, _sprintbacklogModelCommon, _projectModel);
+		_sprintPBITableModel =
+			new SprintPBITableModel(_sprintbacklogModelCommon);
 	}
 	
 	/**
@@ -80,6 +83,25 @@ public class SprintBacklogModel
 	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
 	{
 		_sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
+	}
+	
+	/**
+	 * Insert a new entry into Sprint_PBI table
+	 * 
+	 * @param sprintId sprint
+	 * @param pbiId pbi
+	 * @param measureDay measure day
+	 * @param employeeId employee
+	 * @param hoursSpent spent hours
+	 * @param hoursRemaining remaining hours
+	 * @param nbOpenImped open impediments
+	 * @param nbClosedImped closed impediments
+	 * @return true if row added, false otherwise
+	 */
+	public void addDailyEntry(int sprintId, int pbIId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+		if (_sprintbacklogModelCommon.addDailyEntry(sprintId, pbIId, measureDay, employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped)) {
+			_sprintPBITableModel.refresh();
+		}
 	}
 	
 	/**
@@ -170,13 +192,17 @@ public class SprintBacklogModel
 	{
 		return _sbiComboBoxModel;
 	}
+	
+	public SprintPBITableModel getSprintPBITableModel() {
+		return _sprintPBITableModel;
+	}
 		
 	public SprintDescriptionListModel getSprintDescriptionListModel() {
 		return _sprintDescriptionListModel;
 	}
 	
-	public void setTaskProp(int taskId, int pbi_id, String newSprint, int emp_id) {
-		_sprintbacklogModelCommon.setTaskProp(taskId, pbi_id, newSprint, emp_id);	
+	public void setTaskProp(int dateId, int pbi_id, String newSprint, int emp_id) {
+		_sprintbacklogModelCommon.setTaskProp(dateId, pbi_id, newSprint, emp_id);	
 	}
 	
 	public void setTaskMeasures(int id, int day, int sh, int rh, int oi, int ci) {
@@ -276,6 +302,7 @@ public class SprintBacklogModel
 		_currentSprint = sprintId;
 		_taskTableModel.setSprintId(sprintId);
 		_impedimentTableModel.setSprintId(sprintId);
+		_sprintPBITableModel.setSprintId(sprintId);
 	}
 	
 	/** 
@@ -294,6 +321,8 @@ public class SprintBacklogModel
 	private ProductBacklogModelCommon _pbiModelCommon;
 	private DeveloperModelCommon _devModelCommon;
 	private TaskModelCommon _taskModelCommon;
+	/// sprint pbi table model
+	private SprintPBITableModel _sprintPBITableModel;
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// project model
