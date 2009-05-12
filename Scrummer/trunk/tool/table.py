@@ -195,7 +195,7 @@ class Table(object):
 		print "\tpublic void process() {"
 		print "\t\tsetResult(true);"
 		print "\t\t_operation.operationSucceeded("
-		print "\t\tDataOperation.Update, ImpedimentOperation.ImpedimentType, \"\");"
+		print "\t\tDataOperation.Update, , \"\");"
 		print "\t}"
 		print "\t@Override"
 		print "\tpublic void handleException(SQLException ex) {"
@@ -218,7 +218,7 @@ class Table(object):
 		print " + \" AND \" + \n".join(pklst) + ");";
 
 		print "\treturn q.getResult();"
-		print "};"
+		print "\t};"
 
 	def generateUpdateGet(self):
 		for f in self.__fields:
@@ -236,10 +236,11 @@ class Table(object):
 			args = [g.toJavaString() for g in self.__primary]
 			args.append("String value")
 			fieldNames = [g.toMethodFieldName() for g in self.__primary]
-			fieldNames.append("\"DBSchemaModel." + substUnder(f.Name) + "\"")
+			fieldNames.append("DBSchemaModel." + substUnder(f.Name))
+			fieldNames.append("value")
 
 			print "public boolean set" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
-			print "\tupdateCell(" + ", ".join(fieldNames) + ");"
+			print "\treturn updateCell(" + ", ".join(fieldNames) + ");"
 			print "}"
 
 	def generateDelete(self):
