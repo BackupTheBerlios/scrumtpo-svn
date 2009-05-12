@@ -8,6 +8,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
 import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.model.DBSchemaModel.SprintPBIEnum;
 import scrummer.util.ObjectRow;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
@@ -60,7 +61,7 @@ public class SprintBacklogModelCommon
         	 st = null;
         	 String query3 =
         		 "INSERT INTO " + DBSchemaModel.SprintPBITable + " " +
-        		 "(" + DBSchemaModel.measureDay + "," + 
+        		 "(" + DBSchemaModel.MeasureDay + "," + 
         		 DBSchemaModel.PBIId + "," +
         		 DBSchemaModel.TaskId + "," +
         		 DBSchemaModel.SprintId + "," +
@@ -159,7 +160,7 @@ public class SprintBacklogModelCommon
 				ex.printStackTrace();
 			}
 		};
-		q.queryResult("SELECT Measure_day, Task.PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.SprintPBITable + " JOIN " + DBSchemaModel.TaskTable + " WHERE Sprint_PBI.Task_id = Task.Task_id");
+		q.queryResult("SELECT Measure_day, Task.PBI_id, Sprint_id, Task.Task_id, Task_description, Task_type_id, Task_status_id, Task_date, Task_active, Task.Employee_id, Hours_spent, Hours_remaining, NbOpenImped, NbClosedImped FROM " + DBSchemaModel.SprintPBITable + " JOIN " + DBSchemaModel.TaskTable);
 		if (q.getResult() == null)
 		{
 			return new Vector<ObjectRow>();
@@ -193,7 +194,7 @@ public class SprintBacklogModelCommon
 		
 		q.query("UPDATE " + DBSchemaModel.SprintPBITable + 
 				" SET " + column + "='" + value + "' " +
-				"WHERE " + DBSchemaModel.PBIId + "='" + pbiid + "' AND " + DBSchemaModel.TaskId + "='" + taskid + "' AND " + DBSchemaModel.SprintId + "='" + sprintid + "' AND" + DBSchemaModel.measureDay + "='" + day + "'");
+				"WHERE " + DBSchemaModel.PBIId + "='" + pbiid + "' AND " + DBSchemaModel.TaskId + "='" + taskid + "' AND " + DBSchemaModel.SprintId + "='" + sprintid + "' AND" + DBSchemaModel.MeasureDay + "='" + day + "'");
 		
 		if (q.getResult() == null)
 		{
@@ -255,7 +256,7 @@ public class SprintBacklogModelCommon
 		};
 		q.query(
 			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
-			"SET " + DBSchemaModel.measureDay + "='" + name + "' " +
+			"SET " + DBSchemaModel.MeasureDay + "='" + name + "' " +
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
 	
@@ -281,17 +282,19 @@ public class SprintBacklogModelCommon
 	}
 	
 	public void setSBIHoursRemain(int id, String name) {
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
 			@Override
 			public void process() {
-				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.HoursRemaining, "");
+				_operation.operationSucceeded(
+					DataOperation.Update, 
+					SprintBacklogOperation.HoursRemaining, "");
 			}
-
 			@Override
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
-				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.HoursRemaining, ex.getMessage());
+				_operation.operationFailed(
+					DataOperation.Update, 
+					SprintBacklogOperation.HoursRemaining, ex.getMessage());
 			}
 			
 		};
@@ -302,19 +305,20 @@ public class SprintBacklogModelCommon
 	}
 	
 	public void setSBINbOpenImped(int id, String name) {
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
 			@Override
 			public void process() {
-				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.NbOpenImped, "");
+				_operation.operationSucceeded(
+					DataOperation.Update, 
+					SprintBacklogOperation.NbOpenImped, "");
 			}
-
 			@Override
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
-				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.NbOpenImped, ex.getMessage());
+				_operation.operationFailed(
+					DataOperation.Update, 
+					SprintBacklogOperation.NbOpenImped, ex.getMessage());
 			}
-			
 		};
 		q.query(
 			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
@@ -323,19 +327,20 @@ public class SprintBacklogModelCommon
 	}
 	
 	public void setSBINbClosedImped(int id, String name) {
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
 			@Override
 			public void process() {
-				_operation.operationSucceeded(DataOperation.Update, SprintBacklogOperation.NbClosedImped, "");
+				_operation.operationSucceeded(
+					DataOperation.Update, 
+					SprintBacklogOperation.NbClosedImped, "");
 			}
-
 			@Override
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
-				_operation.operationFailed(DataOperation.Update, SprintBacklogOperation.NbClosedImped, ex.getMessage());
+				_operation.operationFailed(
+					DataOperation.Update, 
+					SprintBacklogOperation.NbClosedImped, ex.getMessage());
 			}
-			
 		};
 		q.query(
 			"UPDATE " + DBSchemaModel.SprintPBITable + " " +
@@ -343,24 +348,26 @@ public class SprintBacklogModelCommon
 			"WHERE " + DBSchemaModel.TaskId + "='" + id + "'");
 	}
 	
-	public void setTaskProp(int taskId, int pbi_id, String newSprint, int emp_id) {
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{
+	public void setTaskProp(int measureDay, int pbi_id, String newSprint, int emp_id) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
 			@Override
 			public void process() {
-				_operation.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.NbClosedImped, "");
+				_operation.operationSucceeded(
+					DataOperation.Insert, 
+					SprintBacklogOperation.NbClosedImped, "");
 			}
 			@Override
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
-				_operation.operationFailed(DataOperation.Insert, SprintBacklogOperation.NbClosedImped, ex.getMessage());
+				_operation.operationFailed(
+					DataOperation.Insert, 
+					SprintBacklogOperation.NbClosedImped, ex.getMessage());
 			}
-				
-			};
-			q.query(
-				"INSERT INTO " + DBSchemaModel.SprintPBITable + " " +
-				"(Measure_day, PBI_id, Task_id, Sprint_id, Employee_id) VALUES(" +
-				1 + ", " + pbi_id + ", " + taskId + ", " + newSprint + ", " + emp_id + ") ");
+		};
+		q.query(
+			"INSERT INTO " + DBSchemaModel.SprintPBITable + " " +
+			"(Measure_day, PBI_id, Sprint_id, Employee_id) VALUES(" +
+			measureDay + ", " + pbi_id + ", " + newSprint + ", " + emp_id + ") ");
 	}
 	
 	public void setTaskMeasures(int id, int day, int sh, int rh, int oi, int ci) 
@@ -392,7 +399,7 @@ public class SprintBacklogModelCommon
 				};
 				
 				q2.query("INSERT INTO " + DBSchemaModel.SprintPBITable +
-						" (" + DBSchemaModel.measureDay + "," + 
+						" (" + DBSchemaModel.MeasureDay + "," + 
 		       		 	DBSchemaModel.PBIId + "," +
 		       		 	DBSchemaModel.TaskId + "," +
 		       		 	DBSchemaModel.SprintId + "," +
@@ -862,8 +869,8 @@ public class SprintBacklogModelCommon
 			DBSchemaModel.SprintPBIHoursRemaining + ", " +
 			DBSchemaModel.SprintPBINbOpenImped + ", " +
 			DBSchemaModel.SprintPBINbClosedImped + 
-			" FROM " + 
-			"WHERE " +
+			" FROM " + DBSchemaModel.SprintPBITable + 
+			" WHERE " +
 			DBSchemaModel.SprintPBISprintId + "=" + sprintId + 
 			" AND " +
 			DBSchemaModel.SprintPBIPBIId + "=" + pbiId + 
@@ -871,6 +878,148 @@ public class SprintBacklogModelCommon
 			DBSchemaModel.SprintPBIEmployeeId + "=" + employeeId);
 		return q.getResult();	
 	}
+	
+	/**
+	 * Dig into db to find at least one Sprint_PBI entry with given pk.
+	 * @param measureDay day of measurement
+	 * @param pbiId pbi
+	 * @param sprintId sprint
+	 * @param employeeId employee
+	 * @return true if row with specified keys exists
+	 */
+	public boolean existsSprintPBI(int measureDay, int pbiId, int sprintId, int employeeId) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+			@Override
+			public void processResult(ResultSet result) {
+				Vector<ObjectRow> rows = ObjectRow.fetchRows(result);
+				if (rows.size() > 0) {
+					setResult(true);
+				} else { 
+					setResult(false);
+				}				
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(false);
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT *" + 			
+			" FROM " + DBSchemaModel.SprintPBITable + 
+			" WHERE " +
+			DBSchemaModel.SprintPBIMeasureDay + "=" + measureDay + 
+			" AND " +
+			DBSchemaModel.SprintPBISprintId + "=" + sprintId + 
+			" AND " +
+			DBSchemaModel.SprintPBIPBIId + "=" + pbiId + 
+			" AND " +
+			DBSchemaModel.SprintPBIEmployeeId + "=" + employeeId);
+		return q.getResult();	
+	}
+	
+	/**
+	 * Insert a new entry into Sprint_PBI table
+	 * @param sprintId sprint
+	 * @param pbiId pbi
+	 * @param measureDay measure day
+	 * @param employeeId employee
+	 * @param hoursSpent spent hours
+	 * @param hoursRemaining remaining hours
+	 * @param nbOpenImped open impediments
+	 * @param nbClosedImped closed impediments
+	 * @return true if row added, false otherwise
+	 */
+	public boolean addDailyEntry(int sprintId, int pbIId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+        boolean ret = false;
+        java.sql.Connection conn      = null;
+        java.sql.PreparedStatement st = null;
+        ResultSet res = null;
+        try {
+                conn = _connectionModel.getConnection();
+                String query =
+                "INSERT INTO " + DBSchemaModel.SprintPBITable +
+                "(" +
+                DBSchemaModel.SprintPBISprintId + ", " +
+                DBSchemaModel.SprintPBIPBIId + ", " +
+                DBSchemaModel.SprintPBIMeasureDay + ", " + 
+                DBSchemaModel.EmployeeId + "," +
+                DBSchemaModel.HoursSpent + "," +
+                DBSchemaModel.HoursRemaining + "," +
+                DBSchemaModel.NbOpenImped + "," +
+                DBSchemaModel.NbClosedImped +
+                ") " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+                st = conn.prepareStatement(query);
+                st.setInt(1, sprintId);
+                st.setInt(2, pbIId);
+                st.setInt(3, measureDay);                
+                st.setInt(4, employeeId);
+                st.setInt(5, hoursSpent);
+                st.setInt(6, hoursRemaining);
+                st.setInt(7, nbOpenImped);
+                st.setInt(8, nbClosedImped);
+                st.execute();
+                _operation.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.SprintPBI, "");
+                ret = true;
+        } catch (SQLException e) {
+        	_operation.operationFailed(DataOperation.Insert, SprintBacklogOperation.SprintPBI, e.getMessage());
+        	e.printStackTrace();
+        } finally {
+            res  = _connectionModel.close(res);
+            st   = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
+        return ret;
+	}
+	
+	/**
+	 * Update arbitrary cell within Sprint_PBI table
+	 * @param sprintId sprint
+	 * @param pbIId pbi
+	 * @param measureDay measured day
+	 * @param column column name
+	 * @param value value to set
+	 * @return true if cell updated, false otherwise
+	 */
+	public boolean updateSBICell(int sprintId, int pBIId, int measureDay, String column, String value) {
+		System.out.println("Update:" + sprintId + "; " + pBIId + "; " + measureDay + "; " + column + "; " + value);
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(
+            DataOperation.Update, SprintBacklogOperation.SprintPBI, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            _operation.operationFailed(DataOperation.Update, SprintBacklogOperation.SprintPBI,
+            i18n.tr("Failed to update information in the databse."));
+            ex.printStackTrace();
+        }
+        };
+        q.query("UPDATE " + DBSchemaModel.SprintPBITable +
+        " SET " + column + "='" + value + "'" +
+        " WHERE " +
+        DBSchemaModel.SprintId + "=" + sprintId + " AND " +
+        DBSchemaModel.PBIId + "=" + pBIId + " AND " +
+        DBSchemaModel.MeasureDay + "=" + measureDay);
+        return q.getResult();
+	};
+		
+	public boolean setHoursSpent(int sprintId, int pBIId, int measureDay, Integer value) {
+		return updateSBICell(sprintId, pBIId, measureDay, DBSchemaModel.HoursSpent, value.toString());
+	}
+	public boolean setHoursRemaining(int sprintId, int pBIId, int measureDay, Integer value) {
+		return updateSBICell(sprintId, pBIId, measureDay, DBSchemaModel.HoursRemaining, value.toString());
+	}
+	public boolean setNbOpenImped(int sprintId, int pBIId, int measureDay, Integer value) {
+		return updateSBICell(sprintId, pBIId, measureDay, DBSchemaModel.NbOpenImped, value.toString());
+	}
+	public boolean setNbClosedImped(int sprintId, int pBIId, int measureDay, Integer value) {
+		return updateSBICell(sprintId, pBIId, measureDay, DBSchemaModel.NbClosedImped, value.toString());
+	}	
 	
 	/// connection model
 	private ConnectionModel _connectionModel;
