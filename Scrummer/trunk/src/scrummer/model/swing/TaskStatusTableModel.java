@@ -60,8 +60,6 @@ public class TaskStatusTableModel extends DefaultTableModel
 	{
 		_rows = _taskstatusModelCommon.fetchTaskStatusTable();
         _rowCount = _rows.size();
-		
-
 	}
 
 	@Override
