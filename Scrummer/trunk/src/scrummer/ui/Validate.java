@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
 
+import scrummer.exception.ValueInvalid;
+
 /**
  * Validator class makes validation of ui input fields more convenient
  */
@@ -45,15 +47,11 @@ public class Validate {
 	 * @param parent parent on which to display err message
 	 * @return true if field isn't empty, false otherwise
 	 */
-	public static boolean empty(JTextField input, Component parent)
-	{
+	public static boolean empty(JTextField input, Component parent) {
 		String trimmed = input.getText().trim();
-		if (trimmed.length() > 0)
-		{
+		if (trimmed.length() > 0) {
 			return true;
-		}
-		else
-		{			
+		} else {			
 			return false;
 		}
 	}
@@ -115,6 +113,46 @@ public class Validate {
 		}
 		catch (NumberFormatException ex) {}
 		return ret;
+	}
+	
+	/**
+	 * Check if given text field value is in range
+	 * @param input input text field
+	 * @param low low border
+	 * @param high high border
+	 * @return true if value is inbetween, false otherwise
+	 */
+	public static boolean inrange(JTextField input, int low, int high) {	
+		if (low > high) {
+			throw new ValueInvalid(
+				new Integer(low).toString(), 
+				"Low interval border must be lower than high.");
+		}
+		
+		Integer i = Integer.parseInt(input.getText());
+		if ((i >= low) && (i <= high)) {
+			return true;
+		} else {
+			return false;
+		}	
+	}
+	
+	/**
+	 * Check if given text field value is in range. If it is not display error message.
+	 * @param input input text field
+	 * @param low low border
+	 * @param high high border
+	 * @param message error message
+	 * @param parent parent control
+	 * @return true if value is inbetween, false otherwise
+	 */
+	public static boolean inrange(JTextField input, int low, int high, String message, Component parent) {
+		if (!inrange(input, low, high)) {
+			Util.showError(parent, message, i18n.tr("Error"));
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
