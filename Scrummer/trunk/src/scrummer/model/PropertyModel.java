@@ -31,24 +31,19 @@ public class PropertyModel {
 		_logger = logger;
 		_property = defaults();
 		
-		if (IO.exists(IO.filepath("bin")))
-		{
+		if (IO.exists(IO.filepath("bin"))) {
 			String configFile = "bin/" + _property.getProperty("application.configFile");
 			String url = IO.filepath(configFile);
 			// check if configuration file exists
 			// if it exists, load it
-			if (IO.exists(url))
-			{
+			if (IO.exists(url)) {
 				loadPropertyFile(url);
-			}
-			else
+			} else
 			// otherwise create it from default configuration file
 			{
 				createDefaultPropertyFile(url);
 			}
-		}
-		else
-		{
+		} else {
 			_logger.warning("./bin directory does not exist! Could not create configuration file.");
 		}
 	}
@@ -68,16 +63,14 @@ public class PropertyModel {
 	 * @param key property key
 	 * @param value property value
 	 */
-	public void setProperty(String key, String value)
-	{
+	public void setProperty(String key, String value) {
 		_property.setProperty(key, value);	
 	}
 	
 	/**
 	 * Save property file to it's default location
 	 */
-	public void savePropertyFile()
-	{
+	public void savePropertyFile() {
 		// fetch default property file name
 		String path = 
 			IO.filepath("bin") + 
@@ -91,8 +84,7 @@ public class PropertyModel {
 	 * Save property file to given path
 	 * @param url pathname 
 	 */
-	public void savePropertyFile(String url)
-	{
+	public void savePropertyFile(String url) {
 		boolean success = false;
 		FileOutputStream fos = null;
 		try {
@@ -193,6 +185,11 @@ public class PropertyModel {
 		ret.setProperty("uidefault.LoginDialog.database", "scrumtpo");
 		// last opened project
 		ret.setProperty("uidefault.OpenProjectDialog.lastOpened", "");
+		// last chosen sprint on daily scrum dialog - so it doesn't have to be selected each time
+		// when several daily scrums are entered
+		ret.setProperty("uidefault.DailyScrumDialog.lastSprint", "");
+		// last input measure day - so it doesn't have to be selected for each user every time 
+		ret.setProperty("uidefault.DailyScrumDialog.lastMeasureDay", "1");
 		// slovene translation class path
 		ret.setProperty("language.bundle.sl_SI", "scrummer.i18n.Messages_sl_SI");
 		// english translation class path
