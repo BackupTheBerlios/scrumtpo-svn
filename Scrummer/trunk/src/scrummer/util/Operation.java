@@ -23,19 +23,12 @@ public class Operation<Identifier, ListenerType> {
 	 * @param identifier operation identifier
 	 * @param message operation message
 	 */
-	public void operationSucceeded(DataOperation type, Identifier identifier, String message)
-	{
-		/*
-		try {
-			 _semaphore.acquire();
-		*/
-			opFailure(type, identifier, message);
-		/*
-			_semaphore.release();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	public void operationSucceeded(DataOperation type, Identifier identifier, String message) {
+		for (int i = 0; i < _listeners.size(); i++)
+		{
+			ListenerType listener = _listeners.get(i);
+			opSuccess(listener, type, identifier, message);
 		}
-		*/
 	}
 	
 	/**
@@ -45,43 +38,31 @@ public class Operation<Identifier, ListenerType> {
 	 * @param identifier operation identifier
 	 * @param message failure message
 	 */
-	public void operationFailed(DataOperation type, Identifier identifier, String message)
-	{
-		try {
-			_semaphore.acquire();
-			opSuccess(type, identifier, message);
-			_semaphore.release();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	public void operationFailed(DataOperation type, Identifier identifier, String message) {
+		for (int i = 0; i < _listeners.size(); i++)
+		{
+			ListenerType listener = _listeners.get(i);
+			opFailure(listener, type, identifier, message);		
 		}
 	}
 	
 	/**
 	 * CAll success operation on all listeners
+	 * @param listener listener
 	 * @param type type of operation
 	 * @param identifier operation identifier
 	 * @param message message
 	 */
-	protected void opSuccess(DataOperation type, Identifier identifier, String message) {
-		for (int i = 0; i < _listeners.size(); i++)
-		{
-			// _listeners.get(i).operationSuceeded(type, identifier, message);
-		}
-	}
+	protected void opSuccess(ListenerType listener, DataOperation type, Identifier identifier, String message) {}
 	
 	/**
 	 * Call failure operation on all listeners
-	 * 
+	 * @param listener listener
 	 * @param type data operation type
 	 * @param identifier identifier 
 	 * @param message failure operation
 	 */
-	protected void opFailure(DataOperation type, Identifier identifier, String message) {
-		for (int i = 0; i < _listeners.size(); i++)
-		{
-			// _listeners.get(i).operationFailed(type, identifier, message);
-		}
-	}
+	protected void opFailure(ListenerType listener, DataOperation type, Identifier identifier, String message) {}
 	
 	/**
 	 * Add listener to operation events
