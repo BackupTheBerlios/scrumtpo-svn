@@ -15,8 +15,7 @@ import scrummer.util.Operations;
  * 
  * This class works regardless of project state(opened, closed).
  */
-public class TaskModel 
-{
+public class TaskModel {
 	/**
 	 * Constructor
 	 * 
@@ -187,10 +186,10 @@ public class TaskModel
 	/**
 	 * @return project/sprint based task combo box model
 	 */
-	public ProjectSprintTaskComboBoxModel getProjectSprintTaskComboBoxModel()
-	{
+	public ProjectSprintTaskComboBoxModel getProjectSprintTaskComboBoxModel() {
 		_projectSprintTaskComboBoxModel.setProject(_projectModel.getCurrentProjectId());
 		_projectSprintTaskComboBoxModel.setSprint(_sprintBacklogModel.getCurrentSprint());
+		_projectSprintTaskComboBoxModel.refresh();
 		return _projectSprintTaskComboBoxModel;
 	}
 	
