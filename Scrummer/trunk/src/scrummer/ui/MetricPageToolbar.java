@@ -11,6 +11,7 @@ import scrummer.Scrummer;
 import scrummer.model.DeveloperModel;
 import scrummer.model.Models;
 import scrummer.model.ProductBacklogModel;
+import scrummer.model.TaskModel;
 import scrummer.model.swing.SprintPBITableModel;
 import scrummer.uicomponents.StandardComboBox;
 
@@ -22,21 +23,22 @@ public class MetricPageToolbar
 	implements ActionListener {
 
 	public MetricPageToolbar() {
-		
 		setBackground(Color.WHITE);
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		Models m = Scrummer.getModels();
+		TaskModel taskModel = m.getTaskModel();
 		DeveloperModel developerModel = m.getDeveloperModel(); 
 		ProductBacklogModel productModel = m.getProductBacklogModel();
 		_sprintPbiTableModel = m.getSprintBacklogModel().getSprintPBITableModel();
 		
 		FormBuilder fb = new FormBuilder(this, FormBuilder.Layout.LeftToRight);
-		_pbiInput = 
-			fb.addComboBoxInput(i18n.tr("PBI") + ":");
-		_pbiInput.addActionListener(this);
-		_pbiInput.setIVModel(productModel.getProjectSprintPBIComboBoxModel());
-				
+		
+		_taskInput =
+			fb.addComboBoxInput(i18n.tr("Task") + ":");
+		_taskInput.addActionListener(this);
+		_taskInput.setIVModel(taskModel.getProjectSprintTaskComboBoxModel());
+		
 		_employeeInput = 
 			fb.addComboBoxInput(i18n.tr("Employee") + ":");
 		_employeeInput.addActionListener(this);
@@ -50,14 +52,14 @@ public class MetricPageToolbar
 		if (e.getSource() == _employeeInput) {
 			_sprintPbiTableModel.setEmployeeId(_employeeInput.getSelectedId());
 		} else {
-			_sprintPbiTableModel.setPbiId(_pbiInput.getSelectedId());
+			_sprintPbiTableModel.setTaskId(_taskInput.getSelectedId());
 		}
 	}
 	
 	/// link between sprint and pbi table model
 	SprintPBITableModel _sprintPbiTableModel;
 	/// employee and pbi input
-	StandardComboBox _employeeInput, _pbiInput;
+	StandardComboBox _employeeInput, _taskInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serializatino id
