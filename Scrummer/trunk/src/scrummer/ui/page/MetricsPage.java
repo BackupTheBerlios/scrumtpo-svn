@@ -8,6 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import scrummer.Scrummer;
 import scrummer.model.DeveloperModel;
 import scrummer.model.Models;
@@ -43,7 +45,8 @@ public class MetricsPage extends BasePage implements ActionListener {
 		
 		NiceTable sprintbacklogTable = new NiceTable();
 		sprintbacklogTable.setModel(sprintPBITableModel);
-		sprintbacklogTable.setBackground(Color.WHITE);		
+		sprintbacklogTable.setBackground(Color.WHITE);
+		// sprintbacklogTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		_sprintbacklogTable = sprintbacklogTable;
 			
 		JScrollPane scrollPane = new JScrollPane(sprintbacklogTable);				
