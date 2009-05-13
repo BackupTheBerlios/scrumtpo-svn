@@ -1,11 +1,8 @@
 package scrummer.model.swing;
 
 import java.util.Vector;
-
 import javax.swing.table.DefaultTableModel;
-
 import org.xnap.commons.i18n.I18n;
-
 import scrummer.Scrummer;
 import scrummer.model.ConnectionModel;
 import scrummer.model.DBSchemaModel;
@@ -16,16 +13,15 @@ import scrummer.util.ObjectRow;
 /**
  * Product Backlog table synchronization class 
  */
-public class SprintBacklogTableModel extends DefaultTableModel 
-{	
+public class SprintBacklogTableModel 
+	extends DefaultTableModel {	
 	/**
 	 * Default constructor
 	 * 
 	 * @param connectionModel connection model to connect to database
 	 */
 	public SprintBacklogTableModel(ConnectionModel connectionModel, 
-				SprintBacklogModelCommon sprintbacklogModelCommon) 
-	{
+				SprintBacklogModelCommon sprintbacklogModelCommon) {
 		super();
 		_sprintbacklogModelCommon = sprintbacklogModelCommon;
 		
@@ -51,8 +47,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	/**
 	 * Refresh data
 	 */
-	public void refresh()
-	{
+	public void refresh() {
 		refreshColumnNames();
 		refreshTableData();
         fireTableDataChanged();
@@ -61,8 +56,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	/**
 	 * Refresh real column names
 	 */
-	private void refreshColumnNames()
-	{
+	private void refreshColumnNames() {
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
 		_realColumns = schemam.getColumns(DBSchemaModel.SprintPBITable);		
@@ -71,8 +65,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	/**
 	 * Refresh table data
 	 */
-	private void refreshTableData()
-	{
+	private void refreshTableData() {
 		_rows = _sprintbacklogModelCommon.fetchSprintBacklogTable();
         _rowCount = _rows.size();
 	}
@@ -83,8 +76,7 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	}
 
 	@Override
-	public void setValueAt(Object value, int row, int column) 
-	{	
+	public void setValueAt(Object value, int row, int column) {	
 		//if (_sprintbacklogModelCommon.setSprintBacklog(_rows.get(row).get(0).toString(),_realColumns.get(column + 1),value.toString()))
 		//{
 		//	refresh();
@@ -136,10 +128,8 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	}
 	
 	@Override
-	public void removeRow(int row) 
-	{
-		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString()))
-		{
+	public void removeRow(int row) {
+		if (_sprintbacklogModelCommon.removeSprintBacklog(_rows.get(row).get(0).toString())) {
 			refresh();
 		}			
 	}
@@ -179,6 +169,5 @@ public class SprintBacklogTableModel extends DefaultTableModel
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
-	private static final long serialVersionUID = 2334976808166694864L;
-	
+	private static final long serialVersionUID = 2334976808166694864L;	
 }
