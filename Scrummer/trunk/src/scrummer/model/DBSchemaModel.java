@@ -392,6 +392,30 @@ public class DBSchemaModel {
 	public static final String TaskTypeTable = "Task_type";
 	public static final String TaskTypeDesc = "Task_type_description";	
 	
+	public static final String MeasureTable = "Measure_table";
+	public static final String MeasureId = "Measure_id";
+	public static final String MeasureName = "Measure_name";
+	public static final String MeasureDescription = "Measure_description";
+	
+	public static final String ReleaseTable = "FinalRelease";
+	public static final String ReleaseId = "Release_id";
+	public static final String ReleaseDescription = "Release_description";
+	
+	public static final String TaskMeasurementResultTable = "Task_measurement_result";
+	public static final String TaskMeasurementResultId = "Measure_id";
+	public static final String TaskMeasurementResultResult = "Measurement_result";
+	public static final String TaskMeasurementResultDatum = "Datum";
+	
+	public static final String SprintMeasurementResultTable = "Sprint_measurement_result";
+	public static final String SprintMeasurementResultId = "Sprint_id";
+	public static final String SprintMeasurementResultResult = "Measurement_result";
+	public static final String SprintMeasurementResultDate = "Datum";
+	
+	public static final String ReleaseMeasurementResultTable = "Release_measurement_result";
+	public static final String ReleaseMeasurementResultId = "Release_id";
+	public static final String ReleaseMeasurementResultResult = "Measurement_result";
+	public static final String ReleaseMeasurementResultDate = "Datum";
+	
 	// these enumerations were generated using extract.py script
 	public enum AbsenceTypeEnum { AbsenceTypeId, AbsenceTypeDescription }
 	public enum AdministrativeDaysEnum { EmployeeId, AbsenceTypeId, HoursNotWorked, MeasureDay }
