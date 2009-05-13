@@ -92,6 +92,7 @@ class Table(object):
 		self.generateUpdateRow()
 		self.generateRowGetter()
 		self.generateRowUpdater()
+		self.generateEntireRowUpdate()
 		self.generateUpdateGet()
 		self.generateUpdateSet()
 
@@ -153,6 +154,52 @@ class Table(object):
 		print "\t}"
 		print "}"
 
+	
+	## Generate UPDATE statement for entire row
+	def generateEntireRowUpdate(self):
+		args = [f.toJavaString() for f in self.__primary]
+		args.extend([f.toJavaString() for f in self.__fields])
+		print "public boolean updateRow(" + ", ".join(args) + ") {"
+		print "\tResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
+		print "\t@Override"
+		print "\tpublic void process() {"
+		print "\t\tsetResult(true);"
+		print "\t\t_operation.operationSucceeded("
+		print "\t\tDataOperation.Update, , \"\");"
+		print "\t}"
+		print "\t@Override"
+		print "\tpublic void handleException(SQLException ex) {"
+		print "\t\tsetResult(false);"
+		print "\t\t_operation.operationFailed(DataOperation.Update, , "
+		print "\t\ti18n.tr(\"\"));"
+		print "\t\tex.printStackTrace();"
+		print "\t}"
+		print "\t};"
+		print "\tq.query(\"UPDATE \" + DBSchemaModel." + self.Name + "Table + \" \" + "
+
+		setLst = []
+		i = 0
+		for f in self.__fields:
+			setLst.append("\t \"SET \" + " + f.toDbName() + " + \"=\" + " + self.__fields[i].toMethodFieldName())
+			i = i + 1			
+
+		print " + \",\" + \n".join(setLst) + " + "
+
+		# print "\t\" SET \" + column + \"='\" + value + \"'\" + "
+		print "\t\" WHERE \" + "
+
+		pklst = []
+		i = 0
+		for f in self.__primary:
+			pklst.append("\t" + f.toDbName() + " + \"=\" + " + self.__primary[i].toMethodFieldName())
+			i = i + 1			
+		
+		print " + \" AND \" + \n".join(pklst) + ");";
+
+		print "\treturn q.getResult();"
+		print "\t};"
+
+
 	## generate row getter
 	def generateRowGetter(self):
 		args = [f.toJavaString() for f in self.__primary]
@@ -187,7 +234,6 @@ class Table(object):
 	## this thing generates a general row update function(updates some column with certain value)
 	def generateRowUpdater(self):
 	
-		# args = [f.toMethodFieldName() for f in self.__primary]
 		args = [f.toJavaString() for f in self.__primary]
 		print "public boolean updateCell(" + ", ".join(args) + ", String column, String value) {"
 		print "\tResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {"
