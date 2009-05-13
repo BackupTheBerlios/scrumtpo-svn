@@ -322,7 +322,9 @@ public class MainFrame extends JFrame
 	
 	@Override
 	public void setVisible(boolean b) {
-		lastPropertySave();
+		if (!b)	{
+			lastPropertySave();
+		}
 		super.setVisible(b);
 	}
 
