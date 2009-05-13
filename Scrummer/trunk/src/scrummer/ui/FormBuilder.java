@@ -68,6 +68,21 @@ public class FormBuilder {
 	}
 	
 	/**
+	 * Add form entry(label + textbox) and set default text
+	 * 
+	 * @param labelText label text
+	 * @param textActionCmd text action command
+	 * @param defaultText default text
+	 * 
+	 * @return added text field
+	 */
+	public SelectedTextField addSelectedTextInput(String labelText, String textActionCmd, String defaultText) {
+		SelectedTextField ret = addSelectedTextInput(labelText, textActionCmd);
+		ret.setText(defaultText);
+		return ret;
+	}
+	
+	/**
 	 * Add form entry(label + textbox)
 	 * 
 	 * @param labelText label text
