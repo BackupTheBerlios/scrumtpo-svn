@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-
 import scrummer.IO;
 
 /**
@@ -95,17 +94,14 @@ public class PropertyModel {
 			_logger.warning("Could not save application property file!", e1);
 		} catch (IOException e1) {
 			_logger.warning("Could not save application property file!", e1);
-		}
-		finally
-		{
+		} finally {
 			if (fos != null)
 				try {
 					fos.close();
 				} catch (IOException e) {}
 		}
 		
-		if (!success)
-		{
+		if (!success) {
 			_logger.warning("Could not save appplication property file.");
 		}
 	}
@@ -123,9 +119,7 @@ public class PropertyModel {
 			_logger.warning("Could not create file for initial config!", e1);
 		} catch (IOException e1) {
 			_logger.warning("Could not save initial config!", e1);
-		}
-		finally
-		{
+		} finally {
 			if (fos != null)
 				try {
 					fos.close();
@@ -158,9 +152,7 @@ public class PropertyModel {
 					JOptionPane.ERROR_MESSAGE);
 			dialog.setVisible(true);
 			*/
-		}
-		finally
-		{
+		} finally {
 			if (fis != null)
 				try {
 					fis.close();
