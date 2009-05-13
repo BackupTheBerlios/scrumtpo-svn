@@ -8,170 +8,214 @@ package scrummer.ui.dialog;
 
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.SprintBacklogOperation;
-import scrummer.listener.OperationListener;
+import scrummer.listener.SprintBacklogListener;
 import scrummer.model.Models;
+import scrummer.model.PropertyModel;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.TaskComboBoxModel;
+import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
+import scrummer.ui.Validate;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 public class DailyScrumMeetingDialog 
 	extends TwoButtonDialog
-	implements OperationListener<SprintBacklogOperation> {
+	implements SprintBacklogListener, FocusListener {
 
 	/**
 	 * Constructor
 	 * 
 	 * @param owner owner form
 	 */
-	public DailyScrumMeetingDialog(Frame owner)
-	{
+	public DailyScrumMeetingDialog(Frame owner) {
 		super(owner, ModalityType.APPLICATION_MODAL);
 
 		setTitle(i18n.tr("Daily scrum meeting"));
+
+		int k = 10;
+		Panel.setBorder(
+			Util.createSpacedTitleBorder(
+				k, k, k, k, 
+				i18n.tr("Daily Scrum"), 
+				4, k, k, k + 2));
 		
 		Models m = Scrummer.getModels();
 		_sprintbacklogModel = m.getSprintBacklogModel();
-		//_sprintbacklogModel.addSprintBacklogListener(this);
-		
+		_sprintbacklogModel.addSprintBacklogListener(this);
 		_taskComboModel = m.getTaskModel().getTaskComboBoxModel();
+		_propertyModel = m.getPropertyModel();
+	
+		FormBuilder fb = new FormBuilder(Panel);
 		
-		int k = 10;
-		Panel.setLayout(new GridLayout(6, 6, 10, 12));
-		Panel.setBorder(BorderFactory.createEmptyBorder(k + 3, k, k + 10, k));
+		_sprintInput =
+			fb.addComboBoxInput(i18n.tr("Sprint") + ":");
+		_employeeInput = 
+			fb.addComboBoxInput(i18n.tr("Employee") + ":");
+		_taskInput =
+			fb.addComboBoxInput(i18n.tr("Task") + ":");
 		
-		JLabel taskLbl = new JLabel(i18n.tr("Task") + ":");
-		StandardComboBox taskInput = new StandardComboBox();
-		taskInput.setIVModel(_taskComboModel);
-		_taskInput = taskInput;
+		String defaultMeasureDay = _propertyModel.getProperty("uidefault.DailyScrumDialog.lastMeasureDay");
+		_measuredayInput = 
+			fb.addSelectedTextInput(i18n.tr("Measure day") + ":", "MeasureDay", defaultMeasureDay);
+		_hoursspentInput = 
+			fb.addSelectedTextInput(i18n.tr("Spent hours") + ":", "HoursSpent", "0");
+		_hoursremainInput = 
+			fb.addSelectedTextInput(i18n.tr("Remaining hours") + ":", "HoursRemain", "0");
+		_nbopenimpedInput = 
+			fb.addSelectedTextInput(i18n.tr("Number of open impediments") + ":", "NbOpenImped", "0");
+		_nbclosedimpedInput = 
+			fb.addSelectedTextInput(i18n.tr("Number of closed impediments") + ":", "NbClosedImped", "0");
 		
-		Panel.add(taskLbl);
-		Panel.add(taskInput);
+		fb.setCellSpacing(5, 5);
 		
-		_measuredayInput = addEntry(i18n.tr("Measure day") + ":", "MeasureDay");
-		_hoursspentInput = addEntry(i18n.tr("Spent hours") + ":", "HoursSpent");
-		_hoursremainInput = addEntry(i18n.tr("Remaining hours") + ":", "HoursRemain");
-		_nbopenimpedInput = addEntry(i18n.tr("Number of open impediments") + ":", "NbOpenImped");
-		_nbclosedimpedInput = addEntry(i18n.tr("Number of closed impediments") + ":", "NbClosedImped");
+		_sprintInput.setIVModel(m.getSprintBacklogModel().getSprintProjectComboBoxModel());
+	
+		// fetch last selected sprint
+		String lastSprint = _propertyModel.getProperty("uidefault.DailyScrumDialog.lastSprint"); 
+		if (!(lastSprint.length() == 0)) {
+			Integer i = Integer.parseInt(lastSprint);
+			if (i < _sprintInput.getItemCount()) {
+				_sprintInput.setSelectedIndex(i);
+			}
+		}
 		
-		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 2, k - 4));
+		_employeeInput.setIVModel(m.getDeveloperModel().getEmployeeComboBoxModel());
+		_taskInput.setIVModel(_taskComboModel);		
+		
+		_sprintInput.addFocusListener(this);
+		_measuredayInput.addFocusListener(this);
+		
+		// ret.setProperty("uidefault.DailyScrumDialog.lastSprint", "");
+		// last input measure day - so it doesn't have to be selected for each user every time 
+		// ret.setProperty("uidefault.DailyScrumDialog.lastMeasureDay", "1");		
+		
+		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, k + 5, k - 3));
 		
 		OK.setText("Save");
-		setSize(new Dimension(460, 360));
-	}
-	
-	/** 
-	 * Add form entry(label + textbox)
-	 * 
-	 * @param labelText label text
-	 * @param textActionCmd text action command
-	 * @return added text field
-	 */
-	public JTextField addEntry(String labelText, String textActionCmd)
-	{
-		JLabel label = new JLabel(labelText);
-		
-		JTextField textBox = new SelectedTextField();
-		
-		Panel.add(label);
-		Panel.add(textBox);
-		
-		return textBox;
-	}
+		setSize(new Dimension(460, 330));
+	}	
 	
 	@Override
-	public void actionPerformed(ActionEvent e) 
-	{	
-		if (e.getActionCommand() == "StandardDialog.OK")
-		{
-				String day = _measuredayInput.getText().trim();
-				String hoursspent = _hoursspentInput.getText().trim();
-				String hoursremain = _hoursremainInput.getText().trim();
-				String nbopenimped = _nbopenimpedInput.getText().trim();
-				String nbclosedimped = _nbclosedimpedInput.getText().trim();
-				
-				if (day.length() > 0)
-				{
-					if (_taskInput.isSelected()) {
-						int id = _taskInput.getSelectedId();
-						if(hoursspent.length() > 0 && hoursremain.length() > 0 && nbopenimped.length() > 0 && nbclosedimped.length() > 0)
-						{
-							if (_sprintbacklogModel.existsTaskInSBI(id))
-								_sprintbacklogModel.setTaskMeasures(id, Integer.parseInt(day), Integer.parseInt(hoursspent), Integer.parseInt(hoursremain), Integer.parseInt(nbopenimped), Integer.parseInt(nbclosedimped));
-							else
-								Util.showError(this, i18n.tr("First insert task into your sprint backlog and then set it's measures!"), i18n.tr("Error"));
-						}
-					}
-					else
-					{
-						Util.showError(this, i18n.tr("Some task must be selected to set it's measures."), i18n.tr("Error"));
-					}
-				}
-		}
-		else
-		{
+	public void actionPerformed(ActionEvent e)  {	
+		if (e.getActionCommand() == "StandardDialog.OK") {
+			int currentSprint = _sprintInput.getSelectedId();
+			if (!Validate.inrange(
+					_measuredayInput, 1, 
+					currentSprint, 
+					i18n.tr("Sprint day is out sprint days range."), this)) return;				
+		
+			if (!Validate.empty(_measuredayInput, this)) _measuredayInput.setText("1");
+			if (!Validate.empty(_hoursspentInput, this)) _hoursspentInput.setText("0");
+			if (!Validate.empty(_hoursremainInput, this)) _hoursremainInput.setText("0");
+			if (!Validate.empty(_nbopenimpedInput, this)) _nbopenimpedInput.setText("0");
+			if (!Validate.empty(_nbclosedimpedInput, this)) _nbclosedimpedInput.setText("0");
+			
+			Integer hoursSpent = 
+				Integer.parseInt(_hoursspentInput.getText().trim());
+			Integer hoursRemaining = 
+				Integer.parseInt(_hoursremainInput.getText().trim());
+			Integer nbOpenImped = 
+				Integer.parseInt(_nbopenimpedInput.getText().trim());
+			Integer nbClosedImped = 
+				Integer.parseInt(_nbclosedimpedInput.getText().trim());
+			
+			Integer measureDay = 
+				Integer.parseInt(_measuredayInput.getText()); 			
+			
+			if (_sprintbacklogModel.existsSprintPBI(
+					measureDay, _taskInput.getSelectedId(), currentSprint, _employeeInput.getSelectedId())) {
+				_sprintbacklogModel.updateDailyMeasure(
+					currentSprint, _taskInput.getSelectedId(), measureDay, 
+					_employeeInput.getSelectedId(), 
+					hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped);
+			} else {
+				_sprintbacklogModel.addDailyEntry(
+					currentSprint, 
+					_taskInput.getSelectedId(), 
+					measureDay, 
+					_employeeInput.getSelectedId(), 
+					hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped);
+			}	
+		} else {
 			super.actionPerformed(e);
 		}
 	}
+	
+	@Override
+	public void focusGained(FocusEvent e) {}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		if (e.getSource() == _sprintInput) {
+			// sprint is always a valid selection, store it
+			_propertyModel.setProperty(
+				"uidefault.DailyScrumDialog.lastSprint", 
+				new Integer(_sprintInput.getSelectedIndex()).toString());
+		} else if (e.getSource() == _measuredayInput) {
+			// check if not empty and is a number
+			if (Validate.empty(_measuredayInput, this)) {
+				_propertyModel.setProperty(
+					"uidefault.DailyScrumDialog.lastMeasureDay", 
+					_measuredayInput.getText().trim());
+			}
+		}
+	}	
 
 	@Override
 	public void operationSucceeded(DataOperation type, SprintBacklogOperation identifier, String message) {
-		switch (type)
-		{
-		case Update:
-		
-			switch (identifier)
-			{
-			case Task:
-				_taskComboModel.refresh();
-				_taskInput.setSelectedIndex(0);
-				setVisible(false);
-				break;
-			}
-			break;
+		if (((type == DataOperation.Insert) ||
+			 (type == DataOperation.Update)) && 
+			(identifier == SprintBacklogOperation.SprintPBI)) {
+			_taskComboModel.refresh();
+			_taskInput.setSelectedIndex(0);
+			setVisible(false);
 		}
 	}
 	
 	@Override
 	public void operationFailed(DataOperation type, SprintBacklogOperation identifier, String message) {
-		
-		switch (type)
-		{
-		case Update:
-			switch (identifier)
-			{
-			case Task:
-				Util.showError(this, 
-					i18n.tr("An error has occurred when setting team name") + ": " + message, 
-					i18n.tr("Error"));
-				break;
-			}
-			break;
+		if (((type == DataOperation.Insert) || 
+			 (type == DataOperation.Update)) && 
+			(identifier == SprintBacklogOperation.SprintPBI)) {
+			Util.showError(this, 
+				i18n.tr("An error has occurred when setting team name") + ": " + message, 
+				i18n.tr("Error"));
 		}
-	}	
+	}
+
+	@Override
+	public void setVisible(boolean b) {
+		if (!b) {
+			_sprintbacklogModel.removeSprintBacklogListener(this);
+		}
+		super.setVisible(b);
+	}
 
 	/// sprint backlog model
 	private SprintBacklogModel _sprintbacklogModel;
+	/// property model
+	private PropertyModel _propertyModel;
 	/// all SBI in combo box
 	private TaskComboBoxModel _taskComboModel;
 	/// team new name input
-	private JTextField _measuredayInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
+	private SelectedTextField _measuredayInput, _hoursspentInput, _hoursremainInput, _nbopenimpedInput, _nbclosedimpedInput;
 	/// team input combo box
-	private StandardComboBox _taskInput;
+	private StandardComboBox _taskInput, _sprintInput, _employeeInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
-	private static final long serialVersionUID = -1346923766182215474L;	
+	private static final long serialVersionUID = -1346923766182215474L;
+	
 }
