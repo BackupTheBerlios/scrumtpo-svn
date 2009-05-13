@@ -45,7 +45,7 @@ public class SprintPBITableModel extends DefaultTableModel {
 		_rows = new Vector<ObjectRow>();
 		Vector<ObjectRow> rows = 
 			_sprintBacklogModelCommon.getSprintPBIs(
-				_currentSprint, _pbiId, _employeeId);
+				_currentSprint, _taskId, _employeeId);
 		
 		for (int i = 0; i < 4; i++) _rows.add(new ObjectRow(1 + _sprintLength));		
 		// iterate all rows in table
@@ -88,13 +88,22 @@ public class SprintPBITableModel extends DefaultTableModel {
 		_employeeId = value;
 		refresh();
 	}
-	
+		
 	/**
-	 * Set pbi id
+	 * Set task id
 	 * @param value value to set
 	 */
-	public void setPbiId(int value) {
-		_pbiId = value;
+	public void setTaskId(int value) {
+		_taskId = value;
+		refresh();
+	}
+	
+	/**
+	 * Set sprint length
+	 * @param value value to set
+	 */
+	public void setSprintLength(int value) {
+		_sprintLength = value;
 		refresh();
 	}
 
@@ -112,47 +121,36 @@ public class SprintPBITableModel extends DefaultTableModel {
 		try {
 			int val = Integer.parseInt(value.toString());
 			// if it exists modify it
-			if (_sprintBacklogModelCommon.existsSprintPBI(column, _pbiId, _currentSprint, _employeeId)) {
+			if (_sprintBacklogModelCommon.existsSprintPBI(column, _taskId, _currentSprint, _employeeId)) {
 				Integer realValue = Integer.parseInt(value.toString());
 				boolean updateSuceeded = false;
 				switch (row) {
 				case 0: 
-					updateSuceeded = _sprintBacklogModelCommon.setHoursSpent(_currentSprint, _pbiId, column, realValue);					
+					updateSuceeded = _sprintBacklogModelCommon.setHoursSpent(_currentSprint, _taskId, column, realValue);					
 					break;
 				case 1:							
-					updateSuceeded = _sprintBacklogModelCommon.setHoursRemaining(_currentSprint, _pbiId, column, realValue);
+					updateSuceeded = _sprintBacklogModelCommon.setHoursRemaining(_currentSprint, _taskId, column, realValue);
 					break;
 				case 2:
-					updateSuceeded = _sprintBacklogModelCommon.setNbOpenImped(_currentSprint, _pbiId, column, realValue);
+					updateSuceeded = _sprintBacklogModelCommon.setNbOpenImped(_currentSprint, _taskId, column, realValue);
 					break;
 				case 3:
-					updateSuceeded = _sprintBacklogModelCommon.setNbClosedImped(_currentSprint, _pbiId, column, realValue);
+					updateSuceeded = _sprintBacklogModelCommon.setNbClosedImped(_currentSprint, _taskId, column, realValue);
 					break;
 				}
 				if (updateSuceeded) {
 					refresh();
-				}
-				
-			} else { // otherwise create new entry
-				
-				int hoursSpent = 
-					(row == 0) ? val : 0;
-				int hoursRemaining = 
-					(row == 1) ? val : 0;
-				int openImpediments = 
-					(row == 2) ? val : 0;
-				int closedImpediments = 
-					(row == 3) ? val : 0;
-				
+				}				
+			} else { // otherwise create new entry				
+				int hoursSpent 		  = (row == 0) ? val : 0;
+				int hoursRemaining    = (row == 1) ? val : 0;
+				int openImpediments   = (row == 2) ? val : 0;
+				int closedImpediments = (row == 3) ? val : 0;
 				if (_sprintBacklogModelCommon.addDailyEntry(
-						_currentSprint, 
-						_pbiId, 
-						column, 
-						_employeeId, 
-						hoursSpent, 
-						hoursRemaining, 
-						openImpediments, 
-						closedImpediments)) {
+						_currentSprint, _taskId, 
+						column, _employeeId, 
+						hoursSpent, hoursRemaining, 
+						openImpediments, closedImpediments)) {
 					refresh();
 				}
 			}
@@ -190,12 +188,12 @@ public class SprintPBITableModel extends DefaultTableModel {
 		}
 	}
 	
-	/// current spriunt id
+	/// current sprint id
 	private int _currentSprint = 0;
 	/// employee id
 	private int _employeeId = 0;
-	/// pbi id
-	private int _pbiId = 0;
+	/// task id
+	private int _taskId = 0;
 	/// locally stored sprint length
 	private int _sprintLength = 10;
 	/// column count
