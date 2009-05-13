@@ -52,6 +52,10 @@ class Table(object):
 		print " + \",\" + \n".join(inserts) + " + "
 		print "\t\t\")\" + "
 
+		lst = ["?" for f in inserts]
+
+		print "\t\t\" VALUES (" + ", ".join(lst) + ") \" + "
+
 		print "\t\t\" WHERE \" + " 
 
 		keys = ["\t\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
@@ -89,6 +93,7 @@ class Table(object):
 	## Generate update statements
 	def generateUpdate(self):
 		self.generateInsert()
+		self.generateDelete()
 		self.generateUpdateRow()
 		self.generateRowGetter()
 		self.generateRowUpdater()
@@ -110,11 +115,11 @@ class Table(object):
 		lst = []
 		i = 1
 		for f in self.__primary:
-			add = "\t\t\t" + f.toJavaString() + " =\n\t\t\t\t" + f.toRSGetter(i)
+			add = "\t\t\t" + substUnder(f.Name) + " =\n\t\t\t\t" + "result." + f.toRSGetter(i) + ";"
 			lst.append(add)
 			i = i + 1
 		for f in self.__fields:
-			add = "\t\t\t" + f.toJavaString() + " =\n\t\t\t\t" + f.toRSGetter(i)
+			add = "\t\t\t" + substUnder(f.Name) + " =\n\t\t\t\t" + "result." + f.toRSGetter(i) + ";"
 			lst.append(add)
 			i = i + 1
 
@@ -130,13 +135,13 @@ class Table(object):
 		print "\t * @param taskId"
 		print "\t * @return true if row key equals this row"
 		print "\t */"
-		args = [f.toMethodFieldName() for f in self.__primary]
+		args = [f.toJavaString() for f in self.__primary]
 		print "\tpublic boolean keyEquals(" + ", ".join(args) + ") {"
 		
 		if len(args) == 0:
 			print "\t\treturn true;"
 		elif len(args) == 1:
-			print "\t\tif (" + self.__primary[0].toMethodFieldName() + " == " + self.__primary[0].toJavaString() + ") {"
+			print "\t\tif (" + self.__primary[0].toMethodFieldName() + " == " + substUnder(self.__primary[0].Name) + ") {"
 			print "\t\t\treturn true;"
 			print "\t\t} else {"
 			print "\t\t\treturn false;"
@@ -145,15 +150,24 @@ class Table(object):
 			lst = []
 			i = 0
 			for f in self.__primary:
-				lst.append("(" + f.toMethodFieldName() + " == " + f.toJavaString() + ")")
+				lst.append("(" + f.toMethodFieldName() + " == " + substUnder(f.Name) + ")")
 			print "\t\tif (" + " &&\n\t\t    ".join(lst) + ") {"
 			print "\t\t\treturn true;"
 			print "\t\t} else {"
 			print "\t\t\treturn false;"
 			print "\t\t}"
 		print "\t}"
-		print "}"
 
+		# generate fields
+		fields = [f.sqlToJavaType(f.Type) + " " + substUnder(f.Name) for f in self.__primary]
+		fields.extend([(f.sqlToJavaType(f.Type) + " " + substUnder(f.Name)) for f in self.__fields])
+		
+		nfields = []
+		for f in fields:
+			nfields.append("\tpublic " + f + ";")
+		print "\n".join(nfields)
+
+		print "}"
 	
 	## Generate UPDATE statement for entire row
 	def generateEntireRowUpdate(self):
@@ -164,19 +178,16 @@ class Table(object):
 		print "\t@Override"
 		print "\tpublic void process() {"
 		print "\t\tsetResult(true);"
-		print "\t\t_operation.operationSucceeded("
-		print "\t\tDataOperation.Update, , \"\");"
+		print "\t\t_operation.operationSucceeded(DataOperation.Update, , \"\");"
 		print "\t}"
 		print "\t@Override"
 		print "\tpublic void handleException(SQLException ex) {"
 		print "\t\tsetResult(false);"
-		print "\t\t_operation.operationFailed(DataOperation.Update, , "
-		print "\t\ti18n.tr(\"\"));"
+		print "\t\t_operation.operationFailed(DataOperation.Update, , ex.getMessage());"
 		print "\t\tex.printStackTrace();"
 		print "\t}"
 		print "\t};"
 		print "\tq.query(\"UPDATE \" + DBSchemaModel." + self.Name + "Table + \" \" + "
-
 		setLst = []
 		i = 0
 		for f in self.__fields:
@@ -197,18 +208,18 @@ class Table(object):
 		print " + \" AND \" + \n".join(pklst) + ");";
 
 		print "\treturn q.getResult();"
-		print "\t};"
+		print "}"
 
 
 	## generate row getter
 	def generateRowGetter(self):
 		args = [f.toJavaString() for f in self.__primary]
 		print "public Row getRow(" + ", ".join(args) + ") {" 
-		print "{"
 		print "\tResultQuery<Row> q = new ResultQuery<Row>(_connectionModel) {"
 		print "\t@Override"
 		print "\tpublic void processResult(ResultSet result) {"
 		print "\t\tsetResult(new Row(result));"
+		print "\t\t_operation.operationSucceeded(DataOperation.Remove, , \"\");"
 		print "\t}"
 		print "\t@Override"
 		print "\tpublic void handleException(SQLException ex) {"
@@ -219,17 +230,17 @@ class Table(object):
 		print "\t}"
 		print "\t};"
 		print "\tq.queryResult("
-		print "\t\"SELECT * FROM \" + DBSchemaModel." + substUnder(self.Name) + " + \" WHERE \" + "
+		print "\t\"SELECT * FROM \" + DBSchemaModel." + substUnder(self.Name) + "Table + \" WHERE \" + "
 		keys = ["\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
 		nkeys = []
 		i = 0
 		for k in keys:
 			nkeys.append(keys[i] + self.__primary[i].toMethodFieldName())
 			i=i+1
-		print " + \",\" + \n".join(nkeys) + ");"
+		print " + \" AND \" + \n".join(nkeys) + ");"
 
 		print "\treturn q.getResult();"
-		print "}"
+		print "\t}"
 	
 	## this thing generates a general row update function(updates some column with certain value)
 	def generateRowUpdater(self):
@@ -269,9 +280,9 @@ class Table(object):
 	def generateUpdateGet(self):
 		for f in self.__fields:
 			# generate common header(primary key)
-			args = [f.toJavaString() for f in self.__primary]
-			fieldNames = [f.toMethodFieldName() for f in self.__primary]
-			print "public boolean get" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
+			args = [g.toJavaString() for g in self.__primary]
+			fieldNames = [h.toMethodFieldName() for h in self.__primary]
+			print "public " + f.sqlToJavaType(f.Type) + " get" + substUnder(f.Name) + "(" + ", ".join(args) + ") {"
 			print "\treturn getRow(" + ", ".join(fieldNames) + ")." + substUnder(f.Name) + ";"
 			print "}"
 
@@ -296,17 +307,17 @@ class Table(object):
 		print "\t@Override"
 		print "\tpublic void process() {"
 		print "\t\tsetResult(true);"
-		print "\t\t_operation.operationSucceeded(DataOperation.Remove, , "");"
+		print "\t\t_operation.operationSucceeded(DataOperation.Remove, , \"\");"
 		print "\t}"
 		print "\t@Override"
 		print "\tpublic void handleException(SQLException ex) {"
 		print "\t\tsetResult(false);"
 		print "\t\tex.printStackTrace();"
 		print "\t\t_operation.operationFailed(DataOperation.Remove, , "
-		print "\t\ti18n.tr(""));"
+		print "\t\tex.getMessage());"
 		print "\t}"
 		print "\t};"
-		print "\tq.query(\"DELETE FROM \" + DBSchemaModel." + substUnder(self.Name) + " + "
+		print "\tq.query(\"DELETE FROM \" + DBSchemaModel." + substUnder(self.Name) + "Table + "
 		print "\t\" WHERE \" + " 
 
 		keys = ["\t" + f.toDbName() + " + \"=\" + " for f in self.__primary]
@@ -315,7 +326,7 @@ class Table(object):
 		for k in keys:
 			nkeys.append(keys[i] + self.__primary[i].toMethodFieldName())
 			i=i+1
-		print " + \",\" + \n".join(nkeys)
+		print " + \" AND \" + \n".join(nkeys)
 		print "\t);"
 
 		print "\treturn q.getResult();"
