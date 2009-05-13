@@ -80,8 +80,7 @@ public class SprintBacklogModel
 	 * @param nbopenimped number of open impediments for task
 	 * @param nbclosedimped number of closed impediments for task
 	 */
-	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped)
-	{
+	public void add(String task_desc, int task_type, int task_status, String task_date, String task_active, int day, int pbi, int sprint, int employee, int hours_spent, int hours_remain, int nbopenimped, int nbclosedimped) {
 		_sprintbacklogModelCommon.add(task_desc, task_type, task_status, task_date, task_active, day, pbi, sprint, employee, hours_spent, hours_remain, nbopenimped, nbclosedimped);
 	}
 	
@@ -89,7 +88,7 @@ public class SprintBacklogModel
 	 * Insert a new entry into Sprint_PBI table
 	 * 
 	 * @param sprintId sprint
-	 * @param pbiId pbi
+	 * @param taskId task
 	 * @param measureDay measure day
 	 * @param employeeId employee
 	 * @param hoursSpent spent hours
@@ -98,8 +97,8 @@ public class SprintBacklogModel
 	 * @param nbClosedImped closed impediments
 	 * @return true if row added, false otherwise
 	 */
-	public void addDailyEntry(int sprintId, int pbIId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
-		if (_sprintbacklogModelCommon.addDailyEntry(sprintId, pbIId, measureDay, employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped)) {
+	public void addDailyEntry(int sprintId, int taskId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+		if (_sprintbacklogModelCommon.addDailyEntry(sprintId, taskId, measureDay, employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped)) {
 			_sprintPBITableModel.refresh();
 		}
 	}
@@ -117,8 +116,7 @@ public class SprintBacklogModel
 	 */
 	public void addSprint(String description, int teamId, Date startDate, Date endDate, int length, Date estimated) {
 		int projectId = _projectModel.getCurrentProjectId(); 
-		if (_sprintbacklogModelCommon.addSprint(projectId, description, teamId, startDate, endDate, length, estimated))
-		{
+		if (_sprintbacklogModelCommon.addSprint(projectId, description, teamId, startDate, endDate, length, estimated)) {
 			_sprintDescriptionListModel.refresh();
 			_sprintProjectComboBoxModel.refresh();
 		}
@@ -129,11 +127,9 @@ public class SprintBacklogModel
 	 * 
 	 * @param sprintId sprint id
 	 */
-	public void removeSprint(int sprintId)
-	{
+	public void removeSprint(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
-		if (_sprintbacklogModelCommon.removeSprint(projectId, sprintId))
-		{
+		if (_sprintbacklogModelCommon.removeSprint(projectId, sprintId)) {
 			_sprintDescriptionListModel.refresh();
 			_sprintProjectComboBoxModel.refresh();
 		}
@@ -144,24 +140,21 @@ public class SprintBacklogModel
 	 * 
 	 * @return sprint backlog table model
 	 */
-	public SprintBacklogTableModel getSprintBacklogTableModel()
-	{
+	public SprintBacklogTableModel getSprintBacklogTableModel() {
 		return _sprintbacklogTableModel;
 	}
 	
 	/**
 	 * @return model that displays sprint id's on current project
 	 */
-	public SprintProjectComboBoxModel getSprintProjectComboBoxModel()
-	{
+	public SprintProjectComboBoxModel getSprintProjectComboBoxModel() {
 		return _sprintProjectComboBoxModel;
 	}
 	
 	/**
 	 * @return fetch task table model
 	 */
-	public AllTaskTableModel getTaskTableModel()
-	{
+	public AllTaskTableModel getTaskTableModel() {
 		return _taskTableModel;
 	}
 	
@@ -170,8 +163,7 @@ public class SprintBacklogModel
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addSprintBacklogListener(SprintBacklogListener listener)
-	{
+	public void addSprintBacklogListener(SprintBacklogListener listener) {
 		_operation.addListener(listener);
 	}
 	
@@ -179,8 +171,7 @@ public class SprintBacklogModel
 	 * Remove sprint backlog data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeSprintBacklogListener(SprintBacklogListener listener)
-	{
+	public void removeSprintBacklogListener(SprintBacklogListener listener) {
 		_operation.removeListener(listener);
 	}
 	
@@ -188,8 +179,7 @@ public class SprintBacklogModel
 	 * Fetch SBI combo box model(contains all SBIs)
 	 * @return model
 	 */
-	public SBIComboBoxModel getSBIComboBoxModel() 
-	{
+	public SBIComboBoxModel getSBIComboBoxModel() {
 		return _sbiComboBoxModel;
 	}
 	
@@ -214,6 +204,18 @@ public class SprintBacklogModel
 	}
 	
 	/**
+	 * Dig into db to find at least one Sprint_PBI entry with given pk.
+	 * @param measureDay day of measurement
+	 * @param taskId task
+	 * @param sprintId sprint
+	 * @param employeeId employee
+	 * @return true if row with specified keys exists
+	 */
+	public boolean existsSprintPBI(int measureDay, int taskId, int sprintId, int employeeId) {
+		return _sprintbacklogModelCommon.existsSprintPBI(measureDay, taskId, sprintId, employeeId);
+	}
+	
+	/**
 	 * @param sprintId sprint id
 	 * @retur sprint description
 	 */
@@ -226,8 +228,7 @@ public class SprintBacklogModel
 	 * @param sprintId sprint id
 	 * @return team id
 	 */
-	public int getTeam(int sprintId)
-	{
+	public int getTeam(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
 		return _sprintbacklogModelCommon.getTeam(projectId, sprintId);
 	}
@@ -236,8 +237,7 @@ public class SprintBacklogModel
 	 * @param sprintId sprint id
 	 * @return starting date
 	 */
-	public Date getBeginDate(int sprintId)
-	{
+	public Date getBeginDate(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
 		return _sprintbacklogModelCommon.getBeginDate(projectId, sprintId); 
 	}
@@ -246,8 +246,7 @@ public class SprintBacklogModel
 	 * @param sprintId sprint id
 	 * @return sprint end date
 	 */
-	public Date getEndDate(int sprintId)
-	{
+	public Date getEndDate(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
 		return _sprintbacklogModelCommon.getEndDate(projectId, sprintId);
 	}
@@ -256,8 +255,7 @@ public class SprintBacklogModel
 	 * @param sprintId sprint id
 	 * @return sprint length
 	 */
-	public int getSprintLength(int sprintId)
-	{
+	public int getSprintLength(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
 		return _sprintbacklogModelCommon.getSprintLength(projectId, sprintId);
 	}
@@ -266,8 +264,7 @@ public class SprintBacklogModel
 	 * @param sprintId sprint id
 	 * @return sprint estimated end date
 	 */
-	public Date getSprintEstimated(int sprintId)
-	{
+	public Date getSprintEstimated(int sprintId) {
 		int projectId = _projectModel.getCurrentProjectId();
 		return _sprintbacklogModelCommon.getSprintEstimated(projectId, sprintId);
 	}
@@ -297,19 +294,33 @@ public class SprintBacklogModel
 	 * 
 	 * @param sprintId sprint id
 	 */
-	public void setCurrentSprint(int sprintId)
-	{
+	public void setCurrentSprint(int sprintId) {
 		_currentSprint = sprintId;
 		_taskTableModel.setSprintId(sprintId);
 		_impedimentTableModel.setSprintId(sprintId);
 		_sprintPBITableModel.setSprintId(sprintId);
+		_sprintPBITableModel.setSprintLength(getSprintLength(_currentSprint));
+	}
+
+	/**
+	 * Update daily measurement entry
+	 * @param sprintId sprint
+	 * @param taskId task
+	 * @param measureDay measure day
+	 * @param employeeId employee
+	 * @param hoursSpent spent hours
+	 * @param hoursRemaining remaining hours
+	 * @param nbOpenImped open impediments
+	 * @param nbClosedImped closed impediments
+	 */
+	public void updateDailyMeasure(int sprintId, int taskId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+		_sprintbacklogModelCommon.updateRow(sprintId, taskId, measureDay, employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped);
 	}
 	
 	/** 
 	 * @return Currently active sprint 
 	 */
-	public int getCurrentSprint()
-	{
+	public int getCurrentSprint() {
 		return _currentSprint;
 	}
 	
