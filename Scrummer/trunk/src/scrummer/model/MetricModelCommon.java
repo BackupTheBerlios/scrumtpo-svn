@@ -2,10 +2,12 @@ package scrummer.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.MetricOperation;
+import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
 
@@ -505,8 +507,8 @@ public class MetricModelCommon {
         }
         };
         q.query("UPDATE " + DBSchemaModel.MeasureTable + " " +
-         "SET " + DBSchemaModel.MeasureName + "=" + measureName + "," +
-         "SET " + DBSchemaModel.MeasureDescription + "=" + measureDescription +
+         "SET " + DBSchemaModel.MeasureName + "='" + measureName + "'," +
+         		  DBSchemaModel.MeasureDescription + "='" + measureDescription + "' " +
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId);
         return q.getResult();
@@ -536,7 +538,7 @@ public class MetricModelCommon {
         }
         };
         q.query("UPDATE " + DBSchemaModel.TaskMeasurementResultTable + " " +
-         "SET " + DBSchemaModel.TaskMeasurementResultResult + "=" + measurementResult +
+         "SET " + DBSchemaModel.TaskMeasurementResultResult + "='" + measurementResult + "'" +
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.TaskId + "=" + taskId + " AND " +
@@ -567,7 +569,7 @@ public class MetricModelCommon {
         }
         };
         q.query("UPDATE " + DBSchemaModel.SprintMeasurementResultTable + " " +
-         "SET " + DBSchemaModel.SprintMeasurementResultResult + "=" + measurementResult +
+         "SET " + DBSchemaModel.SprintMeasurementResultResult + "='" + measurementResult + "'" +
         " WHERE " +
         DBSchemaModel.SprintId + "=" + sprintId + " AND " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
@@ -598,7 +600,7 @@ public class MetricModelCommon {
         }
         };
         q.query("UPDATE " + DBSchemaModel.ReleaseMeasurementResultTable + " " +
-         "SET " + DBSchemaModel.SprintMeasurementResultResult + "=" + measurementResult +
+         "SET " + DBSchemaModel.SprintMeasurementResultResult + "='" + measurementResult + "'" +
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.ReleaseId + "=" + releaseId + " AND " +
@@ -621,8 +623,6 @@ public class MetricModelCommon {
         public void handleException(SQLException ex) {
             setResult(null);
             ex.printStackTrace();
-            _operation.operationFailed(DataOperation.Remove, MetricOperation.Measure,
-            i18n.tr(""));
         }
         };
         q.queryResult(
@@ -714,6 +714,29 @@ public class MetricModelCommon {
 	
 	public String getMeasurementResult(int sprintId, int measureId, java.sql.Date datum) {
         return getSprintMeasurementRow(sprintId, measureId, datum).MeasurementResult;
+	}
+	
+	/**
+	 * Fetch id, name pairs for metric
+	 * @return 
+	 */
+	public Vector<IdValue> fetchMetricDescriptions() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}					
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.MeasureId + ", " +
+						DBSchemaModel.MeasureName + 
+			" FROM " + DBSchemaModel.MeasureTable);
+		return q.getResult();
+		
 	}
 	
 	/// connection model
