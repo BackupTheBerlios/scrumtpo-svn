@@ -20,8 +20,9 @@ public class MetricModelCommon {
 	 * Constructor
 	 * @param connectionModel connection model
 	 */
-	public MetricModelCommon(ConnectionModel connectionModel) {
+	public MetricModelCommon(ConnectionModel connectionModel, Operations.MetricOperation operation) {
 		_connectionModel = connectionModel;
+		_operation = operation;
 	}
 	
 	public static class MeasureRow extends DataRow {
