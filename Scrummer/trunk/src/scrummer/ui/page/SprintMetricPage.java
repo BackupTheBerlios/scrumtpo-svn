@@ -25,8 +25,8 @@ import scrummer.uicomponents.NiceTable;
 /**
  * A page that displays all tasks on current project and sprint
  */
-public class MetricsPage extends BasePage implements ActionListener {
-	public MetricsPage(MainFrame mainFrame) {
+public class SprintMetricPage extends BasePage implements ActionListener {
+	public SprintMetricPage(MainFrame mainFrame) {
 		super(mainFrame);		
 		setLayout(new GridLayout(1,1));
 		
