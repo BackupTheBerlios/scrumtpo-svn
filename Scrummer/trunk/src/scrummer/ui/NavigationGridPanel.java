@@ -18,6 +18,8 @@ import scrummer.model.NavigationModel;
 import scrummer.model.ProjectModel;
 import scrummer.ui.page.AdminDaysPage;
 import scrummer.ui.page.ImpedimentPage;
+import scrummer.ui.page.MetricGraphPage;
+import scrummer.ui.page.MetricInputPage;
 import scrummer.ui.page.SprintMetricPage;
 import scrummer.ui.page.PBPage;
 import scrummer.ui.page.ProductBacklogPage;
@@ -98,6 +100,15 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 			break;
 		case Overview:
 			showOverview(bottomPanel); 
+			break;
+		case Metric:
+			showMetric(bottomPanel);
+			break;
+		case MetricEdit:
+			showMetricEdit(bottomPanel);
+			break;
+		case MetricReport:
+			showMetricReport(bottomPanel);
 			break;
 		case ProductBacklog:
 			showProductBacklog(bottomPanel); 
@@ -199,6 +210,41 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		Util.addLink(box, NavigationModel.Link.Project);
 		Util.addLink(box, NavigationModel.Link.ProductBacklog);
 		Util.addLink(box, NavigationModel.Link.SprintBacklog);
+		Util.addLink(box, NavigationModel.Link.Metric);
+		
+		box.setMaximumSize(new Dimension(100, 100));
+		box.setMaximumSize(new Dimension(1600, 100));
+		
+		Box vertBox = new Box(BoxLayout.X_AXIS);
+		vertBox.add(box);
+		
+		panel.add(vertBox);
+	}
+	
+	private void showMetricReport(JPanel panel) {		
+		panel.setLayout(new GridLayout(1,1));
+		MetricGraphPage page = new MetricGraphPage(_mainFrame);
+		panel.add(page);
+		panel.setBackground(Color.WHITE);
+	}
+
+	private void showMetricEdit(JPanel panel) {		
+		panel.setLayout(new GridLayout(1,1));
+		MetricInputPage page = new MetricInputPage(_mainFrame);
+		panel.add(page);
+		panel.setBackground(Color.WHITE);
+	}
+	
+	private void showMetric(JPanel panel) {
+		panel.setLayout(new BorderLayout());
+		
+		JPanel box = new JPanel();
+		box.setLayout(new FlowLayout(FlowLayout.CENTER));
+		box.setAlignmentX(CENTER_ALIGNMENT);
+		box.setBackground(Color.WHITE);
+		
+		Util.addLink(box, NavigationModel.Link.MetricEdit);
+		Util.addLink(box, NavigationModel.Link.MetricReport);		
 		
 		box.setMaximumSize(new Dimension(100, 100));
 		box.setMaximumSize(new Dimension(1600, 100));
