@@ -31,15 +31,13 @@ public class SelectedTextField extends JTextField
 	@Override
 	protected void processFocusEvent(FocusEvent e) {
 		super.processFocusEvent(e);
-		if ( e.getID() == FocusEvent.FOCUS_GAINED )
-		{
+		if ( e.getID() == FocusEvent.FOCUS_GAINED ) {
 			selectAll() ;
-		}
-		else
-		{
+		} else {
 			select(0, 0);
 		}
 	}
-
+	
+	/// translation class
 	private static final long serialVersionUID = -113124952966116940L;
 }
