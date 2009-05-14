@@ -24,8 +24,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	 */
 	public ProductBacklogTableModel(ConnectionModel connectionModel,
 									ProductBacklogModelCommon productbacklogModelCommon,
-									ProjectModel projectModel) 
-	{
+									ProjectModel projectModel) {
 		super();
 		_projectModel = projectModel;
 		_productbacklogModelCommon = productbacklogModelCommon;
@@ -45,8 +44,7 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	/**
 	 * Refresh data
 	 */
-	public void refresh()
-	{
+	public void refresh() {
 		refreshColumnNames();
 		refreshTableData();
         fireTableDataChanged();
@@ -78,22 +76,18 @@ public class ProductBacklogTableModel extends DefaultTableModel
 	}
 
 	@Override
-	public void setValueAt(Object value, int row, int column) 
-	{
+	public void setValueAt(Object value, int row, int column) {
 		if (_productbacklogModelCommon.setProductBacklog(
 				_rows.get(row).get(0).toString(),
 				_realColumns.get(column + 1),
-				value.toString()))
-		{
+				value.toString())) {
 			refresh();
 		}
 	}
 	
 	@Override
-	public void removeRow(int row) 
-	{
-		if (_productbacklogModelCommon.removeProductBacklogItem(_rows.get(row).get(0).toString()))
-		{
+	public void removeRow(int row) {
+		if (_productbacklogModelCommon.removeProductBacklogItem(_rows.get(row).get(0).toString())) {
 			refresh();
 		}	
 	}
