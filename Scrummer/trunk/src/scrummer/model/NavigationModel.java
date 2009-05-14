@@ -27,7 +27,13 @@ public class NavigationModel implements ProjectListener {
 		/// application overview
 		Overview,
 		/// project overview
-		Project,		
+		Project,
+		/// metrics page
+		Metric, 
+		/// metric input page
+		MetricEdit,
+		/// metric graph
+		MetricReport,
 		/// product backlog
 		ProductBacklog,
 		/// product backlog item
@@ -53,16 +59,32 @@ public class NavigationModel implements ProjectListener {
 	{	
 		_top = Link.Overview;
 		
-		_translatedLinks.put(Link.Blank, 				i18n.tr("Blank"));
-		_translatedLinks.put(Link.Overview, 			i18n.tr("Overview"));
-		_translatedLinks.put(Link.ProductBacklog, 		i18n.tr("Product Backlog"));
-		_translatedLinks.put(Link.ProductBacklogItem, 	i18n.tr("Naroènikove zahteve"));
-		_translatedLinks.put(Link.Project, 				i18n.tr("Project"));
-		_translatedLinks.put(Link.SprintBacklog, 		i18n.tr("Sprint Backlog"));
-		_translatedLinks.put(Link.SprintBacklogAbsent,  i18n.tr("Absent"));
-		_translatedLinks.put(Link.SprintBacklogHurdles, i18n.tr("Hurdles"));
-		_translatedLinks.put(Link.SprintBacklogMetric,  i18n.tr("Metrics"));
-		_translatedLinks.put(Link.SprintBacklogTasks,   i18n.tr("Tasks"));
+		_translatedLinks.put(Link.Blank,
+			i18n.tr("Blank"));
+		_translatedLinks.put(Link.Overview,
+			i18n.tr("Overview"));
+		_translatedLinks.put(Link.Metric,
+			i18n.tr("Metric"));
+		_translatedLinks.put(Link.MetricEdit, 
+			i18n.tr("Input"));
+		_translatedLinks.put(Link.MetricReport, 
+			i18n.tr("Graph"));
+		_translatedLinks.put(Link.ProductBacklog,
+			i18n.tr("Product Backlog"));
+		_translatedLinks.put(Link.ProductBacklogItem, 	
+			i18n.tr("Product Backlog Items"));
+		_translatedLinks.put(Link.Project, 				
+			i18n.tr("Project"));
+		_translatedLinks.put(Link.SprintBacklog, 		
+			i18n.tr("Sprint Backlog"));
+		_translatedLinks.put(Link.SprintBacklogAbsent,  
+			i18n.tr("Absent"));
+		_translatedLinks.put(Link.SprintBacklogHurdles, 
+			i18n.tr("Hurdles"));
+		_translatedLinks.put(Link.SprintBacklogMetric,  
+			i18n.tr("Metrics"));
+		_translatedLinks.put(Link.SprintBacklogTasks,  
+			i18n.tr("Tasks"));
 		
 		projectModel.addProjectListener(this);
 	}
