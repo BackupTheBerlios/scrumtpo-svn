@@ -66,15 +66,12 @@ public class Query {
 		try {
 			// fetch connection
 			_connection = _connectionModel.getConnection();
-			
 			_statement = _connection.createStatement();
 			_resultSet = _statement.executeQuery(query);
 			processResult(_resultSet);
 		} catch (SQLException ex) {
 			handleException(ex);
-		}
-		finally
-		{
+		} finally {
 			dispose();
 		}
 	}
