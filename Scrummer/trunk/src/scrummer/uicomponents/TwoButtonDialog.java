@@ -117,15 +117,11 @@ public class TwoButtonDialog
 	/**
 	 * Koda skupna vsem konstruktorjem
 	 */
-	private void init()
-	{
+	private void init() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setLayout(new GridBagLayout());
+		GridBagLayout layout = new GridBagLayout(); 
+		setLayout(layout);
 		
-		Panel = new JPanel();
-		
-		GridBagConstraints gcTop = Util.constraint(GridBagConstraints.BOTH, 1.0, 0.85);
-		add(Panel, gcTop);
 		
 		BottomPanel = new JPanel();
 		BottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
@@ -145,13 +141,21 @@ public class TwoButtonDialog
 		BottomPanel.add(Cancel);
 		
 		add(BottomPanel, gcBottom);
+		
+		Panel = new JPanel();
+		
+		GridBagConstraints gcTop = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 0.85);
+		add(Panel, gcTop);
+		
+		
+		layout.layoutContainer(Panel);
+		// invalidate();
+		// doLayout();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getActionCommand().equals("StandardDialog.Cancel"))
-		{
+		if (e.getActionCommand().equals("StandardDialog.Cancel")) {
 			setVisible(false);
 		}
 	}
@@ -175,8 +179,7 @@ public class TwoButtonDialog
 	public JPanel BottomPanel;
 	/// gumb za sprejem obrazca
 	public JButton OK;
-	public JButton Cancel;
-	
+	public JButton Cancel;	
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass()); 
 }
