@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import scrummer.util.Query;
+import scrummer.util.ResultQuery;
 
 /**
  * Database schema model can be used to get all database table structure data.
@@ -93,6 +94,32 @@ public class DBSchemaModel {
 			}
 			
 			return ret;
+		}
+		
+		/**
+		 * Shorthand for getting id/value pairs from some table
+		 * @param table table name 
+		 * @param idColumn id column name
+		 * @param valueColumn value column name
+		 * @param model connection model
+		 * @return list of id, value pairs
+		 */
+		public static Vector<IdValue> fetchValues(String table, String idColumn, String valueColumn, ConnectionModel model) {
+			ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(model) {	
+				@Override
+				public void processResult(ResultSet result) throws SQLException {
+					setResult(IdValue.fetchValues(result));
+				}
+				@Override
+				public void handleException(SQLException ex) {
+					ex.printStackTrace();
+				}					
+			};
+			q.queryResult(
+				"SELECT " + idColumn + ", " +
+							valueColumn + 
+				" FROM " + table);
+			return q.getResult();
 		}
 		
 		public int Id;
