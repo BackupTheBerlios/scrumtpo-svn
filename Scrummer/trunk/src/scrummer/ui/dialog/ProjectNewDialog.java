@@ -104,20 +104,16 @@ public class ProjectNewDialog extends TwoButtonDialog implements ProjectListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("StandardDialog.OK"))
-		{
+		if (e.getActionCommand().equals("StandardDialog.OK")) {
 			 _projectModel.addProject(_projectNameInput.getText(), _descriptionTextAreaInput.getText());
-		}
-		else
-		{
+		} else {
 			super.actionPerformed(e);
 		}
 	}
 	
 	@Override
 	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
-		switch (type)
-		{
+		switch (type) {
 		case Insert:
 			setVisible(false);
 			break;
@@ -136,8 +132,7 @@ public class ProjectNewDialog extends TwoButtonDialog implements ProjectListener
 	@Override
 	public void setVisible(boolean b) {
 	
-		if (!b)
-		{
+		if (!b) {
 			_projectModel.removeProjectListener(this);
 		}
 		
