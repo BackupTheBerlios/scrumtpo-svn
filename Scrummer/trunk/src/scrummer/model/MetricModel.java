@@ -2,6 +2,9 @@ package scrummer.model;
 
 import java.sql.Date;
 
+import scrummer.listener.MetricListener;
+import scrummer.util.Operations;
+
 /**
  * This model deals with 
  */
@@ -9,7 +12,7 @@ public class MetricModel {
 
 	public MetricModel(ConnectionModel connectionModel) {
 		_metricModelCommon = 
-			new MetricModelCommon(connectionModel);
+			new MetricModelCommon(connectionModel, _operation);
 	}
 	
 	/**
@@ -190,7 +193,25 @@ public class MetricModel {
 	public String getMeasureDescription(int measureId) {
 		return _metricModelCommon.getMeasureDescription(measureId);
 	}
-		
+	
+	/**
+	 * Add event listener to changes from this data object changes
+	 * @param listener listener instance
+	 */
+	public void addMetricListener(MetricListener listener)  {
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remnove event listener from this data object changes
+	 * @param listener listener instance
+	 */
+	public void removeMetricListener(MetricListener listener) {
+		_operation.removeListener(listener);
+	}
+	
 	/// common metric model
 	private MetricModelCommon _metricModelCommon;
+	/// project event listeners
+	private Operations.MetricOperation _operation = new Operations.MetricOperation();
 }
