@@ -18,7 +18,7 @@ import scrummer.model.NavigationModel;
 import scrummer.model.ProjectModel;
 import scrummer.ui.page.AdminDaysPage;
 import scrummer.ui.page.ImpedimentPage;
-import scrummer.ui.page.MetricsPage;
+import scrummer.ui.page.SprintMetricPage;
 import scrummer.ui.page.PBPage;
 import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
@@ -139,7 +139,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	private void showSprintBacklogMetric(JPanel panel) 
 	{
 		panel.setLayout(new GridLayout(1,1));
-		MetricsPage page = new MetricsPage(_mainFrame);
+		SprintMetricPage page = new SprintMetricPage(_mainFrame);
 		panel.add(page);
 	}
 
