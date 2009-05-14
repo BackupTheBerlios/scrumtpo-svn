@@ -43,13 +43,11 @@ public class StandardButton extends JButton implements KeyListener {
 	/**
 	 * Vsem konstruktorjem skupna koda
 	 */
-	private void init()
-	{
+	private void init() {
 		int k = 5;
 		setSize(100, 20);
 		setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY)
-				/* BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.GRAY, Color.BLACK )*/, 
+				BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY), 
 				BorderFactory.createEmptyBorder(k, k, k, k)));
 		this.addKeyListener(this);
 	}
@@ -58,14 +56,12 @@ public class StandardButton extends JButton implements KeyListener {
 	public void keyPressed(KeyEvent e) {}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getKeyCode() == KeyEvent.VK_ENTER)
-		{
+	public void keyReleased(KeyEvent e) {	
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			doClick();
 		}
 	}
-
+	
 	@Override
 	public void keyTyped(KeyEvent e) {}
 	
