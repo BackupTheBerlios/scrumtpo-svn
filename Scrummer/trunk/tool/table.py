@@ -191,7 +191,7 @@ class Table(object):
 		setLst = []
 		i = 0
 		for f in self.__fields:
-			setLst.append("\t \"SET \" + " + f.toDbName() + " + \"=\" + " + self.__fields[i].toMethodFieldName())
+			setLst.append("\t \"SET \" + " + f.toDbName() + " + \"=\"' + " + self.__fields[i].toMethodFieldName() + "' + ")
 			i = i + 1			
 
 		print " + \",\" + \n".join(setLst) + " + "
