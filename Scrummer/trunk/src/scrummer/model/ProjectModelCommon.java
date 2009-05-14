@@ -123,26 +123,12 @@ public class ProjectModelCommon {
 	 * Fetch all projects from db
 	 * @return project id's and names
 	 */
-	public Vector<IdValue> fetchProjects()
-	{
-		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
-
-			@Override
-			public void processResult(ResultSet result) throws SQLException {
-				setResult(IdValue.fetchValues(result));
-			}
-			
-			@Override
-			public void handleException(SQLException ex) {
-				ex.printStackTrace();
-			}					
-		};
-		q.queryResult(
-			"SELECT " + DBSchemaModel.ProjectId + ", " +
-						DBSchemaModel.ProjectName + 
-			" FROM " + DBSchemaModel.ProjectTable);
-		
-		return q.getResult();
+	public Vector<IdValue> fetchProjects() {
+		return IdValue.fetchValues(
+				DBSchemaModel.ProjectTable, 
+				DBSchemaModel.ProjectId, 
+				DBSchemaModel.ProjectName, 
+				_connectionModel);
 	}
 	
 	/**
