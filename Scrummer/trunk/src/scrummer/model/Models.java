@@ -28,6 +28,7 @@ public class Models {
 		createResourceModel();
 		createDeveloperModel();
 		createProductBacklogModel();
+		createMetricModel();
 		
 		createSprintBacklogModel();
 		createImpedimentModel();
@@ -49,10 +50,8 @@ public class Models {
 	 * @param logger logger
 	 * @return created model
 	 */
-	private ConnectionModel createConnectionModel(PropertyModel properties)
-	{
-		if (_connectionModel == null)
-		{
+	private ConnectionModel createConnectionModel(PropertyModel properties) {
+		if (_connectionModel == null) {
 			_connectionModel = new ConnectionModel(getLoggingModel(), properties);
 		}
 		return _connectionModel;
@@ -62,10 +61,8 @@ public class Models {
 	 * Fetch connection model
 	 * @return model
 	 */
-	public ConnectionModel getConnectionModel()
-	{
-		if (_connectionModel == null)
-		{
+	public ConnectionModel getConnectionModel() {
+		if (_connectionModel == null) {
 			throw new NullPointerException("Connection model was not created!");
 		}
 		return _connectionModel;
@@ -75,10 +72,8 @@ public class Models {
 	 * Create project model
 	 * @return created model
 	 */
-	private ProjectModel createProjectModel()
-	{
-		if (_projectModel == null)
-		{
+	private ProjectModel createProjectModel() {
+		if (_projectModel == null) {
 			_projectModel = new ProjectModel(getConnectionModel());
 		}
 		return _projectModel;
@@ -88,10 +83,8 @@ public class Models {
 	 * Fetch project model
 	 * @return model
 	 */
-	public ProjectModel getProjectModel()
-	{
-		if (_projectModel == null)
-		{
+	public ProjectModel getProjectModel() {
+		if (_projectModel == null) {
 			throw new NullPointerException("Project model was not created!");
 		}
 		return _projectModel;
@@ -101,10 +94,8 @@ public class Models {
 	 * Create navigation model
 	 * @return created model
 	 */
-	private NavigationModel createNavigationModel()
-	{
-		if (_navigationModel == null)
-		{
+	private NavigationModel createNavigationModel() {
+		if (_navigationModel == null) {
 			_navigationModel = new NavigationModel(getProjectModel());
 		}
 		return _navigationModel;
@@ -114,10 +105,8 @@ public class Models {
 	 * Fetch navigation model
 	 * @return model
 	 */
-	public NavigationModel getNavigationModel()
-	{
-		if (_navigationModel == null)
-		{
+	public NavigationModel getNavigationModel() {
+		if (_navigationModel == null) {
 			throw new NullPointerException("Navigation model was not created!");
 		}
 		return _navigationModel;
@@ -127,10 +116,8 @@ public class Models {
 	 * Create property model
 	 * @return created model
 	 */
-	private PropertyModel createPropertyModel(LoggingModel logger)
-	{
-		if (_propertyModel == null)
-		{
+	private PropertyModel createPropertyModel(LoggingModel logger) {
+		if (_propertyModel == null) {
 			_propertyModel = new PropertyModel(logger);
 		}
 		return _propertyModel;
@@ -140,10 +127,8 @@ public class Models {
 	 * Fetch property model
 	 * @return model
 	 */
-	public PropertyModel getPropertyModel()
-	{
-		if (_propertyModel == null)
-		{
+	public PropertyModel getPropertyModel() {
+		if (_propertyModel == null) {
 			throw new NullPointerException("Property model was not created!");
 		}
 		return _propertyModel;
@@ -153,10 +138,8 @@ public class Models {
 	 * Create logging model
 	 * @return created model
 	 */
-	private LoggingModel createLoggingModel()
-	{
-		if (_loggingModel == null)
-		{
+	private LoggingModel createLoggingModel() {
+		if (_loggingModel == null) {
 			_loggingModel = new LoggingModel();
 		}
 		return _loggingModel;
@@ -166,10 +149,8 @@ public class Models {
 	 * Fetch logging model
 	 * @return logging model
 	 */
-	public LoggingModel getLoggingModel()
-	{
-		if (_loggingModel == null)
-		{
+	public LoggingModel getLoggingModel() {
+		if (_loggingModel == null) {
 			throw new NullPointerException("Logging model was not created!");
 		}
 		return _loggingModel;
@@ -179,10 +160,8 @@ public class Models {
 	 * Create resource model
 	 * @return created resource model
 	 */
-	private ResourceModel createResourceModel()
-	{
-		if (_resourceModel == null)	
-		{
+	private ResourceModel createResourceModel() {
+		if (_resourceModel == null)	 {
 			_resourceModel = new ResourceModel(getLoggingModel());
 		}
 		return _resourceModel;
@@ -191,10 +170,8 @@ public class Models {
 	/**
 	 * @return resource model
 	 */
-	public ResourceModel getResourceModel()
-	{
-		if (_resourceModel == null)
-		{
+	public ResourceModel getResourceModel() {
+		if (_resourceModel == null) {
 			throw new NullPointerException("Resource model was not yet created!");
 		}
 		return _resourceModel;
@@ -204,10 +181,8 @@ public class Models {
 	 * Create developer model
 	 * @return created developer model
 	 */
-	private DeveloperModel createDeveloperModel()
-	{
-		if (_developerModel == null)	
-		{
+	private DeveloperModel createDeveloperModel() {
+		if (_developerModel == null) {
 			_developerModel = new DeveloperModel(getConnectionModel());
 		}
 		return _developerModel;
@@ -216,10 +191,8 @@ public class Models {
 	/**
 	 * @return developer model
 	 */
-	public DeveloperModel getDeveloperModel()
-	{
-		if (_developerModel == null)
-		{
+	public DeveloperModel getDeveloperModel() {
+		if (_developerModel == null) {
 			throw new NullPointerException("Developer model was not yet created!");
 		}
 		return _developerModel;
@@ -229,10 +202,8 @@ public class Models {
 	 * Create impediment model
 	 * @return created impediment model
 	 */
-	private ImpedimentModel createImpedimentModel()
-	{
-		if (_impedimentModel == null)	
-		{
+	private ImpedimentModel createImpedimentModel() {
+		if (_impedimentModel == null) {
 			_impedimentModel = new ImpedimentModel(getConnectionModel(), getSprintBacklogModel());
 		}
 		return _impedimentModel;
@@ -241,10 +212,8 @@ public class Models {
 	/**
 	 * @return impediment model
 	 */
-	public ImpedimentModel getImpedimentModel()
-	{
-		if (_impedimentModel == null)
-		{
+	public ImpedimentModel getImpedimentModel() {
+		if (_impedimentModel == null) {
 			throw new NullPointerException("Impediment model was not yet created!");
 		}
 		return _impedimentModel;
@@ -254,10 +223,8 @@ public class Models {
 	 * Create product backlog model
 	 * @return created product backlog model
 	 */
-	private ProductBacklogModel createProductBacklogModel()
-	{
-		if (_productbacklogModel == null)	
-		{
+	private ProductBacklogModel createProductBacklogModel() {
+		if (_productbacklogModel == null) {
 			_productbacklogModel = 
 				new ProductBacklogModel(getConnectionModel(), getProjectModel());
 		}
@@ -267,10 +234,8 @@ public class Models {
 	/**
 	 * @return product backlog model
 	 */
-	public ProductBacklogModel getProductBacklogModel()
-	{
-		if (_productbacklogModel == null)
-		{
+	public ProductBacklogModel getProductBacklogModel() {
+		if (_productbacklogModel == null) {
 			throw new NullPointerException("Product Backlog model was not yet created!");
 		}
 		return _productbacklogModel;
@@ -280,10 +245,8 @@ public class Models {
 	 * Create sprint backlog model
 	 * @return created sprint backlog model
 	 */
-	private SprintBacklogModel createSprintBacklogModel()
-	{
-		if (_sprintbacklogModel == null)	
-		{
+	private SprintBacklogModel createSprintBacklogModel() {
+		if (_sprintbacklogModel == null) {
 			_sprintbacklogModel = new SprintBacklogModel(getConnectionModel(), getProjectModel());
 		}
 		return _sprintbacklogModel;
@@ -292,10 +255,8 @@ public class Models {
 	/**
 	 * @return product backlog model
 	 */
-	public SprintBacklogModel getSprintBacklogModel()
-	{
-		if (_sprintbacklogModel == null)
-		{
+	public SprintBacklogModel getSprintBacklogModel() {
+		if (_sprintbacklogModel == null) {
 			throw new NullPointerException("Sprint Backlog model was not yet created!");
 		}
 		return _sprintbacklogModel;
@@ -305,10 +266,8 @@ public class Models {
 	 * Create database schema model
 	 * @return created model
 	 */
-	private DBSchemaModel createDBSchemaModel()
-	{
-		if (_dbschemaModel == null)	
-		{
+	private DBSchemaModel createDBSchemaModel() {
+		if (_dbschemaModel == null)	{
 			_dbschemaModel = new DBSchemaModel(getConnectionModel());
 		}
 		return _dbschemaModel;
@@ -317,10 +276,8 @@ public class Models {
 	/**
 	 * @return database schema model
 	 */
-	public DBSchemaModel getDBSchemaModel()
-	{
-		if (_dbschemaModel == null)
-		{
+	public DBSchemaModel getDBSchemaModel() {
+		if (_dbschemaModel == null) {
 			throw new NullPointerException("Database schema model was not yet created!");
 		}
 		return _dbschemaModel;
@@ -330,10 +287,8 @@ public class Models {
 	 * Create administrative days model
 	 * @return created model
 	 */
-	private AdminDaysModel createAdminDaysModel()
-	{
-		if (_admindaysModel == null)	
-		{
+	private AdminDaysModel createAdminDaysModel() {
+		if (_admindaysModel == null) {
 			_admindaysModel = new AdminDaysModel(getConnectionModel());
 		}
 		return _admindaysModel;
@@ -342,86 +297,82 @@ public class Models {
 	/**
 	 * @return administrative days model
 	 */
-	public AdminDaysModel getAdminDaysModel()
-	{
-		if (_admindaysModel == null)
-		{
+	public AdminDaysModel getAdminDaysModel() {
+		if (_admindaysModel == null) {
 			throw new NullPointerException("Administrative days model was not yet created!");
 		}
 		return _admindaysModel;
 	}
 	
-	private AbsenceTypeModel createAbsenceTypeModel()
-	{
-		if (_absencetypeModel == null)	
-		{
+	private AbsenceTypeModel createAbsenceTypeModel() {
+		if (_absencetypeModel == null) {
 			_absencetypeModel = new AbsenceTypeModel(getConnectionModel());
 		}
 		return _absencetypeModel;
 	}
 	
-	public AbsenceTypeModel getAbsenceTypeModel() 
-	{
-		if (_absencetypeModel == null)
-		{
+	public AbsenceTypeModel getAbsenceTypeModel() {
+		if (_absencetypeModel == null) {
 			throw new NullPointerException("Absence type model was not yet created!");
 		}
 		return _absencetypeModel;
 	}
 	
-	private TaskStatusModel createTaskStatusModel()
-	{
-		if (_taskstatusModel == null)	
-		{
+	private TaskStatusModel createTaskStatusModel() {
+		if (_taskstatusModel == null) {
 			_taskstatusModel = new TaskStatusModel(getConnectionModel());
 		}
 		return _taskstatusModel;
 	}
 	
-	public TaskStatusModel getTaskStatusModel() 
-	{
-		if (_taskstatusModel == null)
-		{
+	public TaskStatusModel getTaskStatusModel() {
+		if (_taskstatusModel == null) {
 			throw new NullPointerException("Task status model was not yet created!");
 		}
 		return _taskstatusModel;
 	}
 	
-	private TaskTypeModel createTaskTypeModel()
-	{
-		if (_tasktypeModel == null)	
-		{
+	private TaskTypeModel createTaskTypeModel() {
+		if (_tasktypeModel == null)	{
 			_tasktypeModel = new TaskTypeModel(getConnectionModel());
 		}
 		return _tasktypeModel;
 	}
 	
-	public TaskTypeModel getTaskTypeModel() 
-	{
-		if (_tasktypeModel == null)
-		{
+	public TaskTypeModel getTaskTypeModel()  {
+		if (_tasktypeModel == null) {
 			throw new NullPointerException("Task type model was not yet created!");
 		}
 		return _tasktypeModel;
 	}
 	
-	private TaskModel createTaskModel()
-	{
-		if (_taskModel == null)	
-		{
+	private TaskModel createTaskModel() {
+		if (_taskModel == null)	 {
 			_taskModel = 
 				new TaskModel(getConnectionModel(), getProjectModel(), getSprintBacklogModel());
 		}
 		return _taskModel;
 	}
 	
-	public TaskModel getTaskModel() 
-	{
-		if (_taskModel == null)
-		{
+	public TaskModel getTaskModel() {
+		if (_taskModel == null) {
 			throw new NullPointerException("Task model was not yet created!");
 		}
 		return _taskModel;
+	}
+	
+	public MetricModel createMetricModel() {
+		if (_metricModel == null) {
+			_metricModel = new MetricModel(getConnectionModel());
+		}
+		return _metricModel;
+	}
+	
+	public MetricModel getMetricModel() {
+		if (_metricModel == null) {
+			throw new NullPointerException("Metric model was not created!");
+		}
+		return _metricModel;
 	}
 	
 	private ConnectionModel _connectionModel = null;
@@ -432,6 +383,7 @@ public class Models {
 	private ResourceModel   _resourceModel = null;
 	private DeveloperModel  _developerModel = null;
 	private ImpedimentModel _impedimentModel = null;
+	private MetricModel _metricModel = null;
 	private SprintBacklogModel  _sprintbacklogModel = null;
 	private ProductBacklogModel _productbacklogModel = null;
 	/// schema model contains database schema related data
