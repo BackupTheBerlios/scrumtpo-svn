@@ -41,6 +41,9 @@ import scrummer.ui.dialog.ImpedimentsAddDialog;
 import scrummer.ui.dialog.ImpedimentsChangeDialog;
 import scrummer.ui.dialog.ImpedimentsViewDialog;
 import scrummer.ui.dialog.LoginDialog;
+import scrummer.ui.dialog.MetricAddDialog;
+import scrummer.ui.dialog.MetricChangeDialog;
+import scrummer.ui.dialog.MetricRemoveDialog;
 import scrummer.ui.dialog.ProjectNewDialog;
 import scrummer.ui.dialog.ProjectOpenDialog;
 import scrummer.ui.dialog.ProductBacklogAddDialog;
@@ -116,48 +119,59 @@ public class MainFrame extends JFrame
 		addMenuEntry(fileMenu, i18n.tr("Remove Project"), 		KeyEvent.VK_R, "RemoveProject");
 		_closeMenuItem = addMenuEntry(fileMenu, i18n.tr("Close Project"), KeyEvent.VK_C, "CloseProject");
 		_closeMenuItem.setEnabled(false);
+		
 		fileMenu.addSeparator();
+		
 		addMenuEntry(fileMenu, i18n.tr("Insert into product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Change product backlog item"), KeyEvent.VK_P, "ChangeProductBacklogItem");
-		/*
-		fileMenu.addSeparator();
-		addMenuEntry(fileMenu, i18n.tr("Add impediment"), KeyEvent.VK_I, "AddImpediment");
-		addMenuEntry(fileMenu, i18n.tr("View impediments"), KeyEvent.VK_V, "ViewImpediments");
-		addMenuEntry(fileMenu, i18n.tr("Change impediment"), KeyEvent.VK_C, "ChangeImpediment");
-		*/
+		
 		fileMenu.addSeparator();
 		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
 		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
 		addMenuEntry(fileMenu, i18n.tr("Daily scrum meeting"), KeyEvent.VK_Z, "DailyScrumMeet");
+		
 		fileMenu.addSeparator();
+		
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
-		JMenu sifrantiMenu = new JMenu(i18n.tr("Sifranti"));
+		JMenu sifrantiMenu = new JMenu(i18n.tr("Code List"));
 		sifrantiMenu.setMnemonic(KeyEvent.VK_0);
 		
 		addMenuEntry(sifrantiMenu, i18n.tr("Add absence type"), KeyEvent.VK_1, "AddAbsenceType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_2, "ChangeAbsenceType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change absence type"), KeyEvent.VK_2, "ChangeAbsenceType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Remove absence type"), KeyEvent.VK_3, "RemoveAbsenceType");
-		addMenuEntry(sifrantiMenu, i18n.tr("Add task type"), KeyEvent.VK_4, "AddTaskType");
-		addMenuEntry(sifrantiMenu, i18n.tr("Change task type"), KeyEvent.VK_5, "ChangeTaskType");
-		addMenuEntry(sifrantiMenu, i18n.tr("Remove task type"), KeyEvent.VK_6, "RemoveTaskType");
-		addMenuEntry(sifrantiMenu, i18n.tr("Add task status"), KeyEvent.VK_7, "AddTaskStatus");
-		addMenuEntry(sifrantiMenu, i18n.tr("Change task status"), KeyEvent.VK_8, "ChangeTaskStatus");
-		addMenuEntry(sifrantiMenu, i18n.tr("Remove task status"), KeyEvent.VK_9, "RemoveTaskStatus");
 		
 		sifrantiMenu.addSeparator();
-		
+
 		addMenuEntry(sifrantiMenu, i18n.tr("Add impediment type"), KeyEvent.VK_I, "AddImpedimentType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change impediment type"), KeyEvent.VK_M, "ChangeImpedimentType");
 		addMenuEntry(sifrantiMenu, i18n.tr("Remove impediment type"), KeyEvent.VK_M, "RemoveImpedimentType");
-		
+
 		sifrantiMenu.addSeparator();
 		
 		addMenuEntry(sifrantiMenu, i18n.tr("Add impediment status"), KeyEvent.VK_I, "AddImpedimentStatus");
 		addMenuEntry(sifrantiMenu, i18n.tr("Change impediment status"), KeyEvent.VK_M, "ChangeImpedimentStatus");
 		addMenuEntry(sifrantiMenu, i18n.tr("Remove impediment status"), KeyEvent.VK_M, "RemoveImpedimentStatus");
+		
+		sifrantiMenu.addSeparator();
+		
+		addMenuEntry(sifrantiMenu, i18n.tr("Add Metric"), KeyEvent.VK_0, "AddMetric");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change Metric"), KeyEvent.VK_0, "ChangeMetric");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove Metric"), KeyEvent.VK_0, "RemoveMetric");
+		
+		sifrantiMenu.addSeparator();
+		
+		addMenuEntry(sifrantiMenu, i18n.tr("Add task type"), KeyEvent.VK_4, "AddTaskType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change task type"), KeyEvent.VK_5, "ChangeTaskType");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove task type"), KeyEvent.VK_6, "RemoveTaskType");
+		
+		sifrantiMenu.addSeparator();
+		
+		addMenuEntry(sifrantiMenu, i18n.tr("Add task status"), KeyEvent.VK_7, "AddTaskStatus");
+		addMenuEntry(sifrantiMenu, i18n.tr("Change task status"), KeyEvent.VK_8, "ChangeTaskStatus");
+		addMenuEntry(sifrantiMenu, i18n.tr("Remove task status"), KeyEvent.VK_9, "RemoveTaskStatus");
 		
 		JMenu developerMenu = new JMenu(i18n.tr("Employees"));
 		developerMenu.setMnemonic(KeyEvent.VK_E);
@@ -206,10 +220,8 @@ public class MainFrame extends JFrame
 	/**
 	 * Save application properties
 	 */
-	private void lastPropertySave()
-	{
-		if (!_saved)
-		{
+	private void lastPropertySave() {
+		if (!_saved) {
 			_saved = true;
 			// save property file
 			PropertyModel pm = _models.getPropertyModel();
@@ -221,77 +233,10 @@ public class MainFrame extends JFrame
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd.equals("NewProject")) {
-			showIt(new ProjectNewDialog(this));
-		} else if (cmd.equals("OpenProject")) {
-			showIt(new ProjectOpenDialog(this));
-		} else if (cmd == "RemoveProject") {
-			showIt(new ProjectRemoveDialog(this));
-		} else if (cmd.equals("CloseProject")) {
-			_projectModel.closeProject();
-		} else if (cmd.equals("ViewProductBacklog")) {
-			showIt(new ProductBacklogViewDialog(this));
-		} else if(cmd.equals("AddProductBacklog")) {
-			showIt(new ProductBacklogAddDialog(this));
-		} else if(cmd.equals("ChangeProductBacklogItem")) {
-			/*
-			ProductBacklogChangeDialog dialog = new ProductBacklogChangeDialog(this, 2);
-			Util.centre(dialog);
-			dialog.setVisible(true);
-			*/
-		}
-		else if(cmd.equals("AddImpediment")) {
-			showIt(new ImpedimentsAddDialog(this)); 
-		} else if(cmd.equals("ViewImpediments")) {
-			showIt(new ImpedimentsViewDialog(this));
-		} else if(cmd.equals("ChangeImpediment")) {
-			// showIt(new ImpedimentsChangeDialog(this));
-		} else if(cmd.equals("AddImpedimentType")) {
-			showIt(new ImpedimentTypeAdd(this));
-		} else if(cmd.equals("ChangeImpedimentType")) {
-			showIt(new ImpedimentTypeChange(this));
-		} else if(cmd.equals("RemoveImpedimentType")) {
-			showIt(new ImpedimentTypeRemove(this));
-		} else if(cmd.equals("AddImpedimentStatus")) {
-			showIt(new ImpedimentStatusAdd(this));
-		} else if(cmd.equals("AddAbsenceType")) {
-			showIt(new AbsenceTypeAddDialog(this));
-		} else if(cmd.equals("ChangeImpedimentStatus")) {
-			showIt(new ImpedimentStatusChange(this));
-		} else if(cmd.equals("ChangeAbsenceType")) {
-			showIt(new AbsenceTypeChangeDialog(this));
-		} else if(cmd.equals("RemoveAbsenceType")) {
-			showIt(new AbsenceTypeRemoveDialog(this));
-		} else if(cmd.equals("AddTaskType")) {
-			showIt(new TaskTypeAddDialog(this));
-		} else if(cmd.equals("RemoveImpedimentStatus")) {
-			showIt(new ImpedimentStatusRemove(this));
-		} else if(cmd.equals("ChangeTaskType")) {
-			showIt(new TaskTypeChangeDialog(this));
-		} else if(cmd.equals("RemoveTaskType")) {
-			showIt(new TaskTypeRemoveDialog(this));
-		} else if(cmd.equals("AddTaskStatus")) {
-			showIt(new TaskStatusAddDialog(this));
-		} else if(cmd.equals("SprintPlanMeet")) {
-			showIt(new SprintPlanningMeetingDialog(this));
-		} else if(cmd.equals("ChangeTaskStatus")) {
-			showIt(new TaskStatusChangeDialog(this));
-		} else if(cmd.equals("ViewSprintBacklog")) {
-			showIt(new SprintBacklogViewDialog(this));
-		} else if(cmd.equals("RemoveTaskStatus")) {
-			showIt(new TaskStatusRemoveDialog(this));
-		} else if (cmd.equals("ViewDevelopers")) {
+		if (handleFileMenu(e)) {}
+		else if (handleCodeListMenu(e)) {}
+		else if (cmd.equals("ViewDevelopers")) {
 			showIt(new DevelopersViewDialog(this));
-		} else if(cmd.equals("DailyScrumMeet")) {
-			showIt(new DailyScrumMeetingDialog(this));
-		} else if(cmd.equals("AdminDaysView")) {
-			showIt(new AdminDaysViewDialog(this));
-		} else if(cmd.equals("AdminDaysAdd")) {
-			showIt(new AdminDaysAddDialog(this));
-		} else if(cmd.equals("AddAbsenceType")) {
-			showIt(new AbsenceTypeAddDialog(this));
-		} else if(cmd.equals("ChangeAbsenceType")) {
-			showIt(new AbsenceTypeChangeDialog(this));			
 		} else if (cmd.equals("ViewDevelopers")) {
 			showIt(new DevelopersViewDialog(this));
 		} else if(cmd.equals("AddDeveloper")) {
@@ -304,10 +249,154 @@ public class MainFrame extends JFrame
 			showIt(new TeamChangeNameDialog(this));
 		} else if (cmd.equals("RemoveTeam")) {
 			showIt(new TeamRemoveDialog(this));
-		} else if (cmd.equals("Exit")) {
-			dispose();
 		} else if (cmd.equals("About")) {
 			showIt(new AboutBoxDialog(this));
+		}
+	}
+	
+	/**
+	 * Handle file menu action events
+	 * @param e event
+	 * @return true if handled, false otherwise
+	 */
+	private boolean handleFileMenu(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if (cmd.equals("NewProject")) {
+			return showIt(new ProjectNewDialog(this));
+		} else if (cmd.equals("OpenProject")) {
+			return showIt(new ProjectOpenDialog(this));
+		} else if (cmd == "RemoveProject") {
+			return showIt(new ProjectRemoveDialog(this));
+		} else if (cmd.equals("CloseProject")) {
+			_projectModel.closeProject();
+			return true;
+		} else if (cmd.equals("ViewProductBacklog")) {
+			return showIt(new ProductBacklogViewDialog(this));
+		} else if(cmd.equals("AddProductBacklog")) {
+			return showIt(new ProductBacklogAddDialog(this));
+		} else if(cmd.equals("ChangeProductBacklogItem")) {
+			/*
+			ProductBacklogChangeDialog dialog = new ProductBacklogChangeDialog(this, 2);
+			Util.centre(dialog);
+			dialog.setVisible(true);
+			*/
+			return true;
+		} else if(cmd.equals("SprintPlanMeet")) {
+			return showIt(new SprintPlanningMeetingDialog(this));
+		} else if(cmd.equals("DailyScrumMeet")) {
+			return showIt(new DailyScrumMeetingDialog(this));
+		} else if(cmd.equals("ViewSprintBacklog")) {
+			return showIt(new SprintBacklogViewDialog(this));
+		} else if (cmd.equals("Exit")) {
+			dispose();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Handle code list menu events
+	 * @param e event
+	 * @return true if handled, false otherwise
+	 */
+	private boolean handleCodeListMenu(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if (handleImpedimentCodeListMenu(e)) {
+			return true;
+		} else if (handleTaskCodeListMenu(e)) {
+			return true;		
+		} else if (handleMetricCodeListMenu(e)) {
+			return true;
+		} else if(cmd.equals("AddAbsenceType")) {
+			return showIt(new AbsenceTypeAddDialog(this));
+		} else if(cmd.equals("ChangeAbsenceType")) {
+			return showIt(new AbsenceTypeChangeDialog(this));
+		} else if(cmd.equals("RemoveAbsenceType")) {
+			return showIt(new AbsenceTypeRemoveDialog(this));
+		} else if(cmd.equals("AddAbsenceType")) {
+			return showIt(new AbsenceTypeAddDialog(this));
+		} else if(cmd.equals("ChangeAbsenceType")) {
+			return showIt(new AbsenceTypeChangeDialog(this));
+		} else if(cmd.equals("AdminDaysView")) {
+			return showIt(new AdminDaysViewDialog(this));
+		} else if(cmd.equals("AdminDaysAdd")) {
+			return showIt(new AdminDaysAddDialog(this));
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Handle impediment code list 
+	 * @param e event
+	 * @return true if handled, false otherwise
+	 */
+	private boolean handleImpedimentCodeListMenu(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if (cmd.equals("AddImpediment")) {
+			return showIt(new ImpedimentsAddDialog(this));
+		} else if(cmd.equals("ChangeImpedimentStatus")) {
+			return showIt(new ImpedimentStatusChange(this));
+		} else if(cmd.equals("ViewImpediments")) {
+			return showIt(new ImpedimentsViewDialog(this));
+		} else if(cmd.equals("ChangeImpediment")) {
+			// showIt(new ImpedimentsChangeDialog(this));
+			return true;
+		} else if(cmd.equals("AddImpedimentType")) {
+			return showIt(new ImpedimentTypeAdd(this));
+		} else if(cmd.equals("ChangeImpedimentType")) {
+			return showIt(new ImpedimentTypeChange(this));
+		} else if(cmd.equals("RemoveImpedimentType")) {
+			return showIt(new ImpedimentTypeRemove(this));
+		} else if(cmd.equals("AddImpedimentStatus")) {
+			return showIt(new ImpedimentStatusAdd(this));
+		} else if(cmd.equals("RemoveImpedimentStatus")) {
+			return showIt(new ImpedimentStatusRemove(this));
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Handle task related code list menu events
+	 * @param e event
+	 * @return true if handled, false otherwise
+	 */
+	private boolean handleTaskCodeListMenu(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if(cmd.equals("AddTaskType")) {
+			return showIt(new TaskTypeAddDialog(this));
+		} else if(cmd.equals("ChangeTaskType")) {
+			return showIt(new TaskTypeChangeDialog(this));
+		} else if(cmd.equals("RemoveTaskType")) {
+			return showIt(new TaskTypeRemoveDialog(this));
+		} else if (cmd.equals("AddTaskStatus")) {
+			return showIt(new TaskStatusAddDialog(this));
+		} else if(cmd.equals("ChangeTaskStatus")) {
+			return showIt(new TaskStatusChangeDialog(this));
+		} else if(cmd.equals("RemoveTaskStatus")) {
+			return showIt(new TaskStatusRemoveDialog(this));
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Handle metric related code list menu events
+	 * @param e event
+	 * @return true if handled, false otherwise
+	 */
+	private boolean handleMetricCodeListMenu(ActionEvent e) {
+		String cmd = e.getActionCommand();
+		if (cmd.equals("AddMetric")) {
+			return showIt(new MetricAddDialog(this));
+		} else if (cmd.equals("ChangeMetric")) {
+			return showIt(new MetricChangeDialog(this));
+		} else if (cmd.equals("RemoveMetric")) {
+			return showIt(new MetricRemoveDialog(this));
+		} else {
+			return false;
 		}
 	}
 	
@@ -315,9 +404,10 @@ public class MainFrame extends JFrame
 	 * Centre and display dialog applicatino modally
 	 * @param dialog dialog to display
 	 */
-	private void showIt(JDialog dialog) {
+	private boolean showIt(JDialog dialog) {
 		Util.centre(dialog);
 		dialog.setVisible(true);
+		return true;
 	}
 	
 	@Override
@@ -355,19 +445,15 @@ public class MainFrame extends JFrame
 	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
 		switch (type)
 		{
-		case Update:
-		{
-			switch (identifier)
-			{
+		case Update: {
+			switch (identifier) {
 			case Project:
 				setTitle(ApplicationName + " - " + _projectModel.getCurrentProjectName());
 				break;
 			}
 		}
-		case Custom:
-		{
-			switch (identifier)
-			{
+		case Custom: {
+			switch (identifier) {
 			case Open:
 				setTitle(ApplicationName + " - " + _projectModel.getCurrentProjectName());
 				_closeMenuItem.setEnabled(true);
