@@ -392,7 +392,7 @@ public class DBSchemaModel {
 	public static final String TaskTypeTable = "Task_type";
 	public static final String TaskTypeDesc = "Task_type_description";	
 	
-	public static final String MeasureTable = "Measure_table";
+	public static final String MeasureTable = "Measure";
 	public static final String MeasureId = "Measure_id";
 	public static final String MeasureName = "Measure_name";
 	public static final String MeasureDescription = "Measure_description";
