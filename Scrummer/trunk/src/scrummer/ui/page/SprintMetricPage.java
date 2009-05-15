@@ -17,7 +17,7 @@ import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.SprintBacklogTableModel;
 import scrummer.model.swing.SprintPBITableModel;
 import scrummer.ui.MainFrame;
-import scrummer.ui.MetricPageToolbar;
+import scrummer.ui.TaskMetricPageToolbar;
 import scrummer.ui.Util;
 import scrummer.ui.dialog.DailyScrumMeetingDialog;
 import scrummer.uicomponents.NiceTable;
@@ -41,7 +41,7 @@ public class SprintMetricPage extends BasePage implements ActionListener {
 		int k = 1;
 		box.setBorder(BorderFactory.createEmptyBorder(k, k, k, k));
 		
-		MetricPageToolbar toolbar = new MetricPageToolbar();
+		TaskMetricPageToolbar toolbar = new TaskMetricPageToolbar();
 		
 		NiceTable sprintbacklogTable = new NiceTable();
 		sprintbacklogTable.setModel(sprintPBITableModel);
