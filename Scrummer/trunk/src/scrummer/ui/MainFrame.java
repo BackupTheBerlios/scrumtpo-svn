@@ -65,9 +65,9 @@ import scrummer.ui.dialog.TeamRemoveDialog;
 /**
  * Main application window
  */
-public class MainFrame extends JFrame 
-					   implements ActionListener, WindowListener, ProjectListener 
-{
+public class MainFrame 
+	extends JFrame 
+	implements ActionListener, WindowListener, ProjectListener {
 	/**
 	 * Default constructor
 	 * @throws HeadlessException
