@@ -430,16 +430,19 @@ public class DBSchemaModel {
 	
 	public static final String TaskMeasurementResultTable = "Task_measurement_result";
 	public static final String TaskMeasurementResultId = "Measure_id";
+	public static final String TaskMeasurementTaskId = "Task_id";
 	public static final String TaskMeasurementResultResult = "Measurement_result";
 	public static final String TaskMeasurementResultDatum = "Datum";
 	
 	public static final String SprintMeasurementResultTable = "Sprint_measurement_result";
-	public static final String SprintMeasurementResultId = "Sprint_id";
+	public static final String SprintMeasurementResultId = "Measure_id";
+	public static final String SprintMeasurementSprintId = "Sprint_id";
 	public static final String SprintMeasurementResultResult = "Measurement_result";
 	public static final String SprintMeasurementResultDate = "Datum";
 	
 	public static final String ReleaseMeasurementResultTable = "Release_measurement_result";
-	public static final String ReleaseMeasurementResultId = "Release_id";
+	public static final String ReleaseMeasurementResultId = "Measure_id";
+	public static final String ReleaseMeasurementReleaseId = "Release_id";
 	public static final String ReleaseMeasurementResultResult = "Measurement_result";
 	public static final String ReleaseMeasurementResultDate = "Datum";
 	
