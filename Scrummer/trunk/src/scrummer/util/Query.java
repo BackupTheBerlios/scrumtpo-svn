@@ -15,23 +15,18 @@ public class Query {
 	 * Constructor
 	 * @param connectionModel connection model
 	 */
-	public Query(ConnectionModel connectionModel)
-	{
+	public Query(ConnectionModel connectionModel) {
 		_connectionModel = connectionModel;
 	}
 
-	public void dispose()
-	{
-		if (_resultSet != null)
-		{
+	public void dispose() {
+		if (_resultSet != null) {
 			_connectionModel.close(_resultSet);
 		}
-		if (_statement != null)
-		{
+		if (_statement != null) {
 			_connectionModel.close(_statement);
 		}
-		if (_connection != null)
-		{
+		if (_connection != null) {
 			_connectionModel.close(_connection);
 		}
 	}
