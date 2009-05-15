@@ -8,6 +8,7 @@ import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.MetricOperation;
 import scrummer.model.DBSchemaModel.IdValue;
+import scrummer.util.ObjectRow;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
 
@@ -718,7 +719,7 @@ public class MetricModelCommon {
 	
 	/**
 	 * Fetch id, name pairs for metric
-	 * @return 
+	 * @return metric descriptions
 	 */
 	public Vector<IdValue> fetchMetricDescriptions() {
 		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
@@ -736,7 +737,82 @@ public class MetricModelCommon {
 						DBSchemaModel.MeasureName + 
 			" FROM " + DBSchemaModel.MeasureTable);
 		return q.getResult();
-		
+	}
+	
+	/**
+	 * General metric data fetch rows
+	 * @param id id of task, sprint, ...
+	 * @param tableName table name
+	 * @param idColumn not id column but task, sprint id, ... column
+	 * @param dateColumn date column name
+	 * @param measureColumn measure column name
+	 * @return rows or null if error occurred
+	 */
+	private Vector<ObjectRow> fetchAnyMetricData(int id, String tableName, String idColumn, String dateColumn, String measureColumn) {
+		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(ObjectRow.fetchRows(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(null);
+				ex.printStackTrace();
+			}					
+		};
+		q.queryResult("SELECT " + 
+				dateColumn  + ", " +
+				measureColumn + ", " +
+			" FROM " + tableName + 
+			" WHERE " +
+			idColumn + "=" + id);
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch task metric information
+	 * @param taskId task id
+	 * @return table rows
+	 */
+	public Vector<ObjectRow> fetchTaskMetric(int taskId) {
+		Vector<ObjectRow> ret = 
+			fetchAnyMetricData(taskId, 
+				DBSchemaModel.TaskMeasurementResultTable, 
+				DBSchemaModel.TaskMeasurementTaskId, 
+				DBSchemaModel.TaskMeasurementResultDatum, 
+				DBSchemaModel.TaskMeasurementResultResult);
+		if (ret == null) {
+			_operation.operationFailed(DataOperation.Select, MetricOperation.TaskMeasure, 
+				i18n.tr("Could not retrieve task measures."));
+			return new Vector<ObjectRow>();
+		} else {
+			_operation.operationSucceeded(DataOperation.Select, MetricOperation.TaskMeasure, 
+					"");
+			return ret;
+		}
+	}
+	
+	/**
+	 * Fetch sprint metric information
+	 * @param sprintId task id
+	 * @return table rows
+	 */
+	public Vector<ObjectRow> fetchSprintMetric(int sprintId) {
+		Vector<ObjectRow> ret = 
+			fetchAnyMetricData(sprintId, 
+				DBSchemaModel.SprintMeasurementResultTable, 
+				DBSchemaModel.SprintMeasurementResultId, 
+				DBSchemaModel.SprintMeasurementResultDate, 
+				DBSchemaModel.SprintMeasurementResultResult);
+		if (ret == null) {
+			_operation.operationFailed(DataOperation.Select, MetricOperation.SprintMeasure, 
+				i18n.tr("Could not retrieve sprint measures."));
+			return new Vector<ObjectRow>();
+		} else {
+			_operation.operationSucceeded(DataOperation.Select, MetricOperation.SprintMeasure, 
+					"");
+			return ret;
+		}
 	}
 	
 	/// connection model

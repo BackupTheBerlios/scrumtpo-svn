@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import scrummer.listener.MetricListener;
 import scrummer.model.swing.MetricComboBoxModel;
+import scrummer.model.swing.MetricTableModel;
 import scrummer.util.Operations;
 
 /**
@@ -16,6 +17,8 @@ public class MetricModel {
 			new MetricModelCommon(connectionModel, _operation);
 		_metricComboBoxModel = 
 			new MetricComboBoxModel(_metricModelCommon);
+		_metricTableModel = 
+			new MetricTableModel(_metricModelCommon);
 	}
 	
 	/**
@@ -220,6 +223,15 @@ public class MetricModel {
 		return _metricComboBoxModel;
 	}
 	
+	/**
+	 * @return metric table model
+	 */
+	public MetricTableModel getMetricTableModel() {
+		return _metricTableModel;
+	}
+	
+	/// metric table model
+	private MetricTableModel _metricTableModel;
 	/// metric name combo box
 	private MetricComboBoxModel _metricComboBoxModel;
 	/// common metric model
