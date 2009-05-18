@@ -57,7 +57,7 @@ public class Query {
 	 * @param query database query
 	 * @return result set
 	 */
-	public void queryResult(String query) {		
+	public void queryResult(String query) {
 		try {
 			// fetch connection
 			_connection = _connectionModel.getConnection();
