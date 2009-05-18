@@ -2,11 +2,10 @@ package scrummer.ui;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JFormattedTextField.AbstractFormatter;
-
 import scrummer.uicomponents.SelectedFormattedTextField;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
@@ -124,6 +123,21 @@ public class FormBuilder {
 	}
 	
 	/**
+	 * Add custom control
+	 * @param labelText label text
+	 * @param component component to add
+	 */
+	public void addCustom(String labelText, JComponent component) {
+		_addedElements += 2;
+		adjustPanelLayout(_panel, _addedElements, _horizontal, _vertical);
+		
+		JLabel label = new JLabel(labelText);
+		
+		_panel.add(label);
+		_panel.add(component);
+	}
+	
+	/**
 	 * Set intercell spacing
 	 * @param horizontal
 	 * @param vertical
@@ -150,7 +164,6 @@ public class FormBuilder {
 			panel.setLayout(
 				new FlowLayout(FlowLayout.LEFT, horizontalSpacing, verticalSpacing));
 		}
-		
 	}
 	
 	/// layout type
