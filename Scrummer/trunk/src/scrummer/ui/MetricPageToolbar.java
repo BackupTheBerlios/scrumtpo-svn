@@ -1,19 +1,16 @@
 package scrummer.ui;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
-
 import scrummer.Scrummer;
 import scrummer.model.MetricModel;
 import scrummer.model.Models;
 import scrummer.model.swing.MetricTableModel;
+import scrummer.model.swing.base.IdValueComboBoxModel;
 import scrummer.uicomponents.AddEditRemovePanel;
 import scrummer.uicomponents.StandardComboBox;
 
@@ -43,16 +40,30 @@ public class MetricPageToolbar
 			fb.addComboBoxInput("");
 		add(left);
 		
-		AddEditRemovePanel right = new AddEditRemovePanel();		
-		add(right);
+		_addEditRemovePanel = new AddEditRemovePanel();		
+		add(_addEditRemovePanel);
 		
-		_metricSelectionInput.addItem("Sprint");
 		_metricSelectionInput.addItem("Task");
+		_metricSelectionInput.addItem("Sprint");
+		
+		_metricSelectionInput.setEnabled(true);
 		
 		_metricInput.setIVModel(_metricModel.getMetricComboBoxModel());		
 		
 		_metricSelectionInput.setSelectedIndex(0);
 	}	
+	
+	/**
+	 * Select metric domain Sprint, Task, ...
+	 * @param index index to set
+	 */
+	public void selectMetricDomain(int index) {
+		_metricSelectionInput.setSelectedIndex(index);
+	}
+	
+	public void selectMetricType(int index) {
+		_metricInput.setSelectedIndex(index);
+	}
 	
 	/**
 	 * Add item listener to all combo boxes
@@ -90,6 +101,63 @@ public class MetricPageToolbar
 		_addEditRemovePanel.removeActionListener(listener);
 	}
 	
+	/**
+	 * @param object any object
+	 * @return true if object is metric selection input
+	 */
+	public boolean isMetricSelectionInput(Object object) {
+		return (_metricSelectionInput == object);
+	}
+	
+	/**
+	 * @param object any object
+	 * @return true if object is metric type input
+	 */
+	public boolean isMetricInput(Object object) {
+		return (_metricInput == object);
+	}
+	
+	/**
+	 * @param object object to compare
+	 * @return true if object is the control that further refines which metrics to show(task id, sprint id, ...)
+	 */
+	public boolean isMetricId(Object object) {
+		return (_specificMetricInput == object);
+	}
+	
+	/**
+	 * @return currently selected metric domain(Sprint, Task, ...)
+	 */
+	public MetricTableModel.MetricType getSelectedMetricType() {
+		return MetricTableModel.MetricType.values()[_metricSelectionInput.getSelectedIndex()];
+	}
+	
+	/**
+	 * @return metric type
+	 */
+	public int getMetricId() {
+		return _metricInput.getSelectedId();
+	}
+	
+	/**
+	 * @return task, sprint id, etc.
+	 */
+	public int getSpecificId() {
+		if (_specificMetricInput.isSelected()) {
+			return _specificMetricInput.getSelectedId();
+		} else {
+			return -1;
+		}
+	}
+	
+	/**
+	 * Update box with objects
+	 * @param model model to set
+	 */
+	public void updateObjectBox(IdValueComboBoxModel model) {
+		_specificMetricInput.setIVModel(model);
+	}
+	
 	/// metric model
 	private MetricModel _metricModel;
 	/// metric table model
@@ -97,10 +165,10 @@ public class MetricPageToolbar
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 	/// this combo box controls what kind of information will be available next
-	private StandardComboBox _metricSelectionInput;
+	private JComboBox _metricSelectionInput;
 	/// user can select either a sprint or a task, etc. from this list
 	private StandardComboBox _specificMetricInput;
-	/// metric type cmbo box
+	/// metric type combo box
 	private StandardComboBox _metricInput;
 	/// add/edit/remove panel
 	private AddEditRemovePanel _addEditRemovePanel;
