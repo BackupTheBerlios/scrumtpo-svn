@@ -1,5 +1,7 @@
 package scrummer.model;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -241,7 +243,7 @@ public class MetricModelCommon {
 	 * @param measurementResult result
 	 * @return true if task added, false otherwise
 	 */
-	public boolean addTaskMeasurement(int measureId, int taskId, java.sql.Date datum, String measurementResult) {
+	public boolean addTaskMeasurement(int measureId, int taskId, java.sql.Date datum, BigDecimal measurementResult) {
         boolean ret = false;
         java.sql.Connection conn      = null;
         java.sql.PreparedStatement st = null;
@@ -250,17 +252,18 @@ public class MetricModelCommon {
             conn = _connectionModel.getConnection();
             String query =
             "INSERT INTO " + DBSchemaModel.TaskMeasurementResultTable +
-            "(" +
+            " (" +
+            DBSchemaModel.TaskMeasurementResultId + ", " +
+            DBSchemaModel.TaskMeasurementTaskId + ", " +
+            DBSchemaModel.TaskMeasurementResultDatum + ", " +
             DBSchemaModel.TaskMeasurementResultResult +
             ")" +
-            " VALUES (?) " +
-            " WHERE " +
-            DBSchemaModel.MeasureId + "=" + measureId + "," +
-            DBSchemaModel.TaskId + "=" + taskId + "," +
-            DBSchemaModel.TaskMeasurementResultDatum + "=" + datum +
-            ")";
+            " VALUES (?, ?, ?, ?) ";
             st = conn.prepareStatement(query);
-            st.setString(1, measurementResult);
+            st.setInt(1, measureId);
+            st.setInt(2, taskId);
+            st.setDate(3, datum);
+            st.setBigDecimal(4, measurementResult);
             st.execute();
             _operation.operationSucceeded(DataOperation.Insert, MetricOperation.TaskMeasure, "");
             ret = true;
@@ -284,7 +287,7 @@ public class MetricModelCommon {
 	 * @param measurementResult result
 	 * @return true if sprint measurement added, false otherwise
 	 */
-	public boolean addSprintMeasurement(int sprintId, int measureId, java.sql.Date datum, String measurementResult) {
+	public boolean addSprintMeasurement(int sprintId, int measureId, java.sql.Date datum, BigDecimal measurementResult) {
         boolean ret = false;
         java.sql.Connection conn      = null;
         java.sql.PreparedStatement st = null;
@@ -294,16 +297,17 @@ public class MetricModelCommon {
             String query =
             "INSERT INTO " + DBSchemaModel.SprintMeasurementResultTable +
             "(" +
+            DBSchemaModel.SprintMeasurementResultId + ", " + 
+            DBSchemaModel.SprintMeasurementSprintId + ", " + 
+            DBSchemaModel.SprintMeasurementResultDate + ", " +
             DBSchemaModel.SprintMeasurementResultResult +
             ")" +
-            " VALUES (?) " +
-            " WHERE " +
-            DBSchemaModel.SprintId + "=" + sprintId + "," +
-            DBSchemaModel.MeasureId + "=" + measureId + "," +
-            DBSchemaModel.SprintMeasurementResultDate + "=" + datum +
-            ")";
+            " VALUES (?, ?, ?, ?) ";
             st = conn.prepareStatement(query);
-            st.setString(1, measurementResult);
+            st.setInt(1, measureId);
+            st.setInt(2, sprintId);
+            st.setDate(3, datum);
+            st.setBigDecimal(4, measurementResult);
             st.execute();
             _operation.operationSucceeded(DataOperation.Insert, MetricOperation.SprintMeasure, "");
             ret = true;
@@ -327,7 +331,7 @@ public class MetricModelCommon {
 	 * @param measurementResult result
 	 * @return true if measurement added, false otherwise
 	 */
-	public boolean addReleaseMeasurement(int measureId, int releaseId, java.sql.Date datum, String measurementResult) {
+	public boolean addReleaseMeasurement(int measureId, int releaseId, java.sql.Date datum, BigDecimal measurementResult) {
         boolean ret = false;
         java.sql.Connection conn      = null;
         java.sql.PreparedStatement st = null;
@@ -337,16 +341,17 @@ public class MetricModelCommon {
             String query =
             "INSERT INTO " + DBSchemaModel.ReleaseMeasurementResultTable +
             "(" +
+            DBSchemaModel.ReleaseMeasurementResultId + ", " + 
+            DBSchemaModel.ReleaseMeasurementReleaseId + ", " +
+            DBSchemaModel.ReleaseMeasurementResultDate + ", " +
             DBSchemaModel.ReleaseMeasurementResultResult +
             ")" +
-            " VALUES (?) " +
-            " WHERE " +
-            DBSchemaModel.MeasureId + "=" + measureId + "," +
-            DBSchemaModel.ReleaseId + "=" + releaseId + "," +
-            DBSchemaModel.ReleaseMeasurementResultDate + "=" + datum +
-            ")";
+            " VALUES (?, ?, ?) ";
             st = conn.prepareStatement(query);
-            st.setString(1, measurementResult);
+            st.setInt(1, measureId);
+            st.setInt(2, releaseId);
+            st.setDate(3, datum);
+            st.setBigDecimal(4, measurementResult);
             st.execute();
             _operation.operationSucceeded(DataOperation.Insert, MetricOperation.ReleaseMeasure, "");
             ret = true;
@@ -415,7 +420,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.ReleaseId + "=" + releaseId + " AND " +
-        DBSchemaModel.ReleaseMeasurementResultDate + "=" + datum
+        DBSchemaModel.ReleaseMeasurementResultDate + "='" + datum + "'"
         );
         return q.getResult();
 	}
@@ -446,7 +451,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.TaskId + "=" + taskId + " AND " +
-        DBSchemaModel.TaskMeasurementResultDatum + "=" + datum
+        DBSchemaModel.TaskMeasurementResultDatum + "='" + datum + "'"
         );
         return q.getResult();
 	}
@@ -477,7 +482,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.SprintId + "=" + sprintId + " AND " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
-        DBSchemaModel.SprintMeasurementResultDate + "=" + datum
+        DBSchemaModel.SprintMeasurementResultDate + "='" + datum + "'"
         );
         return q.getResult();
 	}
@@ -511,7 +516,7 @@ public class MetricModelCommon {
          "SET " + DBSchemaModel.MeasureName + "='" + measureName + "'," +
          		  DBSchemaModel.MeasureDescription + "='" + measureDescription + "' " +
         " WHERE " +
-        DBSchemaModel.MeasureId + "=" + measureId);
+        DBSchemaModel.MeasureId + "='" + measureId + "'");
         return q.getResult();
     };
     
@@ -543,7 +548,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.TaskId + "=" + taskId + " AND " +
-        DBSchemaModel.TaskMeasurementResultDatum + "=" + datum);
+        DBSchemaModel.TaskMeasurementResultDatum + "='" + datum + "'");
         return q.getResult();
 	}
 
@@ -574,7 +579,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.SprintId + "=" + sprintId + " AND " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
-        DBSchemaModel.SprintMeasurementResultDate + "=" + datum);
+        DBSchemaModel.SprintMeasurementResultDate + "='" + datum + "'");    
         return q.getResult();
     }
 
@@ -605,7 +610,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.ReleaseId + "=" + releaseId + " AND " +
-        DBSchemaModel.ReleaseMeasurementResultDate + "=" + datum);
+        DBSchemaModel.ReleaseMeasurementResultDate + "='" + datum + "'");
         return q.getResult();
     }
 
@@ -742,17 +747,20 @@ public class MetricModelCommon {
 	/**
 	 * General metric data fetch rows
 	 * @param id id of task, sprint, ...
+	 * @param metricId metric id
 	 * @param tableName table name
 	 * @param idColumn not id column but task, sprint id, ... column
 	 * @param dateColumn date column name
 	 * @param measureColumn measure column name
 	 * @return rows or null if error occurred
 	 */
-	private Vector<ObjectRow> fetchAnyMetricData(int id, String tableName, String idColumn, String dateColumn, String measureColumn) {
+	private Vector<ObjectRow> fetchAnyMetricData(int id, int metricId, String tableName, String idColumn, String dateColumn, String measureColumn) {
 		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel) {	
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
-				setResult(ObjectRow.fetchRows(result));
+				Vector<ObjectRow> res = ObjectRow.fetchRows(result);
+				ObjectRow.convertDate(res, 1);
+				setResult(res);
 			}
 			@Override
 			public void handleException(SQLException ex) {
@@ -760,12 +768,14 @@ public class MetricModelCommon {
 				ex.printStackTrace();
 			}					
 		};
-		q.queryResult("SELECT " + 
+		q.queryResult("SELECT " +
+				idColumn + ", " +
 				dateColumn  + ", " +
-				measureColumn + ", " +
+				measureColumn +
 			" FROM " + tableName + 
 			" WHERE " +
-			idColumn + "=" + id);
+			idColumn + "=" + id + " AND " + 
+			DBSchemaModel.MeasureId + "=" + metricId);
 		return q.getResult();
 	}
 	
@@ -774,9 +784,9 @@ public class MetricModelCommon {
 	 * @param taskId task id
 	 * @return table rows
 	 */
-	public Vector<ObjectRow> fetchTaskMetric(int taskId) {
+	public Vector<ObjectRow> fetchTaskMetric(int taskId, int metricId) {
 		Vector<ObjectRow> ret = 
-			fetchAnyMetricData(taskId, 
+			fetchAnyMetricData(taskId, metricId,
 				DBSchemaModel.TaskMeasurementResultTable, 
 				DBSchemaModel.TaskMeasurementTaskId, 
 				DBSchemaModel.TaskMeasurementResultDatum, 
@@ -795,13 +805,14 @@ public class MetricModelCommon {
 	/**
 	 * Fetch sprint metric information
 	 * @param sprintId task id
+	 * @param metricId metric id
 	 * @return table rows
 	 */
-	public Vector<ObjectRow> fetchSprintMetric(int sprintId) {
+	public Vector<ObjectRow> fetchSprintMetric(int sprintId, int metricId) {
 		Vector<ObjectRow> ret = 
-			fetchAnyMetricData(sprintId, 
+			fetchAnyMetricData(sprintId, metricId,
 				DBSchemaModel.SprintMeasurementResultTable, 
-				DBSchemaModel.SprintMeasurementResultId, 
+				DBSchemaModel.SprintMeasurementSprintId, 
 				DBSchemaModel.SprintMeasurementResultDate, 
 				DBSchemaModel.SprintMeasurementResultResult);
 		if (ret == null) {
@@ -809,8 +820,7 @@ public class MetricModelCommon {
 				i18n.tr("Could not retrieve sprint measures."));
 			return new Vector<ObjectRow>();
 		} else {
-			_operation.operationSucceeded(DataOperation.Select, MetricOperation.SprintMeasure, 
-					"");
+			_operation.operationSucceeded(DataOperation.Select, MetricOperation.SprintMeasure, "");
 			return ret;
 		}
 	}
