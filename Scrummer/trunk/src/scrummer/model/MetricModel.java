@@ -1,5 +1,6 @@
 package scrummer.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import scrummer.listener.MetricListener;
@@ -37,20 +38,24 @@ public class MetricModel {
 	 * @param date date
 	 * @param measurementResult result
 	 */
-	public void addTaskMeasurement(int measureId, int taskId, java.util.Date date, String measurementResult) {
-		_metricModelCommon.addTaskMeasurement(measureId, taskId, new java.sql.Date(date.getTime()), measurementResult);
+	public void addTaskMeasurement(int measureId, int taskId, java.util.Date date, BigDecimal measurementResult) {
+		if (_metricModelCommon.addTaskMeasurement(measureId, taskId, new java.sql.Date(date.getTime()), measurementResult)) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
 	 * Add sprint measurement result
 	 * 
-	 * @param sprintId sprint
 	 * @param measureId measure type
+	 * @param sprintId sprint
 	 * @param datum date
 	 * @param measurementResult result
 	 */
-	public void addSprintMeasurement(int sprintId, int measureId, java.util.Date date, String measurementResult) {
-		_metricModelCommon.addSprintMeasurement(sprintId, measureId, new java.sql.Date(date.getTime()), measurementResult);
+	public void addSprintMeasurement(int measureId, int sprintId, java.util.Date date, BigDecimal measurementResult) {
+		if (_metricModelCommon.addSprintMeasurement(sprintId, measureId, new java.sql.Date(date.getTime()), measurementResult)) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -61,8 +66,10 @@ public class MetricModel {
 	 * @param date date
 	 * @param measurementResult result
 	 */
-	public void addReleaseMeasurement(int measureId, int releaseId, java.util.Date date, String measurementResult) {
-		_metricModelCommon.addReleaseMeasurement(measureId, releaseId, new Date(date.getTime()), measurementResult);
+	public void addReleaseMeasurement(int measureId, int releaseId, java.util.Date date, BigDecimal measurementResult) {
+		if (_metricModelCommon.addReleaseMeasurement(measureId, releaseId, new Date(date.getTime()), measurementResult)) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -71,7 +78,9 @@ public class MetricModel {
 	 * @param measureId measure id
 	 */
 	public void removeMeasure(int measureId) {
-		_metricModelCommon.removeMeasure(measureId);
+		if (_metricModelCommon.removeMeasure(measureId)) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -81,7 +90,9 @@ public class MetricModel {
 	 * @param datum date
 	 */
 	public void removeReleaseMeasurement(int measureId, int releaseId, java.util.Date datum) {
-		_metricModelCommon.removeReleaseMeasurement(measureId, releaseId, new Date(datum.getTime()));
+		if (_metricModelCommon.removeReleaseMeasurement(measureId, releaseId, new Date(datum.getTime()))) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -90,8 +101,10 @@ public class MetricModel {
 	 * @param taskId task id
 	 * @param datum date
 	 */
-	public void removeTaskMeasurement(int measureId, int taskId, Date datum) {
-		_metricModelCommon.removeTaskMeasurement(measureId, taskId, new Date(datum.getTime()));
+	public void removeTaskMeasurement(int measureId, int taskId, java.util.Date datum) {
+		if (_metricModelCommon.removeTaskMeasurement(measureId, taskId, new Date(datum.getTime()))) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -100,8 +113,10 @@ public class MetricModel {
 	 * @param measureId  measure
 	 * @param datum date
 	 */
-	public void removeSprintMeasurement(int sprintId, int measureId, java.util.Date datum) {
-		_metricModelCommon.removeSprintMeasurement(sprintId, measureId, new Date(datum.getTime()));
+	public void removeSprintMeasurement(int measureId, int sprintId, java.util.Date datum) {
+		if (_metricModelCommon.removeSprintMeasurement(sprintId, measureId, new Date(datum.getTime()))) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -112,7 +127,9 @@ public class MetricModel {
 	 * @param measureDescription new description
 	 */
 	public void updateMeasure(int measureId, String measureName, String measureDescription) {
-		_metricModelCommon.updateMeasure(measureId, measureName, measureDescription);	
+		if (_metricModelCommon.updateMeasure(measureId, measureName, measureDescription)) {
+			_metricTableModel.refresh();
+		}
 	}
 	
 	/**
@@ -123,8 +140,11 @@ public class MetricModel {
      * @param datum date
      * @param measurementResult new measurement result 
      */
-    public void updateTaskMeasurement(int measureId, int taskId, java.util.Date datum, String measurementResult) {
-    	_metricModelCommon.updateTaskMeasurement(measureId, taskId, new Date(datum.getTime()), measurementResult);
+    public void updateTaskMeasurement(int measureId, int taskId, java.util.Date datum, BigDecimal measurementResult) {
+    	System.out.println(measureId + "; " + taskId);
+    	if (_metricModelCommon.updateTaskMeasurement(measureId, taskId, new Date(datum.getTime()), measurementResult.toEngineeringString())) {
+    		_metricTableModel.refresh();
+    	}
     }
     
     /**
@@ -134,8 +154,11 @@ public class MetricModel {
      * @param datum date
      * @param measurementResult new result
      */
-    public void updateSprintMeasurement(int sprintId, int measureId, Date datum, String measurementResult) {
-    	_metricModelCommon.updateSprintMeasurement(sprintId, measureId, new Date(datum.getTime()), measurementResult);
+    public void updateSprintMeasurement(int measureId, int sprintId, java.util.Date datum, BigDecimal measurementResult) {
+    	System.out.println(measureId + "; " + sprintId);
+    	if (_metricModelCommon.updateSprintMeasurement(sprintId, measureId, new Date(datum.getTime()), measurementResult.toEngineeringString())) {
+    		_metricTableModel.refresh();
+    	}
     }
     
     /**
@@ -146,7 +169,9 @@ public class MetricModel {
      * @param measurementResult measurement result 
      */
     public void updateReleaseMeasurement(int measureId, int releaseId, java.util.Date datum, String measurementResult) {
-    	_metricModelCommon.updateReleaseMeasurement(measureId, releaseId, new Date(datum.getTime()), measurementResult);
+    	if (_metricModelCommon.updateReleaseMeasurement(measureId, releaseId, new Date(datum.getTime()), measurementResult)) {
+    		_metricTableModel.refresh();
+    	}
     }
 	
 	/**
