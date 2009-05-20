@@ -446,6 +446,12 @@ public class DBSchemaModel {
 	public static final String ReleaseMeasurementResultResult = "Measurement_result";
 	public static final String ReleaseMeasurementResultDate = "Datum";
 	
+	public static final String PBIMeasurementResultTable = "PBI_measurement_result";
+	public static final String PBIMeasurementResultId = "Measure_id";
+	public static final String PBIMeasurementPBIId = "PBI_id";
+	public static final String PBIMeasurementResultResult = "Measurement_result";
+	public static final String PBIMeasurementResultDate = "Datum";
+		
 	// these enumerations were generated using extract.py script
 	public enum AbsenceTypeEnum { AbsenceTypeId, AbsenceTypeDescription }
 	public enum AdministrativeDaysEnum { EmployeeId, AbsenceTypeId, HoursNotWorked, MeasureDay }
