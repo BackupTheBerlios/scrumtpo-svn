@@ -1,5 +1,6 @@
 package scrummer.uicomponents;
 
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -12,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -121,7 +123,12 @@ public class TwoButtonDialog
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		GridBagLayout layout = new GridBagLayout(); 
 		setLayout(layout);
+
+		Panel = new JPanel();
+		Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		GridBagConstraints gcTop = Util.constraint(GridBagConstraints.BOTH, 1.0, 0.85);
+		add(Panel, gcTop);
 		
 		BottomPanel = new JPanel();
 		BottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
@@ -142,13 +149,7 @@ public class TwoButtonDialog
 		
 		add(BottomPanel, gcBottom);
 		
-		Panel = new JPanel();
-		
-		GridBagConstraints gcTop = Util.constraint(GridBagConstraints.HORIZONTAL, 1.0, 0.85);
-		add(Panel, gcTop);
-		
-		
-		layout.layoutContainer(Panel);
+		// layout.layoutContainer(Panel);
 		// invalidate();
 		// doLayout();
 	}
