@@ -2,17 +2,25 @@ package scrummer.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Vector;
 
 import scrummer.listener.MetricListener;
+import scrummer.model.MetricModelCommon.Measurement;
+import scrummer.model.graph.MetricDataSet;
 import scrummer.model.swing.MetricComboBoxModel;
 import scrummer.model.swing.MetricTableModel;
 import scrummer.util.Operations;
 
 /**
- * This model deals with 
+ * This model deals with metrics(Task_measurement_result, Sprint_measurement_result, 
+ * PBI_measurement_result, 
  */
 public class MetricModel {
 
+	/**
+	 * Constructor
+	 * @param connectionModel connection model
+	 */
 	public MetricModel(ConnectionModel connectionModel) {
 		_metricModelCommon = 
 			new MetricModelCommon(connectionModel, _operation);
@@ -20,6 +28,8 @@ public class MetricModel {
 			new MetricComboBoxModel(_metricModelCommon);
 		_metricTableModel = 
 			new MetricTableModel(_metricModelCommon);
+		_metricDataSet = 
+			new MetricDataSet(this);
 	}
 	
 	/**
@@ -29,7 +39,9 @@ public class MetricModel {
 	 * @param measureDescription description
 	 */
 	public void addMeasure(String measureName, String measureDescription) {
-		_metricModelCommon.addMeasure(measureName, measureDescription);
+		if (_metricModelCommon.addMeasure(measureName, measureDescription)) {
+			_metricComboBoxModel.refresh();
+		}
 	}
 	/**
 	 * Add task measurement 
@@ -181,7 +193,7 @@ public class MetricModel {
 	 */
 	public String getMeasureName(int measureId) {
 		return _metricModelCommon.getMeasureName(measureId);
-	}
+	}	
 	
 	/**
 	 * Fetch task measurement
@@ -215,6 +227,8 @@ public class MetricModel {
 	public String getReleaseMeasurementResult(int releaseId, int measureId, java.util.Date datum) {
 		return _metricModelCommon.getMeasurementResult(releaseId, measureId, new Date(datum.getTime()));
 	}
+	
+	
 	
 	/**
 	 * Fetch measure description    
@@ -255,6 +269,80 @@ public class MetricModel {
 		return _metricTableModel;
 	}
 	
+	/**
+	 * @return metric data set
+	 */
+	public MetricDataSet getMetricDataSet() {
+		return _metricDataSet;
+	}
+	
+	/**
+	 * Fetch sprint measurements 
+	 * 
+	 * @param measureName measure name
+	 * @param sprintId sprint id
+	 * @param from from date
+	 * @param to end date
+	 * @return measurements
+	 */
+	public Vector<Measurement> fetchSprintMeasures(String measureName, int sprintId, java.util.Date from, java.util.Date to) {
+		return _metricModelCommon.fetchMeasures(
+			measureName, 
+			DBSchemaModel.SprintMeasurementResultTable, 
+			DBSchemaModel.SprintMeasurementSprintId, 
+			sprintId, from, to);
+	}
+	
+	/**
+	 * Fetch task related measures
+	 * @param measureName measure name
+	 * @param taskId task id
+	 * @param from date from
+	 * @param to date to
+	 * @return a list of task measurements
+	 */
+	public Vector<Measurement> fetchTaskMeasures(String measureName, int taskId, java.util.Date from, java.util.Date to) {
+		return _metricModelCommon.fetchMeasures(
+			measureName, 
+			DBSchemaModel.TaskMeasurementResultTable, 
+			DBSchemaModel.TaskMeasurementTaskId, 
+			taskId, from, to);
+	}
+	
+	/**
+	 * Fetch pbi related measures
+	 * @param measureName measure name
+	 * @param taskId task id
+	 * @param from date from
+	 * @param to date to
+	 * @return a list of task measurements
+	 */
+	public Vector<Measurement> fetchPBIMeasures(String measureName, int pbiId, Date from, Date to) {
+		return _metricModelCommon.fetchMeasures(
+			measureName, 
+			DBSchemaModel.PBIMeasurementResultTable, 
+			DBSchemaModel.PBIMeasurementPBIId, 
+			pbiId, from, to);
+	}
+	
+	/**
+	 * Fetch release related measures
+	 * @param measureName measure name
+	 * @param releaseId relevant release
+	 * @param from date from
+	 * @param to date to
+	 * @return a list of task measurements
+	 */
+	public Vector<Measurement> fetchReleaseMeasures(String measureName, int releaseId, Date from, Date to) {
+		return _metricModelCommon.fetchMeasures(
+			measureName, 
+			DBSchemaModel.ReleaseMeasurementResultTable, 
+			DBSchemaModel.ReleaseMeasurementReleaseId, 
+			releaseId, from, to);
+	}
+	
+	/// graph metric data set
+	private MetricDataSet _metricDataSet;
 	/// metric table model
 	private MetricTableModel _metricTableModel;
 	/// metric name combo box
