@@ -1,7 +1,6 @@
 package scrummer.ui.dialog;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import org.xnap.commons.i18n.I18n;
@@ -22,7 +21,8 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class MetricAddDialog 
 	extends TwoButtonDialog 
-	implements MetricListener {	
+	implements MetricListener {
+	
 	public MetricAddDialog(JFrame owner) {
 		super(owner);
 		setSize(320, 176);
@@ -55,29 +55,31 @@ public class MetricAddDialog
 	}
 	
 	@Override
-	public void operationSucceeded(DataOperation type, MetricOperation identifier, String message) {	
-		if ((type == DataOperation.Insert) && (identifier == MetricOperation.Measure)) {
+	public void operationSucceeded(DataOperation type, MetricOperation identifier, String message) {
+		if ((type == DataOperation.Insert) && 
+			(identifier == MetricOperation.Measure)) {
 			setVisible(false);
 		}
 	}
+	
 	@Override
 	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {
-		if ((type == DataOperation.Insert) && (identifier == MetricOperation.Measure)) {
-			Util.showError(this, i18n.tr("Error while adding new measure: ") + message, i18n.tr("Error"));
+		if ((type == DataOperation.Insert) && 
+			(identifier == MetricOperation.Measure)) {
+			Util.showError(this, 
+				i18n.tr("Error while adding new measure: ") + message, 
+				i18n.tr("Error"));
 		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "StandardDialog.OK") {
-			
 			if (!Validate.empty(_nameInput, this)) return;
 			if (!Validate.empty(_descriptionInput, this)) return;
-			
 			_metricModel.addMeasure(
 				_nameInput.getText(), 
 				_descriptionInput.getText());
-			
 		} else {
 			super.actionPerformed(e);
 		}
@@ -88,7 +90,6 @@ public class MetricAddDialog
 		if (!b) {
 			_metricModel.removeMetricListener(this);
 		}
-		
 		super.setVisible(b);
 	}
 
