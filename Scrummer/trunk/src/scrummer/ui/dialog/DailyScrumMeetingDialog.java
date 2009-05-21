@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import org.xnap.commons.i18n.I18n;
@@ -131,8 +133,7 @@ public class DailyScrumMeetingDialog
 			Integer nbClosedImped = 
 				Integer.parseInt(_nbclosedimpedInput.getText().trim());
 			
-			Integer measureDay = 
-				Integer.parseInt(_measuredayInput.getText()); 			
+			Date measureDay = Validate.date(_measuredayInput, i18n.tr("Invalid date format."), this); if (measureDay != null) return;				 			
 			
 			if (_sprintbacklogModel.existsSprintPBI(
 					measureDay, _taskInput.getSelectedId(), currentSprint, _employeeInput.getSelectedId())) {
@@ -147,7 +148,7 @@ public class DailyScrumMeetingDialog
 					measureDay, 
 					_employeeInput.getSelectedId(), 
 					hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped);
-			}	
+			}
 		} else {
 			super.actionPerformed(e);
 		}

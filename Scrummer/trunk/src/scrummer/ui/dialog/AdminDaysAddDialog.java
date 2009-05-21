@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.AbsenceTypeComboBoxModel;
 import scrummer.model.swing.EmployeeComboBoxModel;
 import scrummer.ui.Util;
+import scrummer.ui.Validate;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -78,6 +80,7 @@ public class AdminDaysAddDialog
 		
 		_hoursnotworkedTextField = addEntry(i18n.tr("Hours not worked") + ":", "HoursNotWorked");
 		_dayTextField = addEntry(i18n.tr("Measure day") + ":", "MeasureDay");
+		_dayTextField.setText(Util.today());
 		
 		int topK = 10;
 		Panel.setBorder(
@@ -101,8 +104,7 @@ public class AdminDaysAddDialog
 	 * @param textActionCmd text action command
 	 * @return added text field
 	 */
-	public JTextField addEntry(String labelText, String textActionCmd)
-	{
+	public JTextField addEntry(String labelText, String textActionCmd) {
 		JLabel label = new JLabel(labelText);
 		
 		JTextField textBox = new SelectedTextField();
@@ -114,28 +116,22 @@ public class AdminDaysAddDialog
 	}
 		
 	@Override
-	public void actionPerformed(ActionEvent e) 
-	{
-		if (e.getActionCommand() == "StandardDialog.OK")
-		{
-			int employee, absence, hours, day;
+	public void actionPerformed(ActionEvent e)  {
+		if (e.getActionCommand() == "StandardDialog.OK") {
+			int employee, absence, hours;
 			employee = _empInput.getSelectedId();
 			absence = _absInput.getSelectedId();
-			hours = Integer.parseInt(_hoursnotworkedTextField.getText().trim());
-			day = Integer.parseInt(_dayTextField.getText().trim());
-			_admindaysModel.add(employee, absence, hours, day);
-		}
-		else
-		{
+			hours = Integer.parseInt(_hoursnotworkedTextField.getText().trim());			
+			Date d = Validate.date(_dayTextField, i18n.tr("Wrong date format."), this); if (d == null) return;
+			_admindaysModel.add(employee, absence, hours, d);
+		} else {
 			super.actionPerformed(e);
 		}
 	}
 
 	@Override
 	public void setVisible(boolean b) {
-		
-		if (!b)
-		{
+		if (!b) {
 			// _impedimentModel.
 		}
 
@@ -149,27 +145,16 @@ public class AdminDaysAddDialog
 
 	@Override
 	public void operationSucceeded(DataOperation type, AdminDaysOperation identifier, String message) {
-		switch (type)
-		{
-		case Insert:
-			setVisible(false);
-			break;
+		if (type == DataOperation.Insert) {
+			setVisible(false);	
 		}
 	}
 	
 	@Override
-	public void operationFailed(DataOperation type,
-			SprintBacklogOperation identifier, String message) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void operationFailed(DataOperation type, SprintBacklogOperation identifier, String message) {}
 
 	@Override
-	public void operationSucceeded(DataOperation type,
-			SprintBacklogOperation identifier, String message) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void operationSucceeded(DataOperation type, SprintBacklogOperation identifier, String message) {}
 	
 	/// administrative days model
 	private AdminDaysModel _admindaysModel;

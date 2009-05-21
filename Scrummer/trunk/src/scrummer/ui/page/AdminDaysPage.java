@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -85,7 +86,7 @@ public class AdminDaysPage
 			if (selection != -1)
 			{
 				int emp = _admindaysTableModel.getEmployee(selection);
-				int day = _admindaysTableModel.getMeasureDay(selection);
+				Date day = _admindaysTableModel.getMeasureDay(selection);
 				_admindaysModel.remove(emp,day);
 			}
 		}
