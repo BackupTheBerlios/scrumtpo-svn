@@ -38,7 +38,7 @@ public class MeasureChangeDialog extends MeasureDialog {
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		
 		_dateInput.setText(df.format(date));
-		_resultInput.setText(value.toEngineeringString());
+		_resultInput.setSelectedItem(value.toEngineeringString());
 	}
 	
 	@Override
@@ -46,11 +46,10 @@ public class MeasureChangeDialog extends MeasureDialog {
 		if (e.getActionCommand() == "StandardDialog.OK") {
 			
 			if (!Validate.empty(_dateInput, this)) return;
-			if (!Validate.empty(_resultInput, this)) return;
 		
 			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			Date d = Validate.date(_dateInput, i18n.tr("Wrong date format."), this);
-			BigDecimal bd = new BigDecimal(_resultInput.getText());
+			BigDecimal bd = new BigDecimal(_resultInput.getSelectedItem().toString());
 			
 			switch (_metricType) {
 			case Sprint:

@@ -1,11 +1,14 @@
 package scrummer.ui.dialog;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.math.BigDecimal;
+
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
+import org.omg.CORBA._PolicyStub;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -15,7 +18,7 @@ import scrummer.model.MetricModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
 import scrummer.uicomponents.SelectedTextField;
-import scrummer.uicomponents.StandardButton;
+import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
 /**
@@ -23,13 +26,13 @@ import scrummer.uicomponents.TwoButtonDialog;
  */
 public class MeasureDialog 
 	extends TwoButtonDialog 
-	implements MetricListener {
+	implements ItemListener, MetricListener {
 
 	/**
 	 * Constructor
 	 */
 	public MeasureDialog(JFrame parent) {
-		super(parent);
+		super(parent, ModalityType.APPLICATION_MODAL);
 		
 		_metricModel = Scrummer.getModels().getMetricModel();
 		_metricModel.addMetricListener(this);
@@ -42,26 +45,13 @@ public class MeasureDialog
 				k - 6, k, k, k));
 		
 		FormBuilder fb = new FormBuilder(Panel);
-		
 		_dateInput = fb.addSelectedTextInput(i18n.tr("Date") + ":", "Date");
-		
-		JPanel textCalc = new JPanel();
-		textCalc.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
-		_resultInput = new SelectedTextField();
-		_resultInput.setColumns(8);
-		
-		JButton calcButton = new StandardButton();
-		calcButton.setText(i18n.tr("="));
-		calcButton.setMinimumSize(new Dimension(1,1));
-		calcButton.setSize(32, 10);
-		calcButton.setActionCommand("Calculate");
-		calcButton.setPreferredSize(new Dimension(32,18));
-		
-		textCalc.add(_resultInput);
-		textCalc.add(calcButton);
-		
-		fb.addCustom(i18n.tr("Measurement") + ":", textCalc);
+		_resultInput = fb.addComboBoxInput(i18n.tr("Result") + ":");
+		_resultInput.setEditable(true);
+		_resultInput.addItem("Work Effectiveness");
+		_resultInput.addItemListener(this);
+		_resultInput.setEnabled(true);
+	
 		fb.setCellSpacing(5, 6);
 		
 		_dateInput.setPreferredSize(new Dimension(_dateInput.getWidth(), 20));
@@ -83,20 +73,39 @@ public class MeasureDialog
 	}
 
 	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			int index = _resultInput.getSelectedIndex();
+			switch (index) {
+			case 0:				
+				try { _previous = new BigDecimal(_resultInput.getSelectedItem().toString());
+				} catch (NumberFormatException ex) {}
+				WorkEffectivenessDialog dialog = 
+					new WorkEffectivenessDialog(getParentFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				break;
+			}
+		}
+	}
+	
+	@Override
 	public void operationSucceeded(DataOperation type, MetricOperation identifier, String message) {}
 	
 	@Override
 	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {}
 	 
+	/// previous resultinput contents
+	protected BigDecimal _previous = BigDecimal.ZERO;
 	/// metric model
 	protected MetricModel _metricModel;
 	/// date input
 	protected SelectedTextField _dateInput;
 	/// selected result input
-	protected SelectedTextField _resultInput;
+	protected StandardComboBox _resultInput;
+	// protected SelectedTextField _resultInput;
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 5015031774929775662L;
-	
 }

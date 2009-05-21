@@ -16,7 +16,8 @@ import scrummer.ui.Validate;
 /**
  * Add measure dialog
  */
-public class MeasureAddDialog extends MeasureDialog {
+public class MeasureAddDialog 
+	extends MeasureDialog {
 
 	/**
 	 * Constructor
@@ -43,28 +44,25 @@ public class MeasureAddDialog extends MeasureDialog {
 		}
 		
 		_dateInput.setText(Util.today());
-		_resultInput.setText("0");
+		_resultInput.setSelectedItem("0");
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if (cmd.equals("StandardDialog.OK")) {
-			
-			if (!Validate.empty(_dateInput, this)) return;
-			if (!Validate.empty(_resultInput, this)) return;
-			
+			if (!Validate.empty(_dateInput, this)) return;			
 			Date d = Validate.date(_dateInput, i18n.tr("Wrong date format."), this); if (d == null) return;			
 			// convert to date
-			BigDecimal num = new BigDecimal(_resultInput.getText());
+			BigDecimal num = BigDecimal.ZERO;
+			try {
+				System.out.println(_resultInput.getEditor().getItem().toString());
+				num = new BigDecimal(_resultInput.getEditor().getItem().toString());
+			} catch (NumberFormatException ex) {}
 			
 			switch (_metricType) {
-			case Sprint:
-				_metricModel.addSprintMeasurement(_metricId, _objectId, d, num);	
-				break;
-			case Task:
-				_metricModel.addTaskMeasurement(_metricId, _objectId, d, num);
-				break;
+			case Sprint: _metricModel.addSprintMeasurement(_metricId, _objectId, d, num); break;
+			case Task: _metricModel.addTaskMeasurement(_metricId, _objectId, d, num); break;
 			}
 			
 		} else if (cmd.equals("Calculate")) {
@@ -76,28 +74,31 @@ public class MeasureAddDialog extends MeasureDialog {
 	
 	@Override
 	public void operationSucceeded(DataOperation type, MetricOperation identifier, String message) {
-		switch (identifier) {
-		case ReleaseMeasure:
-		case SprintMeasure:
-		case TaskMeasure:
-			if (type == DataOperation.Insert) {
-				setVisible(false);
-			}
-			break;
-		}		
+		if ((type == DataOperation.Custom) && 
+			(identifier == MetricOperation.WorkEffectivenessCalculated)) {
+			_resultInput.setSelectedItem(message);
+		}
+		else if ((type == DataOperation.Insert) && 
+				 ((identifier == MetricOperation.ReleaseMeasure) ||
+				  (identifier == MetricOperation.SprintMeasure) ||
+				  (identifier == MetricOperation.TaskMeasure))) {
+			setVisible(false);
+		}
 	}
 	
 	@Override
-	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {
-		switch (identifier) {
-		case ReleaseMeasure:
-		case SprintMeasure:
-		case TaskMeasure:
-			if (type == DataOperation.Insert) {
-				Util.showError(this, 
-					i18n.tr("Error while adding new measure: ") + message, i18n.tr("Error"));
-			}
-			break;
+	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {		
+		if ((type == DataOperation.Custom) && 
+			(identifier == MetricOperation.WorkEffectivenessCalculated)) {
+				_resultInput.setSelectedItem(_previous.toEngineeringString());
+				OK.requestFocus();
+		}
+		else if ((type == DataOperation.Insert) && 
+				 ((identifier == MetricOperation.ReleaseMeasure) ||
+				  (identifier == MetricOperation.SprintMeasure) ||
+				  (identifier == MetricOperation.TaskMeasure))) {
+			Util.showError(this, 
+				i18n.tr("Error while adding new measure: ") + message, i18n.tr("Error"));
 		}
 	}
 	
