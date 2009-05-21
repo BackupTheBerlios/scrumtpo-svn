@@ -25,10 +25,8 @@ public class DeveloperModel {
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public DeveloperModel(ConnectionModel connectionModel)
-	{
-		if (connectionModel == null)
-		{
+	public DeveloperModel(ConnectionModel connectionModel) {
+		if (connectionModel == null) {
 			throw new NullPointerException("Cannot use null connection model!");
 		}
 		/// connection model
@@ -57,8 +55,7 @@ public class DeveloperModel {
 	 * @param surname developer surname
 	 * @param address developer address
 	 */
-	public void add(String name, String surname, String address)
-	{
+	public void add(String name, String surname, String address) {
 		 _developerModelCommon.add(name, surname, address);
 	}
 	
@@ -66,20 +63,16 @@ public class DeveloperModel {
 	 * Move selected indices from A to B
 	 * @param indices indices of elements in A
 	 */
-	public void moveAtoB(int [] indices)
-	{
+	public void moveAtoB(int [] indices) {
 		Vector<IdValue> moved = new Vector<IdValue>();
-		for (int i = 0; i < indices.length; i++)
-		{
+		for (int i = 0; i < indices.length; i++) {
 			moved.add(_employeeListModelA.getValue(indices[i]));
 		}
 		
-		for (int i = 0; i < moved.size(); i++)
-		{
+		for (int i = 0; i < moved.size(); i++) {
 			_employeeListModelA.removeElement(moved.get(i));
 		}
-		for (int i = 0; i < moved.size(); i++)
-		{
+		for (int i = 0; i < moved.size(); i++) {
 			_employeeListModelB.addValue(moved.get(i));
 		}
 	}
@@ -88,20 +81,16 @@ public class DeveloperModel {
 	 * Move selected indices from B to A
 	 * @param indices indices of elements in B
 	 */
-	public void moveBtoA(int [] indices)
-	{
+	public void moveBtoA(int [] indices) {
 		Vector<IdValue> moved = new Vector<IdValue>();
-		for (int i = 0; i < indices.length; i++)
-		{
+		for (int i = 0; i < indices.length; i++) {
 			moved.add(_employeeListModelB.getValue(indices[i]));
 		}
 		
-		for (int i = 0; i < moved.size(); i++)
-		{
+		for (int i = 0; i < moved.size(); i++) {
 			_employeeListModelB.removeElement(moved.get(i));
 		}
-		for (int i = 0; i < moved.size(); i++)
-		{
+		for (int i = 0; i < moved.size(); i++) {
 			_employeeListModelA.addValue(moved.get(i));
 		}
 	}	
@@ -111,8 +100,7 @@ public class DeveloperModel {
 	 * 
 	 * @param name team name
 	 */
-	public void addTeamB(String name)
-	{
+	public void addTeamB(String name) {
 		// assemble all id's
 		Vector<Integer> employees = new Vector<Integer>();
 		for (int i = 0; i < _employeeListModelB.size(); i++)
@@ -128,8 +116,7 @@ public class DeveloperModel {
 	 * @param developerId developer id
 	 * @param teamId team id
 	 */
-	public void addDeveloperToTeam(int developerId, int teamId)
-	{
+	public void addDeveloperToTeam(int developerId, int teamId) {
 		_developerModelCommon.addDeveloperToTeam(developerId, teamId);
 	}
 	
@@ -139,8 +126,7 @@ public class DeveloperModel {
 	 * @param developerId developer id
 	 * @param teamId team id
 	 */
-	public void removeDeveloperFromTeam(int developerId, int teamId)
-	{
+	public void removeDeveloperFromTeam(int developerId, int teamId) {
 		_developerModelCommon.removeDeveloperFromTeam(developerId, teamId);
 	}
 	
@@ -150,8 +136,7 @@ public class DeveloperModel {
 	 * @param teamId team id
 	 * @param newName name to set
 	 */
-	public void setTeamName(int teamId, String newName)
-	{
+	public void setTeamName(int teamId, String newName) {
 		_developerModelCommon.setTeamName(teamId, newName);
 	}
 	
@@ -160,8 +145,7 @@ public class DeveloperModel {
 	 * 
 	 * @param id team id
 	 */
-	public void removeTeam(int id)
-	{
+	public void removeTeam(int id) {
 		_developerModelCommon.removeTeam(id);
 	}
 	
@@ -170,8 +154,7 @@ public class DeveloperModel {
 	 * 
 	 * @return developer table model
 	 */
-	public DeveloperTableModel getDeveloperTableModel()
-	{
+	public DeveloperTableModel getDeveloperTableModel() {
 		return _developerTableModel;
 	}
 	
@@ -179,8 +162,7 @@ public class DeveloperModel {
 	 * Employee list model - contains id's + employees 
 	 * @return model
 	 */
-	public EmployeeListModel getEmployeeListModelA()
-	{
+	public EmployeeListModel getEmployeeListModelA() {
 		return _employeeListModelA;
 	}
 	
@@ -188,8 +170,7 @@ public class DeveloperModel {
 	 * Employee list model - contains id's + employees 
 	 * @return model
 	 */
-	public EmployeeListModel getEmployeeListModelB()
-	{
+	public EmployeeListModel getEmployeeListModelB() {
 		return _employeeListModelB;
 	}
 	
@@ -197,8 +178,7 @@ public class DeveloperModel {
 	 * Fetch team combo box model(contains all team names)
 	 * @return model
 	 */
-	public TeamComboBoxModel getTeamComboBoxModel()
-	{
+	public TeamComboBoxModel getTeamComboBoxModel() {
 		return _teamComboBoxModel;
 	}
 	
@@ -206,8 +186,7 @@ public class DeveloperModel {
 	 * Fetch developer team list model
 	 * @return model
 	 */
-	public DeveloperTeamListModel getDeveloperTeamListModel()
-	{
+	public DeveloperTeamListModel getDeveloperTeamListModel() {
 		return _developerTeamListModel;
 	}
 	
@@ -215,8 +194,7 @@ public class DeveloperModel {
 	 * Fetch developer model not on given team
 	 * @return model
 	 */
-	public DeveloperNonTeamListModel getDeveloperNonTeamListModel()
-	{
+	public DeveloperNonTeamListModel getDeveloperNonTeamListModel() {
 		return _developerNonTeamListModel;
 	}
 
@@ -232,8 +210,7 @@ public class DeveloperModel {
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addDeveloperListener(DeveloperListener listener)
-	{
+	public void addDeveloperListener(DeveloperListener listener) {
 		_operation.addListener(listener);
 	}
 	
@@ -241,8 +218,7 @@ public class DeveloperModel {
 	 * Remove developer data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeDeveloperListener(DeveloperListener listener)
-	{
+	public void removeDeveloperListener(DeveloperListener listener) {
 		_operation.removeListener(listener);
 	}
 	
