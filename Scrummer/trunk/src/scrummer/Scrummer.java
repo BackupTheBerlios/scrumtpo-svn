@@ -89,22 +89,18 @@ public class Scrummer {
 			"scrummer" 		+ IO.separator() +
 			"i18n";
 		
-		if (!(new File(outdir).exists()))
-		{
+		if (!(new File(outdir).exists())) {
 			new File(outdir).mkdirs();
 		}
 		
 		String [] paths = classPath.split(":");
-		for (int i = 0; i < paths.length; i++)
-		{
+		for (int i = 0; i < paths.length; i++) {
 			String pathen = paths[i] + IO.separator() + engt;
-			if (IO.exists(pathen))
-			{ 		
+			if (IO.exists(pathen)) { 		
 				IO.copyFile(new File(pathen), new File(outdir + IO.separator() + engt));	
 			}
 			String pathsl = paths[i] + IO.separator() + slot;
-			if (IO.exists(pathsl))
-			{
+			if (IO.exists(pathsl)){
 				IO.copyFile(new File(pathsl), new File(outdir + IO.separator() + slot));
 			}
 		}
@@ -115,8 +111,7 @@ public class Scrummer {
 	 * @param clazz class from which this function is being called
 	 * @return translation object
 	 */
-	public static I18n getI18n(Class<?> clazz)
-	{
+	public static I18n getI18n(Class<?> clazz) {
 		return I18nFactory.getI18n(clazz, _languageClassFile);
 	}
 
@@ -124,10 +119,8 @@ public class Scrummer {
 	 * Fetch model factory
 	 * @return model factory
 	 */
-	public static Models getModels()
-	{
-		if (_models == null)
-		{
+	public static Models getModels() {
+		if (_models == null) {
 			_models = new Models(_logger);
 		}
 		
