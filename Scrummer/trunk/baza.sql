@@ -76,7 +76,7 @@ create table Administrative_days
    Employee_id          integer                        not null,
    Absence_type_id      integer                        not null,
    Hours_not_worked     integer                        not null,
-   Measure_day integer not null,
+   Measure_day 			DATE 						   not null,
    constraint PK_ADMINISTRATIVE_DAYS primary key (Employee_id, Measure_day)
 ) CHARACTER SET utf8;
 
@@ -233,7 +233,7 @@ create table Sprint
 /*==============================================================*/
 create table Sprint_PBI 
 (
-   Measure_day	integer	not null,
+   Measure_day	DATE	not null,
    Task_id	integer	not null,
    Sprint_id	integer	not null,
    Employee_id	integer	not null,
