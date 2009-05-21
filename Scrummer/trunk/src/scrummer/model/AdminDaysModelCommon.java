@@ -1,5 +1,6 @@
 package scrummer.model;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -32,9 +33,9 @@ public class AdminDaysModelCommon
 	 * @param employee_id employee id
 	 * @param absence_type_id absence type
 	 * @param hours_not_worked number of hours not worked
+	 * @param measure_day measurement day
 	 */
-	public void add(int employee_id, int absence_type_id, int hours_not_worked, int measure_day)
-	{
+	public void add(int employee_id, int absence_type_id, int hours_not_worked, Date measure_day) {
 		 java.sql.Connection conn      = null;
          java.sql.PreparedStatement st = null;
          ResultSet res = null;
@@ -49,16 +50,14 @@ public class AdminDaysModelCommon
 			 st.setInt(1, employee_id);
 			 st.setInt(2, absence_type_id);
 			 st.setInt(3, hours_not_worked);
-			 st.setInt(4, measure_day);
+			 st.setDate(4, measure_day);
 			 st.execute();
 			 
 			 _operation.operationSucceeded(DataOperation.Insert, AdminDaysOperation.Administrative_days, "");
 		} catch (SQLException e) {
 			_operation.operationFailed(DataOperation.Insert, AdminDaysOperation.Administrative_days, e.getMessage());
 			e.printStackTrace();
-		}
-		finally
-		{
+		} finally {
 			res  = _connectionModel.close(res);
 			st   = _connectionModel.close(st);
 			conn = _connectionModel.close(conn);
@@ -70,70 +69,55 @@ public class AdminDaysModelCommon
 	 * 
 	 * @return all rows
 	 */
-	public Vector<ObjectRow> fetchAdminDaysTable()
-	{
-		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel)
-		{
+	public Vector<ObjectRow> fetchAdminDaysTable() {
+		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel) {
 			@Override
 			public void processResult(ResultSet result) {
-				setResult(ObjectRow.fetchRows(result)); 
+				Vector<ObjectRow> rows = ObjectRow.fetchRows(result);
+				ObjectRow.convertDate(rows, 4);
+				setResult(rows); 
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+				setResult(new Vector<ObjectRow>());
+			}
+		};
+		q.queryResult(
+			"SELECT " + 
+			DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeId + ", " + 
+			" CONCAT(Employee_name, ' ', Employee_surname), Absence_type_description, Hours_not_worked, Measure_Day " +
+				"FROM (" + DBSchemaModel.EmployeeTable + " JOIN " + DBSchemaModel.AbsenceTypeTable + ") JOIN " 
+				+ DBSchemaModel.AdminDaysTable + " WHERE Employee.Employee_id = Administrative_days.Employee_id AND " +
+				"Absence_type.Absence_type_id = Administrative_days.Absence_type_id");
+		return q.getResult();
+	}
+	
+	public Vector<IdValue> fetchAbsenceTypeNames() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {
+			@Override
+			public void processResult(ResultSet result) {
+				Vector<IdValue> res = new Vector<IdValue>();
+				try {
+					result.beforeFirst();
+					while (result.next()) {
+						res.add(new IdValue(result.getInt(1), result.getString(2)));
+					}
+					setResult(res);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					setResult(new Vector<IdValue>());
+				}
 			}
 			@Override
 			public void handleException(SQLException ex) {
 				ex.printStackTrace();
 			}
 		};
-		
-		q.queryResult("SELECT CONCAT(Employee_name, ' ', Employee_surname), Absence_type_description, Hours_not_worked, Measure_Day " +
-				"FROM (" + DBSchemaModel.EmployeeTable + " JOIN " + DBSchemaModel.AbsenceTypeTable + ") JOIN " 
-				+ DBSchemaModel.AdminDaysTable + " WHERE Employee.Employee_id = Administrative_days.Employee_id AND " +
-				"Absence_type.Absence_type_id = Administrative_days.Absence_type_id");
-		if (q.getResult() == null)
-		{
-			return new Vector<ObjectRow>();
-		}
-		else
-		{
-			return q.getResult();
-		}
-	}
-	
-	public Vector<IdValue> fetchAbsenceTypeNames() 
-	{
-		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
-		{
-			@Override
-			public void processResult(ResultSet result) 
-			{
-				Vector<IdValue> res = new Vector<IdValue>();
-				try {
-					result.beforeFirst();
-					while (result.next())
-					{
-						res.add(new IdValue(result.getInt(1), result.getString(2)));
-					}
-					setResult(res);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			@Override
-			public void handleException(SQLException ex) 
-			{
-				ex.printStackTrace();
-			}
-		};
 		q.queryResult(
 			"SELECT * FROM "   + 
 			DBSchemaModel.AbsenceTypeTable);
-		if (q.getResult() == null)
-		{
-			return new Vector<IdValue>();
-		}
-		else
-		{
-			return q.getResult();
-		}
+		return q.getResult();
 	}
 	
 	/**
@@ -143,32 +127,24 @@ public class AdminDaysModelCommon
 	 * @param day measure day
 	 * @return true if administrative day was removed, false otherwise
 	 */
-	public boolean removeImpediment(int id, int day)
-	{
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{	
-			@Override
-			public void process() {
-				setResult(true);
-			}
-			@Override
-			public void handleException(SQLException ex) {
-				ex.printStackTrace();
-	        	_operation.operationFailed(DataOperation.Remove, AdminDaysOperation.Administrative_days, 
-	        		i18n.tr("Could not remove administrative day."));
-			}
+	public boolean removeImpediment(int id, Date day) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {	
+		@Override
+		public void process() {
+			setResult(true);
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(false);
+			ex.printStackTrace();
+        	_operation.operationFailed(DataOperation.Remove, AdminDaysOperation.Administrative_days, 
+        		i18n.tr("Could not remove administrative day."));
+		}
 		};
 		q.query("DELETE FROM " + DBSchemaModel.AdminDaysTable + 
 				" WHERE " + DBSchemaModel.EmployeeId + "=" + id + " AND " +
-				DBSchemaModel.MeasureDay + "=" + day);
-		if (q.getResult() == null)
-		{
-			return false;
-		}
-		else
-		{
-			return q.getResult();
-		}
+				DBSchemaModel.MeasureDay + "='" + day + "'");		
+		return q.getResult();
 	}
 		
 	/// connection model

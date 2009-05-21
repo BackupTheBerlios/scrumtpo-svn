@@ -1,10 +1,6 @@
 package scrummer.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import scrummer.enumerator.AdminDaysOperation;
-import scrummer.enumerator.DataOperation;
+import java.util.Date;
 import scrummer.listener.AdminDaysListener;
 import scrummer.model.swing.AbsenceTypeComboBoxModel;
 import scrummer.model.swing.AdminDaysTableModel;
@@ -24,10 +20,8 @@ public class AdminDaysModel
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public AdminDaysModel(ConnectionModel connectionModel)
-	{
-		if (connectionModel == null)
-		{
+	public AdminDaysModel(ConnectionModel connectionModel) {
+		if (connectionModel == null) {
 			throw new NullPointerException("Cannot use null connection model!");
 		}
 		/// connection model
@@ -45,36 +39,8 @@ public class AdminDaysModel
 	 * @param absence_type_id type of absence
 	 * @param hours_not_worked number of hours not worked
 	 */
-	public void add(int employee_id, int absence_type_id, int hours_not_worked, int measure_day)
-	{
-		java.sql.Connection conn      = null;
-		java.sql.PreparedStatement st = null;
-		ResultSet res = null;
-		try {
-			 conn = _connectionModel.getConnection();
-			 String query =
-				"INSERT INTO Administrative_days (" +
-				DBSchemaModel.EmployeeId + ", " + DBSchemaModel.AbsenceTypeId + 
-				", " + DBSchemaModel.HoursNotWorked + ", " + DBSchemaModel.MeasureDay + ") " +
-			 	"VALUES (?, ?, ?, ?)";
-			 st = conn.prepareStatement(query);
-			 st.setInt(1, employee_id);
-			 st.setInt(2, absence_type_id);
-			 st.setInt(3, hours_not_worked);
-			 st.setInt(4, measure_day);
-			 st.execute();
-			 
-			 _adminoperation.operationSucceeded(DataOperation.Insert, AdminDaysOperation.Administrative_days, "");
-		} catch (SQLException e) {
-			_adminoperation.operationFailed(DataOperation.Insert, AdminDaysOperation.Administrative_days, e.getMessage());
-			e.printStackTrace();
-		}
-		finally
-		{
-			res  = _connectionModel.close(res);
-			st   = _connectionModel.close(st);
-			conn = _connectionModel.close(conn);
-		}
+	public void add(int employee_id, int absence_type_id, int hours_not_worked, Date measure_day) {
+		_admindaysModelCommon.add(employee_id, absence_type_id, hours_not_worked, new java.sql.Date(measure_day.getTime()));
 	}
 	
 	/**
@@ -82,8 +48,7 @@ public class AdminDaysModel
 	 * 
 	 * @return administrative days table model
 	 */
-	public AdminDaysTableModel getAdminDaysTableModel()
-	{
+	public AdminDaysTableModel getAdminDaysTableModel() {
 		return _admindaysTableModel;
 	}
 	
@@ -92,8 +57,7 @@ public class AdminDaysModel
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addAdminDaysListener(AdminDaysListener listener)
-	{
+	public void addAdminDaysListener(AdminDaysListener listener) {
 		_adminoperation.addListener(listener);
 	}
 	
@@ -101,8 +65,7 @@ public class AdminDaysModel
 	 * Remove administrative days data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeAdminDaysListener(AdminDaysListener listener)
-	{
+	public void removeAdminDaysListener(AdminDaysListener listener) {
 		_adminoperation.removeListener(listener);
 	}
 	
@@ -115,15 +78,15 @@ public class AdminDaysModel
 	 * @param emp employee id
 	 * @param day measure day
 	 */
-	public void remove(int emp, int day) {
-		if (_admindaysModelCommon.removeImpediment(emp, day))
-		{
+	public void remove(int emp, Date day) {
+		if (_admindaysModelCommon.removeImpediment(emp, new java.sql.Date(day.getTime()))) {
 			_admindaysTableModel.refresh();
 		}
 	}
 		
 	/// common administrative days related functionality
 	private AdminDaysModelCommon _admindaysModelCommon;
+	/// common absence type model 
 	private AbsenceTypeModelCommon _absencetypeModelCommon;
 	/// connection model
 	private ConnectionModel _connectionModel;
