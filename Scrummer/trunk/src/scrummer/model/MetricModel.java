@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Vector;
 
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.MetricOperation;
 import scrummer.listener.MetricListener;
 import scrummer.model.MetricModelCommon.Measurement;
 import scrummer.model.graph.MetricDataSet;
@@ -21,7 +23,8 @@ public class MetricModel {
 	 * Constructor
 	 * @param connectionModel connection model
 	 */
-	public MetricModel(ConnectionModel connectionModel) {
+	public MetricModel(ConnectionModel connectionModel, ProjectModel projectModel) {
+		_projectModel = projectModel;
 		_metricModelCommon = 
 			new MetricModelCommon(connectionModel, _operation);
 		_metricComboBoxModel = 
@@ -228,8 +231,6 @@ public class MetricModel {
 		return _metricModelCommon.getMeasurementResult(releaseId, measureId, new Date(datum.getTime()));
 	}
 	
-	
-	
 	/**
 	 * Fetch measure description    
 	 * @param measureId measure id
@@ -341,6 +342,26 @@ public class MetricModel {
 			releaseId, from, to);
 	}
 	
+	/**
+	 * Calculate work effectiveness on a time interval
+	 * @param from starting date
+	 * @param to ending date
+	 * @return effectiveness factor
+	 */
+	public BigDecimal calculateWorkEffectiveness(java.util.Date from, java.util.Date to) {
+		int projectId = 0;
+		return _metricModelCommon.calculateWorkEffectiveness(projectId, new Date(from.getTime()), new Date(to.getTime()));
+	}
+	
+	/**
+	 * Notify everyone that work effectiveness indicator was not calculated
+	 */
+	public void failCalculatingWorkEffectiveness() {
+		_operation.operationFailed(DataOperation.Custom, MetricOperation.WorkEffectivenessCalculated, "");
+	}
+	
+	/// project model
+	private ProjectModel _projectModel;
 	/// graph metric data set
 	private MetricDataSet _metricDataSet;
 	/// metric table model
