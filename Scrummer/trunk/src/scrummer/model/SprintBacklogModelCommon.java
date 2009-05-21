@@ -971,8 +971,7 @@ public class SprintBacklogModelCommon
 	        @Override
 	        public void handleException(SQLException ex) {
 	            setResult(false);
-	            _operation.operationFailed(DataOperation.Update, SprintBacklogOperation.SprintPBI,
-	            i18n.tr(""));
+	            _operation.operationFailed(DataOperation.Update, SprintBacklogOperation.SprintPBI, ex.getMessage());
 	            ex.printStackTrace();
 	        }
 	    };

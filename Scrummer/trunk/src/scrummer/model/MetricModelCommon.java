@@ -692,8 +692,7 @@ public class MetricModelCommon {
         public void handleException(SQLException ex) {
             setResult(null);
             ex.printStackTrace();
-            _operation.operationFailed(DataOperation.Remove, MetricOperation.SprintMeasure,
-            i18n.tr(""));
+            _operation.operationFailed(DataOperation.Remove, MetricOperation.SprintMeasure, ex.getMessage());
         }
         };
         q.queryResult(
