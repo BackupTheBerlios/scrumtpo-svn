@@ -11,5 +11,7 @@ public enum MetricOperation {
 	/// release related measure dop
 	ReleaseMeasure,
 	/// sprint related measure dop
-	SprintMeasure
+	SprintMeasure,
+	/// work effectiveness was calculated
+	WorkEffectivenessCalculated
 }
