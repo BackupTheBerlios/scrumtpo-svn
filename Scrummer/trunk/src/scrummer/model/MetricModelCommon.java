@@ -922,7 +922,7 @@ public class MetricModelCommon {
 				while (result.next()) {
 					BigDecimal res = result.getBigDecimal(1);
 					if (res == null) {
-						setResult(new BigDecimal(0));
+						setResult(BigDecimal.ZERO);
 					} else {
 						setResult(res);
 					}
@@ -930,14 +930,14 @@ public class MetricModelCommon {
 			}
 			@Override
 			public void handleException(SQLException ex) {
-				setResult(new BigDecimal(0));
+				setResult(BigDecimal.ZERO);
 				ex.printStackTrace();
 			}
 		};
 		String query = "SELECT SUM(" + DBSchemaModel.SprintPBIHourseSpent + ") as Hours_spent_sum FROM " +
 		DBSchemaModel.SprintPBITable + " NATURAL JOIN " + DBSchemaModel.SprintTable + " WHERE " +
 		DBSchemaModel.ProjectId + "=" + projectId + " AND " +
-		DBSchemaModel.SprintPBIMeasureDay + " BETWEEN " + "'" + d1.toString() + "' AND '" + d2.toString(); 		
+		DBSchemaModel.SprintPBIMeasureDay + " BETWEEN " + "'" + d1.toString() + "' AND '" + d2.toString() + "'"; 		
 		q.queryResult(query);
 		return q.getResult();
 	}
@@ -950,11 +950,18 @@ public class MetricModelCommon {
 	 * @return work effectiveness
 	 */
 	public BigDecimal calculateWorkEffectiveness(int projectId, java.sql.Date d1, java.sql.Date d2) {
-		return (calculateAllTaskRemainingWork(projectId, d1).subtract(
-					calculateAllTaskRemainingWork(projectId, d2))).divide( 
-			    calculateAllTaskSpentWork(projectId, d1, d2));			    
+		BigDecimal allTaskSpent = calculateAllTaskSpentWork(projectId, d1, d2); 
+		BigDecimal bd = BigDecimal.ZERO;
+		if (allTaskSpent != BigDecimal.ZERO) {
+			BigDecimal d1Remaining = calculateAllTaskRemainingWork(projectId, d1);
+			BigDecimal d2Remaining = calculateAllTaskRemainingWork(projectId, d2);
+			bd = d1Remaining.subtract(d2Remaining).divide(allTaskSpent);
+		}
+		_operation.operationSucceeded(
+		     DataOperation.Custom, 
+		     MetricOperation.WorkEffectivenessCalculated, bd.toEngineeringString());
+		return bd;
 	}
-	
 	
 	/**
 	 * Calculate value of all completed tasks
