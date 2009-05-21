@@ -363,7 +363,7 @@ public class Models {
 	
 	public MetricModel createMetricModel() {
 		if (_metricModel == null) {
-			_metricModel = new MetricModel(getConnectionModel());
+			_metricModel = new MetricModel(getConnectionModel(), getProjectModel());
 		}
 		return _metricModel;
 	}
