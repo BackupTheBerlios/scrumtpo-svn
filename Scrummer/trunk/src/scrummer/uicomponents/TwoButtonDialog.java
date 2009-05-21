@@ -16,6 +16,7 @@ import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.xnap.commons.i18n.I18n;
@@ -38,6 +39,12 @@ public class TwoButtonDialog
 		init();
 	}
 
+	public TwoButtonDialog(JFrame owner) {
+		super(owner);
+		_parentFrame = owner;
+		init();
+	}
+	
 	public TwoButtonDialog(Frame owner) {
 		super(owner);
 		init();
@@ -166,8 +173,7 @@ public class TwoButtonDialog
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER)
-		{
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			OK.doClick();
 		}
 	}
@@ -175,6 +181,12 @@ public class TwoButtonDialog
 	@Override
 	public void keyTyped(KeyEvent e) {}
 	
+	
+	protected JFrame getParentFrame() {
+		return _parentFrame;
+	}
+	
+	private JFrame _parentFrame;
 	/// zgornji del dialoga(na to dodajaš kontrole) 
 	public JPanel Panel;
 	public JPanel BottomPanel;
