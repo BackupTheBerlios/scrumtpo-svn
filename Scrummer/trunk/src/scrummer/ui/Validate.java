@@ -100,6 +100,24 @@ public class Validate {
 	}
 	
 	/**
+	 * Check whether contents of input field is date
+	 * 
+	 * @param input input field
+	 * @return text converted to date or null if value invalid
+	 */
+	public static Date date(JTextField input)
+	{
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date ret = null;
+		try {
+			ret = df.parse(input.getText());
+		} catch (ParseException e) {			
+			ret = null;
+		}
+		return ret;
+	}
+	
+	/**
 	 * Check if given field contains a number
 	 * @param input input field
 	 * @return number or 0 if field is empty
