@@ -1,11 +1,12 @@
 package scrummer.model.swing;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
-
 import javax.swing.table.DefaultTableModel;
-
 import org.xnap.commons.i18n.I18n;
-
 import scrummer.Scrummer;
 import scrummer.model.AdminDaysModelCommon;
 import scrummer.model.ConnectionModel;
@@ -21,12 +22,9 @@ public class AdminDaysTableModel extends DefaultTableModel
 	/**
 	 * Default constructor
 	 */
-	public AdminDaysTableModel(ConnectionModel connectionModel,
-								AdminDaysModelCommon admindaysModelCommon) 
-	{
+	public AdminDaysTableModel(ConnectionModel connectionModel, AdminDaysModelCommon admindaysModelCommon) {
 		super();
 		_admindaysModelCommon = admindaysModelCommon;
-		
 		_columns.add(i18n.tr("Employee"));
 		_columns.add(i18n.tr("Absence type"));
 		_columns.add(i18n.tr("Hours not worked"));
@@ -38,8 +36,7 @@ public class AdminDaysTableModel extends DefaultTableModel
 	/**
 	 * Refresh data
 	 */
-	public void refresh()
-	{
+	public void refresh() {
 		refreshColumnNames();
 		refreshTableData();
         fireTableDataChanged();
@@ -48,8 +45,7 @@ public class AdminDaysTableModel extends DefaultTableModel
 	/**
 	 * Refresh real column names
 	 */
-	private void refreshColumnNames()
-	{
+	private void refreshColumnNames() {
 		Models m = Scrummer.getModels();
 		DBSchemaModel schemam = m.getDBSchemaModel();
 		_realColumns = schemam.getColumns(DBSchemaModel.AdminDaysTable);
@@ -58,8 +54,7 @@ public class AdminDaysTableModel extends DefaultTableModel
 	/**
 	 * Refresh table data
 	 */
-	private void refreshTableData()
-	{
+	private void refreshTableData() {
 		_rows = _admindaysModelCommon.fetchAdminDaysTable();
         _rowCount = _rows.size();
 	}
@@ -81,7 +76,7 @@ public class AdminDaysTableModel extends DefaultTableModel
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		return _rows.get(row).get(column);
+		return _rows.get(row).get(column+1);
 	}
 
 	@Override
@@ -89,14 +84,19 @@ public class AdminDaysTableModel extends DefaultTableModel
 		return _columns.get(column);
 	}
 	
-	public int getEmployee(int row)
-	{
-		return (Integer)_rows.get(row).get(0);
+	public int getEmployee(int row) {
+		return Integer.parseInt(_rows.get(row).get(0).toString());
 	}
 	
-	public int getMeasureDay(int row)
-	{
-		return (Integer)_rows.get(row).get(3);
+	public java.util.Date getMeasureDay(int row) {
+		ObjectRow orow = _rows.get(row);
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		try {
+			return df.parse(orow.get(4).toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/// column count
@@ -117,5 +117,4 @@ public class AdminDaysTableModel extends DefaultTableModel
 	private static final long serialVersionUID = 2334976808166694864L;
 	/// table name
 	public static final String AdminDays = "Administrative_days";
-	
 }
