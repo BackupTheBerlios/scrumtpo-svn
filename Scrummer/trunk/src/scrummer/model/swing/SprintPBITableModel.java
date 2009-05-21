@@ -1,5 +1,8 @@
 package scrummer.model.swing;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
@@ -8,6 +11,7 @@ import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
 import scrummer.model.SprintBacklogModelCommon;
+import scrummer.ui.Util;
 import scrummer.util.ObjectRow;
 
 /**
@@ -26,14 +30,14 @@ public class SprintPBITableModel extends DefaultTableModel {
 	 * Refresh data
 	 */
 	public void refresh() {
-		refreshColumnNames();
-		refreshTableData();
-		super.fireTableDataChanged();
+		if (_sprintStart != null) {
+			refreshColumnNames();
+			refreshTableData();
+			super.fireTableDataChanged();
+		}
 	}
 	
 	private void refreshColumnNames() {
-		// fetch sprint length
-		int sprintLength = 10;
 		_columns.clear();
 		_columns.add(i18n.tr("Hours Spent"));
 		_columns.add(i18n.tr("Hours Remaining"));
@@ -53,16 +57,22 @@ public class SprintPBITableModel extends DefaultTableModel {
 			ObjectRow current = _rows.get(row);	
 			int j = 0;
 			if (rows.size() > 0) {
+				SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+				GregorianCalendar gc = new GregorianCalendar();
+				gc.setTime(_sprintStart);
 				// iterate every row along all metric columns			
 				for (int i = 0; i < _sprintLength; i++) {					
 					if ((j < rows.size()) && 
-						(Integer)rows.get(j).get(0) == (i+1)) {						
+						((java.sql.Date)rows.get(j).get(0)).getTime() == 
+						 gc.getTime().getTime()) {
 						// copy metric information to current row cell
 						current.set(i, rows.get(j).get(row+1));
 						j++;
 					} else {
+						// if (j == 0)
 						current.set(i, 0);
 					}
+					gc.add(GregorianCalendar.DATE, 1);
 				}
 			}
 		}
@@ -106,6 +116,15 @@ public class SprintPBITableModel extends DefaultTableModel {
 		_sprintLength = value;
 		refresh();
 	}
+	
+	/**
+	 * Set start of sprint
+	 * @param sprintStart 
+	 */
+	public void setSprintStart(Date sprintStart) {
+		_sprintStart = sprintStart;
+		refresh();
+	}
 
 	@Override
 	public boolean isCellEditable(int row, int column) {		
@@ -118,24 +137,32 @@ public class SprintPBITableModel extends DefaultTableModel {
 
 	@Override
 	public void setValueAt(Object value, int row, int column) {
+		
+		Date columnDate = null;
+		if (_sprintStart != null) {
+			GregorianCalendar gc = new GregorianCalendar();
+			gc.setTime(_sprintStart);
+			gc.add(GregorianCalendar.DATE, column);
+			columnDate = gc.getTime();
+		}
 		try {
 			int val = Integer.parseInt(value.toString());
 			// if it exists modify it
-			if (_sprintBacklogModelCommon.existsSprintPBI(column, _taskId, _currentSprint, _employeeId)) {
+			if (_sprintBacklogModelCommon.existsSprintPBI(new java.sql.Date(columnDate.getTime()), _taskId, _currentSprint, _employeeId)) {
 				Integer realValue = Integer.parseInt(value.toString());
 				boolean updateSuceeded = false;
 				switch (row) {
 				case 0: 
-					updateSuceeded = _sprintBacklogModelCommon.setHoursSpent(_currentSprint, _taskId, column, realValue);					
+					updateSuceeded = _sprintBacklogModelCommon.setHoursSpent(_currentSprint, _taskId, new java.sql.Date(columnDate.getTime()), realValue);					
 					break;
 				case 1:							
-					updateSuceeded = _sprintBacklogModelCommon.setHoursRemaining(_currentSprint, _taskId, column, realValue);
+					updateSuceeded = _sprintBacklogModelCommon.setHoursRemaining(_currentSprint, _taskId, new java.sql.Date(columnDate.getTime()), realValue);
 					break;
 				case 2:
-					updateSuceeded = _sprintBacklogModelCommon.setNbOpenImped(_currentSprint, _taskId, column, realValue);
+					updateSuceeded = _sprintBacklogModelCommon.setNbOpenImped(_currentSprint, _taskId, new java.sql.Date(columnDate.getTime()), realValue);
 					break;
 				case 3:
-					updateSuceeded = _sprintBacklogModelCommon.setNbClosedImped(_currentSprint, _taskId, column, realValue);
+					updateSuceeded = _sprintBacklogModelCommon.setNbClosedImped(_currentSprint, _taskId, new java.sql.Date(columnDate.getTime()), realValue);
 					break;
 				}
 				if (updateSuceeded) {
@@ -148,7 +175,8 @@ public class SprintPBITableModel extends DefaultTableModel {
 				int closedImpediments = (row == 3) ? val : 0;
 				if (_sprintBacklogModelCommon.addDailyEntry(
 						_currentSprint, _taskId, 
-						column, _employeeId, 
+						new java.sql.Date(columnDate.getTime()), 
+						_employeeId, 
 						hoursSpent, hoursRemaining, 
 						openImpediments, closedImpediments)) {
 					refresh();
@@ -182,7 +210,10 @@ public class SprintPBITableModel extends DefaultTableModel {
 	@Override
 	public String getColumnName(int column) {
 		if (column > 0) {
-			return new Integer(column).toString();
+			GregorianCalendar gc = new GregorianCalendar();
+			gc.setTime(_sprintStart);
+			gc.add(GregorianCalendar.DATE, column);
+			return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." + (gc.get(GregorianCalendar.MONTH) + 1) + ".";
 		} else {
 			return "";
 		}
@@ -196,6 +227,8 @@ public class SprintPBITableModel extends DefaultTableModel {
 	private int _taskId = 0;
 	/// locally stored sprint length
 	private int _sprintLength = 10;
+	/// start of sprint
+	private Date _sprintStart = null;
 	/// column count
 	private int _columnCount = 0;
 	/// row count
@@ -212,5 +245,4 @@ public class SprintPBITableModel extends DefaultTableModel {
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = -2979385877140097149L;
-	
 }

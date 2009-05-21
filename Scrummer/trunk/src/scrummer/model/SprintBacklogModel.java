@@ -97,8 +97,8 @@ public class SprintBacklogModel
 	 * @param nbClosedImped closed impediments
 	 * @return true if row added, false otherwise
 	 */
-	public void addDailyEntry(int sprintId, int taskId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
-		if (_sprintbacklogModelCommon.addDailyEntry(sprintId, taskId, measureDay, employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped)) {
+	public void addDailyEntry(int sprintId, int taskId, Date measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+		if (_sprintbacklogModelCommon.addDailyEntry(sprintId, taskId, new java.sql.Date(measureDay.getTime()), employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped)) {
 			_sprintPBITableModel.refresh();
 		}
 	}
@@ -211,8 +211,8 @@ public class SprintBacklogModel
 	 * @param employeeId employee
 	 * @return true if row with specified keys exists
 	 */
-	public boolean existsSprintPBI(int measureDay, int taskId, int sprintId, int employeeId) {
-		return _sprintbacklogModelCommon.existsSprintPBI(measureDay, taskId, sprintId, employeeId);
+	public boolean existsSprintPBI(Date measureDay, int taskId, int sprintId, int employeeId) {
+		return _sprintbacklogModelCommon.existsSprintPBI(new java.sql.Date(measureDay.getTime()), taskId, sprintId, employeeId);
 	}
 	
 	/**
@@ -299,6 +299,7 @@ public class SprintBacklogModel
 		_taskTableModel.setSprintId(sprintId);
 		_impedimentTableModel.setSprintId(sprintId);
 		_sprintPBITableModel.setSprintId(sprintId);
+		_sprintPBITableModel.setSprintStart(getBeginDate(_currentSprint));
 		_sprintPBITableModel.setSprintLength(getSprintLength(_currentSprint));
 	}
 
@@ -313,8 +314,8 @@ public class SprintBacklogModel
 	 * @param nbOpenImped open impediments
 	 * @param nbClosedImped closed impediments
 	 */
-	public void updateDailyMeasure(int sprintId, int taskId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
-		_sprintbacklogModelCommon.updateRow(sprintId, taskId, measureDay, employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped);
+	public void updateDailyMeasure(int sprintId, int taskId, Date measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+		_sprintbacklogModelCommon.updateRow(sprintId, taskId, new java.sql.Date(measureDay.getTime()), employeeId, hoursSpent, hoursRemaining, nbOpenImped, nbClosedImped);
 	}
 	
 	/** 

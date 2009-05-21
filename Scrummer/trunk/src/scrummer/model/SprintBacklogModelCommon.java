@@ -823,7 +823,7 @@ public class SprintBacklogModelCommon
 	 * @param employeeId employee
 	 * @return true if row with specified keys exists
 	 */
-	public boolean existsSprintPBI(int measureDay, int taskId, int sprintId, int employeeId) {
+	public boolean existsSprintPBI(java.sql.Date measureDay, int taskId, int sprintId, int employeeId) {
 		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
 			@Override
 			public void processResult(ResultSet result) {
@@ -844,7 +844,7 @@ public class SprintBacklogModelCommon
 			"SELECT *" + 			
 			" FROM " + DBSchemaModel.SprintPBITable + 
 			" WHERE " +
-			DBSchemaModel.SprintPBIMeasureDay + "=" + measureDay + 
+			DBSchemaModel.SprintPBIMeasureDay + "='" + measureDay + "'" + 
 			" AND " +
 			DBSchemaModel.SprintPBISprintId + "=" + sprintId + 
 			" AND " +
@@ -866,7 +866,7 @@ public class SprintBacklogModelCommon
 	 * @param nbClosedImped closed impediments
 	 * @return true if row added, false otherwise
 	 */
-	public boolean addDailyEntry(int sprintId, int taskId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+	public boolean addDailyEntry(int sprintId, int taskId, java.sql.Date measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
         boolean ret = false;
         java.sql.Connection conn      = null;
         java.sql.PreparedStatement st = null;
@@ -886,15 +886,16 @@ public class SprintBacklogModelCommon
                 DBSchemaModel.NbClosedImped +
                 ") " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+                System.out.println(query);	
                 st = conn.prepareStatement(query);
-                st.setInt(1, sprintId);
-                st.setInt(2, taskId);
-                st.setInt(3, measureDay);                
-                st.setInt(4, employeeId);
-                st.setInt(5, hoursSpent);
-                st.setInt(6, hoursRemaining);
-                st.setInt(7, nbOpenImped);
-                st.setInt(8, nbClosedImped);
+                st.setInt (1, sprintId);
+                st.setInt (2, taskId);
+                st.setDate(3, measureDay);                
+                st.setInt (4, employeeId);
+                st.setInt (5, hoursSpent);
+                st.setInt (6, hoursRemaining);
+                st.setInt (7, nbOpenImped);
+                st.setInt (8, nbClosedImped);
                 st.execute();
                 _operation.operationSucceeded(DataOperation.Insert, SprintBacklogOperation.SprintPBI, "");
                 ret = true;
@@ -918,7 +919,7 @@ public class SprintBacklogModelCommon
 	 * @param value value to set
 	 * @return true if cell updated, false otherwise
 	 */
-	public boolean updateSBICell(int sprintId, int taskId, int measureDay, String column, String value) {
+	public boolean updateSBICell(int sprintId, int taskId, java.sql.Date measureDay, String column, String value) {
         ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
         @Override
         public void process() {
@@ -939,28 +940,28 @@ public class SprintBacklogModelCommon
         " WHERE " +
         DBSchemaModel.SprintId + "=" + sprintId + " AND " +
         DBSchemaModel.TaskId + "=" + taskId + " AND " +
-        DBSchemaModel.MeasureDay + "=" + measureDay);
+        DBSchemaModel.MeasureDay + "='" + measureDay + "'");
         return q.getResult();
 	};
 		
-	public boolean setHoursSpent(int sprintId, int taskId, int measureDay, Integer value) {
+	public boolean setHoursSpent(int sprintId, int taskId, java.sql.Date measureDay, Integer value) {
 		return updateSBICell(sprintId, taskId, measureDay, DBSchemaModel.HoursSpent, value.toString());
 	}
 	
-	public boolean setHoursRemaining(int sprintId, int taskId, int measureDay, Integer value) {
+	public boolean setHoursRemaining(int sprintId, int taskId, java.sql.Date measureDay, Integer value) {
 		return updateSBICell(sprintId, taskId, measureDay, DBSchemaModel.HoursRemaining, value.toString());
 	}
 	
-	public boolean setNbOpenImped(int sprintId, int taskId, int measureDay, Integer value) {
+	public boolean setNbOpenImped(int sprintId, int taskId, java.sql.Date measureDay, Integer value) {
 		return updateSBICell(sprintId, taskId, measureDay, DBSchemaModel.NbOpenImped, value.toString());
 	}
 	
-	public boolean setNbClosedImped(int sprintId, int taskId, int measureDay, Integer value) {
+	public boolean setNbClosedImped(int sprintId, int taskId, java.sql.Date measureDay, Integer value) {
 		return updateSBICell(sprintId, taskId, measureDay, DBSchemaModel.NbClosedImped, value.toString());
 	}	
 	
 	/// generated update
-	public boolean updateRow(int sprintId, int taskId, int measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
+	public boolean updateRow(int sprintId, int taskId, java.sql.Date measureDay, int employeeId, int hoursSpent, int hoursRemaining, int nbOpenImped, int nbClosedImped) {
         ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
 	        @Override
 	        public void process() {
@@ -983,7 +984,7 @@ public class SprintBacklogModelCommon
         " WHERE " +
         DBSchemaModel.SprintId + "=" + sprintId + " AND " +
         DBSchemaModel.TaskId + "=" + taskId + " AND " +
-        DBSchemaModel.MeasureDay + "=" + measureDay + " AND " +
+        DBSchemaModel.MeasureDay + "='" + measureDay + "' AND " +
         DBSchemaModel.EmployeeId + "=" + employeeId);
         return q.getResult();
     };
