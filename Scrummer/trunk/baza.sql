@@ -305,7 +305,8 @@ create table CustomerPoll_measurement_result
 	Customer_name		text							not null,
 	Measurement_result	text							null,
 	Datum				date							not null,
-	constraint PK_CUSTOMERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Customer_name, Datum)
+	Sprint_id			integer							not null,
+	constraint PK_CUSTOMERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Customer_name, Datum, Sprint_id)
 }
 
 /*==============================================================*/
@@ -317,7 +318,8 @@ create table DeveloperPoll_measurement_result
 	Employee_id			integer							not null,
 	Measurement_result	text							null,
 	Datum				date							not null,
-	constraint PK_DEVELOPERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Employee_id, Datum)
+	Sprint_id			integer							not null,
+	constraint PK_DEVELOPERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Employee_id, Datum, Sprint_id)
 } CHARACTER SET utf8;
 
 /*==============================================================*/
