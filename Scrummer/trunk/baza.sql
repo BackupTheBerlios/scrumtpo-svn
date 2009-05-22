@@ -297,6 +297,30 @@ create table Task_measurement_result
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
+/* Table: CustomerPoll_measurement_result                               */
+/*==============================================================*/
+create table CustomerPoll_measurement_result
+{
+	Measure_id           integer                        not null,
+	Customer_name		text							not null,
+	Measurement_result	text							null,
+	Datum				date							not null,
+	constraint PK_CUSTOMERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Customer_name, Datum)
+}
+
+/*==============================================================*/
+/* Table: DeveloperPoll_measurement_result                               */
+/*==============================================================*/
+create table DeveloperPoll_measurement_result
+{
+	Measure_id           integer                        not null,
+	Employee_id			integer							not null,
+	Measurement_result	text							null,
+	Datum				date							not null,
+	constraint PK_DEVELOPERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Employee_id, Datum)
+} CHARACTER SET utf8;
+
+/*==============================================================*/
 /* Table: Task_status                                           */
 /*==============================================================*/
 create table Task_status 
@@ -521,7 +545,25 @@ alter table Task_measurement_result
       references Task (Task_id)
       on update restrict
       on delete restrict;
-
+	  
+alter table CustomerPoll_measurement_result
+	add constraint FK_CUSPOLL_MEA_RELATIONS_MEASURE foreign key (Measure_id)
+		references Measure (Measure_id)
+		on update restrict
+		on delete restrict;
+		
+alter table DeveloperPoll_measurement_result
+	add constraint FK_DEVPOLL_MEA_RELATIONS_MEASURE foreign key (Measure_id)
+		references Measure (Measure_id)
+		on update restrict
+		on delete restrict;
+		
+alter table DeveloperPoll_measurement_result
+	add constraint FK_DEVPOLL_MEA_RELATIONS_EMPLOYEE foreign key (Employee_id)
+		references Employee (Employee_id)
+		on update restrict
+		on delete restrict;
+		
 alter table Team_member
    add constraint FK_TEAM_MEM_RELATIONS_EMPLOYEE foreign key (Employee_id)
       references Employee (Employee_id)
@@ -609,3 +651,46 @@ insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_descr
 insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (2, 1, 2, 1, 'meni', '2009-04-30', 'yes');
 insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (1, 1, 3, 2, 'ikone', '2009-04-30', 'yes');
 insert into Task (Employee_id, Team_id, Task_status_id, Task_type_id, Task_description, Task_date, Task_active) values (2, 1, 2, 3, 'modeli', '2009-04-30', 'yes');
+
+insert into Measure (Measure_id, Measure_name, Measure_description) values(1,'q1_customer','Sodelovanje z razvojno skupino v èasu razvoja');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(2,'q2_customer','Odzivnost razvijalcev na želje, spremembe v zahtevah');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(3,'q3_customer','Popolnost izdelane rešitve');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(4,'q4_customer','Skladnost izdelane rešitve s prièakovanji');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(5,'q5_customer','Intuitivnost uporabniškega vmesnika');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(6,'q6_customer','Uporabnost/Koristnost izdelanih programov');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(7,'q7_customer','Odsotnost napak, zanesljivost delovanja, robustnost');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(8,'q8_customer','Kakovost oddanih Sprint Backlog-ov, pravoèasnost oddaje');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(9,'q9_customer','Splošna ocena zadovoljstva z delom razvojne skupine');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(10,'q10_customer','Splošna ocena kakovosti izdelanih programov');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(11,'q10_customer_comment','Komentar k splošni oceni kakovosti izdelanih programov');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(12,'q11_customer','Funkcionalnost, ki ni bila realizirana, oziroma je bila realizirana neustrezno. Poleg vsake
+funkcionalnosti navedite prioriteto (1 – najvišja prioriteta):');
+
+insert into Measure (Measure_id, Measure_name, Measure_description) values(13,'q1_developer','Jasnost zastavljenega Product Backlog-a');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(14,'q1_developer_comment','Komentar k jasnosti zastavljenega Product Backlog-a');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(15,'q2_developer','Ocena èasa za posamezno zahtevo v Product Backlogu');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(16,'q2_developer_comment','Komentar k oceni èasa za posamezno zahtevo v Product Backlogu');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(17,'q3_developer','Administracija pri metodologiji Scrum');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(18,'q3_developer_comment','Komentar k administraciji pri metodologiji Scrum');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(19,'q4_developer','Obremenjenost z administracijo');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(20,'q4_developer_comment','Komentar k obremenjenosti z administracijo');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(21,'q5_developer','Tehniène težave na zaèetku Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(22,'q5_developer_comment','Komentar k tehniènim težavam na zaèetku Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(23,'q6_developer','Vsebinske težave (razumevanje zahtevane funkcionalnosti) na zaèetku Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(24,'q6_developer_comment','Komentar k vsebinskim težavam (razumevanje zahtevane funkcionalnosti) na zaèetku Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(25,'q7_developer','Tehniène težave na koncu Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(26,'q7_developer_comment','Komentar k tehniènim težavam na koncu Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(27,'q8_developer','Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(28,'q8_developer_comment','Komentar k vsebinskim težavam (razumevanje zahtevane funkcionalnosti) na koncu Sprinta');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(29,'q9_developer','Sodelovanje s Scrum Master-jem');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(30,'q9_developer_comment','Komentar k sodelovanju s Scrum Master-jem');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(31,'q10_developer','Sodelovanje s Product Owner-jem');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(32,'q10_developer_comment','Komentar k sodelovanju s Product Owner-jem');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(33,'q11_developer','Sodelovanje znotraj razvojne skupine');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(34,'q11_developer_comment','Komentar k sodelovanju znotraj razvojne skupine');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(35,'q12_developer','Primernost obsega dela na projektu');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(36,'q12_developer_comment','Komentar k primernosti obsega dela na projektu');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(37,'q13_developer','Splošna ocena vašega zadovoljstva s potekom dela na projektu');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(38,'q13_developer_comment','Komentar k splošni oceni vašega zadovoljstva s potekom dela na projektu');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(39,'q14_developer','Splošna ocena metodologije Scrum');
+insert into Measure (Measure_id, Measure_name, Measure_description) values(40,'q14_developer_comment','Komentar k splošni oceni metodologije Scrum');
