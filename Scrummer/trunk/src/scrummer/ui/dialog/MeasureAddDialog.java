@@ -28,7 +28,7 @@ public class MeasureAddDialog
 	 * @param objectId object id(task id, sprint id, ...)
 	 */
 	public MeasureAddDialog(JFrame parent, MetricTableModel.MetricType metricType, int metricId, int objectId) {
-		super(parent);
+		super(parent, objectId);
 		
 		_metricType = metricType;
 		_metricId = metricId;
@@ -56,7 +56,6 @@ public class MeasureAddDialog
 			// convert to date
 			BigDecimal num = BigDecimal.ZERO;
 			try {
-				System.out.println(_resultInput.getEditor().getItem().toString());
 				num = new BigDecimal(_resultInput.getEditor().getItem().toString());
 			} catch (NumberFormatException ex) {}
 			
@@ -75,7 +74,8 @@ public class MeasureAddDialog
 	@Override
 	public void operationSucceeded(DataOperation type, MetricOperation identifier, String message) {
 		if ((type == DataOperation.Custom) && 
-			(identifier == MetricOperation.WorkEffectivenessCalculated)) {
+			((identifier == MetricOperation.WorkEffectivenessCalculated) || 
+			 (identifier == MetricOperation.EarnedValueCalculated))) {
 			_resultInput.setSelectedItem(message);
 		}
 		else if ((type == DataOperation.Insert) && 
@@ -89,7 +89,8 @@ public class MeasureAddDialog
 	@Override
 	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {		
 		if ((type == DataOperation.Custom) && 
-			(identifier == MetricOperation.WorkEffectivenessCalculated)) {
+			((identifier == MetricOperation.WorkEffectivenessCalculated) ||
+			 (identifier == MetricOperation.EarnedValueCalculated))) {
 				_resultInput.setSelectedItem(_previous.toEngineeringString());
 				OK.requestFocus();
 		}

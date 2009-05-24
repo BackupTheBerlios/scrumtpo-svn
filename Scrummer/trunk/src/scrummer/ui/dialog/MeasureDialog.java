@@ -30,10 +30,14 @@ public class MeasureDialog
 
 	/**
 	 * Constructor
+	 * 
+	 * @param parent parent frame
+	 * @param objectId object id
 	 */
-	public MeasureDialog(JFrame parent) {
+	public MeasureDialog(JFrame parent, int objectId) {
 		super(parent, ModalityType.APPLICATION_MODAL);
 		
+		_objectId = objectId;
 		_metricModel = Scrummer.getModels().getMetricModel();
 		_metricModel.addMetricListener(this);
 		
@@ -49,6 +53,7 @@ public class MeasureDialog
 		_resultInput = fb.addComboBoxInput(i18n.tr("Result") + ":");
 		_resultInput.setEditable(true);
 		_resultInput.addItem("Work Effectiveness");
+		_resultInput.addItem("Earned Value");
 		_resultInput.addItemListener(this);
 		_resultInput.setEnabled(true);
 	
@@ -85,6 +90,14 @@ public class MeasureDialog
 				Util.centre(dialog);
 				dialog.setVisible(true);
 				break;
+			case 1:
+				try { _previous = new BigDecimal(_resultInput.getSelectedItem().toString());
+				} catch (NumberFormatException ex) {}
+				EarnedValueDialog evdlg = 
+					new EarnedValueDialog(getParentFrame(), _objectId);
+				Util.centre(evdlg);
+				evdlg.setVisible(true);
+				break;
 			}
 		}
 	}
@@ -99,6 +112,8 @@ public class MeasureDialog
 	protected BigDecimal _previous = BigDecimal.ZERO;
 	/// metric model
 	protected MetricModel _metricModel;
+	/// object id
+	protected int _objectId;
 	/// date input
 	protected SelectedTextField _dateInput;
 	/// selected result input

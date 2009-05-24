@@ -29,7 +29,7 @@ public class MeasureChangeDialog extends MeasureDialog {
 	 * @param value measure value
 	 */
 	public MeasureChangeDialog(JFrame parent, MetricTableModel.MetricType metric, int measureId, int objectId, Date date, BigDecimal value) {
-		super(parent);
+		super(parent, objectId);
 		setTitle(i18n.tr("Change Measurement"));
 		
 		_metricType = metric;
