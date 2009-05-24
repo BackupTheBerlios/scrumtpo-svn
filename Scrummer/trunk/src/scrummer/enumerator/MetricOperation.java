@@ -13,5 +13,7 @@ public enum MetricOperation {
 	/// sprint related measure dop
 	SprintMeasure,
 	/// work effectiveness was calculated
-	WorkEffectivenessCalculated
+	WorkEffectivenessCalculated,
+	/// earned value indicator was calculated
+	EarnedValueCalculated
 }
