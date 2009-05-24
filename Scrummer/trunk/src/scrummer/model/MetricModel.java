@@ -156,7 +156,6 @@ public class MetricModel {
      * @param measurementResult new measurement result 
      */
     public void updateTaskMeasurement(int measureId, int taskId, java.util.Date datum, BigDecimal measurementResult) {
-    	System.out.println(measureId + "; " + taskId);
     	if (_metricModelCommon.updateTaskMeasurement(measureId, taskId, new Date(datum.getTime()), measurementResult.toEngineeringString())) {
     		_metricTableModel.refresh();
     	}
@@ -170,7 +169,6 @@ public class MetricModel {
      * @param measurementResult new result
      */
     public void updateSprintMeasurement(int measureId, int sprintId, java.util.Date datum, BigDecimal measurementResult) {
-    	System.out.println(measureId + "; " + sprintId);
     	if (_metricModelCommon.updateSprintMeasurement(sprintId, measureId, new Date(datum.getTime()), measurementResult.toEngineeringString())) {
     		_metricTableModel.refresh();
     	}
@@ -349,8 +347,24 @@ public class MetricModel {
 	 * @return effectiveness factor
 	 */
 	public BigDecimal calculateWorkEffectiveness(java.util.Date from, java.util.Date to) {
-		int projectId = 0;
+		int projectId = _projectModel.getCurrentProjectId();
 		return _metricModelCommon.calculateWorkEffectiveness(projectId, new Date(from.getTime()), new Date(to.getTime()));
+	}
+	
+	/**
+	 * Calculate earned value
+	 * @param sprintId sprint
+	 * @param sprintStart start of sprint
+	 * @param date date up to which to calculate it
+	 * @return calculated value
+	 */
+	public BigDecimal calculateEarnedValue(int sprintId, java.util.Date sprintStart, java.util.Date date) {
+		int projectId = _projectModel.getCurrentProjectId();
+		return _metricModelCommon.calculateEarnedValue(
+			projectId,
+			sprintId, 
+			new Date(sprintStart.getTime()), 
+			new Date(date.getTime()));
 	}
 	
 	/**
@@ -358,6 +372,13 @@ public class MetricModel {
 	 */
 	public void failCalculatingWorkEffectiveness() {
 		_operation.operationFailed(DataOperation.Custom, MetricOperation.WorkEffectivenessCalculated, "");
+	}
+	
+	/**
+	 * Notify everyon that earned value indicator was not calculated
+	 */
+	public void failCalculatingEarnedValue() {
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.EarnedValueCalculated, "");
 	}
 	
 	/// project model
