@@ -4,14 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
-
 import javax.swing.table.DefaultTableModel;
-
 import org.xnap.commons.i18n.I18n;
-
 import scrummer.Scrummer;
 import scrummer.model.SprintBacklogModelCommon;
-import scrummer.ui.Util;
 import scrummer.util.ObjectRow;
 
 /**
@@ -57,21 +53,22 @@ public class SprintPBITableModel extends DefaultTableModel {
 			ObjectRow current = _rows.get(row);	
 			int j = 0;
 			if (rows.size() > 0) {
-				SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 				GregorianCalendar gc = new GregorianCalendar();
 				gc.setTime(_sprintStart);
 				// iterate every row along all metric columns			
-				for (int i = 0; i < _sprintLength; i++) {					
-					if ((j < rows.size()) && 
-						((java.sql.Date)rows.get(j).get(0)).getTime() == 
-						 gc.getTime().getTime()) {
-						// copy metric information to current row cell
-						current.set(i, rows.get(j).get(row+1));
-						j++;
-					} else {
-						// if (j == 0)
-						current.set(i, 0);
+				for (int i = 0; i <= _sprintLength; i++) {
+					// find current date row
+					int idx = -1;
+					for (int fi = 0; fi < rows.size(); fi++) {
+						if (((java.sql.Date)rows.get(fi).get(0)).getTime() == gc.getTime().getTime()) {
+							idx = fi;
+						}
 					}
+					if (idx != -1) {
+						current.set(i, rows.get(idx).get(row+1));	
+					} else {
+						current.set(i, 0);
+					}					
 					gc.add(GregorianCalendar.DATE, 1);
 				}
 			}
@@ -203,7 +200,7 @@ public class SprintPBITableModel extends DefaultTableModel {
 		if (column == 0) {
 			return _columns.get(row);
 		} else {
-			return _rows.get(row).get(column-1);
+			return _rows.get(row).get(column);
 		}
 	}
 
