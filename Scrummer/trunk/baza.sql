@@ -53,6 +53,8 @@ drop table if exists Sprint_measurement_result;
 drop table if exists Sprint_team;
 drop table if exists Task;
 drop table if exists Task_measurement_result;
+drop table if exists CustomerPoll_measurement_result;
+drop table if exists DeveloperPoll_measurement_result;
 drop table if exists Task_status;
 drop table if exists Task_type;
 drop table if exists Team;
@@ -279,6 +281,7 @@ create table Task
    Task_status_id       integer                        not null,
    Task_type_id         integer                        not null,
    Task_description     text                           not null,
+   Task_engineering_hour DECIMAL					   not null,
    Task_date            DATE                           not null,
    Task_active          BOOLEAN			   not null,
    constraint PK_TASK primary key (Task_id)
@@ -289,7 +292,7 @@ create table Task
 /*==============================================================*/
 create table Task_measurement_result 
 (
-   Measure_id           integer                        not null,
+   Measure_id			integer                        not null,
    Task_id              integer                        not null,
    Measurement_result   text                           null,
    Datum                date                           not null,
@@ -297,30 +300,30 @@ create table Task_measurement_result
 ) CHARACTER SET utf8;
 
 /*==============================================================*/
-/* Table: CustomerPoll_measurement_result                               */
+/* Table: CustomerPoll_measurement_result                       */
 /*==============================================================*/
 create table CustomerPoll_measurement_result
-{
-	Measure_id           integer                        not null,
-	Customer_name		text							not null,
+(
+	Measure_id			integer                         not null,
+	Customer_name		VARCHAR(255)					null,
 	Measurement_result	text							null,
 	Datum				date							not null,
 	Sprint_id			integer							not null,
 	constraint PK_CUSTOMERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Customer_name, Datum, Sprint_id)
-}
+) CHARACTER SET utf8;
 
 /*==============================================================*/
-/* Table: DeveloperPoll_measurement_result                               */
+/* Table: DeveloperPoll_measurement_result                      */
 /*==============================================================*/
 create table DeveloperPoll_measurement_result
-{
+(
 	Measure_id           integer                        not null,
 	Employee_id			integer							not null,
 	Measurement_result	text							null,
 	Datum				date							not null,
 	Sprint_id			integer							not null,
 	constraint PK_DEVELOPERPOLL_MEASUREMENT_RESULT primary key(Measure_id, Employee_id, Datum, Sprint_id)
-} CHARACTER SET utf8;
+) CHARACTER SET utf8;
 
 /*==============================================================*/
 /* Table: Task_status                                           */
