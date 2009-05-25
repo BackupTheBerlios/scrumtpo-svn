@@ -17,6 +17,8 @@ import scrummer.listener.MetricListener;
 import scrummer.model.MetricModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
+import scrummer.ui.dialog.measure.EarnedValueDialog;
+import scrummer.ui.dialog.measure.WorkEffectivenessDialog;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
@@ -54,6 +56,8 @@ public class MeasureDialog
 		_resultInput.setEditable(true);
 		_resultInput.addItem("Work Effectiveness");
 		_resultInput.addItem("Earned Value");
+		_resultInput.addItem("SPI");
+		_resultInput.addItem("CPI");
 		_resultInput.addItemListener(this);
 		_resultInput.setEnabled(true);
 	
