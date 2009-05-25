@@ -1,5 +1,6 @@
 package scrummer.model;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -15,13 +16,11 @@ import scrummer.util.ResultQuery;
 /**
  * This model features common task related functionality
  */
-public class TaskModelCommon 
-{	
+public class TaskModelCommon {	
 	/**
 	 * Data row for updating data
 	 */
-	public static class Row extends DataRow 
-	{
+	public static class Row extends DataRow {
 		/**
 		 * Constructor
 		 * 
@@ -29,8 +28,7 @@ public class TaskModelCommon
 		 */
 		public Row(ResultSet result) {
 			try {
-				result.beforeFirst(); result.next();
-				
+				result.beforeFirst(); result.next();				
 				TaskId = 
 					result.getInt(1);
 				EmployeeId = 
@@ -47,10 +45,12 @@ public class TaskModelCommon
 					result.getInt(7);
 				TaskDescription =
 					result.getString(8);
+				EngineeringHour =
+					result.getBigDecimal(9);				
 				TaskDate =
-					result.getDate(9);
+					result.getDate(10);
 				TaskActive = 
-					result.getBoolean(10);
+					result.getBoolean(11);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -61,14 +61,14 @@ public class TaskModelCommon
 		 * @param taskId
 		 * @return
 		 */
-		public boolean keyEquals(int taskId)
-		{
+		public boolean keyEquals(int taskId) {
 			return (TaskId == taskId);
 		}
 		
 		public int TaskId, EmployeeId, PBIId, TeamId, TaskParentId, TaskStatus, TaskType;
 		public String TaskDescription;
 		public Date TaskDate;
+		public BigDecimal EngineeringHour;
 		public boolean TaskActive;
 	}
 	
@@ -77,8 +77,7 @@ public class TaskModelCommon
 	 * 
 	 * @param connectionModel connection model
 	 */
-	public TaskModelCommon(ConnectionModel connectionModel, Operations.TaskOperation operation)
-	{
+	public TaskModelCommon(ConnectionModel connectionModel, Operations.TaskOperation operation) {
 		_connectionModel = connectionModel;
 		_operation 		 = operation;
 	}
@@ -87,6 +86,7 @@ public class TaskModelCommon
 	 * Add task
 	 * 
 	 * @param description task description
+	 * @param engineeringHour engineering hour
 	 * @param parent parent task (if any)
 	 * @param pbi related pbi(a task does not exist without one)
 	 * @param employee responsible employee
@@ -97,8 +97,7 @@ public class TaskModelCommon
 	 * @param active is task active
 	 * @return true if task added, false otherwise
 	 */
-	public boolean add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
-	{
+	public boolean add(String description, BigDecimal engineeringHour, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active) {
 		boolean ret = false;
 		java.sql.Connection conn      = null;
 		java.sql.PreparedStatement st = null;
@@ -114,9 +113,10 @@ public class TaskModelCommon
 			 		  DBSchemaModel.TaskStatusId + ", " +
 			 		  DBSchemaModel.TaskTypeId + ", " + 
 			 		  DBSchemaModel.TaskDescription + ", " +
+			 		  DBSchemaModel.TaskEngineeringHour + ", " +
 			 		  DBSchemaModel.TaskDate + ", " +
 			 		  DBSchemaModel.TaskActive + ") " +
-			 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			 	"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			 st = conn.prepareStatement(query);
 			 st.setInt(1, employee);
 			 if (pbi == null) { st.setNull(2, java.sql.Types.INTEGER); } else { st.setInt(2, pbi); }
@@ -125,10 +125,10 @@ public class TaskModelCommon
 			 st.setInt(5, status);
 			 st.setInt(6, type);
 			 st.setString(7, description);
-			 st.setDate(8, new java.sql.Date(date.getTime()));
-			 st.setBoolean(9, active);
-			 st.execute();
-			 
+			 st.setBigDecimal(8, engineeringHour);
+			 st.setDate(9, new java.sql.Date(date.getTime()));
+			 st.setBoolean(10, active);
+			 st.execute();			 
 			 ret = true;
 			 _operation.operationSucceeded(DataOperation.Insert, TaskOperation.Task, "");
 		} catch (SQLException e) {
@@ -147,21 +147,17 @@ public class TaskModelCommon
 	 * 
 	 * @return identified task statuses
 	 */
-	public Vector<IdValue> fetchTaskNames()
-	{
-		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
-		{
-			@Override
-			public void processResult(ResultSet result) 
-			{
-				setResult(IdValue.fetchValues(result));
-			}
-			@Override
-			public void handleException(SQLException ex) 
-			{
-				setResult(new Vector<IdValue>());
-				ex.printStackTrace();
-			}
+	public Vector<IdValue> fetchTaskNames() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {
+		@Override
+		public void processResult(ResultSet result) {
+			setResult(IdValue.fetchValues(result));
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(new Vector<IdValue>());
+			ex.printStackTrace();
+		}
 		};
 		q.queryResult(
 			"SELECT " + DBSchemaModel.TaskId + ", " +
@@ -175,10 +171,8 @@ public class TaskModelCommon
 	 * 
 	 * @return all rows
 	 */
-	public Vector<ObjectRow> fetchTaskTable()
-	{
-		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel)
-		{
+	public Vector<ObjectRow> fetchTaskTable() {
+		ResultQuery<Vector<ObjectRow>> q = new ResultQuery<Vector<ObjectRow>>(_connectionModel) {
 			@Override
 			public void processResult(ResultSet result) {
 				setResult(ObjectRow.fetchRows(result)); 
@@ -190,7 +184,7 @@ public class TaskModelCommon
 			}
 		};
 		q.queryResult("SELECT Task_id, CONCAT(Employee_name, ' ', Employee_surname), Team_description " +
-				"Task_status_description, Task_type_description, Task_date, Task_active FROM ((((" + 
+				"Task_status_description, Task_type_description, Task_engineering_hour, Task_date, Task_active FROM ((((" + 
 				DBSchemaModel.TaskTable + ") JOIN " + DBSchemaModel.EmployeeTable + ") JOIN " + DBSchemaModel.TeamTable +
 				") JOIN " + DBSchemaModel.TaskTypeTable + ") JOIN " + DBSchemaModel.TaskStatusTable + " WHERE " +
 				"Task.Employee_id = Employee.Employee_id AND Task.Team_id = Team.Team_id AND " +
@@ -198,20 +192,24 @@ public class TaskModelCommon
 		return q.getResult();
 	}
 	
+	/**
+	 * Remove task with given id
+	 * @param taskId task id
+	 * @return true if task removed, false otherwise
+	 */
 	public boolean removeTask(int taskId) {
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{	
-			@Override
-			public void process() {
-				setResult(true);
-			}
-			@Override
-			public void handleException(SQLException ex) {
-				setResult(false);
-				ex.printStackTrace();
-	        	_operation.operationFailed(DataOperation.Remove, TaskOperation.Task, 
-	        		i18n.tr("Could not remove task."));
-			}
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {	
+		@Override
+		public void process() {
+			setResult(true);
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(false);
+			ex.printStackTrace();
+        	_operation.operationFailed(DataOperation.Remove, TaskOperation.Task, 
+        		i18n.tr("Could not remove task."));
+		}
 		};
 		q.query("DELETE FROM " + DBSchemaModel.TaskTable + 
 				" WHERE " + DBSchemaModel.TaskId + "='" + taskId + "'");
@@ -219,23 +217,22 @@ public class TaskModelCommon
 	}
 	
 	/**
-	 * Fetch task row
+	 * @param taskId task 
+	 * @return task row  
 	 */
-	public Row getRow(int taskId)
-	{	
-		ResultQuery<Row> q = new ResultQuery<Row>(_connectionModel)
-		{	
-			@Override
-			public void processResult(ResultSet result) {
-				setResult(new Row(result));
-			}
-			@Override
-			public void handleException(SQLException ex) {
-				setResult(null);
-				ex.printStackTrace();
-	        	_operation.operationFailed(DataOperation.Remove, TaskOperation.Task, 
-	        		i18n.tr("Could not remove task."));
-			}
+	public Row getRow(int taskId) {	
+		ResultQuery<Row> q = new ResultQuery<Row>(_connectionModel) {	
+		@Override
+		public void processResult(ResultSet result) {
+			setResult(new Row(result));
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(null);
+			ex.printStackTrace();
+        	_operation.operationFailed(DataOperation.Remove, TaskOperation.Task, 
+        		i18n.tr("Could not remove task."));
+		}
 		};
 		q.queryResult(
 			"SELECT * FROM " + DBSchemaModel.TaskTable + 
@@ -252,24 +249,21 @@ public class TaskModelCommon
 	 * @return task names
 	 */
 	public Vector<IdValue> fetchTaskNames(int project, int sprint) {
-		
-		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
-		{
-			@Override
-			public void processResult(ResultSet result) {
-				setResult(IdValue.fetchValues(result));
-			}
-			@Override
-			public void handleException(SQLException ex) 
-			{
-				setResult(new Vector<IdValue>());
-				ex.printStackTrace();
-			}
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {
+		@Override
+		public void processResult(ResultSet result) {
+			setResult(IdValue.fetchValues(result));
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(new Vector<IdValue>());
+			ex.printStackTrace();
+		}
 		};
 		q.queryResult(
 			"SELECT " + DBSchemaModel.TaskId + ", " +
 						DBSchemaModel.TaskDescription +
-			" FROM "   + DBSchemaModel.TaskTable + 
+			" FROM " + DBSchemaModel.TaskTable + 
 			" JOIN " +
 			DBSchemaModel.PBITable + " ON " + 
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
@@ -286,6 +280,7 @@ public class TaskModelCommon
 	 * 
 	 * @param taskId task id
 	 * @param description task description
+	 * @param engineeringHour engineering hour
 	 * @param parentId parent
 	 * @param pbiId pbi id
 	 * @param employeeId employee
@@ -299,24 +294,20 @@ public class TaskModelCommon
 	 */
 	public boolean updateTask(
 		int taskId,
-		String description, int parentId, int pbiId, int employeeId, int teamId,
+		String description, BigDecimal engineeringHour, int parentId, int pbiId, int employeeId, int teamId,
 		int taskTypeId, int taskStatusId, Date date, boolean active) {
-
-		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel)
-		{
-			@Override
-			public void process() {
-				_operation.operationSucceeded(DataOperation.Update, TaskOperation.Task, "");
-				setResult(true);
-			}
-
-			@Override
-			public void handleException(SQLException ex) {
-				setResult(false);
-				ex.printStackTrace();
-				_operation.operationFailed(DataOperation.Update, TaskOperation.Task, ex.getMessage());
-			}
-			
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+		@Override
+		public void process() {
+			_operation.operationSucceeded(DataOperation.Update, TaskOperation.Task, "");
+			setResult(true);
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(false);
+			ex.printStackTrace();
+			_operation.operationFailed(DataOperation.Update, TaskOperation.Task, ex.getMessage());
+		}
 		};
 		q.query(
 			"UPDATE " + 
@@ -333,11 +324,9 @@ public class TaskModelCommon
 			DBSchemaModel.TaskActive + "='" + (active ? 1 : 0) + "' " +
 			"WHERE " + 
 			DBSchemaModel.TaskId+ "='" + taskId + "'");
-		
 		return q.getResult();		
 	}
 
-	
 	/// last gotten row
 	private Row _lastRow = null;
 	/// connection model
@@ -346,5 +335,4 @@ public class TaskModelCommon
 	private Operations.TaskOperation _operation;
 	/// translation class field
 	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
-
 }

@@ -1,5 +1,6 @@
 package scrummer.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import scrummer.exception.DBMap;
 import scrummer.listener.TaskListener;
@@ -47,6 +48,7 @@ public class TaskModel {
 	 * Add task
 	 * 
 	 * @param description task description
+	 * @param engineeringHour engineering hour
 	 * @param parent parent task (if any)
 	 * @param pbi related pbi(a task does not exist without one)
 	 * @param employee responsible employee
@@ -56,21 +58,19 @@ public class TaskModel {
 	 * @param date end date
 	 * @param active is task active
 	 */
-	public void add(String description, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active)
-	{
-		if (_taskModelCommon.add(description, parent, pbi, employee, team, status, type, date, active))
-		{
+	public void add(String description, BigDecimal engineeringHour, Integer parent, Integer pbi, int employee, int team, int status, int type, Date date, boolean active) {
+		if (_taskModelCommon.add(description, engineeringHour, parent, pbi, employee, team, status, type, date, active)) {
 			_taskTableModel.refresh();
 			_sprintBacklogModel.getTaskTableModel().refresh();
 		}
 	}
 	
-	
 	/**
 	 * Update task 
 	 * 
 	 * @param taskId task id
-	 * @param description task description 
+	 * @param description task description
+	 * @param engineeringHour engineering hour 
 	 * @param pbiId task parent pbi
 	 * @param employeeId task employee
 	 * @param teamId task responsible team
@@ -79,21 +79,18 @@ public class TaskModel {
 	 * @param date task date
 	 * @param active task active?
 	 */
-	public void updateTask(int taskId, String description, int parentId, int pbiId, int employeeId, int teamId, int taskTypeId, int taskStatusId, Date date, boolean active) {
+	public void updateTask(int taskId, String description, BigDecimal engineeringHour, int parentId, int pbiId, int employeeId, int teamId, int taskTypeId, int taskStatusId, Date date, boolean active) {
 		if (_taskModelCommon.updateTask(
-			taskId, description, parentId, pbiId, employeeId, 
-			teamId, taskTypeId, taskStatusId, date, active))
-		{
+			taskId, description, engineeringHour, parentId, pbiId, employeeId, 
+			teamId, taskTypeId, taskStatusId, date, active)) {
 			_taskTableModel.refresh();
 			_sprintBacklogModel.getTaskTableModel().refresh();
 		}
 	}
 	
-	public Integer getInteger(DBSchemaModel.TaskEnum enumId, int taskId)
-	{
+	public Integer getInteger(DBSchemaModel.TaskEnum enumId, int taskId) {
 		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
-		switch (enumId)
-		{
+		switch (enumId) {
 		case TaskId: 
 			return row.TaskId;
 		case EmployeeId: 
@@ -108,6 +105,21 @@ public class TaskModel {
 			return row.TaskType;
 		case TeamId:
 			return row.TeamId; 
+		}
+		throw new DBMap(enumId);
+	}
+	
+	/**
+	 * Fetch big decimal
+	 * @param enumId field
+	 * @param taskId task 
+	 * @return value
+	 */
+	public BigDecimal getBigDecimal(DBSchemaModel.TaskEnum enumId, int taskId) {
+		TaskModelCommon.Row row = _taskModelCommon.getRow(taskId);
+		switch (enumId) {
+		case EngineeringHour:
+			return row.EngineeringHour;
 		}
 		throw new DBMap(enumId);
 	}
