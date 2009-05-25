@@ -2,6 +2,7 @@ package scrummer.ui.dialog;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.xnap.commons.i18n.I18n;
@@ -51,8 +52,11 @@ public class TaskAddDialog
 			
 			if (taskDate == null) { _dateInput.grabFocus(); return; }
 			
+			BigDecimal bd = new BigDecimal(_engineeringHourInput.getText());
+			
 			_taskModel.add(
 				description,
+				bd,
 				(_parentInput.isSelected() ? _parentInput.getSelectedId() : null),
 				(_pbiInput.isSelected() ? _pbiInput.getSelectedId() : null),
 				_taskEmployeeInput.getSelectedId(),

@@ -16,6 +16,7 @@ import scrummer.model.swing.TeamComboBoxModel;
 import scrummer.model.swing.base.BooleanComboBoxModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
+import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
 import scrummer.uicomponents.TwoButtonDialog;
 
@@ -58,6 +59,8 @@ public class TaskDialog extends TwoButtonDialog {
 	
 		_descriptionInput = 
 			fb.addSelectedTextInput(i18n.tr("Description") + ":", "Description");
+		_engineeringHourInput =
+			fb.addSelectedTextInput(i18n.tr("Engineering hour") + ":", "EngineeringHour");
 		_pbiInput =
 			fb.addComboBoxInput(i18n.tr("PBI") + ":");
 		_parentInput =
@@ -88,11 +91,11 @@ public class TaskDialog extends TwoButtonDialog {
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 18, 7));
 		
-		setSize(new Dimension(300, 390));
+		setSize(new Dimension(300, 400));
 	}
 	
 	/// description and status gui inputs
-	protected JTextField _descriptionInput, _dateInput;
+	protected SelectedTextField _descriptionInput, _dateInput, _engineeringHourInput;
 	/// combo box inputs
 	protected StandardComboBox _parentInput, _pbiInput, _taskActiveInput, _taskEmployeeInput, _taskTeamInput, _taskTypeInput, _taskStatusInput; 
 	/// is task active combo box model

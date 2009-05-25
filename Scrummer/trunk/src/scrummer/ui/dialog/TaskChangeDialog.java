@@ -2,6 +2,7 @@ package scrummer.ui.dialog;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.xnap.commons.i18n.I18n;
@@ -35,6 +36,8 @@ public class TaskChangeDialog
 		
 		_descriptionInput.setText(
 			_taskModel.getString(TaskEnum.TaskDescription, taskId));
+		_engineeringHourInput.setText(
+			_taskModel.getBigDecimal(TaskEnum.EngineeringHour, taskId).toEngineeringString());
 		_pbiInput.selectId(_taskModel.getInteger(TaskEnum.PBIId, taskId));
 		_parentInput.selectId(_taskModel.getInteger(TaskEnum.TaskParentId, taskId));
 		_taskEmployeeInput.selectId(_taskModel.getInteger(TaskEnum.EmployeeId, taskId));
@@ -50,28 +53,23 @@ public class TaskChangeDialog
 
 	@Override
 	public void operationFailed(DataOperation type, TaskOperation identifier, String message) {
-		if ((type == DataOperation.Update) && (identifier == TaskOperation.Task))
-		{
+		if ((type == DataOperation.Update) && (identifier == TaskOperation.Task)) {
 			Util.showError(this, i18n.tr("Error while updating task: " + message), i18n.tr("Error"));
 		}
 	}
 	
 	@Override
 	public void operationSucceeded(DataOperation type, TaskOperation identifier, String message) {
-		if ((type == DataOperation.Update) && (identifier == TaskOperation.Task))
-		{
+		if ((type == DataOperation.Update) && (identifier == TaskOperation.Task)) {
 			setVisible(false);
 		}
 	}
 	
 	@Override
 	public void setVisible(boolean b) {
-		
-		if (!b)
-		{
+		if (!b) {
 			_taskModel.removeTaskListener(this);
 		}
-		
 		super.setVisible(b);
 	}
 
@@ -100,9 +98,12 @@ public class TaskChangeDialog
 			boolean active = 
 				_taskActiveInput.getSelectedIndex() == 0;
 			
+			BigDecimal bd = new BigDecimal(_engineeringHourInput.getText());
+			
 			_taskModel.updateTask(
 				_taskId, 
 				_descriptionInput.getText(),
+				bd,
 				parentId,
 				pbiId,
 				employeeId,
