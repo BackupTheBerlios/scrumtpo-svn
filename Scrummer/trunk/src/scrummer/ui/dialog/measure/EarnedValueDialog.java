@@ -59,11 +59,7 @@ public class EarnedValueDialog
 	}
 	
 	@Override
-	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {
-		// if ((type == DataOperation.Custom) && (identifier == MetricOperation.EarnedValueCalculated)) {
-		// 	Util.showError(this, message, i18n.tr("Error"));
-		// }
-	}
+	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {}
 	
 	@Override
 	public void setVisible(boolean b) {
