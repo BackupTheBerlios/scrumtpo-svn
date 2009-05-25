@@ -350,6 +350,7 @@ public class DBSchemaModel {
 	public static final String TaskStatusId = "Task_status_id";
 	public static final String TaskTypeId = "Task_type_id";
 	public static final String TaskDescription = "Task_description";
+	public static final String TaskEngineeringHour = "Task_engineering_hour";
 	public static final String TaskDate = "Task_date";
 	public static final String TaskActive = "Task_active";
 	public static final String TaskId = "Task_id";
@@ -470,7 +471,7 @@ public class DBSchemaModel {
 	public enum SprintPBIEnum { MeasureDay, PBIId, TaskId, SprintId, EmployeeId, HoursSpent, HoursRemaining, NbOpenImped, NbClosedImped }
 	public enum SprintMeasurementResultEnum { SprintId, MeasureId, MeasurementResult, Datum }
 	public enum SprintTeamEnum { TeamId, SprintId }
-	public enum TaskEnum { TaskId, EmployeeId, PBIId, TeamId, TaskParentId, TaskStatusId, TaskTypeId, TaskDescription, TaskDate, TaskActive }
+	public enum TaskEnum { TaskId, EmployeeId, PBIId, TeamId, TaskParentId, TaskStatusId, TaskTypeId, TaskDescription, EngineeringHour, TaskDate, TaskActive }
 	public enum TaskMeasurementResultEnum { MeasureId, TaskId, MeasurementResult, Datum }
 	public enum TaskStatusEnum { TaskStatusId, TaskStatusDescription }
 	public enum TaskTypeEnum { TaskTypeId, TaskTypeDescription }
