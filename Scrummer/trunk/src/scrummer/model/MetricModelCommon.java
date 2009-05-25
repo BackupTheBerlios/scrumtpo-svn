@@ -1036,19 +1036,18 @@ public class MetricModelCommon {
 		ResultQuery<BigDecimal> q = new ResultQuery<BigDecimal>(_connectionModel) {	
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
+				setResult(BigDecimal.ZERO);
 				result.beforeFirst();
 				while (result.next()) {
 					BigDecimal res = result.getBigDecimal(1);
-					if (res == null) {
-						setResult(new BigDecimal(0));
-					} else {
+					if (res != null) {
 						setResult(res);
 					}
 				}
 			}
 			@Override
 			public void handleException(SQLException ex) {
-				setResult(new BigDecimal(0));
+				setResult(BigDecimal.ZERO);
 				ex.printStackTrace();
 			}
 		};
@@ -1056,33 +1055,95 @@ public class MetricModelCommon {
 		// them together using natural join; then calculate the equation results from table
 		// that has all the coefficients
 		String query =
-				"(SELECT " + 
-				DBSchemaModel.TaskId + ", " +
-				"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_d" + ", " +
-				"Hours_spent_until_d  FROM " + DBSchemaModel.SprintPBITable + 
-				" NATURAL JOIN  (" +
-					"SELECT " + 
-					DBSchemaModel.TaskId + ", " + 
-					"SUM(" + DBSchemaModel.HoursSpent + ") as Hours_spent_until_d FROM " + 
-					DBSchemaModel.SprintPBITable + 
-					" WHERE " + 
-					DBSchemaModel.SprintPBIMeasureDay + " < '" + date.toString() + "' " + 
-					" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
-				" NATURAL JOIN (" +
-					"SELECT " + 
-					DBSchemaModel.TaskId + ", " +
-					"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_sum " +
-					" FROM " +
-					DBSchemaModel.SprintPBITable + 
-					" NATURAL JOIN " + 
-					DBSchemaModel.SprintTable + 
-					" WHERE " +
-					DBSchemaModel.ProjectId + "=" + projectId + " AND " +
-					DBSchemaModel.SprintPBIMeasureDay + "='" + init.toString() + "'" +
-					" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_init_table " +
+			"(SELECT " + 
+			DBSchemaModel.TaskId + ", " +
+			"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_d" + ", " +
+			"Hours_spent_until_d  FROM " + DBSchemaModel.SprintPBITable + 
+			" NATURAL JOIN  (" +
+				"SELECT " + 
+				DBSchemaModel.TaskId + ", " + 
+				"SUM(" + DBSchemaModel.HoursSpent + ") as Hours_spent_until_d FROM " + 
+				DBSchemaModel.SprintPBITable + 
 				" WHERE " + 
-				DBSchemaModel.SprintPBIMeasureDay + "='" + date.toString() + "'" + 
-				" GROUP BY " + DBSchemaModel.TaskId;
+				DBSchemaModel.SprintPBIMeasureDay + " < '" + date.toString() + "' " + 
+				" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
+			" NATURAL JOIN (" +
+				"SELECT " + 
+				DBSchemaModel.TaskId + ", " +
+				"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_sum " +
+				" FROM " +
+				DBSchemaModel.SprintPBITable + 
+				" NATURAL JOIN " + 
+				DBSchemaModel.SprintTable + 
+				" WHERE " +
+				DBSchemaModel.ProjectId + "=" + projectId + " AND " +
+				DBSchemaModel.SprintPBIMeasureDay + "='" + init.toString() + "'" +
+				" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_init_table " +
+			" WHERE " + 
+			DBSchemaModel.SprintPBIMeasureDay + "='" + date.toString() + "'" + 
+			" GROUP BY " + DBSchemaModel.TaskId;
+		q.queryResult(query);
+		return q.getResult();
+	}	
+	
+	/**
+	 * Calculate scheduled performance index
+	 * @param projectId project id
+	 * @param date date on which to perform calculation
+	 * @return earned value indicator
+	 */
+	public BigDecimal calculateCostPerformanceIndex(int projectId, java.sql.Date date, java.sql.Date init) {
+		ResultQuery<BigDecimal> q = new ResultQuery<BigDecimal>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(BigDecimal.ZERO);
+				result.beforeFirst();
+				while (result.next()) {
+					BigDecimal res = result.getBigDecimal(1);
+					if (res != null) {
+						setResult(res);
+					}
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(BigDecimal.ZERO);
+				ex.printStackTrace();
+			}
+		};
+		// calculate top part of ER equation (work spent until day) and work remaining at day, join
+		// them together using natural join; then calculate the equation results from table
+		// that has all the coefficients
+		String query = "";
+		/*
+			"(SELECT " + 
+			DBSchemaModel.TaskId + ", " +
+			"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_d" + ", " +
+			"Hours_spent_until_d  FROM " + DBSchemaModel.SprintPBITable + 
+			" NATURAL JOIN  (" +
+				"SELECT " + 
+				DBSchemaModel.TaskId + ", " + 
+				"SUM(" + DBSchemaModel.HoursSpent + ") as Hours_spent_until_d FROM " + 
+				DBSchemaModel.SprintPBITable + 
+				" WHERE " + 
+				DBSchemaModel.SprintPBIMeasureDay + " < '" + date.toString() + "' " + 
+				" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
+			" NATURAL JOIN (" +
+				"SELECT " + 
+				DBSchemaModel.TaskId + ", " +
+				"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_sum " +
+				" FROM " +
+				DBSchemaModel.SprintPBITable + 
+				" NATURAL JOIN " + 
+				DBSchemaModel.SprintTable + 
+				" WHERE " +
+				DBSchemaModel.ProjectId + "=" + projectId + " AND " +
+				DBSchemaModel.SprintPBIMeasureDay + "='" + init.toString() + "'" +
+				" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_init_table " +
+			" WHERE " + 
+			DBSchemaModel.SprintPBIMeasureDay + "='" + date.toString() + "'" + 
+			" GROUP BY " + DBSchemaModel.TaskId;
+		*/
 		q.queryResult(query);
 		return q.getResult();
 	}	

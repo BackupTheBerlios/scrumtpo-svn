@@ -368,6 +368,32 @@ public class MetricModel {
 	}
 	
 	/**
+	 * Calculate schedule performance index
+	 * @param sprintId sprint
+	 * @param date date up to which date to calculate it
+	 * @return calculate spi
+	 */
+	public BigDecimal calculateSchedulePerformanceIndex(int sprintId, java.util.Date sprintStart, java.util.Date date) {
+		int projectId = _projectModel.getCurrentProjectId();
+		return _metricModelCommon.calculateSchedulePerformanceIndex(
+			projectId, 
+			new Date(date.getTime()), 
+			new Date(sprintStart.getTime()));
+	}
+	
+	/**
+	 * Calculate cost performance index
+	 * @param sprintId sprint
+	 * @param sprintStart sprint start
+	 * @param date date up to which to calculate it
+	 * @return calculated cpi
+	 */
+	public BigDecimal calculateCostPerformanceIndex(int sprintId, java.util.Date sprintStart, java.util.Date date) {
+		int projectId = _projectModel.getCurrentProjectId();
+		return BigDecimal.ZERO;
+	}
+	
+	/**
 	 * Notify everyone that work effectiveness indicator was not calculated
 	 */
 	public void failCalculatingWorkEffectiveness() {
@@ -375,10 +401,24 @@ public class MetricModel {
 	}
 	
 	/**
-	 * Notify everyon that earned value indicator was not calculated
+	 * Notify everyone that earned value indicator was not calculated
 	 */
 	public void failCalculatingEarnedValue() {
-		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.EarnedValueCalculated, "");
+		_operation.operationFailed(DataOperation.Custom, MetricOperation.EarnedValueCalculated, "");
+	}
+	
+	/**
+	 * Notify everyon that schedule performance index failed to be calculated
+	 */
+	public void failCalculatingSchedulePerformanceIndex() {
+		_operation.operationFailed(DataOperation.Custom, MetricOperation.SPICalculated, "");
+	}
+	
+	/**
+	 * Notify everyone that cost performance index failed to be calculated
+	 */
+	public void failCalculatingCostPerformanceIndex() {
+		_operation.operationFailed(DataOperation.Custom, MetricOperation.CPICalculated, "");
 	}
 	
 	/// project model
