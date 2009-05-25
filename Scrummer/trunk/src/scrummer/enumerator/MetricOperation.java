@@ -15,5 +15,9 @@ public enum MetricOperation {
 	/// work effectiveness was calculated
 	WorkEffectivenessCalculated,
 	/// earned value indicator was calculated
-	EarnedValueCalculated
+	EarnedValueCalculated,
+	/// spi was calculated
+	SPICalculated,
+	/// cpi was calculated
+	CPICalculated
 }
