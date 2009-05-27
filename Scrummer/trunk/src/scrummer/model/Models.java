@@ -14,8 +14,7 @@ public class Models {
 	 * 
 	 * @param logger logger instance
 	 */
-	public Models(LoggingModel logger)
-	{
+	public Models(LoggingModel logger) {
 		_loggingModel = logger;
 		createPropertyModel(getLoggingModel());
 		
@@ -363,7 +362,7 @@ public class Models {
 	
 	public MetricModel createMetricModel() {
 		if (_metricModel == null) {
-			_metricModel = new MetricModel(getConnectionModel(), getProjectModel());
+			_metricModel = new MetricModel(getConnectionModel(), getProjectModel(), getSprintBacklogModel());
 		}
 		return _metricModel;
 	}
