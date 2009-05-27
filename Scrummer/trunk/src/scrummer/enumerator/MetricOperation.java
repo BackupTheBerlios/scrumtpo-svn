@@ -12,6 +12,8 @@ public enum MetricOperation {
 	ReleaseMeasure,
 	/// sprint related measure dop
 	SprintMeasure,
+	/// pbi related measure dop
+	PBIMeasure,
 	/// work effectiveness was calculated
 	WorkEffectivenessCalculated,
 	/// earned value indicator was calculated
