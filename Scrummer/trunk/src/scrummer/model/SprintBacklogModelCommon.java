@@ -722,9 +722,9 @@ public class SprintBacklogModelCommon
 			@Override
 			public void processResult(ResultSet result)  {
 				Vector<ObjectRow> res = ObjectRow.fetchRows(result);
-				ObjectRow.convertDate(res, 7);
-				ObjectRow.convertEnum(res, 5, DBSchemaModel.TaskStatusTable);
-				ObjectRow.convertEnum(res, 6, DBSchemaModel.TaskTypeTable);
+				ObjectRow.convertDate(res, 8);
+				ObjectRow.convertEnum(res, 6, DBSchemaModel.TaskStatusTable);
+				ObjectRow.convertEnum(res, 7, DBSchemaModel.TaskTypeTable);
 				setResult(res); 
 			}
 			@Override
@@ -735,6 +735,7 @@ public class SprintBacklogModelCommon
 		q.queryResult("SELECT " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskId + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDescription + ", " +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskEngineeringHour + ", " +
 			DBSchemaModel.PBITable +  "." + DBSchemaModel.PBIDesc + ", " +
 			"CONCAT(" + DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeName + " , ' ', " +
 						DBSchemaModel.EmployeeTable + "." + DBSchemaModel.EmployeeSurname + "), " +
