@@ -19,8 +19,7 @@ public class ProjectSprintTaskComboBoxModel extends IdValueComboBoxModel {
 	 * Set current project
 	 * @param value project to set
 	 */
-	public void setProject(int value)
-	{
+	public void setProject(int value) {
 		_projectId = value;		
 	}
 	
@@ -28,8 +27,7 @@ public class ProjectSprintTaskComboBoxModel extends IdValueComboBoxModel {
 	 * Set current sprint
 	 * @param value sprint to sets
 	 */
-	public void setSprint(int value)
-	{
+	public void setSprint(int value) {
 		_sprintId = value;
 	}
 	
