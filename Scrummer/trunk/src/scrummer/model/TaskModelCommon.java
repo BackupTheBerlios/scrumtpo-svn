@@ -314,6 +314,7 @@ public class TaskModelCommon {
 			DBSchemaModel.TaskTable + " " +
 			"SET " + 
 			DBSchemaModel.TaskDescription + "='" + description + "', " +
+			DBSchemaModel.TaskEngineeringHour + "='" + engineeringHour.toEngineeringString() + "', " +
 			DBSchemaModel.TaskPBIId + "='" + pbiId + "', " +
 			DBSchemaModel.TaskParentId + "='" + parentId + "', " +
 			DBSchemaModel.TaskEmployeeId + "='" + employeeId + "', " +
