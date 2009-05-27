@@ -45,7 +45,8 @@ public class EarnedValueDialog
 				_metricModel.calculateEarnedValue(_sprintId, _sprintStart, getDate());
 			}
 		} else if (cmd == "StandardDialog.Cancel") {
-			_metricModel.failCalculatingEarnedValue();			
+			_metricModel.failCalculatingEarnedValue();
+			super.actionPerformed(e);
 		} else {
 			super.actionPerformed(e);
 		}

@@ -12,6 +12,7 @@ import scrummer.enumerator.MetricOperation;
 import scrummer.listener.MetricListener;
 import scrummer.model.MetricModel;
 import scrummer.model.Models;
+import scrummer.model.SprintBacklogModel;
 import scrummer.ui.dialog.DateDialog;
 
 /**
@@ -55,7 +56,9 @@ public class SPIDialog
 		String cmd = e.getActionCommand();
 		if (cmd.equals("StandardDialog.OK")) {
 			if (valid()) {
-				// _metricModel.calculateCPI()
+				Models m = Scrummer.getModels();
+				SprintBacklogModel sprintBacklogModel = m.getSprintBacklogModel();
+				_metricModel.calculateSchedulePerformanceIndex(_sprintId, sprintBacklogModel.getBeginDate(_sprintId), getDate());
 			}
 		} else if (cmd.equals("StandardDialog.Cancel")) {
 			super.actionPerformed(e);
