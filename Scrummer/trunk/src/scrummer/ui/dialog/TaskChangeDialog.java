@@ -98,7 +98,7 @@ public class TaskChangeDialog
 			boolean active = 
 				_taskActiveInput.getSelectedIndex() == 0;
 			
-			BigDecimal bd = new BigDecimal(_engineeringHourInput.getText());
+			BigDecimal bd = new BigDecimal(_engineeringHourInput.getText());			
 			
 			_taskModel.updateTask(
 				_taskId, 

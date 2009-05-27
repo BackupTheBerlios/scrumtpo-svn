@@ -91,7 +91,7 @@ public class TaskDialog extends TwoButtonDialog {
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 18, 7));
 		
-		setSize(new Dimension(300, 400));
+		setSize(new Dimension(300, 410));
 	}
 	
 	/// description and status gui inputs
