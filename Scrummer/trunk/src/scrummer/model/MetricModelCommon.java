@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -210,6 +211,49 @@ public class MetricModelCommon {
         public String MeasurementResult;
 	}
 	
+	public static class Row extends DataRow {
+        /**
+         * Constructor
+         *
+         * @param result result from which to get data
+         */
+        public Row(ResultSet result) {
+            try {
+                result.beforeFirst(); result.next();
+                MeasureId =
+                    result.getInt(1);
+                PBIId =
+                    result.getInt(2);
+                Datum =
+                    result.getDate(3);
+                MeasurementResult =
+                    result.getString(4);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * Does key equal
+         * @param taskId
+         * @return true if row key equals this row
+         */
+        public boolean keyEquals(int measureId, int pBIId, java.sql.Date datum) {
+            if ((measureId == MeasureId) &&
+                (pBIId == PBIId) &&
+                (datum == Datum)) {
+                    return true;
+            } else {
+                    return false;
+            }
+        }
+        public int MeasureId;
+        public int PBIId;
+        public java.sql.Date Datum;
+        public String MeasurementResult;
+	}
+
+	
 	/**
 	 * Add a new measure
 	 *  
@@ -380,6 +424,50 @@ public class MetricModelCommon {
 	}
 	
 	/**
+	 * Add pbi measurement
+	 * @param measureId measure type
+	 * @param pBIId pbi
+	 * @param datum date
+	 * @param measurementResult result
+	 * @return true if added, false otherwise
+	 */
+	public boolean addPBIMeasurement(int measureId, int pBIId, java.sql.Date datum, BigDecimal measurementResult) {
+        boolean ret = false;
+        java.sql.Connection conn      = null;
+        java.sql.PreparedStatement st = null;
+        ResultSet res = null;
+        try {
+            conn = _connectionModel.getConnection();
+            String query =
+            "INSERT INTO " + DBSchemaModel.PBIMeasurementResultTable +
+            "(" +
+            DBSchemaModel.PBIMeasurementResultId + ", " +
+            DBSchemaModel.PBIMeasurementPBIId + ", " +
+            DBSchemaModel.PBIMeasurementResultDate + ", " +
+            DBSchemaModel.PBIMeasurementResultResult + 
+            ")" +
+            " VALUES (?, ?, ?, ?)";
+            st = conn.prepareStatement(query);
+            st.setInt(1, measureId);
+            st.setInt(2, pBIId);
+            st.setDate(3, datum);
+            st.setBigDecimal(4, measurementResult);
+            st.execute();
+            _operation.operationSucceeded(DataOperation.Insert, MetricOperation.PBIMeasure, "");
+            ret = true;
+        } catch (SQLException e) {
+            _operation.operationFailed(DataOperation.Insert, MetricOperation.PBIMeasure, e.getMessage());
+            e.printStackTrace();
+        } finally {
+            res  = _connectionModel.close(res);
+            st   = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
+        return ret;
+	}
+
+		
+	/**
 	 * Remove measure
 	 * 
 	 * @param measureId measure id
@@ -500,6 +588,36 @@ public class MetricModelCommon {
         return q.getResult();
 	}
 
+	/**
+	 * Remove pbi measurement
+	 * @param measureId measure
+	 * @param pBIId pbi id
+	 * @param datum date
+	 * @return true if removed, false otherwise
+	 */
+	public boolean removePBIMeasurement(int measureId, int pBIId, java.sql.Date datum) {
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(DataOperation.Remove, MetricOperation.PBIMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            ex.printStackTrace();
+            _operation.operationFailed(DataOperation.Remove, MetricOperation.PBIMeasure, ex.getMessage());
+        }
+        };
+        q.query("DELETE FROM " + DBSchemaModel.PBIMeasurementResultTable +
+        " WHERE " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.PBIId + "=" + pBIId + " AND " +
+        DBSchemaModel.PBIMeasurementResultDate + "=" + datum
+        );
+        return q.getResult();
+	}
+	
 	/**
 	 * Update measure information
 	 * 
@@ -627,6 +745,37 @@ public class MetricModelCommon {
     }
 
     /**
+     * Update pbi measurement
+     * @param measureId measure
+     * @param pBIId pbi
+     * @param datum date
+     * @param measurementResult result
+     * @return true if measure update, false otherwise
+     */
+    public boolean updatePBIMeasurement(int measureId, int pBIId, java.sql.Date datum, String measurementResult) {
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(DataOperation.Update, MetricOperation.PBIMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            _operation.operationFailed(DataOperation.Update, MetricOperation.PBIMeasure, ex.getMessage());
+            ex.printStackTrace();
+        }
+        };
+        q.query("UPDATE " + DBSchemaModel.PBIMeasurementResultTable + " " +
+         "SET " + DBSchemaModel.PBIMeasurementResultResult + "='" + measurementResult + "'"  +
+        " WHERE " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.PBIId + "=" + pBIId + " AND " +
+        DBSchemaModel.PBIMeasurementResultDate + "='" + datum + "'");
+        return q.getResult();
+    }
+    
+    /**
      * Fecth measure with given id
      * @param measureId measure
      * @return row with all information
@@ -707,30 +856,71 @@ public class MetricModelCommon {
 	public String getSprintMeasurementResult(int sprintId, int measureId, java.sql.Date datum) {
         return getSprintMeasurementRow(sprintId, measureId, datum).MeasurementResult;
 	}
-
-	public SprintMeasurementRow getRow(int sprintId, int measureId, java.sql.Date datum) {
-        ResultQuery<SprintMeasurementRow> q = new ResultQuery<SprintMeasurementRow>(_connectionModel) {
+	
+	/**
+	 * Fetch release row
+	 * @param measureId measure
+	 * @param releaseId release 
+	 * @param datum date
+	 * @return row
+	 */
+	public ReleaseMeasurementRow getReleaseRow(int measureId, int releaseId, java.sql.Date datum) {
+        ResultQuery<ReleaseMeasurementRow> q = new ResultQuery<ReleaseMeasurementRow>(_connectionModel) {
         @Override
         public void processResult(ResultSet result) {
-            setResult(new SprintMeasurementRow(result));
+            setResult(new ReleaseMeasurementRow(result));
+            _operation.operationSucceeded(DataOperation.Select, MetricOperation.ReleaseMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+                setResult(null);
+                ex.printStackTrace();
+                _operation.operationFailed(DataOperation.Select, MetricOperation.ReleaseMeasure, ex.getMessage());
+        }
+        };
+        q.queryResult(
+        "SELECT * FROM " + DBSchemaModel.ReleaseMeasurementResultTable + " WHERE " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.ReleaseId + "=" + releaseId + " AND " +
+        DBSchemaModel.ReleaseMeasurementResultDate + "='" + datum + "'");
+        return q.getResult();
+    }
+
+	public String getReleaseMeasurementResult(int measureId, int releaseId, java.sql.Date datum) {
+        return getReleaseRow(measureId, releaseId, datum).MeasurementResult;
+	}
+	
+	/**
+	 * Fetch pbi measurement row
+	 * @param measureId measure id
+	 * @param pBIId pbi id
+	 * @param datum date
+	 * @return row
+	 */
+	public Row getPBIMeasurementRow(int measureId, int pBIId, java.sql.Date datum) {
+        ResultQuery<Row> q = new ResultQuery<Row>(_connectionModel) {
+        @Override
+        public void processResult(ResultSet result) {
+            setResult(new Row(result));
+            _operation.operationSucceeded(DataOperation.Remove, MetricOperation.PBIMeasure, "");
         }
         @Override
         public void handleException(SQLException ex) {
             setResult(null);
             ex.printStackTrace();
-            _operation.operationFailed(DataOperation.Remove, MetricOperation.ReleaseMeasure, ex.getMessage());
+            _operation.operationFailed(DataOperation.Remove, MetricOperation.PBIMeasure, i18n.tr(""));
         }
         };
         q.queryResult(
-        "SELECT * FROM " + DBSchemaModel.SprintMeasurementResultTable + " WHERE " +
-        DBSchemaModel.SprintId + "=" + sprintId + " AND " +
+        "SELECT * FROM " + DBSchemaModel.PBIMeasurementResultTable + " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
-        DBSchemaModel.SprintMeasurementResultDate + "=" + datum);
+        DBSchemaModel.PBIId + "=" + pBIId + " AND " +
+        DBSchemaModel.PBIMeasurementResultDate + "='" + datum + "'");
         return q.getResult();
-	}
-	
-	public String getMeasurementResult(int sprintId, int measureId, java.sql.Date datum) {
-        return getSprintMeasurementRow(sprintId, measureId, datum).MeasurementResult;
+    }
+
+	public String getPBIMeasurementResult(int measureId, int pBIId, java.sql.Date datum) {
+        return getPBIMeasurementRow(measureId, pBIId, datum).MeasurementResult;
 	}
 	
 	/**
@@ -1009,16 +1199,16 @@ public class MetricModelCommon {
 				"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_d" + ", " +
 				"Hours_spent_until_d  FROM " + DBSchemaModel.SprintPBITable + " NATURAL JOIN  (" +
 					"SELECT " + 
-						DBSchemaModel.TaskId + ", " + 
-						"SUM(" + DBSchemaModel.HoursSpent + ") as Hours_spent_until_d FROM " + 
-						DBSchemaModel.SprintPBITable + 
-						" WHERE " + 
-						DBSchemaModel.SprintPBIMeasureDay + 
-						" BETWEEN '" + sprintStart.toString() + "' AND '" + date.toString() + "' " + 
-						" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
-						" NATURAL JOIN " + DBSchemaModel.SprintTable + 
-						" WHERE " + DBSchemaModel.SprintProjectId + "=" + projectId + " " +
-						" AND " + DBSchemaModel.SprintId + "=" + sprintId +
+					DBSchemaModel.TaskId + ", " + 
+					"SUM(" + DBSchemaModel.HoursSpent + ") as Hours_spent_until_d FROM " + 
+					DBSchemaModel.SprintPBITable + 
+					" WHERE " + 
+					DBSchemaModel.SprintPBIMeasureDay + 
+					" BETWEEN '" + sprintStart.toString() + "' AND '" + date.toString() + "' " + 
+					" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
+					" NATURAL JOIN " + DBSchemaModel.SprintTable + 
+					" WHERE " + DBSchemaModel.SprintProjectId + "=" + projectId + " " +
+					" AND " + DBSchemaModel.SprintId + "=" + sprintId +
 				" AND " + 
 				DBSchemaModel.SprintPBIMeasureDay + "='" + date.toString() + "'" + 
 				" GROUP BY " + DBSchemaModel.TaskId + ") as Calculation_table GROUP BY " + DBSchemaModel.TaskId;
@@ -1028,11 +1218,41 @@ public class MetricModelCommon {
 	
 	/**
 	 * Calculate scheduled performance index
+	 * 
 	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @param sprintLength sprint length
+	 * @param sprintStart start of sprint
 	 * @param date date on which to perform calculation
 	 * @return earned value indicator
 	 */
-	public BigDecimal calculateSchedulePerformanceIndex(int projectId, java.sql.Date date, java.sql.Date init) {
+	public BigDecimal calculateSchedulePerformanceIndex(int projectId, int sprintId, int sprintLength, java.sql.Date sprintStart, java.sql.Date date) {
+		BigDecimal topPart = calculateTopSchedulePerformanceIndex(projectId, sprintId, sprintStart, date);
+		BigDecimal bottomPart = calculateAllTaskRemainingWork(projectId, sprintStart);
+			
+		if (bottomPart.compareTo(BigDecimal.ZERO) == 0) {
+			long dayLength = 86400000;
+			long diff = (date.getTime() - sprintStart.getTime()) / dayLength;
+			
+			BigDecimal factor = new BigDecimal(diff);
+			factor.divide(new BigDecimal(sprintLength), 3, RoundingMode.DOWN);
+		
+			return topPart.divide(bottomPart).multiply(factor);
+		} else {
+			return BigDecimal.ZERO;
+		}
+	}
+	
+	/**
+	 * Calculate top part of scheduled performance index equation(without sprint length/days elapsed
+	 * 
+	 * @param projectId project id
+	 * @param sprintId sprint id
+	 * @param sprintStart start of sprint
+	 * @param date date on which to perform calculation
+	 * @return earned value indicator
+	 */
+	public BigDecimal calculateTopSchedulePerformanceIndex(int projectId, int sprintId, java.sql.Date sprintStart, java.sql.Date date) {
 		ResultQuery<BigDecimal> q = new ResultQuery<BigDecimal>(_connectionModel) {	
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
@@ -1055,36 +1275,30 @@ public class MetricModelCommon {
 		// them together using natural join; then calculate the equation results from table
 		// that has all the coefficients
 		String query =
+			"SELECT SUM(Hours_spent_until_d / (Hours_spent_until_d + Hours_remaining_d) * Hours_remaining_at_start) as SPI_top FROM " + 
 			"(SELECT " + 
 			DBSchemaModel.TaskId + ", " +
 			"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_d" + ", " +
-			"Hours_spent_until_d  FROM " + DBSchemaModel.SprintPBITable + 
-			" NATURAL JOIN  (" +
+			"Hours_spent_until_d, Hours_remaining_at_start FROM " + DBSchemaModel.SprintPBITable + " NATURAL JOIN  (" +
 				"SELECT " + 
 				DBSchemaModel.TaskId + ", " + 
 				"SUM(" + DBSchemaModel.HoursSpent + ") as Hours_spent_until_d FROM " + 
 				DBSchemaModel.SprintPBITable + 
 				" WHERE " + 
-				DBSchemaModel.SprintPBIMeasureDay + " < '" + date.toString() + "' " + 
+				DBSchemaModel.SprintPBIMeasureDay + 
+				" BETWEEN '" + sprintStart.toString() + "' AND '" + date.toString() + "' " + 
 				" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
-			" NATURAL JOIN (" +
-				"SELECT " + 
-				DBSchemaModel.TaskId + ", " +
-				"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_sum " +
-				" FROM " +
-				DBSchemaModel.SprintPBITable + 
-				" NATURAL JOIN " + 
-				DBSchemaModel.SprintTable + 
-				" WHERE " +
-				DBSchemaModel.ProjectId + "=" + projectId + " AND " +
-				DBSchemaModel.SprintPBIMeasureDay + "='" + init.toString() + "'" +
-				" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_init_table " +
-			" WHERE " + 
-			DBSchemaModel.SprintPBIMeasureDay + "='" + date.toString() + "'" + 
-			" GROUP BY " + DBSchemaModel.TaskId;
+				" NATURAL JOIN " + "(" +
+				"SELECT " + DBSchemaModel.TaskId + ", SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_at_start" + 
+				" FROM " + DBSchemaModel.SprintPBITable +
+				" NATURAL JOIN " + DBSchemaModel.SprintTable +
+				" WHERE " + DBSchemaModel.SprintPBIMeasureDay + "='" + sprintStart.toString() + "'" +
+				" AND " + DBSchemaModel.SprintProjectId + "=" + projectId + " " +
+				" AND " + DBSchemaModel.SprintId + "=" + sprintId +
+			" GROUP BY " + DBSchemaModel.TaskId + ") as Calculation_table GROUP BY " + DBSchemaModel.TaskId + ") as Tmp_table";			
 		q.queryResult(query);
 		return q.getResult();
-	}	
+	}
 	
 	/**
 	 * Calculate scheduled performance index

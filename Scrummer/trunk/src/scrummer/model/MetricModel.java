@@ -3,7 +3,6 @@ package scrummer.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Vector;
-
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.MetricOperation;
 import scrummer.listener.MetricListener;
@@ -23,7 +22,7 @@ public class MetricModel {
 	 * Constructor
 	 * @param connectionModel connection model
 	 */
-	public MetricModel(ConnectionModel connectionModel, ProjectModel projectModel) {
+	public MetricModel(ConnectionModel connectionModel, ProjectModel projectModel, SprintBacklogModel sprintBacklogModel) {
 		_projectModel = projectModel;
 		_metricModelCommon = 
 			new MetricModelCommon(connectionModel, _operation);
@@ -33,6 +32,8 @@ public class MetricModel {
 			new MetricTableModel(_metricModelCommon);
 		_metricDataSet = 
 			new MetricDataSet(this);
+		_sprintBacklogModel = 
+			sprintBacklogModel;
 	}
 	
 	/**
@@ -88,6 +89,20 @@ public class MetricModel {
 	}
 	
 	/**
+	 * Add pbi measurement
+	 * 
+	 * @param pbiId measure
+	 * @param releaseId release 
+	 * @param date date
+	 * @param measurementResult result
+	 */
+	public void addPBIMeasurement(int pbiId, int releaseId, java.util.Date date, BigDecimal measurementResult) {
+		if (_metricModelCommon.addPBIMeasurement(pbiId, releaseId, new Date(date.getTime()), measurementResult)) {
+			_metricTableModel.refresh();
+		}
+	}
+	
+	/**
 	 * Remove measure
 	 * 
 	 * @param measureId measure id
@@ -130,6 +145,18 @@ public class MetricModel {
 	 */
 	public void removeSprintMeasurement(int measureId, int sprintId, java.util.Date datum) {
 		if (_metricModelCommon.removeSprintMeasurement(sprintId, measureId, new Date(datum.getTime()))) {
+			_metricTableModel.refresh();
+		}
+	}
+	
+	/**
+	 * Remove pbi measurement
+	 * @param pbiId sprint
+	 * @param measureId  measure
+	 * @param datum date
+	 */
+	public void removePBIMeasurement(int pbiId, int sprintId, java.util.Date datum) {
+		if (_metricModelCommon.removePBIMeasurement(sprintId, pbiId, new Date(datum.getTime()))) {
 			_metricTableModel.refresh();
 		}
 	}
@@ -186,6 +213,19 @@ public class MetricModel {
     		_metricTableModel.refresh();
     	}
     }
+    
+    /**
+     * Update release measurement information
+     * @param measureId measure
+     * @param releaseId release
+     * @param datum date
+     * @param measurementResult measurement result 
+     */
+    public void updatePBIMeasurement(int pbiId, int releaseId, java.util.Date datum, String measurementResult) {
+    	if (_metricModelCommon.updatePBIMeasurement(pbiId, releaseId, new Date(datum.getTime()), measurementResult)) {
+    		_metricTableModel.refresh();
+    	}
+    }
 	
 	/**
 	 * Fetch measure name
@@ -226,7 +266,18 @@ public class MetricModel {
 	 * @return measurement
 	 */
 	public String getReleaseMeasurementResult(int releaseId, int measureId, java.util.Date datum) {
-		return _metricModelCommon.getMeasurementResult(releaseId, measureId, new Date(datum.getTime()));
+		return _metricModelCommon.getReleaseMeasurementResult(releaseId, measureId, new Date(datum.getTime()));
+	}
+	
+	/**
+	 * Fetch PBI measurement
+	 * @param pbiId release
+	 * @param measureId measure
+	 * @param datum date
+	 * @return measurement
+	 */
+	public String getPBIMeasurementResult(int pbiId, int measureId, java.util.Date datum) {
+		return _metricModelCommon.getPBIMeasurementResult(pbiId, measureId, new Date(datum.getTime()));
 	}
 	
 	/**
@@ -375,10 +426,11 @@ public class MetricModel {
 	 */
 	public BigDecimal calculateSchedulePerformanceIndex(int sprintId, java.util.Date sprintStart, java.util.Date date) {
 		int projectId = _projectModel.getCurrentProjectId();
+		int sprintLength = _sprintBacklogModel.getSprintLength(sprintId);
 		return _metricModelCommon.calculateSchedulePerformanceIndex(
-			projectId, 
-			new Date(date.getTime()), 
-			new Date(sprintStart.getTime()));
+			projectId, sprintId, sprintLength,
+			new Date(sprintStart.getTime()),
+			new Date(date.getTime()));
 	}
 	
 	/**
@@ -420,9 +472,11 @@ public class MetricModel {
 	public void failCalculatingCostPerformanceIndex() {
 		_operation.operationFailed(DataOperation.Custom, MetricOperation.CPICalculated, "");
 	}
-	
+		
 	/// project model
 	private ProjectModel _projectModel;
+	/// sprint backlog model
+	private SprintBacklogModel _sprintBacklogModel;
 	/// graph metric data set
 	private MetricDataSet _metricDataSet;
 	/// metric table model
