@@ -4,11 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
-
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-
-import org.omg.CORBA._PolicyStub;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -17,7 +14,9 @@ import scrummer.listener.MetricListener;
 import scrummer.model.MetricModel;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.Util;
+import scrummer.ui.dialog.measure.CPIDialog;
 import scrummer.ui.dialog.measure.EarnedValueDialog;
+import scrummer.ui.dialog.measure.SPIDialog;
 import scrummer.ui.dialog.measure.WorkEffectivenessDialog;
 import scrummer.uicomponents.SelectedTextField;
 import scrummer.uicomponents.StandardComboBox;
@@ -82,11 +81,11 @@ public class MeasureDialog
 	}
 
 	@Override
-	public void itemStateChanged(ItemEvent e) {
+	public void itemStateChanged(ItemEvent e) {		
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			int index = _resultInput.getSelectedIndex();
 			switch (index) {
-			case 0:				
+			case 0:	{
 				try { _previous = new BigDecimal(_resultInput.getSelectedItem().toString());
 				} catch (NumberFormatException ex) {}
 				WorkEffectivenessDialog dialog = 
@@ -94,7 +93,8 @@ public class MeasureDialog
 				Util.centre(dialog);
 				dialog.setVisible(true);
 				break;
-			case 1:
+			}
+			case 1: {
 				try { _previous = new BigDecimal(_resultInput.getSelectedItem().toString());
 				} catch (NumberFormatException ex) {}
 				EarnedValueDialog evdlg = 
@@ -102,6 +102,25 @@ public class MeasureDialog
 				Util.centre(evdlg);
 				evdlg.setVisible(true);
 				break;
+			}
+			case 2: {
+				try { _previous = new BigDecimal(_resultInput.getSelectedItem().toString());
+				} catch (NumberFormatException ex) {}
+				SPIDialog evdlg = 
+					new SPIDialog(getParentFrame(), _objectId);
+				Util.centre(evdlg);
+				evdlg.setVisible(true);
+				break;
+			}
+			case 3: {
+				try { _previous = new BigDecimal(_resultInput.getSelectedItem().toString());
+				} catch (NumberFormatException ex) {}
+				CPIDialog evdlg = 
+					new CPIDialog(getParentFrame(), _objectId);
+				Util.centre(evdlg);
+				evdlg.setVisible(true);
+				break;				
+			}
 			}
 		}
 	}
