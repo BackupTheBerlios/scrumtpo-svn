@@ -9,15 +9,13 @@ import scrummer.model.swing.base.IdValueListModel;
  * current project. 
  */
 public class SprintDescriptionListModel extends IdValueListModel {
-
 	/**
 	 * Constructor
 	 * 
 	 * @param sprintBacklogCommon common sprint data ops.
 	 * @param projectModel project model
 	 */
-	public SprintDescriptionListModel(SprintBacklogModelCommon sprintBacklogCommon, ProjectModel projectModel) {
-			
+	public SprintDescriptionListModel(SprintBacklogModelCommon sprintBacklogCommon, ProjectModel projectModel) {		
 		_sprintBacklogCommon = sprintBacklogCommon;
 		_projectModel = projectModel;
 	}
@@ -31,8 +29,7 @@ public class SprintDescriptionListModel extends IdValueListModel {
 	/**
 	 * Fetch sprint id/description pairs from db.
 	 */
-	private void refreshRows()
-	{
+	private void refreshRows() {
 		setValues(_sprintBacklogCommon.fetchSprintDescriptions(_projectModel.getCurrentProjectId()));
 	}
 
