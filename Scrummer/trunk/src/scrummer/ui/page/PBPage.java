@@ -31,9 +31,10 @@ import scrummer.uicomponents.StandardButton;
  * 
  * Also make it possible to 
  */
-public class PBPage 
+public class PBPage
 	extends BasePage
-	implements ActionListener, ListSelectionListener {
+	implements ActionListener,
+			   ListSelectionListener {
 
 	/**
 	 * Constructor
@@ -103,7 +104,7 @@ public class PBPage
 		Box horizontalRight = new Box(BoxLayout.X_AXIS);
 		horizontalRight.setPreferredSize(new Dimension(300, height));
 		
-		_pbiLink   = Util.addLink(horizontalRight, Link.ProductBacklogItem);
+		_pbiLink = Util.addLink(horizontalRight, Link.ProductBacklogItem);
 		
 		rightSide.add(horizontalRight);
 		
@@ -115,12 +116,9 @@ public class PBPage
 		add(horizontalSplit);
 		setBackground(Color.WHITE);
 		
-		if (_sprintDescriptionModel.isEmpty())
-		{
+		if (_sprintDescriptionModel.isEmpty()) {
 			_pbiLink.setEnabled(false);
-		}
-		else
-		{
+		} else {
 			sprintList.setSelectedIndex(0);
 		}
 	}
@@ -128,37 +126,28 @@ public class PBPage
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd == "AddSprint")
-		{
+		if (cmd == "AddSprint") {
 			SprintAddDialog dialog = new SprintAddDialog(getMainFrame());
 			Util.centre(dialog);
 			dialog.setVisible(true);
-		}
-		else if (cmd == "EditSprint")
-		{
+		} else if (cmd == "EditSprint") {
 			int selected = _sprintList.getSelectedIndex();
-			if (selected != -1)				
-			{			
+			if (selected != -1)	{			
 				int sprintId = _sprintDescriptionModel.getId(selected);
 				
 				SprintChangeDialog dialog = new SprintChangeDialog(getMainFrame(), sprintId);
 				Util.centre(dialog);
 				dialog.setVisible(true);
-			}
-			else
-			{
+			} else {
 				Util.showError(
 					this, 
 					i18n.tr("Cannot display modification dialog. " +
 							"First select a sprint by clicking on it, " +
 							"then click Edit button."), i18n.tr("Error"));
 			}
-		}
-		else if (cmd == "RemoveSprint")
-		{
+		} else if (cmd == "RemoveSprint") {
 			int selected = _sprintList.getSelectedIndex();
-			if (selected != -1)
-			{
+			if (selected != -1) {
 				int sprintId = _sprintDescriptionModel.getId(selected);
 				_sprintBacklogModel.removeSprint(sprintId);
 			}
