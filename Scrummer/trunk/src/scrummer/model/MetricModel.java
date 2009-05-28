@@ -2,7 +2,12 @@ package scrummer.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
+
+import org.xnap.commons.i18n.I18n;
+
+import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.MetricOperation;
 import scrummer.listener.MetricListener;
@@ -17,10 +22,53 @@ import scrummer.util.Operations;
  * PBI_measurement_result, 
  */
 public class MetricModel {
-
+		
+	/**
+	 * Metric types
+	 */
+	public enum MetricEnum {
+		/// work effectiveness indicator
+		WorkEffectiveness,
+		/// earned value indicator
+		EarnedValue,
+		/// sprint burndown chart
+		SprintBurndown,
+		/// schedule performance index
+		SPI,
+		/// cost performance index
+		CPI,
+		/// number of tasks completed in sprint / total tasks in sprint
+		TaskCompleteness,
+		/// number of pbi's completed for release / total number of pbi's
+		PBICompleteness;
+		
+		/**
+		 * Fetch translated enum string
+		 * @param en enum value
+		 * @return translated string
+		 */
+		public static String convert(MetricEnum en) {
+			switch (en) {
+			case WorkEffectiveness: return i18n.tr("Work Effectiveness");
+			case CPI: return i18n.tr("Cost Performance Index");
+			case EarnedValue: return i18n.tr("Earned Value");
+			case PBICompleteness: return i18n.tr("PBI Completeness");
+			case SPI: return i18n.tr("Schedule Performance Index");
+			case SprintBurndown: return i18n.tr("Sprint Burndown Chart");
+			case TaskCompleteness: return i18n.tr("Task Completeness");
+			default: return "";
+			}
+		}
+		
+		/// translation class field
+		private static I18n i18n = Scrummer.getI18n(MetricEnum.class);
+	}
+	
 	/**
 	 * Constructor
 	 * @param connectionModel connection model
+	 * @param projectModel project model
+	 * @param sprintBacklogModel sprint backlog model
 	 */
 	public MetricModel(ConnectionModel connectionModel, ProjectModel projectModel, SprintBacklogModel sprintBacklogModel) {
 		_projectModel = projectModel;
@@ -151,12 +199,12 @@ public class MetricModel {
 	
 	/**
 	 * Remove pbi measurement
-	 * @param pbiId sprint
-	 * @param measureId  measure
+	 * @param measureId  measure type
+	 * @param pbiId pbi
 	 * @param datum date
 	 */
-	public void removePBIMeasurement(int pbiId, int sprintId, java.util.Date datum) {
-		if (_metricModelCommon.removePBIMeasurement(sprintId, pbiId, new Date(datum.getTime()))) {
+	public void removePBIMeasurement(int measureId, int pbiId, java.util.Date datum) {
+		if (_metricModelCommon.removePBIMeasurement(measureId, pbiId, new Date(datum.getTime()))) {
 			_metricTableModel.refresh();
 		}
 	}
@@ -208,8 +256,8 @@ public class MetricModel {
      * @param datum date
      * @param measurementResult measurement result 
      */
-    public void updateReleaseMeasurement(int measureId, int releaseId, java.util.Date datum, String measurementResult) {
-    	if (_metricModelCommon.updateReleaseMeasurement(measureId, releaseId, new Date(datum.getTime()), measurementResult)) {
+    public void updateReleaseMeasurement(int measureId, int releaseId, java.util.Date datum, BigDecimal measurementResult) {
+    	if (_metricModelCommon.updateReleaseMeasurement(measureId, releaseId, new Date(datum.getTime()), measurementResult.toEngineeringString())) {
     		_metricTableModel.refresh();
     	}
     }
@@ -221,8 +269,8 @@ public class MetricModel {
      * @param datum date
      * @param measurementResult measurement result 
      */
-    public void updatePBIMeasurement(int pbiId, int releaseId, java.util.Date datum, String measurementResult) {
-    	if (_metricModelCommon.updatePBIMeasurement(pbiId, releaseId, new Date(datum.getTime()), measurementResult)) {
+    public void updatePBIMeasurement(int pbiId, int releaseId, java.util.Date datum, BigDecimal measurementResult) {
+    	if (_metricModelCommon.updatePBIMeasurement(pbiId, releaseId, new Date(datum.getTime()), measurementResult.toEngineeringString())) {
     		_metricTableModel.refresh();
     	}
     }
@@ -367,7 +415,7 @@ public class MetricModel {
 	 * @param to date to
 	 * @return a list of task measurements
 	 */
-	public Vector<Measurement> fetchPBIMeasures(String measureName, int pbiId, Date from, Date to) {
+	public Vector<Measurement> fetchPBIMeasures(String measureName, int pbiId, java.util.Date from, java.util.Date to) {
 		return _metricModelCommon.fetchMeasures(
 			measureName, 
 			DBSchemaModel.PBIMeasurementResultTable, 
@@ -383,7 +431,7 @@ public class MetricModel {
 	 * @param to date to
 	 * @return a list of task measurements
 	 */
-	public Vector<Measurement> fetchReleaseMeasures(String measureName, int releaseId, Date from, Date to) {
+	public Vector<Measurement> fetchReleaseMeasures(String measureName, int releaseId, java.util.Date from, java.util.Date to) {
 		return _metricModelCommon.fetchMeasures(
 			measureName, 
 			DBSchemaModel.ReleaseMeasurementResultTable, 
@@ -473,6 +521,30 @@ public class MetricModel {
 		_operation.operationFailed(DataOperation.Custom, MetricOperation.CPICalculated, "");
 	}
 		
+	/**
+	 * Calculate earned values for every day in given sprint
+	 * @param sprintId sprint id
+	 */
+	public void calculateMonthlyEarnedValue(int sprintId) {
+		java.util.Date sprintStart = _sprintBacklogModel.getBeginDate(sprintId);
+		java.util.Date sprintEnd = _sprintBacklogModel.getEndDate(sprintId);
+		
+		MetricDataSet.IntervalData data = new MetricDataSet.IntervalData(sprintStart, sprintEnd);
+		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(sprintStart);
+		// for each day in sprint calculate earned value from this day to tomorrow
+		while (gc.getTime().before(sprintEnd)) {
+			
+			java.util.Date time = gc.getTime();
+			System.out.println(time.toString());
+			BigDecimal dec = calculateEarnedValue(sprintId, sprintStart, time);
+			data.add(time, dec);			
+			gc.add(GregorianCalendar.DATE, 1);
+		}
+		_metricDataSet.setData(MetricEnum.EarnedValue.toString(), data);
+	}
+	
 	/// project model
 	private ProjectModel _projectModel;
 	/// sprint backlog model
