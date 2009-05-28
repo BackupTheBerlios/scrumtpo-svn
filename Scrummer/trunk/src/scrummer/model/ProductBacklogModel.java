@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import scrummer.listener.ProductBacklogListener;
 import scrummer.model.swing.PBIComboBoxModel;
 import scrummer.model.swing.ProductBacklogTableModel;
+import scrummer.model.swing.ProjectPBIComboBoxModel;
 import scrummer.model.swing.ProjectSprintPBIComboBoxModel;
 import scrummer.util.Operations;
 
@@ -38,14 +39,15 @@ public class ProductBacklogModel
 			new PBIComboBoxModel(_productbacklogModelCommon);
 		_projectSprintPBIComboBoxModel =
 			new ProjectSprintPBIComboBoxModel(_productbacklogModelCommon);
+		_projectPBIComboBoxModel =
+			new ProjectPBIComboBoxModel(_productbacklogModelCommon);
 	}
 	
 	/**
 	 * Sprint backlog model should be set after construction to avoid infinite recursion
 	 * @param sprintBacklogModel
 	 */
-	public void setSprintBacklogModel(SprintBacklogModel sprintBacklogModel)
-	{
+	public void setSprintBacklogModel(SprintBacklogModel sprintBacklogModel) {
 		_sprintBacklogModel = sprintBacklogModel;
 	}
 	
@@ -59,8 +61,7 @@ public class ProductBacklogModel
 	 * @param adjustment_factor ratio of extra hours for item
 	 * @param adjusted_estimate max hours spent on item
 	 */
-	public void add(int sprintId, String description, int priority, BigDecimal initial_estimate, BigDecimal adjustment_factor)
-	{
+	public void add(int sprintId, String description, int priority, BigDecimal initial_estimate, BigDecimal adjustment_factor) {
 		int projectId = _projectModel.getCurrentProjectId();
 		_productbacklogModelCommon.add(projectId, sprintId, description, priority, initial_estimate, adjustment_factor);
 		_productbacklogTableModel.refresh();
@@ -77,13 +78,21 @@ public class ProductBacklogModel
 	 * 
 	 * @return product backlog table model
 	 */
-	public ProductBacklogTableModel getProductBacklogTableModel()
-	{
+	public ProductBacklogTableModel getProductBacklogTableModel() {
 		return _productbacklogTableModel;
 	}
 
-	public ProjectSprintPBIComboBoxModel getProjectSprintPBIComboBoxModel()
-	{
+	/**
+	 * Fetch all pbi's on current project
+	 * @return model
+	 */
+	public ProjectPBIComboBoxModel getProjectPBIComboBoxModel() {
+		int project = _projectModel.getCurrentProjectId();
+		_projectPBIComboBoxModel.setProject(project);
+		return _projectPBIComboBoxModel;
+	}
+	
+	public ProjectSprintPBIComboBoxModel getProjectSprintPBIComboBoxModel() {
 		_projectSprintPBIComboBoxModel.setProject(_projectModel.getCurrentProjectId());
 		_projectSprintPBIComboBoxModel.setSprint(_sprintBacklogModel.getCurrentSprint());
 		return _projectSprintPBIComboBoxModel; 
@@ -94,8 +103,7 @@ public class ProductBacklogModel
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addProductBacklogListener(ProductBacklogListener listener)
-	{
+	public void addProductBacklogListener(ProductBacklogListener listener) {
 		_operation.addListener(listener);
 	}
 	
@@ -103,8 +111,7 @@ public class ProductBacklogModel
 	 * Remove product backlog data change listener
 	 * @param listener listener to remove
 	 */
-	public void removeProductBacklogListner(ProductBacklogListener listener)
-	{
+	public void removeProductBacklogListner(ProductBacklogListener listener) {
 		_operation.removeListener(listener);
 	}
 	
@@ -186,31 +193,28 @@ public class ProductBacklogModel
 		_productbacklogModelCommon.setPBIAdjEstimate(pbiid, newAdjestimate);
 	}
 	
-	public Integer getSprint(int productId)
-	{
+	public Integer getSprint(int productId) {
 		return _productbacklogModelCommon.getSprint(productId, _projectModel.getCurrentProjectId());
 	}
 	
-	public String getDescription(int productId)	
-	{
+	public String getDescription(int productId)	 {
 		return _productbacklogModelCommon.getDescription(productId, _projectModel.getCurrentProjectId());
 	}
 	
-	public BigDecimal getInitialEstimate(int productId)
-	{
+	public BigDecimal getInitialEstimate(int productId) {
 		return _productbacklogModelCommon.getInitialEstimate(productId, _projectModel.getCurrentProjectId());
 	}
 	
-	public BigDecimal getAdjustmentFactor(int productId)
-	{
+	public BigDecimal getAdjustmentFactor(int productId) {
 		return _productbacklogModelCommon.getAdjustmentFactor(productId, _projectModel.getCurrentProjectId());
 	}
 	
-	public int getPriority(int productId)
-	{
+	public int getPriority(int productId) {
 		return _productbacklogModelCommon.getPriority(productId, _projectModel.getCurrentProjectId());
 	}
 
+	/// all pbi's on given project
+	private ProjectPBIComboBoxModel _projectPBIComboBoxModel;
 	/// PBI combo box model
 	private PBIComboBoxModel _productbacklogComboBoxModel;
 	/// common developer related functionality
