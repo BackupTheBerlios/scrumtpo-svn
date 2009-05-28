@@ -613,7 +613,7 @@ public class MetricModelCommon {
         " WHERE " +
         DBSchemaModel.MeasureId + "=" + measureId + " AND " +
         DBSchemaModel.PBIId + "=" + pBIId + " AND " +
-        DBSchemaModel.PBIMeasurementResultDate + "=" + datum
+        DBSchemaModel.PBIMeasurementResultDate + "='" + datum + "'"
         );
         return q.getResult();
 	}
@@ -999,6 +999,50 @@ public class MetricModelCommon {
 		} else {
 			_operation.operationSucceeded(DataOperation.Select, MetricOperation.TaskMeasure, 
 					"");
+			return ret;
+		}
+	}
+	
+	/**
+	 * Fetch release metric information
+	 * @param releaseId release id
+	 * @return table rows
+	 */
+	public Vector<ObjectRow> fetchReleaseMetric(int releaseId, int metricId) {
+		Vector<ObjectRow> ret = 
+			fetchAnyMetricData(releaseId, metricId,
+				DBSchemaModel.ReleaseMeasurementResultTable, 
+				DBSchemaModel.ReleaseMeasurementReleaseId, 
+				DBSchemaModel.ReleaseMeasurementResultDate, 
+				DBSchemaModel.ReleaseMeasurementResultResult);
+		if (ret == null) {
+			_operation.operationFailed(DataOperation.Select, MetricOperation.ReleaseMeasure, 
+				i18n.tr("Could not retrieve task measures."));
+			return new Vector<ObjectRow>();
+		} else {
+			_operation.operationSucceeded(DataOperation.Select, MetricOperation.ReleaseMeasure, "");
+			return ret;
+		}
+	}
+	
+	/**
+	 * Fetch release metric information
+	 * @param releaseId release id
+	 * @return table rows
+	 */
+	public Vector<ObjectRow> fetchPBIMetric(int releaseId, int metricId) {
+		Vector<ObjectRow> ret = 
+			fetchAnyMetricData(releaseId, metricId,
+				DBSchemaModel.PBIMeasurementResultTable, 
+				DBSchemaModel.PBIMeasurementPBIId, 
+				DBSchemaModel.PBIMeasurementResultDate, 
+				DBSchemaModel.PBIMeasurementResultResult);
+		if (ret == null) {
+			_operation.operationFailed(DataOperation.Select, MetricOperation.PBIMeasure, 
+				i18n.tr("Could not retrieve pbi measures."));
+			return new Vector<ObjectRow>();
+		} else {
+			_operation.operationSucceeded(DataOperation.Select, MetricOperation.PBIMeasure, "");
 			return ret;
 		}
 	}
