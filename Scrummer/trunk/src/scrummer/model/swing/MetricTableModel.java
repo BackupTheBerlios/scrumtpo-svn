@@ -28,13 +28,11 @@ public class MetricTableModel extends DefaultTableModel {
 		/// task related metrics
 		Task,
 		/// sprint related metrics
-		Sprint
-		/*,
+		Sprint,
 		/// pbi related metrics
 		PBI,
 		/// release related metrics
 		Release
-		*/
 	}
 	
 	public MetricTableModel(MetricModelCommon metricModelCommon) {
@@ -61,7 +59,6 @@ public class MetricTableModel extends DefaultTableModel {
 	 * @return id in database
 	 */
 	public int getId(int row) {
-		System.out.println(_rows.get(row).get(0).toString());
 		String s = _rows.get(row).get(0).toString();
 		if (s.trim().length() == 0) { s = "0"; }
 		return Integer.parseInt(s.trim());
@@ -102,6 +99,12 @@ public class MetricTableModel extends DefaultTableModel {
 				break;
 			case Task:
 				_rows = _metricModelCommon.fetchTaskMetric(_objectId, _metricId);
+				break;
+			case PBI:
+				_rows = _metricModelCommon.fetchPBIMetric(_objectId, _metricId);
+				break;
+			case Release:
+				_rows = _metricModelCommon.fetchReleaseMetric(_objectId, _metricId);
 				break;
 			}
 	        _rowCount = _rows.size();
