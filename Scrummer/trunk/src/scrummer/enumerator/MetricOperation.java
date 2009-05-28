@@ -21,5 +21,7 @@ public enum MetricOperation {
 	/// spi was calculated
 	SPICalculated,
 	/// cpi was calculated
-	CPICalculated
+	CPICalculated,
+	/// Graph related operation
+	Graph
 }
