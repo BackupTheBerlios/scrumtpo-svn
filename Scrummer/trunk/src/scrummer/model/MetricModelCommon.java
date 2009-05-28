@@ -1177,6 +1177,41 @@ public class MetricModelCommon {
 	}
 	
 	/**
+	 * Calculate spent work for all tasks on given date and sprint
+	 * 
+	 * @param sprintId project
+	 * @param date on which day to calculate
+	 * @return calculate remaining work in hours
+	 */
+	public BigDecimal calculateAllTaskSpentWork(int sprintId, java.sql.Date date) {
+		ResultQuery<BigDecimal> q = new ResultQuery<BigDecimal>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				result.beforeFirst();
+				while (result.next()) {
+					BigDecimal res = result.getBigDecimal(1);
+					if (res == null) {
+						setResult(BigDecimal.ZERO);
+					} else {
+						setResult(res);
+					}
+				}
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(BigDecimal.ZERO);
+				ex.printStackTrace();
+			}
+		};
+		String query = "SELECT SUM(" + DBSchemaModel.SprintPBIHourseSpent + ") as Hours_spent_sum FROM " +
+		DBSchemaModel.SprintPBITable + " NATURAL JOIN " + DBSchemaModel.SprintTable + " WHERE " +
+		DBSchemaModel.SprintId + "=" + sprintId + " AND " +
+		DBSchemaModel.SprintPBIMeasureDay + "='" + date + "'"; 		
+		q.queryResult(query);
+		return q.getResult();
+	}
+	
+	/**
 	 * Calculate work effectiveness indicator
 	 * @param projectId project id
 	 * @param d1 starting date
@@ -1185,15 +1220,20 @@ public class MetricModelCommon {
 	 */
 	public BigDecimal calculateWorkEffectiveness(int projectId, java.sql.Date d1, java.sql.Date d2) {
 		BigDecimal allTaskSpent = calculateAllTaskSpentWork(projectId, d1, d2); 
-		BigDecimal bd = BigDecimal.ZERO;
-		if (allTaskSpent != BigDecimal.ZERO) {
-			BigDecimal d1Remaining = calculateAllTaskRemainingWork(projectId, d1);
-			BigDecimal d2Remaining = calculateAllTaskRemainingWork(projectId, d2);
-			bd = d1Remaining.subtract(d2Remaining).divide(allTaskSpent, 3, RoundingMode.UP);
+		BigDecimal bd = BigDecimal.ZERO;		
+		try {
+			if (allTaskSpent.compareTo(BigDecimal.ZERO) == 0) {
+				System.out.println(allTaskSpent);
+				BigDecimal d1Remaining = calculateAllTaskRemainingWork(projectId, d1);
+				BigDecimal d2Remaining = calculateAllTaskRemainingWork(projectId, d2);
+				bd = d1Remaining.subtract(d2Remaining).divide(allTaskSpent, 3, RoundingMode.UP);
+			}
+			_operation.operationSucceeded(
+			     DataOperation.Custom, 
+			     MetricOperation.WorkEffectivenessCalculated, bd.toEngineeringString());
+		} catch (ArithmeticException ex) {
+			bd = BigDecimal.ZERO;
 		}
-		_operation.operationSucceeded(
-		     DataOperation.Custom, 
-		     MetricOperation.WorkEffectivenessCalculated, bd.toEngineeringString());
 		return bd;
 	}
 	
@@ -1405,6 +1445,78 @@ public class MetricModelCommon {
 		q.queryResult(query);
 		return q.getResult();
 	}	
+	
+	/**
+	 * Count all tasks that were completed in given sprint(excluding split/divided)
+	 * @param sprintId sprint
+	 * @param startDate start of sprint
+	 * @param endDate end of sprint 
+	 * @return number of tasks completed
+	 */
+	public int countTasksCompleted(int sprintId, java.sql.Date startDate, java.sql.Date endDate) {
+		ResultQuery<Integer> q = new ResultQuery<Integer>(_connectionModel) {	
+		@Override
+		public void processResult(ResultSet result) throws SQLException {
+			setResult(0);
+			result.beforeFirst();
+			while (result.next()) {
+				setResult(result.getInt(1));
+			}
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(0);
+			ex.printStackTrace();
+		}
+		};
+		String query = "SELECT COUNT(" + DBSchemaModel.TaskId + ") FROM " + DBSchemaModel.TaskTable +
+		" NATURAL JOIN " + DBSchemaModel.TaskStatusTable +
+		" NATURAL JOIN " + DBSchemaModel.SprintPBITable + 
+		" WHERE " + 
+		DBSchemaModel.SprintId + "=" + sprintId + " AND " +
+		DBSchemaModel.TaskStatusDesc + "='completed'" + " AND " +
+		DBSchemaModel.TaskStatusDesc + "!='split/divided'" + " AND " +
+		DBSchemaModel.TaskDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'" + 
+		" GROUP BY " + DBSchemaModel.TaskId; 		
+		q.queryResult(query);		
+		
+		return q.getResult();		
+	}
+	
+	/**
+	 * Count all existing tasks in sprint (excludes split/divided tasks)
+	 * @param sprintId sprint sprint
+	 * @param startDate start of sprint
+	 * @param endDate end of sprint
+	 * @return task count
+	 */
+	public int countTasks(int sprintId, java.sql.Date startDate, java.sql.Date endDate) {
+		ResultQuery<Integer> q = new ResultQuery<Integer>(_connectionModel) {	
+		@Override
+		public void processResult(ResultSet result) throws SQLException {
+			setResult(0);
+			result.beforeFirst();
+			while (result.next()) {
+				setResult(result.getInt(1));
+			}
+		}
+		@Override
+		public void handleException(SQLException ex) {
+			setResult(0);
+			ex.printStackTrace();
+		}
+		};
+		String query = "SELECT COUNT(" + DBSchemaModel.TaskId + ") FROM " + DBSchemaModel.TaskTable +
+		" NATURAL JOIN " + DBSchemaModel.TaskStatusTable +
+		" NATURAL JOIN " + DBSchemaModel.SprintPBITable + 
+		" WHERE " + 
+		DBSchemaModel.SprintId + "=" + sprintId + " AND " +
+		DBSchemaModel.TaskStatusDesc + "!='split/divided'" + " AND " +
+		DBSchemaModel.TaskDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'" +  
+		" GROUP BY " + DBSchemaModel.TaskId; 		
+		q.queryResult(query);				
+		return q.getResult();		
+	}
 	
 	/// connection model
 	private ConnectionModel _connectionModel;

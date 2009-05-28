@@ -523,6 +523,9 @@ public class MetricModel {
 		
 	/**
 	 * Calculate earned values for every day in given sprint
+	 * 
+	 * Earned values calculated for given day are calculated from start of sprint up to that day.
+	 * 
 	 * @param sprintId sprint id
 	 */
 	public void calculateMonthlyEarnedValue(int sprintId) {
@@ -537,12 +540,129 @@ public class MetricModel {
 		while (gc.getTime().before(sprintEnd)) {
 			
 			java.util.Date time = gc.getTime();
-			System.out.println(time.toString());
 			BigDecimal dec = calculateEarnedValue(sprintId, sprintStart, time);
 			data.add(time, dec);			
 			gc.add(GregorianCalendar.DATE, 1);
 		}
 		_metricDataSet.setData(MetricEnum.EarnedValue.toString(), data);
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+	
+	/**
+	 * Calculate work effectiveness for each day in sprint
+	 * 
+	 * From start of sprint to every day in sprint.
+	 * 
+	 * @param sprintId sprint id
+	 */
+	public void calculateMonthlyWorkEffectiveness(int sprintId) {
+		java.util.Date sprintStart = _sprintBacklogModel.getBeginDate(sprintId);
+		java.util.Date sprintEnd = _sprintBacklogModel.getEndDate(sprintId);
+		
+		MetricDataSet.IntervalData data = new MetricDataSet.IntervalData(sprintStart, sprintEnd);
+		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(sprintStart);
+		// for each day in sprint calculate earned value from this day to tomorrow
+		while (gc.getTime().before(sprintEnd)) {
+			java.util.Date time = gc.getTime();
+			BigDecimal dec = calculateWorkEffectiveness(sprintStart, time);
+			data.add(time, dec);			
+			gc.add(GregorianCalendar.DATE, 1);
+		}
+		_metricDataSet.setData(MetricEnum.WorkEffectiveness.toString(), data);
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+
+	/**
+	 * Calculate schedule performance index for each day in sprint
+	 * 
+	 * It is calculate at each day in sprint.
+	 * 
+	 * @param sprintId sprint id
+	 */
+	public void calculateMonthlySPI(int sprintId) {
+		java.util.Date sprintStart = _sprintBacklogModel.getBeginDate(sprintId);
+		java.util.Date sprintEnd = _sprintBacklogModel.getEndDate(sprintId);
+		
+		MetricDataSet.IntervalData data = new MetricDataSet.IntervalData(sprintStart, sprintEnd);
+		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(sprintStart);
+		// for each day in sprint calculate earned value from this day to tomorrow
+		while (gc.getTime().before(sprintEnd)) {
+			java.util.Date time = gc.getTime();
+			BigDecimal dec = calculateSchedulePerformanceIndex(sprintId, sprintStart, time);
+			data.add(time, dec);			
+			gc.add(GregorianCalendar.DATE, 1);
+		}
+		_metricDataSet.setData(MetricEnum.SPI.toString(), data);
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+	
+	/**
+	 * Calculate task completeness index for given sprint
+	 * @param sprintId sprint
+	 */
+	public void calculateTaskCompleteness(int sprintId) {
+		java.util.Date sprintStart = _sprintBacklogModel.getBeginDate(sprintId);
+		java.util.Date sprintEnd = _sprintBacklogModel.getEndDate(sprintId);
+		
+		MetricDataSet.IntervalData data = new MetricDataSet.IntervalData(sprintStart, sprintEnd);
+		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(sprintStart);
+		// for each day in sprint calculate earned value from this day to tomorrow
+		while (gc.getTime().before(sprintEnd)) {
+			java.util.Date time = gc.getTime();
+			BigDecimal top = 
+				new BigDecimal(
+					_metricModelCommon.countTasks(
+						sprintId,
+						new Date(sprintStart.getTime()), 
+						new Date(sprintEnd.getTime())));
+			BigDecimal bottom =
+				new BigDecimal(
+						_metricModelCommon.countTasksCompleted(
+							sprintId,
+							new Date(sprintStart.getTime()), 
+							new Date(sprintEnd.getTime())));
+			
+			BigDecimal res = BigDecimal.ZERO;
+			try {
+				res = top.divide(bottom, 3, BigDecimal.ROUND_HALF_EVEN);
+			} catch (ArithmeticException ex) {}
+			
+			// 	calculateSchedulePerformanceIndex(sprintId, sprintStart, time);
+			data.add(time, res);			
+			gc.add(GregorianCalendar.DATE, 1);
+		}
+		_metricDataSet.setData(MetricEnum.TaskCompleteness.toString(), data);
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+	
+	/**
+	 * Calculate spent work for every task on given sprint
+	 * @param sprintId sprint
+	 */
+	public void calculateSprintWorkSpent(int sprintId) {
+		java.util.Date sprintStart = _sprintBacklogModel.getBeginDate(sprintId);
+		java.util.Date sprintEnd = _sprintBacklogModel.getEndDate(sprintId);
+		
+		MetricDataSet.IntervalData data = new MetricDataSet.IntervalData(sprintStart, sprintEnd);
+		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(sprintStart);
+		// for each day in sprint calculate earned value from this day to tomorrow
+		while (gc.getTime().before(sprintEnd)) {
+			java.util.Date time = gc.getTime();
+			BigDecimal res = _metricModelCommon.calculateAllTaskSpentWork(sprintId, new Date(time.getTime()));
+			// 	calculateSchedulePerformanceIndex(sprintId, sprintStart, time);
+			data.add(time, res);			
+			gc.add(GregorianCalendar.DATE, 1);
+		}
+		_metricDataSet.setData(MetricEnum.SprintBurndown.toString(), data);
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
 	/// project model
