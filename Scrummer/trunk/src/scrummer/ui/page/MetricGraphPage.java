@@ -31,6 +31,11 @@ import scrummer.model.graph.MetricDataSet;
 import scrummer.ui.FormBuilder;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
+import scrummer.ui.dialog.measure.GraphEarnedValueDialog;
+import scrummer.ui.dialog.measure.GraphPBICompleteDialog;
+import scrummer.ui.dialog.measure.GraphSPIDialog;
+import scrummer.ui.dialog.measure.GraphSpentWorkDialog;
+import scrummer.ui.dialog.measure.GraphTaskCompleteDialog;
 import scrummer.ui.dialog.measure.GraphWorkEffectivenessDialog;
 import scrummer.uicomponents.StandardButton;
 import scrummer.uicomponents.StandardComboBox;
@@ -129,12 +134,37 @@ public class MetricGraphPage
 				dialog.setVisible(true);
 				break;
 			}
+			case EarnedValue: {
+				GraphEarnedValueDialog dialog = new GraphEarnedValueDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				break;
+			}
+			case SPI: {
+				GraphSPIDialog dialog = new GraphSPIDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				break;
+			}
 			case CPI: break;
-			case EarnedValue: break;
-			case PBICompleteness: break;
-			case SPI: break;
-			case SprintBurndown: break;
-			case TaskCompleteness: break;
+			case SprintBurndown: {
+				GraphSpentWorkDialog dialog = new GraphSpentWorkDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				break;
+			}
+			case TaskCompleteness: {
+				GraphTaskCompleteDialog dialog = new GraphTaskCompleteDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				break;
+			}
+			case PBICompleteness: {
+				GraphPBICompleteDialog dialog = new GraphPBICompleteDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				break;
+			}
 			}
 			
 		} else if (cmd.equals("Add")) {
