@@ -1,5 +1,6 @@
 package scrummer.model.graph;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Vector;
 import org.jfree.data.xy.AbstractXYDataset;
 import scrummer.model.MetricModel;
 import scrummer.model.MetricModelCommon;
+import scrummer.model.MetricModelCommon.Measurement;
 import scrummer.model.swing.MetricTableModel;
 import scrummer.model.swing.MetricTableModel.MetricType;
 
@@ -18,7 +20,7 @@ public class MetricDataSet extends AbstractXYDataset {
 	/**
 	 * Metric data on an interval
 	 */
-	private static class IntervalData {
+	public static class IntervalData {
 		/**
 		 * Constructor
 		 * @param metricName metric name
@@ -27,27 +29,19 @@ public class MetricDataSet extends AbstractXYDataset {
 		 * @param from start of interval
 		 * @param to end of interval
 		 */
-		public IntervalData(MetricModel metricModel, String metricName, MetricTableModel.MetricType metricType, int objectId, Date from, Date to) {
-			_metricModel = metricModel;
-			_metricName = metricName;
-			_metricType = metricType;
-			_objectId = objectId;
+		public IntervalData(Date from, Date to) {			
 			_from = from;
 			_to = to;
-		}
+		}		
 		
 		/**
-		 * Refresh contained data
+		 * Add pair to data
+		 * @param d date
+		 * @param value value to add
 		 */
-		public void refresh() {
-			switch (_metricType) {
-			case Sprint:
-				_measurements = _metricModel.fetchSprintMeasures(_metricName, _objectId, _from, _to); 
-				break;
-			case Task:
-				_measurements = _metricModel.fetchTaskMeasures(_metricName, _objectId, _from, _to);
-				break;
-			}
+		public void add(Date d, BigDecimal value) {
+			Measurement m = new Measurement(d, value);
+			_measurements.add(m);
 		}
 		
 		/**
@@ -74,17 +68,9 @@ public class MetricDataSet extends AbstractXYDataset {
 			return _measurements.get(item).Measurement;
 		}
 		
-		/// metric model
-		private MetricModel _metricModel;
 		/// a vector of measurements
 		private Vector<MetricModelCommon.Measurement> _measurements = 
 			new Vector<MetricModelCommon.Measurement>(); 
-		/// which metric to query for
-		private String _metricName = "";
-		/// metric type
-		private MetricTableModel.MetricType _metricType = MetricType.Task;
-		/// object id
-		private int _objectId;
 		/// which date designates beginning of measurements data
 		private Date _from;
 		/// which data designates end of measurements data
@@ -98,17 +84,6 @@ public class MetricDataSet extends AbstractXYDataset {
 	public MetricDataSet(MetricModel metricModel) {		
 		_metricModel = metricModel;
 	}
-
-	/**
-	 * Refresh data
-	 */
-	public void refresh() {
-		Collection<IntervalData> intervals = _intervalMeasurements.values();
-		for (IntervalData i : intervals)
-			i.refresh();
-		fireDatasetChanged();
-	}
-	
 	
 	/**
 	 * Add new object measure
@@ -119,6 +94,7 @@ public class MetricDataSet extends AbstractXYDataset {
 	 * @param from date from
 	 * @param to date to
 	 */
+	/*
 	public void addObjectMeasure(String name, String metricName, MetricTableModel.MetricType metricType, int objectId, Date from, Date to) {
 		if (_intervalMeasurements.containsKey(name)) {
 			throw new scrummer.exception.ValueInvalid(name, "Measure already exists.");
@@ -126,6 +102,7 @@ public class MetricDataSet extends AbstractXYDataset {
 		_intervalMeasurements.put(name, new IntervalData(_metricModel, metricName, metricType, objectId, from, to));		
 		refresh();
 	}
+	*/
 	
 	/**
 	 * Set object measure
@@ -137,19 +114,23 @@ public class MetricDataSet extends AbstractXYDataset {
 	 * @param from date from
 	 * @param to date to
 	 */
+	/*
 	public void setObjectMeasure(String name, String metricName, MetricTableModel.MetricType metricType, int objectId, Date from, Date to) {
 		_intervalMeasurements.put(name, new IntervalData(_metricModel, metricName, metricType, objectId, from, to));		
 		refresh();
 	}
+	*/
 	
 	/**
 	 * Remove measure set with specified name
 	 * @param name measure name
 	 */
+	/*
 	public void removeObjectMeasure(String name) {
 		_intervalMeasurements.remove(name);
 		refresh();
 	}	
+	*/
 	
 	@Override
 	public int getSeriesCount() {
@@ -171,9 +152,7 @@ public class MetricDataSet extends AbstractXYDataset {
 	}
 
 	@Override
-	public Number getX(int series, int item) {
-		System.out.println(series + "; " + item);
-		
+	public Number getX(int series, int item) {		
 		String key = getKey(series);
 		return _intervalMeasurements.get(key).getX(item);
 	}
@@ -192,6 +171,26 @@ public class MetricDataSet extends AbstractXYDataset {
 		return _intervalMeasurements.keySet().toArray()[index].toString();
 	}
 	
+	/**
+	 * Set data to display on graph
+	 * @param metric metric name
+	 * @param data data to display
+	 */
+	public void setData(String metric, IntervalData data) {				
+		_intervalMeasurements.clear();
+		_intervalMeasurements.put(metric, data);
+		fireDatasetChanged();
+	}
+	
+	public Date getStartDate() {
+		return _intervalMeasurements.get(_currentMetric)._from;
+	}
+	
+	public Date getEndDate() {
+		return _intervalMeasurements.get(_currentMetric)._to;
+	}
+	
+	private String _currentMetric;
 	/// interval measurements
 	private HashMap<String, IntervalData> _intervalMeasurements = new HashMap<String, IntervalData>();
 	/// metric model
