@@ -248,18 +248,14 @@ public class ProductBacklogModelCommon {
 	 * 
 	 * @return identified PBIs
 	 */
-	public Vector<IdValue> fetchPBIsNames() 
-	{
-		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
-		{
+	public Vector<IdValue> fetchPBIsNames() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {
 			@Override
-			public void processResult(ResultSet result) 
-			{
+			public void processResult(ResultSet result) {
 				Vector<IdValue> res = new Vector<IdValue>();
 				try {
 					result.beforeFirst();
-					while (result.next())
-					{
+					while (result.next()) {
 						res.add(new IdValue(result.getInt(1), result.getString(2)));
 					}
 					setResult(res);
@@ -268,8 +264,8 @@ public class ProductBacklogModelCommon {
 				}
 			}
 			@Override
-			public void handleException(SQLException ex) 
-			{
+			public void handleException(SQLException ex) {
+				setResult(new Vector<IdValue>());
 				ex.printStackTrace();
 			}
 		};
@@ -277,14 +273,30 @@ public class ProductBacklogModelCommon {
 			"SELECT " + DBSchemaModel.PBIId + ", " +
 			DBSchemaModel.PBIDesc +
 			" FROM "   + DBSchemaModel.PBITable);
-		if (q.getResult() == null)
-		{
-			return new Vector<IdValue>();
-		}
-		else
-		{
-			return q.getResult();
-		}
+		return  q.getResult();
+	}
+	
+	/**
+	 * Fetch all pbi's on given project
+	 */
+	public Vector<IdValue> fetchPBIProjectNames(int project) {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {			
+			@Override
+			public void processResult(ResultSet result) {
+				setResult(IdValue.fetchValues(result));				
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(new Vector<IdValue>());
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.PBIId + ", " +
+			DBSchemaModel.PBIDesc +
+			" FROM "   + DBSchemaModel.PBITable + 
+			" WHERE " + DBSchemaModel.PBIProject + "=" + project);
+		return  q.getResult();
 	}
 	
 	/**
