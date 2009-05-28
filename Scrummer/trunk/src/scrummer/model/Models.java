@@ -27,9 +27,9 @@ public class Models {
 		createResourceModel();
 		createDeveloperModel();
 		createProductBacklogModel();
-		createMetricModel();
 		
 		createSprintBacklogModel();
+		createMetricModel();
 		createImpedimentModel();
 		
 		_sprintbacklogModel.setImpedimentTableModel(_impedimentModel.getImpedimentTableModel());
