@@ -45,6 +45,8 @@ public class MetricPageToolbar
 		
 		_metricSelectionInput.addItem("Task");
 		_metricSelectionInput.addItem("Sprint");
+		_metricSelectionInput.addItem("PBI");
+		_metricSelectionInput.addItem("Release");
 		
 		_metricSelectionInput.setEnabled(true);
 		
