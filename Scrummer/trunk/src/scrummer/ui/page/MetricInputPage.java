@@ -16,7 +16,9 @@ import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.model.MetricModel;
 import scrummer.model.Models;
+import scrummer.model.ProductBacklogModel;
 import scrummer.model.swing.MetricTableModel;
+import scrummer.model.swing.ProjectPBIComboBoxModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.MainFrame;
@@ -43,6 +45,9 @@ public class MetricInputPage
 		_metricTableModel = _metricModel.getMetricTableModel();
 		_taskComboBoxModel = m.getTaskModel().getTaskComboBoxModel();
 		_sprintProjectComboBoxModel = m.getSprintBacklogModel().getSprintProjectComboBoxModel();
+		
+		ProductBacklogModel pm = m.getProductBacklogModel();
+		_pbiComboBoxModel = pm.getProjectPBIComboBoxModel();
 		
 		Box box = new Box(BoxLayout.Y_AXIS);
 		int k = 1;
@@ -103,16 +108,21 @@ public class MetricInputPage
 			}
 		} else if (cmd.equals("Remove")) {
 			int selected = _metricTable.getSelectedRow(); 
-			if (selected != -1) {
+			if (selected != -1) {				
 				int id = _metricTableModel.getId(selected);
+				Date d = _metricTableModel.getDate(selected); 
 				switch (_toolbar.getSelectedMetricType()) {
 				case Sprint:
-					_metricModel.removeSprintMeasurement(_toolbar.getMetricId(), id,  
-						_metricTableModel.getDate(selected));
+					_metricModel.removeSprintMeasurement(_toolbar.getMetricId(), id, d);
 					break;
-				case Task: 					
-					_metricModel.removeTaskMeasurement(_toolbar.getMetricId(), id, 
-						_metricTableModel.getDate(selected));
+				case Task:
+					_metricModel.removeTaskMeasurement(_toolbar.getMetricId(), id, d);
+					break;
+				case PBI:
+					_metricModel.removePBIMeasurement(_toolbar.getMetricId(), id, d);					
+					break;
+				case Release:
+					_metricModel.removeReleaseMeasurement(_toolbar.getMetricId(), id, d);
 					break;
 				}
 			}			
@@ -130,6 +140,12 @@ public class MetricInputPage
 			break;
 		case Task:
 			toolbar.updateObjectBox(_taskComboBoxModel);
+			break;
+		case PBI:
+			toolbar.updateObjectBox(_pbiComboBoxModel);
+			break;
+		case Release:
+			System.out.println("TODO");
 			break;
 		}	
 	}
@@ -158,7 +174,9 @@ public class MetricInputPage
 	private SprintProjectComboBoxModel _sprintProjectComboBoxModel;
 	/// all tasks
 	// private ProjectTaskComboBoxModel ZA narest: vse naloge na projektu
-	private TaskComboBoxModel _taskComboBoxModel;	
+	private TaskComboBoxModel _taskComboBoxModel;
+	/// all pbi's on current project
+	private ProjectPBIComboBoxModel _pbiComboBoxModel;
 	/// metric model
 	private MetricModel _metricModel;
 	/// metric table model
