@@ -12,22 +12,19 @@ public class PBIComboBoxModel extends IdValueComboBoxModel
 	 * Constructor
 	 * @param impedimentModelCommon common impediment operations
 	 */
-	public PBIComboBoxModel(ProductBacklogModelCommon productbacklogModelCommon)
-	{
+	public PBIComboBoxModel(ProductBacklogModelCommon productbacklogModelCommon) {
 		_productbacklogModelCommon = productbacklogModelCommon;
 	}
 	
 	/**
 	 * Refresh data from database
 	 */
-	public void refresh()
-	{
+	public void refresh() {
 		refreshPBIs();
 		fireContentsChanged(this, 0, getSize());
 	}
 	
-	private void refreshPBIs()
-	{
+	private void refreshPBIs() {
 		setValues(_productbacklogModelCommon.fetchPBIsNames());		
 	}
 
