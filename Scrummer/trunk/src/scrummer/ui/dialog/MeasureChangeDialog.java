@@ -58,6 +58,12 @@ public class MeasureChangeDialog extends MeasureDialog {
 			case Task:	
 				_metricModel.updateTaskMeasurement(_measureId, _objectId, d, bd); 
 				break;
+			case PBI:
+				_metricModel.updatePBIMeasurement(_measureId, _objectId, d, bd);
+				break;
+			case Release:
+				_metricModel.updateReleaseMeasurement(_measureId, _objectId, d, bd);
+				break;
 			}
 		} else {
 			super.actionPerformed(e);
@@ -70,6 +76,7 @@ public class MeasureChangeDialog extends MeasureDialog {
 		case ReleaseMeasure:
 		case SprintMeasure:
 		case TaskMeasure:
+		case PBIMeasure:
 			if (type == DataOperation.Update) {
 				setVisible(false);
 			}
@@ -83,6 +90,7 @@ public class MeasureChangeDialog extends MeasureDialog {
 		case ReleaseMeasure:
 		case SprintMeasure:
 		case TaskMeasure:
+		case PBIMeasure:
 			if (type == DataOperation.Update) {
 				Util.showError(this, 
 					i18n.tr("Error while updating new measure: ") + message, i18n.tr("Error"));

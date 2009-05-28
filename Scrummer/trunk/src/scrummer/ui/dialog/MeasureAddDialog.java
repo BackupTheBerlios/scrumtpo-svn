@@ -41,6 +41,12 @@ public class MeasureAddDialog
 		case Task:
 			setTitle(i18n.tr("Add Task Measurement"));
 			break;
+		case PBI:
+		 	setTitle(i18n.tr("Add PBI Measurement"));		
+			break;
+		case Release:
+			setTitle(i18n.tr("Add Release Measurement"));
+			break;
 		}
 		
 		_dateInput.setText(Util.today());
@@ -62,6 +68,8 @@ public class MeasureAddDialog
 			switch (_metricType) {
 			case Sprint: _metricModel.addSprintMeasurement(_metricId, _objectId, d, num); break;
 			case Task: _metricModel.addTaskMeasurement(_metricId, _objectId, d, num); break;
+			case PBI: _metricModel.addPBIMeasurement(_metricId, _objectId, d, num); break;
+			case Release: _metricModel.addReleaseMeasurement(_metricId, _objectId, d, num); break;
 			}
 			
 		} else if (cmd.equals("Calculate")) {
@@ -81,10 +89,12 @@ public class MeasureAddDialog
 		else if ((type == DataOperation.Insert) && 
 				 ((identifier == MetricOperation.ReleaseMeasure) ||
 				  (identifier == MetricOperation.SprintMeasure) ||
-				  (identifier == MetricOperation.TaskMeasure))) {
+				  (identifier == MetricOperation.TaskMeasure) ||
+				  (identifier == MetricOperation.PBIMeasure))) {
 			setVisible(false);
 		}
 	}
+	
 	
 	@Override
 	public void operationFailed(DataOperation type, MetricOperation identifier, String message) {		
@@ -97,7 +107,8 @@ public class MeasureAddDialog
 		else if ((type == DataOperation.Insert) && 
 				 ((identifier == MetricOperation.ReleaseMeasure) ||
 				  (identifier == MetricOperation.SprintMeasure) ||
-				  (identifier == MetricOperation.TaskMeasure))) {
+				  (identifier == MetricOperation.TaskMeasure) ||
+				  (identifier == MetricOperation.PBIMeasure))) {
 			Util.showError(this, 
 				i18n.tr("Error while adding new measure: ") + message, i18n.tr("Error"));
 		}
