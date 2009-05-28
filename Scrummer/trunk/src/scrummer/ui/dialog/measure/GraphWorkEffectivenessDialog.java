@@ -25,7 +25,8 @@ public class GraphWorkEffectivenessDialog
 	public GraphWorkEffectivenessDialog(JFrame owner) {
 		super(owner);				
 		Models m = Scrummer.getModels();
-		_metricModel = m.getMetricModel();	
+		_metricModel = m.getMetricModel();
+		_metricModel.addMetricListener(this);
 		setTitle(i18n.tr("Work effectiveness"));
 	}
 	
@@ -33,7 +34,7 @@ public class GraphWorkEffectivenessDialog
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if (cmd.equals("StandardDialog.OK")) {
-			_metricModel.calculateMonthlyEarnedValue(_sprintInput.getSelectedId());
+			_metricModel.calculateMonthlyWorkEffectiveness(_sprintInput.getSelectedId());
 		} else {
 			super.actionPerformed(e);
 		}
@@ -51,11 +52,19 @@ public class GraphWorkEffectivenessDialog
 		if ((type == DataOperation.Custom) && (identifier == MetricOperation.Graph)) {
 			Util.showError(
 			this, 
-			i18n.tr("Error occurred while calculating work effectiveness."), 
+			i18n.tr("Error occurred while calculating work effectiveness: ") + message, 
 			i18n.tr("Error"));
 		}
 	}
 	
+	@Override
+	public void setVisible(boolean b) {
+		if (!b) {
+			_metricModel.removeMetricListener(this);
+		}
+		super.setVisible(b);
+	}
+
 	/// metric model
 	private MetricModel _metricModel;
 	/// translation class field
