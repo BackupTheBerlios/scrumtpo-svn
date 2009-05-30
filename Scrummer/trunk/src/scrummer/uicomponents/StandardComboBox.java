@@ -32,13 +32,10 @@ public class StandardComboBox extends JComboBox {
 	public void setModel(ComboBoxModel model) {
 		super.setModel(model);
 		
-		if (model.getSize() > 0)
-		{
+		if (model.getSize() > 0) {
 			setSelectedIndex(0);
 			setEnabled(true);
-		}		
-		else
-		{
+		} else {
 			setEnabled(false);
 		}
 	}
@@ -47,8 +44,7 @@ public class StandardComboBox extends JComboBox {
 	 * Refresh and set model
 	 * @param model model to set
 	 */
-	public void setIVModel(IdValueComboBoxModel model)
-	{
+	public void setIVModel(IdValueComboBoxModel model) {
 		_idValueModel = model;
 		model.refresh();
 		setModel(model);		
@@ -57,8 +53,7 @@ public class StandardComboBox extends JComboBox {
 	/**
 	 * @return true if an option is selected, false otherwise
 	 */
-	public boolean isSelected()
-	{
+	public boolean isSelected() {
 		return (getSelectedIndex() != -1);
 	}
 	
@@ -66,20 +61,15 @@ public class StandardComboBox extends JComboBox {
 	 * @return selection id from custom set model
 	 * @note you must call setIVModel for this to work
 	 */
-	public int getSelectedId()
-	{
-		if (_idValueModel == null)
-		{
+	public int getSelectedId() {
+		if (_idValueModel == null) {
 			throw new NullField("Could not get selection id because IdValue model was not set. " +
 					"Call setIVModel before this function.");
 		}
 		int selectedIndex = getSelectedIndex();
-		if (selectedIndex == -1)
-		{
+		if (selectedIndex == -1) {
 			return -1;
-		}
-		else
-		{
+		} else {
 			return _idValueModel.getId(selectedIndex);
 		}
 	}
@@ -88,10 +78,8 @@ public class StandardComboBox extends JComboBox {
 	 * Select entry with given id
 	 * @param id id
 	 */
-	public void selectId(int id)
-	{
-		if (_idValueModel == null)
-		{
+	public void selectId(int id) {
+		if (_idValueModel == null) {
 			throw new NullField("Could not get selection id because IdValue model was not set. " +
 					"Call setIVModel before this function.");
 		}
