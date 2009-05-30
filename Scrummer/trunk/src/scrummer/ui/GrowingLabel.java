@@ -3,14 +3,19 @@ package scrummer.ui;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
 import java.awt.image.ImageObserver;
+import java.awt.image.Kernel;
 import java.text.AttributedString;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -25,8 +30,7 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	/**
 	 * Kaj se dogaja z robom
 	 */
-	enum BorderState
-	{
+	enum BorderState {
 		// ne dogaja se nič
 		STANDSTILL,
 		// rob pada(numerično)
@@ -40,9 +44,24 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	 * 
 	 * @param image image to display
 	 */
-	public GrowingLabel(Image image) {
+	public GrowingLabel(BufferedImage image) {
 		super();
 		_image = image;
+		
+		float d = 1.0f / 273.0f;
+		_kernel = new float [] 
+ 		{ 1, 4, 7, 4, 1,
+ 		  4, 16, 26, 16, 4,
+ 		  7, 26, 41, 26, 7,
+ 		  4, 16, 26, 16, 4,
+ 		  1, 4, 7, 4, 1
+ 		};
+		for (int i = 0; i < _kernel.length; i++) {
+			_kernel[i] *= d;
+		}
+ 		Kernel k = new Kernel(5, 5, _kernel);
+ 		ConvolveOp cop = new ConvolveOp(k);
+ 		_copy = cop.filter(_image, null);
 		
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -59,10 +78,8 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	 * Set offset from both edges of this control
 	 * @param value value to set
 	 */
-	public void setPictureSideOffset(int value)
-	{
-		if (value < 0)
-		{
+	public void setPictureSideOffset(int value) {
+		if (value < 0) {
 			throw new ValueInvalid(Integer.toString(value), "Cannot have negative offset.");
 		}
 		_picside = value;
@@ -72,10 +89,8 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	 * Set picture offset from top
 	 * @param value value to set
 	 */
-	public void setPictureTopOffset(int value)
-	{
-		if (value < 0)
-		{
+	public void setPictureTopOffset(int value) {
+		if (value < 0) {
 			throw new ValueInvalid(Integer.toString(value), "Cannot have negative offset.");
 		}
 		_picup = value;
@@ -85,10 +100,8 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	 * Set bottom text offset
 	 * @param value value to set
 	 */
-	public void setTextBottomOffset(int value)
-	{
-		if (value < 0)
-		{
+	public void setTextBottomOffset(int value) {
+		if (value < 0) {
 			throw new ValueInvalid(Integer.toString(value), "Cannot have negative offset.");
 		}
 		_textbottom = value;
@@ -100,10 +113,8 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	 * @param current current size
 	 * @param max maximal size
 	 */
-	public void setBorderGrowth(int min, int current, int max)
-	{
-		if ((min < 0) || (current < 0) || (max < 0))
-		{
+	public void setBorderGrowth(int min, int current, int max) {
+		if ((min < 0) || (current < 0) || (max < 0)) {
 			int neg = 0;
 			if (min < 0) 
 				neg = min;
@@ -122,13 +133,19 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		
-		g.drawImage(_image, _picside + _currentBorder, _picup + _currentBorder, 
+		Graphics2D g2d = (Graphics2D)g.create();		
+		Kernel k = new Kernel(5, 5, _kernel);
+		ConvolveOp cop = new ConvolveOp(k, ConvolveOp.EDGE_NO_OP, null);
+		cop.filter(_image, _copy);		
+		g.drawImage(_copy, _picside + _currentBorder, _picup + _currentBorder, 
 				getWidth() - _picside - _currentBorder, 
 				_image.getHeight(this) - _picup - _currentBorder 
 				/* getHeight() - _picup - _currentBorder */, 
 				0, 0, _image.getWidth(this), 
 					  _image.getHeight(this), this);
+		
+		
+	//	g2d.drawI
 		
 		// for debugging
 		// g.setColor(Color.BLACK);
@@ -156,27 +173,18 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (_state == BorderState.DOWN)
-		{
-			if (_currentBorder > _minBorder)
-			{
+		if (_state == BorderState.DOWN) {
+			if (_currentBorder > _minBorder) {
 				_currentBorder -= 2;
 				this.repaint();				
-			}
-			else
-			{
+			} else {
 				_state = BorderState.STANDSTILL;
 			}
-		}
-		else if (_state == BorderState.UP)
-		{
-			if (_currentBorder < _maxBorder)
-			{
+		} else if (_state == BorderState.UP) {
+			if (_currentBorder < _maxBorder) {
 				_currentBorder += 2;
 				this.repaint();
-			}
-			else
-			{
+			} else {
 				_state = BorderState.STANDSTILL;
 			}
 		}
@@ -187,12 +195,10 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if (isEnabled())
-		{
+		if (isEnabled()) {
 			_mouseIn = true;
 			_state = BorderState.DOWN;
-			if (!_timer.isRunning())
-			{
+			if (!_timer.isRunning()) {
 				_timer.start();
 			}
 		}
@@ -200,13 +206,11 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if (isEnabled())
-		{
+		if (isEnabled()) {
 			_mouseIn = false;
 			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			_state = BorderState.UP;
-			if (!_timer.isRunning())
-			{
+			if (!_timer.isRunning()) {
 				_timer.start();
 			}
 		}
@@ -223,13 +227,11 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if (isEnabled())
-		{
+		if (isEnabled()) {
 			_mouseIn = true;
 			setCursor(new Cursor(Cursor.HAND_CURSOR));
 			_state = BorderState.DOWN;
-			if (!_timer.isRunning())
-			{
+			if (!_timer.isRunning()) {
 				_timer.start();
 			}
 		}
@@ -251,7 +253,9 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	// painting options
 	
 	/// image to paint
-	private Image _image;
+	// private Image _image, _copy;
+	private BufferedImage _image, _copy;
+	private float [] _kernel;
 	
 	/// distance from top 
 	private int _picup = 10;
