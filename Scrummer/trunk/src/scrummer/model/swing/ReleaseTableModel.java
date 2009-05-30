@@ -13,25 +13,30 @@ public class ReleaseTableModel extends DefaultTableModel {
 
 	public ReleaseTableModel(ReleaseModelCommon releaseModelCommon) {
 		_releaseModelCommon = releaseModelCommon;
+		
+		refreshColumnNames();		
+		for (int i = 0; i < 2; i++)
+			_realColumns.add("");
 	}
 	
 	/**
 	 * Refresh data
 	 */
-	public void refresh() {
-		refreshColumnNames();
+	public void refresh() {	
 		refreshTableData();
-		super.fireTableDataChanged();
+		this.fireTableDataChanged();
 	}
 	
 	private void refreshColumnNames() {
 		_columns.clear();
 		_columns.add(i18n.tr("Release"));
 		_columns.add(i18n.tr("PBI"));
+		_columnCount = _columns.size();
 	}
 	
 	public void refreshTableData() {
-		_rows = _releaseModelCommon.fetchReleaseData();		
+		_rows = _releaseModelCommon.fetchReleaseData();	
+		_rowCount = _rows.size();
 	}
 
 	@Override
@@ -63,6 +68,15 @@ public class ReleaseTableModel extends DefaultTableModel {
 	@Override
 	public String getColumnName(int column) {
 		return _columns.get(column);
+	}
+	
+	/**
+	 * Fetch release id for selected row
+	 * @param row row index
+	 * @return release id or -1 if none found
+	 */
+	public int findReleaseId(int row) {
+		return Integer.parseInt(_rows.get(row).get(0).toString());
 	}
 	
 	/// column count
