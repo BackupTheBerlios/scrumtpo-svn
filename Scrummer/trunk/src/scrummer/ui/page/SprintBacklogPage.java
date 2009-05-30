@@ -122,15 +122,12 @@ public class SprintBacklogPage
 		add(horizontalSplit);
 		setBackground(Color.WHITE);
 		
-		if (_sprintDescriptionModel.isEmpty())
-		{
+		if (_sprintDescriptionModel.isEmpty()) {
 			_taskLink.setEnabled(false);
 			_hurdleLink.setEnabled(false);
 			_metricsLink.setEnabled(false);
 			_absentLink.setEnabled(false);
-		}
-		else
-		{
+		} else {
 			sprintList.setSelectedIndex(0);
 		}
 	}
@@ -138,37 +135,28 @@ public class SprintBacklogPage
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd == "AddSprint")
-		{
+		if (cmd == "AddSprint") {
 			SprintAddDialog dialog = new SprintAddDialog(getMainFrame());
 			Util.centre(dialog);
 			dialog.setVisible(true);
-		}
-		else if (cmd == "EditSprint")
-		{
+		} else if (cmd == "EditSprint") {
 			int selected = _sprintList.getSelectedIndex();
-			if (selected != -1)				
-			{			
+			if (selected != -1)	{			
 				int sprintId = _sprintDescriptionModel.getId(selected);
 				
 				SprintChangeDialog dialog = new SprintChangeDialog(getMainFrame(), sprintId);
 				Util.centre(dialog);
 				dialog.setVisible(true);
-			}
-			else
-			{
+			} else {
 				Util.showError(
 					this, 
 					i18n.tr("Cannot display modification dialog. " +
 							"First select a sprint by clicking on it, " +
 							"then click Edit button."), i18n.tr("Error"));
 			}
-		}
-		else if (cmd == "RemoveSprint")
-		{
+		} else if (cmd == "RemoveSprint") {
 			int selected = _sprintList.getSelectedIndex();
-			if (selected != -1)
-			{
+			if (selected != -1) {
 				int sprintId = _sprintDescriptionModel.getId(selected);
 				_sprintBacklogModel.removeSprint(sprintId);
 			}
@@ -176,11 +164,9 @@ public class SprintBacklogPage
 	}
 	
 	@Override
-	public void valueChanged(ListSelectionEvent e) 
-	{
+	public void valueChanged(ListSelectionEvent e) {
 		int selection = _sprintList.getSelectedIndex();
-		if (selection != -1) 
-		{
+		if (selection != -1) {
 			_sprintBacklogModel.setCurrentSprint(_sprintDescriptionModel.getId(selection));
 		}
 	}
