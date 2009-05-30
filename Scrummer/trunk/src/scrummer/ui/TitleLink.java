@@ -2,6 +2,7 @@ package scrummer.ui;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import org.xnap.commons.i18n.I18n;
 
@@ -35,7 +36,7 @@ public class TitleLink extends GrowingLabel implements NavigationListener {
 	 * @param image image to display
 	 * @param text to 
 	 */
-	public TitleLink(Endpoint endpoint, Image image) {
+	public TitleLink(Endpoint endpoint, BufferedImage image) {
 		super(image);
 		
 		_endpoint = endpoint;
