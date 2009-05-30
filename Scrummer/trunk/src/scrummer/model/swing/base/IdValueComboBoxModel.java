@@ -34,13 +34,25 @@ public class IdValueComboBoxModel extends DefaultComboBoxModel {
 	 * @param index team index
 	 * @return team id
 	 */
-	public int getId(int index)
-	{
+	public int getId(int index) {
 		return _values.get(index).Id;
 	}
 	
-	public String getValue(int index)
-	{
+	/**
+	 * Fetch value given element id
+	 * @param id id of element
+	 * @return value or null if none found
+	 */
+	public int getId(String value) {
+		for (int i = 0; i < _values.size(); i++) {
+			if (_values.get(i).Value == value) {
+				return _values.get(i).Id;
+			}
+		}
+		return -1;
+	}
+	
+	public String getValue(int index) {
 		return _values.get(index).Value;
 	}
 	
