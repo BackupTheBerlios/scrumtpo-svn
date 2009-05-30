@@ -74,8 +74,7 @@ public class ResourceModel {
 		 * @param path file path
 		 * @return platform specific file path
 		 */
-		private static String r(String path)
-		{
+		private static String r(String path) {
 			return ("bin/" + path).replace("/", IO.separator());
 		}
 	}
@@ -85,8 +84,7 @@ public class ResourceModel {
 	 * 
 	 * @param logger logger
 	 */
-	public ResourceModel(LoggingModel logger)
-	{
+	public ResourceModel(LoggingModel logger) {
 		_logger = logger;		
 	}
 	
