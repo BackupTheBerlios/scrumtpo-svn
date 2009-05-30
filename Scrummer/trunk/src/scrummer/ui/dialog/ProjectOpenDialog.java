@@ -94,8 +94,7 @@ public class ProjectOpenDialog extends TwoButtonDialog
 		list.setModel(plistm);
 		plistm.refresh();
 		
-		if (list.isSelectionEmpty() && (_projectListModel.size() > 0))
-		{
+		if (list.isSelectionEmpty() && (_projectListModel.size() > 0)) {
 			list.setSelectedIndex(0);
 			list.invalidate();
 		}
@@ -105,25 +104,19 @@ public class ProjectOpenDialog extends TwoButtonDialog
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "StandardDialog.OK")
-		{
+		if (e.getActionCommand() == "StandardDialog.OK") {
 			int selectedIndex =_projectList.getSelectedIndex(); 
-			if (selectedIndex != -1)
-			{
+			if (selectedIndex != -1) {
 				int id = _projectListModel.getId(selectedIndex);
 				_projectModel.openProject(id);
-			}
-			else
-			{
+			} else {
 				JOptionPane.showMessageDialog(
 					this, 
 					i18n.tr("Could not open project. First select a project from project list, " +
 							"then click on Open."), 
 					i18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
 			}
-		}
-		else
-		{
+		} else {
 			super.actionPerformed(e);
 		}		
 	}
@@ -162,10 +155,8 @@ public class ProjectOpenDialog extends TwoButtonDialog
 	
 	@Override
 	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
-		if (type == DataOperation.Custom)
-		{
-			switch (identifier)
-			{
+		if (type == DataOperation.Custom) {
+			switch (identifier) {
 			case Open:
 				setVisible(false);
 				break;
@@ -175,10 +166,8 @@ public class ProjectOpenDialog extends TwoButtonDialog
 	
 	@Override
 	public void operationFailed(DataOperation type, ProjectOperation identifier, String message) {
-		if (type == DataOperation.Custom)
-		{
-			switch (identifier)
-			{
+		if (type == DataOperation.Custom) {
+			switch (identifier) {
 			case Open:
 				JOptionPane.showMessageDialog(this, 
 					i18n.tr("Could not open project"), 
@@ -190,8 +179,7 @@ public class ProjectOpenDialog extends TwoButtonDialog
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER)
-		{
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			OK.doClick();
 		}		
 	}
