@@ -17,6 +17,7 @@ import scrummer.model.swing.ReleaseTableModel;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
 import scrummer.ui.dialog.ReleaseAddDialog;
+import scrummer.ui.dialog.ReleaseEditDialog;
 import scrummer.uicomponents.AddEditRemovePanel;
 import scrummer.uicomponents.NiceTable;
 
@@ -74,7 +75,13 @@ public class ReleasePage
 			Util.centre(dialog);
 			dialog.setVisible(true);
 		} else if (cmd.equals("Edit")) {
-			
+			int selected = _releaseTable.getSelectedRow();
+			if (selected != -1) {
+				int releaseId = _releaseTableModel.findReleaseId(selected);
+				ReleaseEditDialog dialog = new ReleaseEditDialog(getMainFrame(), releaseId);
+				Util.centre(dialog);
+				dialog.setVisible(true);
+			}
 		} else if (cmd.equals("Remove")) {
 			// if item is selected
 			int selected = _releaseTable.getSelectedRow();
