@@ -2,6 +2,7 @@ package scrummer.ui;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import scrummer.Scrummer;
 import scrummer.model.Models;
@@ -18,7 +19,7 @@ public class Link extends GrowingLabel
 	 * @param link link to page
 	 * @param image image
 	 */
-	public Link(NavigationModel.Link link, Image image) {
+	public Link(NavigationModel.Link link, BufferedImage image) {
 		super(image);	
 		_link = link;
 		Models m = Scrummer.getModels();
