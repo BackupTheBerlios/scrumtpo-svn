@@ -8,13 +8,13 @@ import scrummer.listener.ImpedimentListener;
 import scrummer.listener.MetricListener;
 import scrummer.listener.ProductBacklogListener;
 import scrummer.listener.ProjectListener;
+import scrummer.listener.ReleaseListener;
 import scrummer.listener.SprintBacklogListener;
 import scrummer.listener.TaskListener;
 import scrummer.listener.TaskStatusListener;
 import scrummer.listener.TaskTypeListener;
 
 public class Operations {
-
 	/**
 	 * Project operation handles project listeners
 	 * @param <Identifier> identifier designates project specific 
@@ -165,6 +165,21 @@ public class Operations {
 		}
 		@Override
 		protected void opSuccess(MetricListener listener, DataOperation type, scrummer.enumerator.MetricOperation identifier, String message) {			
+			listener.operationSucceeded(type, identifier, message);
+		}
+	}
+	
+	/**
+	 * Metric operation handles metric related listeners
+	 * @param <Identifier> identifier designates project specific 
+	 */
+	public static class ReleaseOperation extends Operation<scrummer.enumerator.ReleaseOperation, ReleaseListener> {
+		@Override
+		protected void opFailure(ReleaseListener listener, DataOperation type, scrummer.enumerator.ReleaseOperation identifier, String message) {
+			listener.operationFailed(type, identifier, message);
+		}
+		@Override
+		protected void opSuccess(ReleaseListener listener, DataOperation type, scrummer.enumerator.ReleaseOperation identifier, String message) {			
 			listener.operationSucceeded(type, identifier, message);
 		}
 	}

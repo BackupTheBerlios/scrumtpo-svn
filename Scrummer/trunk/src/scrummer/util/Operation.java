@@ -24,8 +24,7 @@ public class Operation<Identifier, ListenerType> {
 	 * @param message operation message
 	 */
 	public void operationSucceeded(DataOperation type, Identifier identifier, String message) {
-		for (int i = 0; i < _listeners.size(); i++)
-		{
+		for (int i = 0; i < _listeners.size(); i++) {
 			ListenerType listener = _listeners.get(i);
 			opSuccess(listener, type, identifier, message);
 		}
@@ -39,8 +38,7 @@ public class Operation<Identifier, ListenerType> {
 	 * @param message failure message
 	 */
 	public void operationFailed(DataOperation type, Identifier identifier, String message) {
-		for (int i = 0; i < _listeners.size(); i++)
-		{
+		for (int i = 0; i < _listeners.size(); i++) {
 			ListenerType listener = _listeners.get(i);
 			opFailure(listener, type, identifier, message);		
 		}
@@ -69,12 +67,10 @@ public class Operation<Identifier, ListenerType> {
 	 * 
 	 * @param listener listener to add
 	 */
-	public void addListener(ListenerType listener)
-	{
+	public void addListener(ListenerType listener) {
 		try {
 			_semaphore.acquire();
-			if (!_listeners.contains(listener))
-			{
+			if (!_listeners.contains(listener)) {
 				_listeners.add(listener);
 			}
 			_semaphore.release();
@@ -88,8 +84,7 @@ public class Operation<Identifier, ListenerType> {
 	 * 
 	 * @param listener listener
 	 */
-	public void removeListener(ListenerType listener)
-	{
+	public void removeListener(ListenerType listener) {
 		_listeners.remove(listener);
 	}
 	
