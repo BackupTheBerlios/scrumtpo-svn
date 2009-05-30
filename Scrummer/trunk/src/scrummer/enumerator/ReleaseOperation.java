@@ -1,5 +1,8 @@
 package scrummer.enumerator;
 
 public enum ReleaseOperation {
-	Release
+	/// release related op
+	Release,
+	/// Release and PBI related op
+	ReleasePBI
 }
