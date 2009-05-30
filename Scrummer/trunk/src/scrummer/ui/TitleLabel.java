@@ -100,8 +100,8 @@ public class TitleLabel extends JLabel {
 
 		Color current = g.getColor();
 		
-		g.setColor(_lineColor);
-		renderLine(g, 1, 1, _lineWidth, - _falloff);
+		// g.setColor(_lineColor);
+		// renderLine(g, 1, 1, _lineWidth, - _falloff);
 		
 		g.setColor(current);
 		g.drawString(getText(), _leftTextOffset, (getHeight() / 2) + (textHeight / 2));
