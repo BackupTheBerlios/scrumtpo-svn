@@ -9,6 +9,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
+import com.nilo.plaf.nimrod.NimRODLookAndFeel;
+import com.nilo.plaf.nimrod.NimRODTheme;
+
 import scrummer.model.DBSchemaModel;
 import scrummer.model.LoggingModel;
 import scrummer.model.Models;
@@ -37,13 +40,15 @@ public class Scrummer {
         }		
                 
     	try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());			
+			UIManager.setLookAndFeel(new com.nilo.plaf.nimrod.NimRODLookAndFeel());
+			/*
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			e.printStackTrace(); */
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
