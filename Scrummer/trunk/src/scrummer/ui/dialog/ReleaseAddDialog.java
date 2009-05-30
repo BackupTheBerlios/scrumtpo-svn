@@ -5,8 +5,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
+import scrummer.enumerator.DataOperation;
+import scrummer.enumerator.ReleaseOperation;
 import scrummer.model.Models;
 import scrummer.model.ReleaseModel;
+import scrummer.ui.Util;
 import scrummer.ui.Validate;
 
 /**
@@ -25,14 +28,12 @@ public class ReleaseAddDialog
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if (cmd.equals("StandardDialog.OK")) {		
-			if (!Validate.empty(_descriptionInput, this)) { return; }
-			String name = _descriptionInput.getText();
+		if (cmd.equals("StandardDialog.OK")) {					
+			String name = Validate.empty(_descriptionInput, i18n.tr("Name cannot be empty."), this); if (name == null) return; 
 			_releaseModel.addRelease(name);
 			int id = _releaseModel.getReleaseId(name);
 			Integer [] arr = new Integer [] {};
-			_pbiIds.toArray(arr);
-			// Integer [] arr = _pbiIds.toArray;
+			arr = _pbiIds.toArray(arr);
 			if (id == -1) { return; } else {
 				// gather description and all id's
 				for (int i = 0; i < _pbiIds.size(); i++) {
@@ -41,6 +42,22 @@ public class ReleaseAddDialog
 			}
 		} else {		
 			super.actionPerformed(e);
+		}
+	}
+
+	@Override
+	public void operationFailed(DataOperation type, ReleaseOperation identifier, String message) {
+		if ((type == DataOperation.Insert) && (identifier == ReleaseOperation.Release)) {
+			Util.showError(this, 
+				i18n.tr("An error has occurred while adding a new release: ") + message, 
+				i18n.tr("Error"));
+		}
+	}
+
+	@Override
+	public void operationSucceeded(DataOperation type, ReleaseOperation identifier, String message) {
+		if ((type == DataOperation.Insert) && (identifier == ReleaseOperation.Release)) {
+			setVisible(false);
 		}
 	}
 
