@@ -8,10 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 import scrummer.Scrummer;
-import scrummer.model.DeveloperModel;
 import scrummer.model.Models;
 import scrummer.model.SprintBacklogModel;
 import scrummer.model.swing.SprintBacklogTableModel;

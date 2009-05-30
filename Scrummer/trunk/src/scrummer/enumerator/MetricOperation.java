@@ -12,6 +12,10 @@ public enum MetricOperation {
 	ReleaseMeasure,
 	/// sprint related measure dop
 	SprintMeasure,
+	/// customer poll related measure
+	CustomerPollMeasure,
+	/// developer poll related measure
+	DeveloperPollMeasure,
 	/// pbi related measure dop
 	PBIMeasure,
 	/// work effectiveness was calculated

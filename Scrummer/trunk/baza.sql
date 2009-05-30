@@ -557,6 +557,12 @@ alter table CustomerPoll_measurement_result
 		on update restrict
 		on delete restrict;
 		
+alter table CustomerPoll_measurement_result
+	add constraint FK_CUSPOLL_MEA_RELATIONS_SPRINT foreign key (Sprint_id)
+		references Sprint (Sprint_id)
+		on update restrict
+		on delete restrict;
+		
 alter table DeveloperPoll_measurement_result
 	add constraint FK_DEVPOLL_MEA_RELATIONS_MEASURE foreign key (Measure_id)
 		references Measure (Measure_id)
@@ -566,6 +572,12 @@ alter table DeveloperPoll_measurement_result
 alter table DeveloperPoll_measurement_result
 	add constraint FK_DEVPOLL_MEA_RELATIONS_EMPLOYEE foreign key (Employee_id)
 		references Employee (Employee_id)
+		on update restrict
+		on delete restrict;
+		
+alter table DeveloperPoll_measurement_result
+	add constraint FK_DEVPOLL_MEA_RELATIONS_SPRINT foreign key (Sprint_id)
+		references Sprint (Sprint_id)
 		on update restrict
 		on delete restrict;
 		

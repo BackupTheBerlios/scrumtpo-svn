@@ -12,7 +12,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -20,15 +19,12 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
-import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.PlotOrientation;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.model.MetricModel;
 import scrummer.model.Models;
 import scrummer.model.MetricModel.MetricEnum;
 import scrummer.model.graph.MetricDataSet;
-import scrummer.ui.FormBuilder;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
 import scrummer.ui.dialog.measure.GraphEarnedValueDialog;
@@ -38,7 +34,6 @@ import scrummer.ui.dialog.measure.GraphSpentWorkDialog;
 import scrummer.ui.dialog.measure.GraphTaskCompleteDialog;
 import scrummer.ui.dialog.measure.GraphWorkEffectivenessDialog;
 import scrummer.uicomponents.StandardButton;
-import scrummer.uicomponents.StandardComboBox;
 
 /**
  * Graph display page

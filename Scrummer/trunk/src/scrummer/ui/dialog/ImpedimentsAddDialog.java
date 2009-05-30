@@ -1,43 +1,16 @@
 package scrummer.ui.dialog;
 
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import org.xnap.commons.i18n.I18n;
 
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ImpedimentOperation;
-import scrummer.enumerator.SprintBacklogOperation;
-import scrummer.enumerator.TaskOperation;
-import scrummer.listener.ImpedimentListener;
-import scrummer.listener.SprintBacklogListener;
-import scrummer.listener.TaskListener;
-import scrummer.model.DeveloperModel;
-import scrummer.model.ImpedimentModel;
-import scrummer.model.SprintBacklogModel;
-import scrummer.model.TaskModel;
-import scrummer.model.swing.EmployeeComboBoxModel;
-import scrummer.model.swing.ProjectSprintTaskComboBoxModel;
-import scrummer.model.swing.SprintProjectComboBoxModel;
-import scrummer.model.swing.TaskComboBoxModel;
-import scrummer.model.swing.TeamComboBoxModel;
-import scrummer.ui.Util;
 import scrummer.ui.Validate;
-import scrummer.uicomponents.SelectedTextField;
-import scrummer.uicomponents.StandardComboBox;
-import scrummer.uicomponents.TwoButtonDialog;
 
 /**
  * Add developer dialog

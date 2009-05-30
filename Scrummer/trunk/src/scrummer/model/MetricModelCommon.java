@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -211,6 +210,100 @@ public class MetricModelCommon {
         public String MeasurementResult;
 	}
 	
+	public static class CustomerPollMeasurementRow extends DataRow {
+        /**
+         * Constructor
+         *
+         * @param result result from which to get data
+         */
+        public CustomerPollMeasurementRow(ResultSet result) {
+            try {
+                    result.beforeFirst(); result.next();
+                    CustomerName =
+                            result.getString(1);
+                    MeasureId =
+                            result.getInt(2);
+                    Datum =
+                            result.getDate(3);
+                    MeasurementResult =
+                            result.getString(4);
+                    SprintId =
+                    		result.getInt(5);
+            } catch (SQLException e) {
+                    e.printStackTrace();
+            }
+        }
+
+        /**
+         * Does key equal
+         * @param taskId
+         * @return true if row key equals this row
+         */
+        public boolean keyEquals(String customerName, int measureId, java.sql.Date datum, int sprintId) 
+        {
+            if ((customerName == CustomerName) &&
+                (measureId == MeasureId) &&
+                (datum == Datum) &&
+                (sprintId == SprintId)) {
+                    return true;
+            } else {
+                    return false;
+            }
+        }
+        public String CustomerName;
+        public int MeasureId;
+        public java.sql.Date Datum;
+        public String MeasurementResult;
+        public int SprintId;
+	}
+	
+	public static class DeveloperPollMeasurementRow extends DataRow {
+        /**
+         * Constructor
+         *
+         * @param result result from which to get data
+         */
+        public DeveloperPollMeasurementRow(ResultSet result) {
+            try {
+                    result.beforeFirst(); result.next();
+                    EmployeeId =
+                            result.getInt(1);
+                    MeasureId =
+                            result.getInt(2);
+                    Datum =
+                            result.getDate(3);
+                    MeasurementResult =
+                            result.getString(4);
+                    SprintId =
+                    		result.getInt(5);
+            } catch (SQLException e) {
+                    e.printStackTrace();
+            }
+        }
+
+        /**
+         * Does key equal
+         * @param taskId
+         * @return true if row key equals this row
+         */
+        public boolean keyEquals(int employeeId, int measureId, java.sql.Date datum, int sprintId) 
+        {
+            if ((employeeId == EmployeeId) &&
+                (measureId == MeasureId) &&
+                (datum == Datum) &&
+                (sprintId == SprintId)) {
+                    return true;
+            } else {
+                    return false;
+            }
+        }
+        public int EmployeeId;
+        public int MeasureId;
+        public java.sql.Date Datum;
+        public String MeasurementResult;
+        public int SprintId;
+	}
+	
 	public static class Row extends DataRow {
         /**
          * Constructor
@@ -253,7 +346,6 @@ public class MetricModelCommon {
         public String MeasurementResult;
 	}
 
-	
 	/**
 	 * Add a new measure
 	 *  
@@ -414,6 +506,102 @@ public class MetricModelCommon {
             ret = true;
         } catch (SQLException e) {
             _operation.operationFailed(DataOperation.Insert, MetricOperation.ReleaseMeasure, e.getMessage());
+            e.printStackTrace();
+        } finally {
+            res  = _connectionModel.close(res);
+            st   = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
+        return ret;
+	}
+	
+	/**
+	 * Add customer poll measurement
+	 * 
+	 * @param measureId measure
+	 * @param customerName customer 
+	 * @param datum date
+	 * @param measurementResult result
+	 * @param sprintId sprint
+	 * @return true if measurement added, false otherwise
+	 */
+	public boolean addCustomerPollMeasurement(int measureId, String customerName, java.sql.Date datum, BigDecimal measurementResult, int sprintId) 
+	{
+        boolean ret = false;
+        java.sql.Connection conn      = null;
+        java.sql.PreparedStatement st = null;
+        ResultSet res = null;
+        try {
+            conn = _connectionModel.getConnection();
+            String query =
+            "INSERT INTO " + DBSchemaModel.CustomerPollMeasurementResultTable +
+            "(" +
+            DBSchemaModel.CustomerPollMeasurementResultId + ", " + 
+            DBSchemaModel.CustomerPollMeasurementResultCustomerName + ", " +
+            DBSchemaModel.CustomerPollMeasurementResultDate + ", " +
+            DBSchemaModel.CustomerPollMeasurementResultResult + ", " +
+            DBSchemaModel.CustomerPollMeasurementSprintId +
+            ")" +
+            " VALUES (?, ?, ?, ?, ?) ";
+            st = conn.prepareStatement(query);
+            st.setInt(1, measureId);
+            st.setString(2, customerName);
+            st.setDate(3, datum);
+            st.setBigDecimal(4, measurementResult);
+            st.setInt(5, sprintId);
+            st.execute();
+            _operation.operationSucceeded(DataOperation.Insert, MetricOperation.CustomerPollMeasure, "");
+            ret = true;
+        } catch (SQLException e) {
+            _operation.operationFailed(DataOperation.Insert, MetricOperation.CustomerPollMeasure, e.getMessage());
+            e.printStackTrace();
+        } finally {
+            res  = _connectionModel.close(res);
+            st   = _connectionModel.close(st);
+            conn = _connectionModel.close(conn);
+        }
+        return ret;
+	}
+	
+	/**
+	 * Add developer poll measurement
+	 * 
+	 * @param measureId measure
+	 * @param employeeId employee 
+	 * @param datum date
+	 * @param measurementResult result
+	 * @param sprintId sprint
+	 * @return true if measurement added, false otherwise
+	 */
+	public boolean addDeveloperPollMeasurement(int measureId, int employeeId, java.sql.Date datum, BigDecimal measurementResult, int sprintId) 
+	{
+        boolean ret = false;
+        java.sql.Connection conn      = null;
+        java.sql.PreparedStatement st = null;
+        ResultSet res = null;
+        try {
+            conn = _connectionModel.getConnection();
+            String query =
+            "INSERT INTO " + DBSchemaModel.DeveloperPollMeasurementResultTable +
+            "(" +
+            DBSchemaModel.DeveloperPollMeasurementResultId + ", " + 
+            DBSchemaModel.DeveloperPollMeasurementResulEmployeeId + ", " +
+            DBSchemaModel.DeveloperPollMeasurementResultDate + ", " +
+            DBSchemaModel.DeveloperPollMeasurementResultResult + ", " +
+            DBSchemaModel.DeveloperPollMeasurementSprintId +
+            ")" +
+            " VALUES (?, ?, ?, ?, ?) ";
+            st = conn.prepareStatement(query);
+            st.setInt(1, measureId);
+            st.setInt(2, employeeId);
+            st.setDate(3, datum);
+            st.setBigDecimal(4, measurementResult);
+            st.setInt(5, sprintId);
+            st.execute();
+            _operation.operationSucceeded(DataOperation.Insert, MetricOperation.DeveloperPollMeasure, "");
+            ret = true;
+        } catch (SQLException e) {
+            _operation.operationFailed(DataOperation.Insert, MetricOperation.DeveloperPollMeasure, e.getMessage());
             e.printStackTrace();
         } finally {
             res  = _connectionModel.close(res);
@@ -589,6 +777,74 @@ public class MetricModelCommon {
 	}
 
 	/**
+	 * Remove customer poll measurement
+	 * @param customerName customer
+	 * @param measureId  measure
+	 * @param datum date
+	 * @param sprintId sprint
+	 * @return true if measurement removed, false otherwise
+	 */
+	public boolean removeCustomerPollMeasurement(String customerName, int measureId, java.sql.Date datum, int sprintId) 
+	{
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+                setResult(true);
+                _operation.operationSucceeded(DataOperation.Remove, MetricOperation.CustomerPollMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+                setResult(false);
+                ex.printStackTrace();
+                _operation.operationFailed(DataOperation.Remove, MetricOperation.CustomerPollMeasure,
+                ex.getMessage());
+        }
+        };
+        q.query("DELETE FROM " + DBSchemaModel.CustomerPollMeasurementResultTable +
+        " WHERE " +
+        DBSchemaModel.CustomerPollMeasurementResultCustomerName + "=" + customerName + " AND " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.SprintMeasurementResultDate + "='" + datum + " AND " +
+        DBSchemaModel.SprintId + "=" + sprintId + "'"
+        );
+        return q.getResult();
+	}
+	
+	/**
+	 * Remove developer poll measurement
+	 * @param employeeId employee
+	 * @param measureId  measure
+	 * @param datum date
+	 * @param sprintId sprint
+	 * @return true if measurement removed, false otherwise
+	 */
+	public boolean removeDeveloperPollMeasurement(int employeeId, int measureId, java.sql.Date datum, int sprintId) 
+	{
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+                setResult(true);
+                _operation.operationSucceeded(DataOperation.Remove, MetricOperation.DeveloperPollMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+                setResult(false);
+                ex.printStackTrace();
+                _operation.operationFailed(DataOperation.Remove, MetricOperation.DeveloperPollMeasure,
+                ex.getMessage());
+        }
+        };
+        q.query("DELETE FROM " + DBSchemaModel.DeveloperPollMeasurementResultTable +
+        " WHERE " +
+        DBSchemaModel.DeveloperPollMeasurementResulEmployeeId + "=" + employeeId + " AND " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.SprintMeasurementResultDate + "='" + datum + " AND " +
+        DBSchemaModel.SprintId + "=" + sprintId + "'"
+        );
+        return q.getResult();
+	}
+	
+	/**
 	 * Remove pbi measurement
 	 * @param measureId measure
 	 * @param pBIId pbi id
@@ -743,7 +999,71 @@ public class MetricModelCommon {
         DBSchemaModel.ReleaseMeasurementResultDate + "='" + datum + "'");
         return q.getResult();
     }
+    
+    /**
+     * Update customer poll measurement information
+     * @param measureId measure
+     * @param customerName customer
+     * @param datum date
+     * @param measurementResult measurement result
+     * @return true if update succeeded, false otherwise 
+     */
+    public boolean updateCustomerPollMeasurement(int measureId, String customerName, java.sql.Date datum, String measurementResult, int sprintId) {
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(DataOperation.Update, MetricOperation.CustomerPollMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            _operation.operationFailed(DataOperation.Update, MetricOperation.CustomerPollMeasure, ex.getMessage());
+            ex.printStackTrace();
+        }
+        };
+        q.query("UPDATE " + DBSchemaModel.CustomerPollMeasurementResultTable + " " +
+         "SET " + DBSchemaModel.CustomerPollMeasurementResultResult + "='" + measurementResult + "'" +
+        " WHERE " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.CustomerPollMeasurementResultCustomerName + "=" + customerName + " AND " +
+        DBSchemaModel.CustomerPollMeasurementResultDate + "='" + datum + "' AND" +
+        DBSchemaModel.CustomerPollMeasurementSprintId + "=" + sprintId);
+        return q.getResult();
+    }
 
+    /**
+     * Update developer poll measurement information
+     * @param measureId measure
+     * @param employeeId employee
+     * @param datum date
+     * @param measurementResult measurement result
+     * @return true if update succeeded, false otherwise 
+     */
+    public boolean updateDeveloperPollMeasurement(int measureId, int employeeId, java.sql.Date datum, String measurementResult, int sprintId) {
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(DataOperation.Update, MetricOperation.DeveloperPollMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            _operation.operationFailed(DataOperation.Update, MetricOperation.DeveloperPollMeasure, ex.getMessage());
+            ex.printStackTrace();
+        }
+        };
+        q.query("UPDATE " + DBSchemaModel.DeveloperPollMeasurementResultTable + " " +
+         "SET " + DBSchemaModel.DeveloperPollMeasurementResultResult + "='" + measurementResult + "'" +
+        " WHERE " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.DeveloperPollMeasurementResulEmployeeId + "=" + employeeId + " AND " +
+        DBSchemaModel.DeveloperPollMeasurementResultDate + "='" + datum + "' AND" +
+        DBSchemaModel.DeveloperPollMeasurementSprintId + "=" + sprintId);
+        return q.getResult();
+    }
+    
     /**
      * Update pbi measurement
      * @param measureId measure
@@ -776,7 +1096,7 @@ public class MetricModelCommon {
     }
     
     /**
-     * Fecth measure with given id
+     * Fetch measure with given id
      * @param measureId measure
      * @return row with all information
      */
@@ -921,6 +1241,64 @@ public class MetricModelCommon {
 
 	public String getPBIMeasurementResult(int measureId, int pBIId, java.sql.Date datum) {
         return getPBIMeasurementRow(measureId, pBIId, datum).MeasurementResult;
+	}
+	
+	public String getCustomerPollMeasurementResult(String customerName, int measureId, java.sql.Date datum, int sprintId)
+	{
+		return getCustomerPollMeasurementRow(customerName, measureId, datum, sprintId).MeasurementResult;
+	}
+	
+	public String getDeveloperPollMeasurementResult(int employeeId, int measureId, java.sql.Date datum, int sprintId)
+	{
+		return getDeveloperPollMeasurementRow(employeeId, measureId, datum, sprintId).MeasurementResult;
+	}
+	
+	public CustomerPollMeasurementRow getCustomerPollMeasurementRow(String customerName, int measureId, java.sql.Date datum, int sprintId) 
+	{
+        ResultQuery<CustomerPollMeasurementRow> q = new ResultQuery<CustomerPollMeasurementRow>(_connectionModel) {
+        @Override
+        public void processResult(ResultSet result) {
+            setResult(new CustomerPollMeasurementRow(result));
+            _operation.operationSucceeded(DataOperation.Remove, MetricOperation.CustomerPollMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(null);
+            ex.printStackTrace();
+            _operation.operationFailed(DataOperation.Remove, MetricOperation.CustomerPollMeasure, ex.getMessage());
+        }
+        };
+        q.queryResult(
+        "SELECT * FROM " + DBSchemaModel.CustomerPollMeasurementResultTable + " WHERE " +
+        DBSchemaModel.CustomerPollMeasurementResultCustomerName + "=" + customerName + " AND " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.CustomerPollMeasurementResultDate + "=" + datum + " AND " +
+        DBSchemaModel.SprintId + "=" + sprintId);
+        return q.getResult();
+	}
+	
+	public DeveloperPollMeasurementRow getDeveloperPollMeasurementRow(int employeeId, int measureId, java.sql.Date datum, int sprintId) 
+	{
+        ResultQuery<DeveloperPollMeasurementRow> q = new ResultQuery<DeveloperPollMeasurementRow>(_connectionModel) {
+        @Override
+        public void processResult(ResultSet result) {
+            setResult(new DeveloperPollMeasurementRow(result));
+            _operation.operationSucceeded(DataOperation.Remove, MetricOperation.DeveloperPollMeasure, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(null);
+            ex.printStackTrace();
+            _operation.operationFailed(DataOperation.Remove, MetricOperation.DeveloperPollMeasure, ex.getMessage());
+        }
+        };
+        q.queryResult(
+        "SELECT * FROM " + DBSchemaModel.DeveloperPollMeasurementResultTable + " WHERE " +
+        DBSchemaModel.DeveloperPollMeasurementResulEmployeeId + "=" + employeeId + " AND " +
+        DBSchemaModel.MeasureId + "=" + measureId + " AND " +
+        DBSchemaModel.DeveloperPollMeasurementResultDate + "=" + datum + " AND " +
+        DBSchemaModel.SprintId + "=" + sprintId);
+        return q.getResult();
 	}
 	
 	/**
@@ -1101,6 +1479,82 @@ public class MetricModelCommon {
 		query += "Datum BETWEEN '" + new java.sql.Date(from.getTime()).toString() + "' AND '";
 		query += new java.sql.Date(to.getTime()).toString() + "' AND ";
 		query += objectIdColumn + "=" + objectId + " AND ";
+		query += DBSchemaModel.MeasureName + "='" + measureName + "'";
+		q.queryResult(query);
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch measures on a time interval
+	 * @param measureName measure name(Measure_name)
+	 * @param table table from which to get date
+	 * @param objectIdColumn object id column
+	 * @param objectId object id
+	 * @param from date from 
+	 * @param to date to
+	 * @return a list of measurements
+	 */
+	public Vector<Measurement> fetchCPMeasures(String measureName, String table, String objectIdColumn, String customerName, int sprintId, Date from, Date to) 
+	{
+		ResultQuery<Vector<Measurement>> q = new ResultQuery<Vector<Measurement>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				Vector<Measurement> ret = new Vector<Measurement>();
+				result.beforeFirst();
+				while (result.next()) {
+					ret.add(new Measurement(result.getDate(1), result.getBigDecimal(2)));
+				}
+				setResult(ret);
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(new Vector<Measurement>());
+				ex.printStackTrace();
+			}
+		};
+		String query ="SELECT Datum, Measurement_result FROM " + table + " NATURAL JOIN Measure WHERE ";
+		query += "Datum BETWEEN '" + new java.sql.Date(from.getTime()).toString() + "' AND '";
+		query += new java.sql.Date(to.getTime()).toString() + "' AND ";
+		query += objectIdColumn + "=" + customerName + " AND ";
+		query += DBSchemaModel.SprintId + "=" + sprintId + " AND ";
+		query += DBSchemaModel.MeasureName + "='" + measureName + "'";
+		q.queryResult(query);
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch measures on a time interval
+	 * @param measureName measure name(Measure_name)
+	 * @param table table from which to get date
+	 * @param objectIdColumn object id column
+	 * @param objectId object id
+	 * @param from date from 
+	 * @param to date to
+	 * @return a list of measurements
+	 */
+	public Vector<Measurement> fetchDPMeasures(String measureName, String table, String objectIdColumn, int employeeId, int sprintId, Date from, Date to) 
+	{
+		ResultQuery<Vector<Measurement>> q = new ResultQuery<Vector<Measurement>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				Vector<Measurement> ret = new Vector<Measurement>();
+				result.beforeFirst();
+				while (result.next()) {
+					ret.add(new Measurement(result.getDate(1), result.getBigDecimal(2)));
+				}
+				setResult(ret);
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(new Vector<Measurement>());
+				ex.printStackTrace();
+			}
+		};
+		String query ="SELECT Datum, Measurement_result FROM " + table + " NATURAL JOIN Measure WHERE ";
+		query += "Datum BETWEEN '" + new java.sql.Date(from.getTime()).toString() + "' AND '";
+		query += new java.sql.Date(to.getTime()).toString() + "' AND ";
+		query += objectIdColumn + "=" + employeeId + " AND ";
+		query += DBSchemaModel.SprintId + "=" + sprintId + " AND ";
 		query += DBSchemaModel.MeasureName + "='" + measureName + "'";
 		q.queryResult(query);
 		return q.getResult();

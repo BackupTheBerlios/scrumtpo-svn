@@ -19,7 +19,7 @@ import scrummer.util.Operations;
 
 /**
  * This model deals with metrics(Task_measurement_result, Sprint_measurement_result, 
- * PBI_measurement_result, 
+ * PBI_measurement_result, CustomerPoll_measurement_result, DeveloperPool_measurement_result
  */
 public class MetricModel {
 		
@@ -137,6 +137,40 @@ public class MetricModel {
 	}
 	
 	/**
+	 * Add customer poll measurement
+	 * 
+	 * @param measureId measure
+	 * @param customerName customer 
+	 * @param date date
+	 * @param measurementResult result
+	 * @param sprintId sprint
+	 */
+	public void addCustomerPoolMeasurement(int measureId, String customerName, java.util.Date date, BigDecimal measurementResult, int sprintId)
+	{
+		if(_metricModelCommon.addCustomerPollMeasurement(measureId, customerName, new Date(date.getTime()), measurementResult, sprintId))
+		{
+			_metricTableModel.refresh();
+		}
+	}
+	
+	/**
+	 * Add developer poll measurement
+	 * 
+	 * @param measureId measure
+	 * @param employeeId employee 
+	 * @param date date
+	 * @param measurementResult result
+	 * @param sprintId sprint
+	 */
+	public void addDeveloperPoolMeasurement(int measureId, int employeeId, java.util.Date date, BigDecimal measurementResult, int sprintId)
+	{
+		if(_metricModelCommon.addDeveloperPollMeasurement(measureId, employeeId, new Date(date.getTime()), measurementResult, sprintId))
+		{
+			_metricTableModel.refresh();
+		}
+	}
+	
+	/**
 	 * Add pbi measurement
 	 * 
 	 * @param pbiId measure
@@ -193,6 +227,36 @@ public class MetricModel {
 	 */
 	public void removeSprintMeasurement(int measureId, int sprintId, java.util.Date datum) {
 		if (_metricModelCommon.removeSprintMeasurement(sprintId, measureId, new Date(datum.getTime()))) {
+			_metricTableModel.refresh();
+		}
+	}
+	
+	/**
+	 * Remove customer poll measurement
+	 * @param customerName customer
+	 * @param measureId  measure
+	 * @param datum date
+	 * @param sprintId sprint
+	 */
+	public void removeCustomerPollMeasurement(int measureId, String customerName, java.util.Date datum, int sprintId) 
+	{
+		if (_metricModelCommon.removeCustomerPollMeasurement(customerName, measureId, new Date(datum.getTime()), sprintId)) 
+		{
+			_metricTableModel.refresh();
+		}
+	}
+	
+	/**
+	 * Remove developer poll measurement
+	 * @param employeeId employee
+	 * @param measureId  measure
+	 * @param datum date
+	 * @param sprintId sprint
+	 */
+	public void removeCustomerPollMeasurement(int measureId, int employeeId, java.util.Date datum, int sprintId) 
+	{
+		if (_metricModelCommon.removeDeveloperPollMeasurement(employeeId, measureId, new Date(datum.getTime()), sprintId)) 
+		{
 			_metricTableModel.refresh();
 		}
 	}
@@ -263,6 +327,38 @@ public class MetricModel {
     }
     
     /**
+     * Update customer poll measurement information
+     * @param measureId measure
+     * @param customerName customer
+     * @param datum date
+     * @param measurementResult measurement result 
+     * @param sprintId sprint
+     */
+    public void updateCustomerPollMeasurement(int measureId, String customerName, java.util.Date datum, String measurementResult, int sprintId) 
+    {
+    	if (_metricModelCommon.updateCustomerPollMeasurement(measureId, customerName, new Date(datum.getTime()), measurementResult, sprintId)) 
+    	{
+    		_metricTableModel.refresh();
+    	}
+    }
+    
+    /**
+     * Update developer poll measurement information
+     * @param measureId measure
+     * @param employeeId employee
+     * @param datum date
+     * @param measurementResult measurement result 
+     * @param sprintId sprint
+     */
+    public void updateDeveloperPollMeasurement(int measureId, int employeeId, java.util.Date datum, String measurementResult, int sprintId) 
+    {
+    	if (_metricModelCommon.updateDeveloperPollMeasurement(measureId, employeeId, new Date(datum.getTime()), measurementResult, sprintId)) 
+    	{
+    		_metricTableModel.refresh();
+    	}
+    }
+    
+    /**
      * Update release measurement information
      * @param measureId measure
      * @param releaseId release
@@ -274,7 +370,7 @@ public class MetricModel {
     		_metricTableModel.refresh();
     	}
     }
-	
+    
 	/**
 	 * Fetch measure name
 	 * @param measureId measure
@@ -318,6 +414,32 @@ public class MetricModel {
 	}
 	
 	/**
+	 * Fetch customer poll measurement
+	 * @param customerName customer
+	 * @param measureId measure
+	 * @param datum date
+	 * @param sprintId sprint
+	 * @return measurement
+	 */
+	public String getCustomerPollMeasurementResult(String customerName, int measureId, java.util.Date datum, int sprintId) 
+	{
+		return _metricModelCommon.getCustomerPollMeasurementResult(customerName, measureId, new Date(datum.getTime()),sprintId);
+	}
+	
+	/**
+	 * Fetch developer poll measurement
+	 * @param employeeId employee
+	 * @param measureId measure
+	 * @param datum date
+	 * @param sprintId sprint
+	 * @return measurement
+	 */
+	public String getDeveloperPollMeasurementResult(int employeeId, int measureId, java.util.Date datum, int sprintId) 
+	{
+		return _metricModelCommon.getDeveloperPollMeasurementResult(employeeId, measureId, new Date(datum.getTime()), sprintId);
+	}
+	
+	/**
 	 * Fetch PBI measurement
 	 * @param pbiId release
 	 * @param measureId measure
@@ -346,7 +468,7 @@ public class MetricModel {
 	}
 	
 	/**
-	 * Remnove event listener from this data object changes
+	 * Remove event listener from this data object changes
 	 * @param listener listener instance
 	 */
 	public void removeMetricListener(MetricListener listener) {
@@ -440,6 +562,42 @@ public class MetricModel {
 	}
 	
 	/**
+	 * Fetch customer poll related measures
+	 * @param measureName measure name
+	 * @param customerName customer
+	 * @param sprintId sprint
+	 * @param from date from
+	 * @param to date to
+	 * @return a list of task measurements
+	 */
+	public Vector<Measurement> fetchCustomerPollMeasures(String measureName, String customerName, int sprintId, Date from, Date to) 
+	{
+		return _metricModelCommon.fetchCPMeasures(
+			measureName, 
+			DBSchemaModel.CustomerPollMeasurementResultTable, 
+			DBSchemaModel.CustomerPollMeasurementResultCustomerName, 
+			customerName, sprintId, from, to);
+	}
+	
+	/**
+	 * Fetch developer poll related measures
+	 * @param measureName measure name
+	 * @param employeeId employee
+	 * @param sprintId sprint
+	 * @param from date from
+	 * @param to date to
+	 * @return a list of task measurements
+	 */
+	public Vector<Measurement> fetchDeveloperPollMeasures(String measureName, int employeeId, int sprintId, Date from, Date to) 
+	{
+		return _metricModelCommon.fetchDPMeasures(
+			measureName, 
+			DBSchemaModel.DeveloperPollMeasurementResultTable, 
+			DBSchemaModel.DeveloperPollMeasurementResulEmployeeId, 
+			employeeId, sprintId, from, to);
+	}
+	
+	/**
 	 * Calculate work effectiveness on a time interval
 	 * @param from starting date
 	 * @param to ending date
@@ -508,7 +666,7 @@ public class MetricModel {
 	}
 	
 	/**
-	 * Notify everyon that schedule performance index failed to be calculated
+	 * Notify everyone that schedule performance index failed to be calculated
 	 */
 	public void failCalculatingSchedulePerformanceIndex() {
 		_operation.operationFailed(DataOperation.Custom, MetricOperation.SPICalculated, "");

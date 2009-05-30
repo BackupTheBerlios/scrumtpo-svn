@@ -20,7 +20,7 @@ import scrummer.ui.dialog.TaskAddDialog;
 import scrummer.ui.dialog.TaskChangeDialog;
 import scrummer.uicomponents.AddEditRemovePanel;
 import scrummer.uicomponents.NiceTable;
-
+ 
 /**
  * A page that displays all tasks on current project and sprint
  */
