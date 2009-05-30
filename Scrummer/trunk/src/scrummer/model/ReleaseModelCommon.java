@@ -16,6 +16,43 @@ public class ReleaseModelCommon {
 		_operation = operation;
 	}
 	
+	public static class ReleaseRow 
+		extends DataRow {
+        /**
+         * Constructor
+         *
+         * @param result result from which to get data
+         */
+        public ReleaseRow(ResultSet result) {
+            try {
+                result.beforeFirst(); result.next();
+                Id =
+                    result.getInt(1);
+                Description =
+                    result.getString(2);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * Does key equal
+         * @param taskId
+         * @return true if row key equals this row
+         */
+        public boolean keyEquals(int releaseId) {
+            if (releaseId == Id) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        public int Id;
+        public String Description;
+	}
+
+	
+	
 	/**
 	 * Fetch all release id's + their corresponding pbi descriptions
 	 * @return object rows
@@ -253,10 +290,99 @@ public class ReleaseModelCommon {
 		return q.getResult();
 	}
 	
+	/**
+	 * Fetch release row
+	 * @param releaseId release
+	 * @return data row
+	 */
+	public ReleaseRow getReleaseRow(int releaseId) {
+        ResultQuery<ReleaseRow> q = new ResultQuery<ReleaseRow>(_connectionModel) {
+        @Override
+        public void processResult(ResultSet result) {
+            setResult(new ReleaseRow(result));
+            _operation.operationSucceeded(DataOperation.Remove, ReleaseOperation.Release, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(null);
+            ex.printStackTrace();
+            _operation.operationFailed(DataOperation.Remove, ReleaseOperation.Release,
+            ex.getMessage());
+        }
+        };
+        q.queryResult(
+        "SELECT * FROM " + DBSchemaModel.FinalReleaseTable + " WHERE " +
+        DBSchemaModel.ReleaseId + "=" + releaseId);
+        return q.getResult();
+    }
+
+	public String getReleaseDescription(int releaseId) {
+        return getReleaseRow(releaseId).Description;
+	}
+	 	
+	/**
+	 * Update release cell
+	 * @param releaseId release
+	 * @param column column
+	 * @param value value
+	 * @return true if cell updated, false otherwise
+	 */
+	public boolean updateReleaseCell(int releaseId, String column, String value) {
+        ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(DataOperation.Update, ReleaseOperation.Release, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            _operation.operationFailed(DataOperation.Update, ReleaseOperation.Release, ex.getMessage());
+            ex.printStackTrace();
+        }
+        };
+        q.query("UPDATE " + DBSchemaModel.FinalReleaseTable +
+        " SET " + column + "='" + value + "'" +
+        " WHERE " +
+        DBSchemaModel.ReleaseId + "=" + releaseId);
+        return q.getResult();
+	}
+	
+	public boolean setReleaseDescription(int releaseId, String value) {
+        return updateReleaseCell(releaseId, DBSchemaModel.ReleaseDescription, value);
+	}
+	
+	/**
+	 * Fetch all pbi's for release
+	 * @param releaseId release
+	 * @return a list of pbis
+	 */
+	public Vector<Integer> fetchPbis(int releaseId) {
+		ResultQuery<Vector<Integer>> q = new ResultQuery<Vector<Integer>>(_connectionModel) {
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				Vector<Integer> res = new Vector<Integer>();
+				result.beforeFirst();
+				while (result.next()) {
+					res.add(result.getInt(1));					
+				}				
+				setResult(res);
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(new Vector<Integer>());
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.PBIId +
+			" FROM " + DBSchemaModel.ReleasePBITable + " WHERE " +
+			DBSchemaModel.ReleaseId + "=" + releaseId);
+		return q.getResult();
+	}
+	
 	/// operation notifier
 	private Operations.ReleaseOperation _operation;
 	/// connection model
-	private ConnectionModel _connectionModel;
-
-	
+	private ConnectionModel _connectionModel;	
 }

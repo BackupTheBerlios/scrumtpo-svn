@@ -1,5 +1,7 @@
 package scrummer.model;
 
+import java.util.Vector;
+
 import scrummer.listener.ReleaseListener;
 import scrummer.model.swing.ReleaseTableModel;
 import scrummer.util.Operations;
@@ -74,6 +76,30 @@ public class ReleaseModel {
 		if (_releaseModelCommon.removeReleasePbi(releaseId, pBIId)) {
 			_releaseTableModel.refresh();
 		}
+	}
+	
+	/**
+	 * Fetch all pbi's for release
+	 * @param releaseId release
+	 * @return a list of pbis
+	 */
+	public Vector<Integer> fetchPbis(int releaseId) {
+		return _releaseModelCommon.fetchPbis(releaseId);
+	}
+	
+	/**
+	 * Fetch release description
+	 * @param releaseId id
+	 * @return release description
+	 */
+	public String getReleaseDescription(int releaseId) {
+        return _releaseModelCommon.getReleaseDescription(releaseId);
+	}
+	
+	public void setReleaseDescription(int releaseId, String value) {
+        if (_releaseModelCommon.setReleaseDescription(releaseId, value)) {
+        	_releaseTableModel.refresh();
+        }
 	}
 	
 	/**
