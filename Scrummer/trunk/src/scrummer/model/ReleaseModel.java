@@ -1,5 +1,6 @@
 package scrummer.model;
 
+import scrummer.listener.ReleaseListener;
 import scrummer.model.swing.ReleaseTableModel;
 import scrummer.util.Operations;
 
@@ -21,7 +22,7 @@ public class ReleaseModel {
 	 */
 	public void addRelease(String description) {
         if (_releaseModelCommon.addRelease(description)) {
-        	
+        	_releaseTableModel.refresh();
         }
 	}
 	
@@ -40,7 +41,7 @@ public class ReleaseModel {
 	 */
 	public void removeRelease(int releaseId) {
 		if (_releaseModelCommon.removeRelease(releaseId)) {
-			
+			_releaseTableModel.refresh();
 		}
 	}
 	
@@ -51,7 +52,16 @@ public class ReleaseModel {
 	 */
 	public void addReleasePbi(int releaseId, int pBIId) {
 		if (_releaseModelCommon.addReleasePbi(releaseId, pBIId)) {
-			
+			_releaseTableModel.refresh();
+		}
+	}
+	
+	/**
+	 * Remove all release-id's pbi's
+	 * @param releaseId relesae id
+	 */
+	public void removeAllReleasePbi(int releaseId) {
+		if (_releaseModelCommon.removeAllReleasePbi(releaseId)) {
 		}
 	}
 	
@@ -62,8 +72,28 @@ public class ReleaseModel {
 	 */
 	public void removeReleasePbi(int releaseId, int pBIId) {
 		if (_releaseModelCommon.removeReleasePbi(releaseId, pBIId)) {
-			
+			_releaseTableModel.refresh();
 		}
+	}
+	
+	/**
+	 * Add listener for release events
+	 * @param listener listener
+	 */
+	public void addListener(ReleaseListener listener) {
+		_operation.addListener(listener);
+	}
+	
+	/**
+	 * Remove listener from release related events
+	 * @param listener listener
+	 */
+	public void removeListener(ReleaseListener listener) {
+		_operation.removeListener(listener);
+	}
+	
+	public ReleaseTableModel getReleaseTableModel() {
+		return _releaseTableModel;
 	}
 	
 	/// release table model
@@ -72,4 +102,5 @@ public class ReleaseModel {
 	private Operations.ReleaseOperation _operation = new Operations.ReleaseOperation();
 	/// release model
 	private ReleaseModelCommon _releaseModelCommon;
+	
 }
