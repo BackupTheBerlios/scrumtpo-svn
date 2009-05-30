@@ -5,8 +5,8 @@ import scrummer.model.NavigationModel;
 /**
  * Listener to navigation change events
  */
-public interface NavigationListener {
-
+public interface NavigationListener 
+{
 	/**
 	 * Current page was changed
 	 * @param newLink new page link

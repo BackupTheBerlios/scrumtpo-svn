@@ -34,6 +34,10 @@ public class NavigationModel implements ProjectListener {
 		MetricEdit,
 		/// metric graph
 		MetricReport,
+		/// customer poll
+		CustomerPoll,
+		// developer poll
+		DeveloperPoll,
 		/// product backlog
 		ProductBacklog,
 		/// product backlog item
@@ -69,6 +73,10 @@ public class NavigationModel implements ProjectListener {
 			i18n.tr("Input"));
 		_translatedLinks.put(Link.MetricReport, 
 			i18n.tr("Graph"));
+		_translatedLinks.put(Link.CustomerPoll, 
+			i18n.tr("Customer poll"));
+		_translatedLinks.put(Link.DeveloperPoll, 
+				i18n.tr("Developer poll"));
 		_translatedLinks.put(Link.ProductBacklog,
 			i18n.tr("Product Backlog"));
 		_translatedLinks.put(Link.ProductBacklogItem, 	

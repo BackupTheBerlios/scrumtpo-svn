@@ -454,6 +454,20 @@ public class DBSchemaModel {
 	public static final String PBIMeasurementPBIId = "PBI_id";
 	public static final String PBIMeasurementResultResult = "Measurement_result";
 	public static final String PBIMeasurementResultDate = "Datum";
+	
+	public static final String CustomerPollMeasurementResultTable = "CustomerPoll_measurement_result";
+	public static final String CustomerPollMeasurementResultId = "Measure_id";
+	public static final String CustomerPollMeasurementSprintId = "Sprint_id";
+	public static final String CustomerPollMeasurementResultResult = "Measurement_result";
+	public static final String CustomerPollMeasurementResultDate = "Datum";
+	public static final String CustomerPollMeasurementResultCustomerName = "Customer_name";
+	
+	public static final String DeveloperPollMeasurementResultTable = "DeveloperPoll_measurement_result";
+	public static final String DeveloperPollMeasurementResultId = "Measure_id";
+	public static final String DeveloperPollMeasurementSprintId = "Sprint_id";
+	public static final String DeveloperPollMeasurementResultResult = "Measurement_result";
+	public static final String DeveloperPollMeasurementResultDate = "Datum";
+	public static final String DeveloperPollMeasurementResulEmployeeId = "Employee_id";
 		
 	// these enumerations were generated using extract.py script
 	public enum AbsenceTypeEnum { AbsenceTypeId, AbsenceTypeDescription }
@@ -479,6 +493,7 @@ public class DBSchemaModel {
 	public enum TaskTypeEnum { TaskTypeId, TaskTypeDescription }
 	public enum TeamEnum { TeamId, TeamDescription }
 	public enum TeamMemberEnum { EmployeeId, TeamId }
+	public enum CustomerPollEnum { customerName, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, comment, q11}
 
 
 }

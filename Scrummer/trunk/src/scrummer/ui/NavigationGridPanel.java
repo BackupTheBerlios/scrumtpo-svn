@@ -16,6 +16,8 @@ import scrummer.listener.NavigationListener;
 import scrummer.model.Models;
 import scrummer.model.NavigationModel;
 import scrummer.model.ProjectModel;
+import scrummer.ui.dialog.CustomerPollDialog;
+import scrummer.ui.dialog.DeveloperPollDialog;
 import scrummer.ui.page.AdminDaysPage;
 import scrummer.ui.page.ImpedimentPage;
 import scrummer.ui.page.MetricGraphPage;
@@ -26,6 +28,7 @@ import scrummer.ui.page.ProductBacklogPage;
 import scrummer.ui.page.ProjectPage;
 import scrummer.ui.page.SprintBacklogPage;
 import scrummer.ui.page.TaskPage;
+import scrummer.ui.MainFrame;
 
 /**
  * Navigation grid is a panel that contains a fixed grid i.e. it doesn't scale
@@ -54,7 +57,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) 
+	{
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {}
@@ -69,7 +74,18 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void pageChanged(NavigationModel.Link newLink) {
+	public void pageChanged(NavigationModel.Link newLink) 
+	{
+		switch(newLink)
+		{
+			case DeveloperPoll:
+				showDeveloperPoll();
+				return;
+			case CustomerPoll:
+				showCustomerPoll();
+				return;
+		}
+		
 		// remove all components from panel
 		_panel.removeAll();
 		
@@ -221,6 +237,20 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.add(vertBox);
 	}
 	
+	private void showCustomerPoll()
+	{
+		CustomerPollDialog dialog = new CustomerPollDialog(_mainFrame);
+		Util.centre(dialog);
+		dialog.setVisible(true);
+	}
+	
+	private void showDeveloperPoll()
+	{
+		DeveloperPollDialog dialog = new DeveloperPollDialog(_mainFrame);
+		Util.centre(dialog);
+		dialog.setVisible(true);
+	}
+	
 	private void showMetricReport(JPanel panel) {		
 		panel.setLayout(new GridLayout(1,1));
 		MetricGraphPage page = new MetricGraphPage(_mainFrame);
@@ -244,7 +274,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		box.setBackground(Color.WHITE);
 		
 		Util.addLink(box, NavigationModel.Link.MetricEdit);
-		Util.addLink(box, NavigationModel.Link.MetricReport);		
+		Util.addLink(box, NavigationModel.Link.MetricReport);
+		Util.addLink(box, NavigationModel.Link.CustomerPoll);
+		Util.addLink(box, NavigationModel.Link.DeveloperPoll);
 		
 		box.setMaximumSize(new Dimension(100, 100));
 		box.setMaximumSize(new Dimension(1600, 100));
