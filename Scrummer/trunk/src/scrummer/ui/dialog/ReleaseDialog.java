@@ -160,22 +160,20 @@ public class ReleaseDialog
 
 	@Override
 	public void setVisible(boolean b) {
-	
 		if (!b) {
 			_releaseModel.removeListener(this);
 		}
-		
 		super.setVisible(b);
 	}
 
 	/// list of all pbi's that will be added
 	protected Set<Integer> _pbiIds = new HashSet<Integer>();
 	/// all pbi's on project
-	private ProjectPBIComboBoxModel _projectPbiComboBoxModel;
+	protected ProjectPBIComboBoxModel _projectPbiComboBoxModel;
 	/// all pbi's that will be added
-	private JList _pbiList;
+	protected JList _pbiList;
 	// pbi input combo box
-	private StandardComboBox _pbiInput;
+	protected StandardComboBox _pbiInput;
 	/// description input
 	protected SelectedTextField _descriptionInput;
 	/// release model
