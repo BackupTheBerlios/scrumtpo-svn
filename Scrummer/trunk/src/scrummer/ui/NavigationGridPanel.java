@@ -22,6 +22,7 @@ import scrummer.ui.page.AdminDaysPage;
 import scrummer.ui.page.ImpedimentPage;
 import scrummer.ui.page.MetricGraphPage;
 import scrummer.ui.page.MetricInputPage;
+import scrummer.ui.page.ReleasePage;
 import scrummer.ui.page.SprintMetricPage;
 import scrummer.ui.page.PBPage;
 import scrummer.ui.page.ProductBacklogPage;
@@ -76,8 +77,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 	@Override
 	public void pageChanged(NavigationModel.Link newLink) 
 	{
-		switch(newLink)
-		{
+		switch(newLink) {
 			case DeveloperPoll:
 				showDeveloperPoll();
 				return;
@@ -97,20 +97,16 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		
 		_panel.add(bottomPanel);
 
-		if (!_projectModel.isOpened())
-		{
+		if (!_projectModel.isOpened()) {
 			// newLink = NavigationModel.Link.Blank;
 			_header.setButtonsEnabled(false);
-		}
-		else
-		{
+		} else {
 			_header.setButtonsEnabled(true);
 		}
 		
 		_header.TitleText.setText(_navigationModel.getName(newLink));
 		
-		switch (newLink)
-		{
+		switch (newLink) {
 		case Blank: 
 			showBlank(bottomPanel); 
 			break;
@@ -149,6 +145,9 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 			break;
 		case SprintBacklogTasks:
 			showSprintBacklogTasks(bottomPanel);
+			break;
+		case Release:
+			showRelease(bottomPanel);
 			break;
 		}
 				
@@ -227,6 +226,7 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		Util.addLink(box, NavigationModel.Link.ProductBacklog);
 		Util.addLink(box, NavigationModel.Link.SprintBacklog);
 		Util.addLink(box, NavigationModel.Link.Metric);
+		Util.addLink(box, NavigationModel.Link.Release);
 		
 		box.setMaximumSize(new Dimension(100, 100));
 		box.setMaximumSize(new Dimension(1600, 100));
@@ -265,6 +265,13 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		panel.setBackground(Color.WHITE);
 	}
 	
+	private void showRelease(JPanel panel) {
+		panel.setLayout(new GridLayout(1,1));
+		ReleasePage page = new ReleasePage(_mainFrame);
+		panel.add(page);
+		panel.setBackground(Color.WHITE);
+	}
+	
 	private void showMetric(JPanel panel) {
 		panel.setLayout(new BorderLayout());
 		
@@ -286,7 +293,8 @@ public class NavigationGridPanel extends JPanel implements MouseListener, Naviga
 		
 		panel.add(vertBox);
 	}
-
+	
+	
 	/**
 	 * Create header panel with two links(back, home)
 	 * and current section title
