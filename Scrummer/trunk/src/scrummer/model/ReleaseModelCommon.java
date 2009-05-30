@@ -16,7 +16,6 @@ public class ReleaseModelCommon {
 		_operation = operation;
 	}
 	
-	
 	/**
 	 * Fetch all release id's + their corresponding pbi descriptions
 	 * @return object rows
@@ -44,7 +43,7 @@ public class ReleaseModelCommon {
 								ObjectRow newRow = new ObjectRow(3);
 								newRow.set(0, id); newRow.set(1, description); newRow.set(2, pbis);
 								transformedRows.add(newRow);
-								id = null;
+								id = cid; description = current.get(1); pbis = cpbis;
 							}
 						}					
 					}
@@ -67,8 +66,8 @@ public class ReleaseModelCommon {
 			DBSchemaModel.ReleaseDescription + ", " +
 			DBSchemaModel.PBIDesc +
 			" FROM "   + DBSchemaModel.FinalReleaseTable + 
-			" NATURAL JOIN " + DBSchemaModel.ReleasePBITable + 
-			" NATURAL JOIN " + DBSchemaModel.PBITable);
+			" NATURAL LEFT JOIN " + DBSchemaModel.ReleasePBITable + 
+			" NATURAL LEFT JOIN " + DBSchemaModel.PBITable);
 		return q.getResult();	
 	}
 	
@@ -89,7 +88,7 @@ public class ReleaseModelCommon {
             "(" +
             DBSchemaModel.ReleaseDescription +
             ")" +
-            " VALUES (?) )";
+            " VALUES (?)";
             st = conn.prepareStatement(query);
             st.setString(1, releaseDescription);
             st.execute();
@@ -198,6 +197,33 @@ public class ReleaseModelCommon {
         );
         return q.getResult();
 	}
+	
+	/**
+	 * Remove all pbi's from Release_PBI table related to releaseId
+	 * @param releaseId release
+	 * @return true if removed, false otherwise
+	 */
+	public boolean removeAllReleasePbi(int releaseId) {
+		ResultQuery<Boolean> q = new ResultQuery<Boolean>(_connectionModel) {
+        @Override
+        public void process() {
+            setResult(true);
+            _operation.operationSucceeded(DataOperation.Remove, ReleaseOperation.ReleasePBI, "");
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(false);
+            ex.printStackTrace();
+            _operation.operationFailed(DataOperation.Remove, ReleaseOperation.ReleasePBI,
+            ex.getMessage());
+        }
+        };
+        q.query("DELETE FROM " + DBSchemaModel.ReleasePBITable +
+        " WHERE " +        
+        DBSchemaModel.ReleaseId + "=" + releaseId
+        );
+        return q.getResult();
+	}
 
 	/**
 	 * Fetch id of release with description
@@ -208,10 +234,11 @@ public class ReleaseModelCommon {
 		ResultQuery<Integer> q = new ResultQuery<Integer>(_connectionModel) {
 			@Override
 			public void processResult(ResultSet result) throws SQLException {
+				setResult(-1);
 				result.beforeFirst();
 				while (result.next()) {
 					setResult(result.getInt(1));
-				}
+				}				
 			}
 			@Override
 			public void handleException(SQLException ex) {
@@ -230,5 +257,6 @@ public class ReleaseModelCommon {
 	private Operations.ReleaseOperation _operation;
 	/// connection model
 	private ConnectionModel _connectionModel;
+
 	
 }
