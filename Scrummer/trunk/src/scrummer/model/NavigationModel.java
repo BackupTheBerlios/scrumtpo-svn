@@ -20,8 +20,7 @@ public class NavigationModel implements ProjectListener {
 	/**
 	 * Possible links
 	 */
-	public enum Link
-	{
+	public enum Link {
 		/// blank link
 		Blank,
 		/// application overview
@@ -51,7 +50,9 @@ public class NavigationModel implements ProjectListener {
 		/// sprint backlog - absent
 		SprintBacklogAbsent,
 		/// sprint backlog - hurdles
-		SprintBacklogHurdles
+		SprintBacklogHurdles,
+		/// release
+		Release
 	}
 	
 	/**
@@ -59,8 +60,7 @@ public class NavigationModel implements ProjectListener {
 	 * 
 	 * @param projectModel project model
 	 */
-	public NavigationModel(ProjectModel projectModel)
-	{	
+	public NavigationModel(ProjectModel projectModel) {	
 		_top = Link.Overview;
 		
 		_translatedLinks.put(Link.Blank,
@@ -76,7 +76,7 @@ public class NavigationModel implements ProjectListener {
 		_translatedLinks.put(Link.CustomerPoll, 
 			i18n.tr("Customer poll"));
 		_translatedLinks.put(Link.DeveloperPoll, 
-				i18n.tr("Developer poll"));
+			i18n.tr("Developer poll"));
 		_translatedLinks.put(Link.ProductBacklog,
 			i18n.tr("Product Backlog"));
 		_translatedLinks.put(Link.ProductBacklogItem, 	
@@ -93,6 +93,8 @@ public class NavigationModel implements ProjectListener {
 			i18n.tr("Metrics"));
 		_translatedLinks.put(Link.SprintBacklogTasks,  
 			i18n.tr("Tasks"));
+		_translatedLinks.put(Link.Release, 
+			i18n.tr("Release"));
 		
 		projectModel.addProjectListener(this);
 	}
@@ -102,26 +104,22 @@ public class NavigationModel implements ProjectListener {
 	 * @param link link
 	 * @return translated name
 	 */
-	public String getName(Link link)
-	{
+	public String getName(Link link) {
 		return _translatedLinks.get(link);
 	}
 	
 	/**
 	 * Johnny-go-home
 	 */
-	public void home()
-	{
+	public void home() {
 		switchPage(_top);
 	}
 	
 	/**
 	 * Rupel-be-back
 	 */
-	public void back()
-	{
-		if (_previous.size() > 0)
-		{
+	public void back() {
+		if (_previous.size() > 0) {
 			Link last = _previous.get(_previous.size() - 1);
 			_previous.removeElementAt(_previous.size() - 1);
 			
@@ -134,8 +132,7 @@ public class NavigationModel implements ProjectListener {
 	 * Switch to different page
 	 * @param newPage page to be switched
 	 */
-	public void switchPage(Link newPage)
-	{
+	public void switchPage(Link newPage) {
 		_previous.add(_current);
 		_current  = newPage;
 			
@@ -146,11 +143,9 @@ public class NavigationModel implements ProjectListener {
 	 * Notify everyone that page changed
 	 * @param newLink new link
 	 */
-	private void pageChanged(Link newLink)
-	{
+	private void pageChanged(Link newLink) {
 		_navigationSemaphore.acquireUninterruptibly();
-		for (int i = 0; i < _navigationListeners.size(); i++)
-		{
+		for (int i = 0; i < _navigationListeners.size(); i++) {
 			_navigationListeners.get(i).pageChanged(newLink);
 		}
 		_navigationSemaphore.release();
@@ -160,10 +155,8 @@ public class NavigationModel implements ProjectListener {
 	 * Add listener to connection related events
 	 * @param listener listener
 	 */
-	public void addConnectionListener(NavigationListener listener)
-	{
-		if (!_navigationListeners.contains(listener))
-		{
+	public void addConnectionListener(NavigationListener listener) {
+		if (!_navigationListeners.contains(listener)) {
 			_navigationListeners.add(listener);
 		}
 	}
@@ -172,8 +165,7 @@ public class NavigationModel implements ProjectListener {
 	 * Remove listener to connection related events
 	 * @param listener listener
 	 */
-	public void removeConnectionListener(NavigationListener listener)
-	{
+	public void removeConnectionListener(NavigationListener listener) {
 		_navigationSemaphore.acquireUninterruptibly();
 		_navigationListeners.remove(listener);
 		_navigationSemaphore.release();
@@ -181,8 +173,7 @@ public class NavigationModel implements ProjectListener {
 	
 	@Override
 	public void operationSucceeded(DataOperation type, ProjectOperation identifier, String message) {
-		switch (type)
-		{
+		switch (type) {
 		case Custom:
 			switch (identifier)
 			{
@@ -214,5 +205,4 @@ public class NavigationModel implements ProjectListener {
 	private Vector<NavigationListener> _navigationListeners = new Vector<NavigationListener>();
 	/// translation class field
 	private I18n i18n = Scrummer.getI18n(getClass());
-	
 }
