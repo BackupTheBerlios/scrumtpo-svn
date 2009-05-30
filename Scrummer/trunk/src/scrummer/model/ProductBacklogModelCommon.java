@@ -306,17 +306,13 @@ public class ProductBacklogModelCommon {
 	 * @return a list of pbi descriptions
 	 */
 	public Vector<IdValue> fetchPBIsNames(int project, int sprint) {
-	
-		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel)
-		{
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {
 			@Override
-			public void processResult(ResultSet result) 
-			{
+			public void processResult(ResultSet result) {
 				setResult(IdValue.fetchValues(result));		
 			}
 			@Override
-			public void handleException(SQLException ex) 
-			{
+			public void handleException(SQLException ex) {
 				setResult(new Vector<IdValue>());
 				ex.printStackTrace();
 			}
@@ -328,7 +324,6 @@ public class ProductBacklogModelCommon {
 			DBSchemaModel.PBIProject + "=" + project + 
 			" AND " +
 			DBSchemaModel.PBISprint + "=" + sprint);
-		
 		return q.getResult();
 	}
 	
