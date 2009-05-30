@@ -425,9 +425,11 @@ public class DBSchemaModel {
 	public static final String MeasureName = "Measure_name";
 	public static final String MeasureDescription = "Measure_description";
 	
-	public static final String ReleaseTable = "FinalRelease";
+	public static final String FinalReleaseTable = "FinalRelease";
 	public static final String ReleaseId = "Release_id";
 	public static final String ReleaseDescription = "Release_description";
+	
+	public static final String ReleasePBITable = "Release_PBI";
 	
 	public static final String TaskMeasurementResultTable = "Task_measurement_result";
 	public static final String TaskMeasurementResultId = "Measure_id";

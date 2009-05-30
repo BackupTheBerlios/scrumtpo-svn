@@ -42,6 +42,7 @@ public class Models {
 		createTaskTypeModel();
 		createTaskStatusModel();
 		createTaskModel();
+		createReleaseModel();
 	}
 	
 	/**
@@ -374,6 +375,20 @@ public class Models {
 		return _metricModel;
 	}
 	
+	public ReleaseModel createReleaseModel() {
+		if (_releaseModel == null) {
+			_releaseModel = new ReleaseModel(getConnectionModel());
+		}
+		return _releaseModel;
+	}
+	
+	public ReleaseModel getReleaseModel() {
+		if (_releaseModel == null) {
+			throw new NullPointerException("Release model was not created!");
+		}
+		return _releaseModel;
+	}
+	
 	private ConnectionModel _connectionModel = null;
 	private ProjectModel    _projectModel = null;
 	private NavigationModel _navigationModel = null;
@@ -392,4 +407,5 @@ public class Models {
 	private TaskStatusModel _taskstatusModel = null;
 	private TaskTypeModel _tasktypeModel = null;
 	private TaskModel _taskModel = null;
+	private ReleaseModel _releaseModel = null;
 }
