@@ -172,9 +172,8 @@ msgid "Could not retrieve task measures."
 msgstr "Could not retrieve task measures."
 
 #: src/scrummer/model/MetricModelCommon.java:1467
-#, fuzzy
 msgid "Could not retrieve pbi measures."
-msgstr "Could not retrieve sprint measures."
+msgstr "Could not retrieve pbi measures."
 
 #: src/scrummer/model/MetricModelCommon.java:1490
 msgid "Could not retrieve sprint measures."
@@ -241,7 +240,6 @@ msgstr "Customer poll"
 #: src/scrummer/model/MetricModel.java:79
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:49
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:573
-#, fuzzy
 msgid "Developer poll"
 msgstr "Developer poll"
 
@@ -282,7 +280,7 @@ msgstr "Tasks"
 #: src/scrummer/model/swing/ReleaseTableModel.java:32
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:49
 msgid "Release"
-msgstr ""
+msgstr "Release"
 
 #: src/scrummer/model/TaskModelCommon.java:211
 #: src/scrummer/model/TaskModelCommon.java:234
@@ -335,7 +333,7 @@ msgstr "Description"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:35
 msgid "Engineering rate"
-msgstr ""
+msgstr "Engineering rate"
 
 #: src/scrummer/model/swing/AllTaskTableModel.java:36
 #: src/scrummer/model/swing/ReleaseTableModel.java:33
@@ -587,31 +585,31 @@ msgstr "Could not remove task type."
 
 #: src/scrummer/model/MetricModel.java:63
 msgid "Work Effectiveness"
-msgstr ""
+msgstr "Work Effectiveness"
 
 #: src/scrummer/model/MetricModel.java:65
 msgid "Cost Performance Index"
-msgstr ""
+msgstr "Cost Performance Index"
 
 #: src/scrummer/model/MetricModel.java:67
 msgid "Earned Value"
-msgstr ""
+msgstr "Earned Value"
 
 #: src/scrummer/model/MetricModel.java:69
 msgid "PBI Completeness"
-msgstr ""
+msgstr "PBI Completeness"
 
 #: src/scrummer/model/MetricModel.java:71
 msgid "Schedule Performance Index"
-msgstr ""
+msgstr "Schedule Performance Index"
 
 #: src/scrummer/model/MetricModel.java:73
 msgid "Sprint Burndown Chart"
-msgstr ""
+msgstr "Sprint Burndown Chart"
 
 #: src/scrummer/model/MetricModel.java:75
 msgid "Task Completeness"
-msgstr ""
+msgstr "Task Completeness"
 
 #: src/scrummer/model/ImpedimentModelCommon.java:310
 #: src/scrummer/model/ImpedimentModelCommon.java:791
@@ -638,7 +636,7 @@ msgstr "Could not remove task status."
 
 #: src/scrummer/ui/SprintDialog.java:24
 msgid "Sprint Information"
-msgstr ""
+msgstr "Sprint Information"
 
 #: src/scrummer/ui/TitleLink.java:49
 #: src/scrummer/ui/dialog/DevelopersAddDialog.java:93
@@ -782,17 +780,15 @@ msgstr "Length"
 
 #: src/scrummer/ui/dialog/ReleaseEditDialog.java:27
 msgid "Edit Release"
-msgstr ""
+msgstr "Edit Release"
 
 #: src/scrummer/ui/dialog/ReleaseEditDialog.java:49
-#, fuzzy
 msgid "Description must not be an empty string."
-msgstr "Task description must contain at least one nonempty character."
+msgstr "Description must not be an empty string."
 
 #: src/scrummer/ui/dialog/TaskDialog.java:63
-#, fuzzy
 msgid "Engineering hour"
-msgstr "Remaining hours"
+msgstr "Engineering hours"
 
 #: src/scrummer/ui/dialog/TaskDialog.java:67
 msgid "Parent"
@@ -812,49 +808,48 @@ msgstr "No"
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:80
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:79
-#, fuzzy
 msgid "Choose sprint"
-msgstr "New sprint"
+msgstr "Choose sprint"
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:100
-msgid "Sodelovanje z razvojno skupino v asu razvoja"
-msgstr ""
+msgid "Sodelovanje z razvojno skupino v času razvoja"
+msgstr "Cooperation with development team during development"
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:128
-msgid "Odzivnost razvijalcev na elje, spremembe v zahtevah"
-msgstr ""
+msgid "Odzivnost razvijalcev na želje, spremembe v zahtevah"
+msgstr "Rensponsiveness of developers to wishes, changes in requirements"
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:156
-msgid "<html> Popolnost izdelane reitve "
-msgstr ""
+msgid "<html> Popolnost izdelane rešitve "
+msgstr "<html> Application completeness "
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:185
-msgid "<html> Skladnost izdelane reitve s priakovanji "
-msgstr ""
+msgid "<html> Skladnost izdelane reitve s pričakovanji "
+msgstr "<html> Compliance to expectations "
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:214
 msgid "<html> Intuitivnost uporabnikega vmesnika "
-msgstr ""
+msgstr "<html> Ease of use of user interface "
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:243
 msgid "<html> Uporabnost/Koristnost izdelanih programov "
-msgstr ""
+msgstr "<html> Usefulness of made applications "
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:271
 msgid "<html> Odsotnost napak, zanesljivost delovanja, robustnost "
-msgstr ""
+msgstr "<html> Error rate, reliability, "
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:300
 msgid "Kakovost oddanih Sprint Backlog-ov, pravoasnost oddaje"
-msgstr ""
+msgstr "Quality of Sprint Backlogs, on-time delivery"
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:328
-msgid "Splona ocena zadovoljstva z delom razvojne skupine"
-msgstr ""
+msgid "Splošna ocena zadovoljstva z delom razvojne skupine"
+msgstr "General satisfaction mark with development team work"
 
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:356
-msgid "Splona ocena kakovosti izdelanih programov"
-msgstr ""
+msgid "Splšona ocena kakovosti izdelanih programov"
+msgstr "General quality mark of made applications"
 
 #: src/scrummer/ui/dialog/MeasureDialog.java:49
 msgid "Measurement"
@@ -1108,9 +1103,8 @@ msgstr "Interval"
 
 #: src/scrummer/ui/dialog/DateDialog.java:50
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:136
-#, fuzzy
 msgid "Invalid date format."
-msgstr "Wrong date format."
+msgstr "Invalid date format."
 
 #: src/scrummer/ui/dialog/AdminDaysViewDialog.java:54
 msgid "View administrative days"
@@ -1129,18 +1123,16 @@ msgstr ""
 "Click on a table row and then press remove."
 
 #: src/scrummer/ui/dialog/ReleaseAddDialog.java:23
-#, fuzzy
 msgid "Add Release"
-msgstr "Add developers"
+msgstr "Add Release"
 
 #: src/scrummer/ui/dialog/ReleaseAddDialog.java:32
 msgid "Name cannot be empty."
-msgstr ""
+msgstr "Name cannot be empty."
 
 #: src/scrummer/ui/dialog/ReleaseAddDialog.java:52
-#, fuzzy
 msgid "An error has occurred while adding a new release: "
-msgstr "An error has occurred when setting team name"
+msgstr "An error has occurred while adding a new release: "
 
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:40
 #: src/scrummer/ui/MainFrame.java:119
@@ -1205,65 +1197,71 @@ msgstr "Choose employee"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:101
 msgid "<html> Jasnost zastavljenega Product Backlog-a "
-msgstr ""
+msgstr "<html> Clarity of Product Backlog"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:136
-msgid "<html> Ocena asa za posamezno zahtevo v Product Backlogu "
-msgstr ""
+msgid "<html> Ocena časa za posamezno zahtevo v Product Backlogu "
+msgstr "<html> Estimated time for backlog item"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:169
 msgid "<html> Administracija pri metodologiji Scrum "
-msgstr ""
+msgstr "<html> Administration at Scrum methodology "
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:202
 msgid "<html> Obremenjenost z administracijo "
-msgstr ""
+msgstr "<html>  with administration "
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:235
-msgid "<html> Tehnine teave na zaetku Sprinta "
-msgstr ""
+msgid "<html> Tehnične težave na začetku Sprinta "
+msgstr "<html> Technical problems at start of Sprint"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:268
 msgid ""
-"<html> Vsebinske teave (razumevanje zahtevane funkcionalnosti) na zaetku  "
+"<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na začetku  "
 "Sprinta "
 msgstr ""
+"<html> Content related problems (understanding desired functionality) at start "
+" of Sprint "
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:301
 msgid ""
-"<html> Tehnine teave na koncu Sprinta (5 - ni bilo teav, 1 - bilo je veliko "
-"teav)</html>"
+"<html> Tehnine težave na koncu Sprinta (5 - ni bilo težav, 1 - bilo je veliko "
+"težav)</html>"
 msgstr ""
+"<html> Technical problems at end of Sprint (5 - no problems, 1 - many "
+"problems)</html>"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:333
 msgid ""
-"<html> Vsebinske teave (razumevanje zahtevane funkcionalnosti) na koncu "
+"<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu "
 "Sprinta "
 msgstr ""
+"<html> Content related problems (understanding desired functionality) at end of "
+"Sprint "
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:366
 msgid "Sodelovanje s Scrum Masterjem"
-msgstr ""
+msgstr "Cooperation with Scrum Master"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:398
 msgid "Sodelovanje s Product Owner-jem"
-msgstr ""
+msgstr "Cooperation with Product Owner"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:430
 msgid "Sodelovanje znotraj razvojne skupine"
-msgstr ""
+msgstr "Cooperation between team members"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:462
 msgid "<html> Primernost obsega dela na projektu (Ali je obseg dela "
-msgstr ""
+msgstr "<html> Adequacy of team work scope (Has scope been "
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:495
-msgid "<html> Splopna ocena vaega zadovoljstva s potekom dela na projektu"
-msgstr ""
+msgid "<html> Splopna ocena vašega zadovoljstva s potekom dela na projektu"
+msgstr "<html> General mark of your satisfaction with project work"
 
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:527
-msgid "<html> Splona ocena metodologije Scrum (Ali je ta metodologija "
-msgstr ""
+msgid "<html> Splošna ocena metodologije Scrum (Ali je ta metodologija "
+msgstr "<html> General mark of Scrum methodology (Is this methodology "
 
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:70
 msgid "View Product Backlog"
@@ -1296,14 +1294,12 @@ msgid "Add Task Measurement"
 msgstr "Add Task Measurement"
 
 #: src/scrummer/ui/dialog/MeasureAddDialog.java:45
-#, fuzzy
 msgid "Add PBI Measurement"
-msgstr "Add Task Measurement"
+msgstr "Add PBI Measurement"
 
 #: src/scrummer/ui/dialog/MeasureAddDialog.java:48
-#, fuzzy
 msgid "Add Release Measurement"
-msgstr "Add Task Measurement"
+msgstr "Add Release Measurement"
 
 #: src/scrummer/ui/dialog/MeasureAddDialog.java:61
 #: src/scrummer/ui/dialog/MeasureChangeDialog.java:51
@@ -1634,93 +1630,88 @@ msgid "Calculate Work Effectiveness"
 msgstr ""
 
 #: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:35
-#, fuzzy
 msgid "Developer Poll"
-msgstr "Developer"
+msgstr "Developer Poll"
 
 #: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:41
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:42
 #: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:38
-#, fuzzy
 msgid "Release/Sprint Information"
-msgstr "Error while saving sprint information"
+msgstr "Release/Sprint Information"
 
 #: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:48
 #: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:45
-#, fuzzy
 msgid "Question"
-msgstr "Testing"
+msgstr "Question"
 
 #: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:56
 msgid "Plot Developer Question Poll"
-msgstr ""
+msgstr "Plot Developer Question Poll"
 
 #: src/scrummer/ui/dialog/measure/GraphEarnedValueDialog.java:30
 msgid "Earned value"
-msgstr ""
+msgstr "Earned value"
 
 #: src/scrummer/ui/dialog/measure/GraphEarnedValueDialog.java:55
-#, fuzzy
 msgid "An error has occurred while calculating earned value: "
-msgstr "An error has occurred when setting team name"
+msgstr "An error has occurred while calculating earned value: "
 
 #: src/scrummer/ui/dialog/measure/GraphTaskCompleteDialog.java:30
 #: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:30
 msgid "Schedule performance index"
-msgstr ""
+msgstr "Schedule performance index"
 
 #: src/scrummer/ui/dialog/measure/GraphTaskCompleteDialog.java:55
 msgid "Error occurred while calculating tasks completed in sprint: "
-msgstr ""
+msgstr "Error occurred while calculating tasks completed in sprint: "
 
 #: src/scrummer/ui/dialog/measure/GraphSpentWorkDialog.java:27
 msgid "Sprint burndown chart"
-msgstr ""
+msgstr "Sprint burndown chart"
 
 #: src/scrummer/ui/dialog/measure/GraphSpentWorkDialog.java:52
-#, fuzzy
 msgid "Error occurred while calculating sprint burndown information: "
-msgstr "Error while saving sprint information"
+msgstr "Error occurred while calculating sprint burndown information: "
 
 #: src/scrummer/ui/dialog/measure/SPIDialog.java:34
 msgid "Calculate SPI"
-msgstr ""
+msgstr "Calculate SPI"
 
 #: src/scrummer/ui/dialog/measure/GraphWorkEffectivenessDialog.java:30
 msgid "Work effectiveness"
-msgstr ""
+msgstr "Work effectiveness"
 
 #: src/scrummer/ui/dialog/measure/GraphWorkEffectivenessDialog.java:55
 msgid "Error occurred while calculating work effectiveness: "
-msgstr ""
+msgstr "Error occurred while calculating work effectiveness: "
 
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:36
 msgid "PBI Completion"
-msgstr ""
+msgstr "PBI Completion"
 
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:84
 msgid "Error occurred while calculating pbi completed in sprint: "
-msgstr ""
+msgstr "Error occurred while calculating pbi completed in sprint: "
 
 #: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:55
 msgid "Error occurred while calculating schedule performance indices: "
-msgstr ""
+msgstr "Error occurred while calculating schedule performance indices: "
 
 #: src/scrummer/ui/dialog/measure/CPIDialog.java:33
 msgid "Calculate CPI"
-msgstr ""
+msgstr "Calculate CPI"
 
 #: src/scrummer/ui/dialog/measure/EarnedValueDialog.java:30
 msgid "Calculate Earned Value"
-msgstr ""
+msgstr "Calculate Earned Value"
 
 #: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:32
 msgid "Customer Poll"
-msgstr ""
+msgstr "Customer Poll"
 
 #: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:53
 msgid "Plot Customer Question Poll"
-msgstr ""
+msgstr "Plot Customer Question Poll"
 
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:31
 #: src/scrummer/ui/MainFrame.java:127
@@ -1883,6 +1874,8 @@ msgid ""
 "Could not open dialog because a measure is not selected. Please select it "
 "and then click Edit"
 msgstr ""
+"Could not open dialog because a measure is not selected. Please select it "
+"and then click Edit"
 
 #: src/scrummer/ui/page/ProjectPage.java:57
 msgid "Project Name:"
@@ -1894,11 +1887,11 @@ msgstr "Error while saving project data"
 
 #: src/scrummer/ui/page/MetricGraphPage.java:66
 msgid "Time"
-msgstr ""
+msgstr "Time"
 
 #: src/scrummer/ui/page/MetricGraphPage.java:106
 msgid "Show"
-msgstr ""
+msgstr "Show"
 
 #~ msgid "Metric plots"
 #~ msgstr "Metrics plots"
