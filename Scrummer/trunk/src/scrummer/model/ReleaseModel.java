@@ -3,6 +3,7 @@ package scrummer.model;
 import java.util.Vector;
 
 import scrummer.listener.ReleaseListener;
+import scrummer.model.swing.ReleaseComboBoxModel;
 import scrummer.model.swing.ReleaseTableModel;
 import scrummer.util.Operations;
 
@@ -16,6 +17,8 @@ public class ReleaseModel {
 			new ReleaseModelCommon(connectionModel, _operation);
 		_releaseTableModel = 
 			new ReleaseTableModel(_releaseModelCommon);
+		_releaseComboBoxModel =
+			new ReleaseComboBoxModel(_releaseModelCommon);
 	}
 	
 	/**
@@ -122,6 +125,12 @@ public class ReleaseModel {
 		return _releaseTableModel;
 	}
 	
+	public ReleaseComboBoxModel getReleaseComboBoxModel() {
+		return _releaseComboBoxModel;
+	}
+	
+	/// all release combo box model
+	private ReleaseComboBoxModel _releaseComboBoxModel;
 	/// release table model
 	private ReleaseTableModel _releaseTableModel;
 	/// operation notifier
