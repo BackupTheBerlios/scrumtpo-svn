@@ -2,6 +2,7 @@ package scrummer.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -16,6 +17,7 @@ import scrummer.model.graph.MetricDataSet;
 import scrummer.model.swing.MetricComboBoxModel;
 import scrummer.model.swing.MetricTableModel;
 import scrummer.util.Operations;
+import scrummer.util.ResultQuery;
 
 /**
  * This model deals with metrics(Task_measurement_result, Sprint_measurement_result, 
@@ -70,8 +72,9 @@ public class MetricModel {
 	 * @param projectModel project model
 	 * @param sprintBacklogModel sprint backlog model
 	 */
-	public MetricModel(ConnectionModel connectionModel, ProjectModel projectModel, SprintBacklogModel sprintBacklogModel) {
+	public MetricModel(ConnectionModel connectionModel, ProjectModel projectModel, SprintBacklogModel sprintBacklogModel, ReleaseModel releaseModel) {
 		_projectModel = projectModel;
+		_releaseModel = releaseModel;
 		_metricModelCommon = 
 			new MetricModelCommon(connectionModel, _operation);
 		_metricComboBoxModel = 
@@ -823,6 +826,31 @@ public class MetricModel {
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
+	/**
+	 * Calculate pbi completeness
+	 * @param sprintId sprint 
+	 * @param releaseId release
+	 */
+	public void calculatePBIComplete(int sprintId, int releaseId) {
+		int pbicount = _releaseModel.fetchPbis(releaseId).size();
+		int allpbicount = _metricModelCommon.calculatePBISprintCount(sprintId);
+		java.util.Date sprintStart = _sprintBacklogModel.getBeginDate(sprintId);
+		java.util.Date sprintEnd = _sprintBacklogModel.getEndDate(sprintId);
+		
+		MetricDataSet.IntervalData data = new MetricDataSet.IntervalData(sprintStart, sprintEnd);
+		BigDecimal res = BigDecimal.ZERO;
+		if (allpbicount > 0) {
+			res = new BigDecimal((float)pbicount / (float)allpbicount);
+		}
+		data.add(sprintStart, res);
+		data.add(sprintEnd, res);
+		
+		_metricDataSet.setData(MetricEnum.PBICompleteness.toString(), data);
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+	
+	/// release model
+	private ReleaseModel _releaseModel;
 	/// project model
 	private ProjectModel _projectModel;
 	/// sprint backlog model
@@ -837,4 +865,5 @@ public class MetricModel {
 	private MetricModelCommon _metricModelCommon;
 	/// project event listeners
 	private Operations.MetricOperation _operation = new Operations.MetricOperation();
+	
 }

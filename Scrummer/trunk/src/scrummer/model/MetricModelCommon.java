@@ -1972,6 +1972,32 @@ public class MetricModelCommon {
 		return q.getResult();		
 	}
 	
+	/**
+	 * Calculate number of pbi's on given sprint
+	 * @param sprintId sprint
+	 * @return pbi count
+	 */
+	public int calculatePBISprintCount(int sprintId) {
+		ResultQuery<Integer> q = new ResultQuery<Integer>(_connectionModel) {
+        @Override
+        public void processResult(ResultSet result) throws SQLException {
+        	result.beforeFirst();
+        	while (result.next()) {
+        		setResult(result.getInt(1));
+        	}
+        }
+        @Override
+        public void handleException(SQLException ex) {
+            setResult(0);
+            ex.printStackTrace();
+        }
+        };
+        q.queryResult(
+        "SELECT COUNT(*) FROM " + DBSchemaModel.PBITable + " WHERE " +
+        DBSchemaModel.SprintId + "=" + sprintId);
+        return q.getResult();
+	}
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
