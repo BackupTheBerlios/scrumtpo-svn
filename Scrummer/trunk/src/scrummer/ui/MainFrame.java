@@ -122,17 +122,6 @@ public class MainFrame
 		
 		fileMenu.addSeparator();
 		
-		addMenuEntry(fileMenu, i18n.tr("Insert into product backlog"), 	KeyEvent.VK_A, "AddProductBacklog");
-		addMenuEntry(fileMenu, i18n.tr("View product backlog"), KeyEvent.VK_P, "ViewProductBacklog");
-		addMenuEntry(fileMenu, i18n.tr("Change product backlog item"), KeyEvent.VK_P, "ChangeProductBacklogItem");
-		
-		fileMenu.addSeparator();
-		addMenuEntry(fileMenu, i18n.tr("Sprint planning meeting"), KeyEvent.VK_S, "SprintPlanMeet");
-		addMenuEntry(fileMenu, i18n.tr("View Sprint Backlog"), KeyEvent.VK_B, "ViewSprintBacklog");
-		addMenuEntry(fileMenu, i18n.tr("Daily scrum meeting"), KeyEvent.VK_Z, "DailyScrumMeet");
-		
-		fileMenu.addSeparator();
-		
 		addMenuEntry(fileMenu, i18n.tr("Exit"), KeyEvent.VK_X, "Exit");
 		
 		JMenu sifrantiMenu = new JMenu(i18n.tr("Code List"));
