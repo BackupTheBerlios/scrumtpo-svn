@@ -235,7 +235,7 @@ msgstr "Graph"
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:53
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:396
 msgid "Customer poll"
-msgstr ""
+msgstr "Customer poll"
 
 #: src/scrummer/model/NavigationModel.java:79
 #: src/scrummer/model/MetricModel.java:79
@@ -243,7 +243,7 @@ msgstr ""
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:573
 #, fuzzy
 msgid "Developer poll"
-msgstr "Developer"
+msgstr "Developer poll"
 
 #: src/scrummer/model/NavigationModel.java:81
 msgid "Product Backlog"
