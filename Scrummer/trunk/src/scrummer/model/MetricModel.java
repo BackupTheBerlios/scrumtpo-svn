@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Vector;
 
 import org.xnap.commons.i18n.I18n;
@@ -14,8 +15,11 @@ import scrummer.enumerator.MetricOperation;
 import scrummer.listener.MetricListener;
 import scrummer.model.MetricModelCommon.Measurement;
 import scrummer.model.graph.MetricDataSet;
+import scrummer.model.graph.QuestionDataSet;
 import scrummer.model.swing.MetricComboBoxModel;
 import scrummer.model.swing.MetricTableModel;
+import scrummer.model.swing.QuestionCustomerComboBoxModel;
+import scrummer.model.swing.QuestionDeveloperComboBoxModel;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
 
@@ -42,7 +46,12 @@ public class MetricModel {
 		/// number of tasks completed in sprint / total tasks in sprint
 		TaskCompleteness,
 		/// number of pbi's completed for release / total number of pbi's
-		PBICompleteness;
+		PBICompleteness,
+		/// customer questioanairre average results
+		CustomerPoll,
+		/// developer questionaire average results
+		DeveloperPoll		
+		;
 		
 		/**
 		 * Fetch translated enum string
@@ -51,13 +60,24 @@ public class MetricModel {
 		 */
 		public static String convert(MetricEnum en) {
 			switch (en) {
-			case WorkEffectiveness: return i18n.tr("Work Effectiveness");
-			case CPI: return i18n.tr("Cost Performance Index");
-			case EarnedValue: return i18n.tr("Earned Value");
-			case PBICompleteness: return i18n.tr("PBI Completeness");
-			case SPI: return i18n.tr("Schedule Performance Index");
-			case SprintBurndown: return i18n.tr("Sprint Burndown Chart");
-			case TaskCompleteness: return i18n.tr("Task Completeness");
+			case WorkEffectiveness: 
+				return i18n.tr("Work Effectiveness");
+			case CPI: 
+				return i18n.tr("Cost Performance Index");
+			case EarnedValue: 
+				return i18n.tr("Earned Value");
+			case PBICompleteness: 
+				return i18n.tr("PBI Completeness");
+			case SPI: 
+				return i18n.tr("Schedule Performance Index");
+			case SprintBurndown: 
+				return i18n.tr("Sprint Burndown Chart");
+			case TaskCompleteness: 
+				return i18n.tr("Task Completeness");
+			case CustomerPoll: 
+				return i18n.tr("Customer poll");
+			case DeveloperPoll: 
+				return i18n.tr("Developer poll");
 			default: return "";
 			}
 		}
@@ -85,6 +105,12 @@ public class MetricModel {
 			new MetricDataSet(this);
 		_sprintBacklogModel = 
 			sprintBacklogModel;
+		_questionDataSet = 
+			new QuestionDataSet();
+		_questionCustomerComboBoxModel = 
+			new QuestionCustomerComboBoxModel(_metricModelCommon);
+		_questionDeveloperComboBoxModel =
+			new QuestionDeveloperComboBoxModel(_metricModelCommon);
 	}
 	
 	/**
@@ -499,6 +525,27 @@ public class MetricModel {
 		return _metricDataSet;
 	}
 	
+	/** 
+	 * @return question data set
+	 */
+	public QuestionDataSet getQuestionDataSet() {
+		return _questionDataSet;
+	}
+	
+	/**
+	 * @return combo box with all customer questions
+	 */
+	public QuestionCustomerComboBoxModel getQuestionCustomerComboBoxModel() {
+		return _questionCustomerComboBoxModel;
+	}
+	
+	/**
+	 * @return combo box with all developer questions
+	 */
+	public QuestionDeveloperComboBoxModel getQuestionDeveloperComboBoxModel() {
+		return _questionDeveloperComboBoxModel;
+	}
+	
 	/**
 	 * Fetch sprint measurements 
 	 * 
@@ -849,6 +896,32 @@ public class MetricModel {
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
+	/**
+	 * Calculate customer question marks
+	 * @param sprintId sprint
+	 * @param questionId question id
+	 */
+	public void calculateCustomerQuestionMark(int sprintId, int questionId) {	
+		HashMap<String, Integer> marks = _metricModelCommon.calculateCustomerQuestionMark(sprintId, questionId);		
+		_questionDataSet.setValues(marks);		
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+	
+	/**
+	 * Calculate dev question marks
+	 * @param sprintId sprint
+	 * @param questionId question id
+	 */
+	public void calculateDeveloperQuestionMark(int sprintId, int questionId) {	
+		HashMap<String, Integer> marks = _metricModelCommon.calculateDeveloperQuestionMark(sprintId, questionId);		
+		_questionDataSet.setValues(marks);		
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
+	}
+	
+	/// customer questions
+	private QuestionCustomerComboBoxModel _questionCustomerComboBoxModel;
+	/// developer questions
+	private QuestionDeveloperComboBoxModel _questionDeveloperComboBoxModel;
 	/// release model
 	private ReleaseModel _releaseModel;
 	/// project model
@@ -857,6 +930,8 @@ public class MetricModel {
 	private SprintBacklogModel _sprintBacklogModel;
 	/// graph metric data set
 	private MetricDataSet _metricDataSet;
+	/// question data set
+	private QuestionDataSet _questionDataSet;
 	/// metric table model
 	private MetricTableModel _metricTableModel;
 	/// metric name combo box
@@ -865,5 +940,4 @@ public class MetricModel {
 	private MetricModelCommon _metricModelCommon;
 	/// project event listeners
 	private Operations.MetricOperation _operation = new Operations.MetricOperation();
-	
 }

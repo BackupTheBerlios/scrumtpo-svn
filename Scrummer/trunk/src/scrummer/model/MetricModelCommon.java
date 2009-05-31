@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Vector;
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
@@ -1324,6 +1325,53 @@ public class MetricModelCommon {
 	}
 	
 	/**
+	 * Fetch id, name pairs for customer questions
+	 * @return metric descriptions
+	 */
+	public Vector<IdValue> fetchCustomerMetricDescriptions() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}					
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.MeasureId + ", " +
+						DBSchemaModel.MeasureDescription + 
+			" FROM " + DBSchemaModel.MeasureTable + 
+			" WHERE " + DBSchemaModel.MeasureName + " LIKE 'q%customer'");
+		return q.getResult();
+	}
+	
+	/**
+	 * Fetch id, name pairs for developer questions
+	 * @return metric descriptions
+	 */
+	public Vector<IdValue> fetchDeveloperMetricDescriptions() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {	
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				ex.printStackTrace();
+			}					
+		};
+		q.queryResult(
+			"SELECT " + DBSchemaModel.MeasureId + ", " +
+						DBSchemaModel.MeasureDescription + 
+			" FROM " + DBSchemaModel.MeasureTable + 
+			" WHERE " + DBSchemaModel.MeasureName + " LIKE 'q%developer'");
+		return q.getResult();
+	}
+	
+	
+	/**
 	 * General metric data fetch rows
 	 * @param id id of task, sprint, ...
 	 * @param metricId metric id
@@ -1998,10 +2046,84 @@ public class MetricModelCommon {
         return q.getResult();
 	}
 	
+	/**
+	 * Calculate occurrences for developer questions 
+	 * @param sprintId sprint
+	 * @param questionId question id
+	 * @return mapping of marks to their occurrences
+	 */
+	public HashMap<String, Integer> calculateDeveloperQuestionMark(int sprintId, int questionId) {
+		ResultQuery<HashMap<String, Integer>> q = new ResultQuery<HashMap<String, Integer>>(_connectionModel) {
+        @Override
+        public void processResult(ResultSet result) throws SQLException {
+        	HashMap<String, Integer> res = new HashMap<String, Integer>();
+        	result.beforeFirst();
+        	while (result.next()) {
+        		res.put(result.getString(1), result.getInt(2));
+        	}
+        	setResult(res);
+        }
+        @Override
+        public void handleException(SQLException ex) {
+        	setResult(new HashMap<String, Integer>());
+            ex.printStackTrace();
+        }
+        };
+        q.queryResult(
+        "SELECT " +
+        DBSchemaModel.DeveloperPollMeasurementResultResult + ", " + 
+        " COUNT(*) as Occurrence " + 
+        " FROM " + 
+        DBSchemaModel.DeveloperPollMeasurementResultTable + 
+        " NATURAL JOIN " + DBSchemaModel.MeasureTable + 
+        " WHERE " +
+        DBSchemaModel.SprintId + "=" + sprintId + " AND " + 
+        DBSchemaModel.DeveloperPollMeasurementResultId + "=" + questionId + 
+        " GROUP BY " + DBSchemaModel.DeveloperPollMeasurementResultResult);
+        return q.getResult();
+	}	
+	
+	/**
+	 * Calculate occurrences for customer questions 
+	 * @param sprintId sprint
+	 * @param questionId question id
+	 * @return mapping of marks to their occurrences
+	 */
+	public HashMap<String, Integer> calculateCustomerQuestionMark(int sprintId, int questionId) {
+		ResultQuery<HashMap<String, Integer>> q = new ResultQuery<HashMap<String, Integer>>(_connectionModel) {
+	        @Override
+	        public void processResult(ResultSet result) throws SQLException {
+	        	HashMap<String, Integer> res = new HashMap<String, Integer>();
+	        	result.beforeFirst();
+	        	while (result.next()) {
+	        		res.put(result.getString(1), result.getInt(2));
+	        	}
+	        	setResult(res);
+	        }
+	        @Override
+	        public void handleException(SQLException ex) {
+	        	setResult(new HashMap<String, Integer>());
+	            ex.printStackTrace();
+	        }
+	        };
+	        q.queryResult(
+	        "SELECT " +
+	        DBSchemaModel.CustomerPollMeasurementResultResult + ", " + 
+	        " COUNT(*) as Occurrence " + 
+	        " FROM " + 
+	        DBSchemaModel.CustomerPollMeasurementResultTable + 
+	        " NATURAL JOIN " + DBSchemaModel.MeasureTable + 
+	        " WHERE " +
+	        DBSchemaModel.SprintId + "=" + sprintId + " AND " + 
+	        DBSchemaModel.CustomerPollMeasurementResultId + "=" + questionId + 
+	        " GROUP BY " + DBSchemaModel.CustomerPollMeasurementResultResult);
+	        return q.getResult();
+	}	
+	
 	/// connection model
 	private ConnectionModel _connectionModel;
 	/// developer data operation notifier
 	private Operations.MetricOperation _operation;
 	/// translation class field
-	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());	
+	private org.xnap.commons.i18n.I18n i18n = Scrummer.getI18n(getClass());
 }
