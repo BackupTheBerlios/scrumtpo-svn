@@ -30,6 +30,7 @@ public class SprintDialog extends TwoButtonDialog {
 		Models m = Scrummer.getModels();
 		SprintBacklogModel sbmodel = m.getSprintBacklogModel();
 		_sprintInput.setIVModel(sbmodel.getSprintProjectComboBoxModel());
+		// 		getSprintProjectComboBoxModel());
 		
 		BottomPanel.setBorder(BorderFactory.createEmptyBorder(0, k, k, k - 3));
 		
