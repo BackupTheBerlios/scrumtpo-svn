@@ -48,7 +48,7 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 		super();
 		_image = image;
 		
-		float d = 1.0f / 273.0f;
+		float d = 1.0f / 273.0f;	
 		_kernel = new float [] 
  		{ 1, 4, 7, 4, 1,
  		  4, 16, 26, 16, 4,
@@ -56,9 +56,11 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
  		  4, 16, 26, 16, 4,
  		  1, 4, 7, 4, 1
  		};
+	     
 		for (int i = 0; i < _kernel.length; i++) {
 			_kernel[i] *= d;
 		}
+		
  		Kernel k = new Kernel(5, 5, _kernel);
  		ConvolveOp cop = new ConvolveOp(k);
  		_copy = cop.filter(_image, null);
