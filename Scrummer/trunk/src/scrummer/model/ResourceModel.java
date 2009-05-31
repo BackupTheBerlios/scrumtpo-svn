@@ -36,7 +36,17 @@ public class ResourceModel {
 		/// product backlog
 		ProductBacklog,
 		/// sprint backlog
-		SprintBacklog
+		SprintBacklog,
+		/// release icon
+		Release,
+		/// metric icon
+		Metric,		
+		/// general tabular data icon
+		Table,
+		/// graph icon
+		Graph,
+		/// questionairs
+		Question
 		;
 		
 		/**
@@ -64,6 +74,16 @@ public class ResourceModel {
 				return r("pb.png");
 			case SprintBacklog:
 				return r("sprint.png");
+			case Metric:
+				return r("metric.png");
+			case Release:
+				return r("release.png");
+			case Table:
+				return r("table.png");
+			case Graph:
+				return r("graph.png");
+			case Question:
+				return r("questionaire.png");
 			}
 			
 			throw new ValueInvalid(image.toString(), "Unknown image path!");
