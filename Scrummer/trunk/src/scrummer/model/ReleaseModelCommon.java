@@ -3,11 +3,14 @@ package scrummer.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+
+import scrummer.model.DBSchemaModel.IdValue;
 import scrummer.util.ObjectRow;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.ReleaseOperation;
 import scrummer.util.Operations;
 import scrummer.util.ResultQuery;
+import sun.security.pkcs11.Secmod.DbMode;
 
 public class ReleaseModelCommon {
 
@@ -380,9 +383,30 @@ public class ReleaseModelCommon {
 			DBSchemaModel.ReleaseId + "=" + releaseId);
 		return q.getResult();
 	}
+
+	/**
+	 * Fetch all releases
+	 * @return all releases
+	 */
+	public Vector<IdValue> fetchReleases() {
+		ResultQuery<Vector<IdValue>> q = new ResultQuery<Vector<IdValue>>(_connectionModel) {
+			@Override
+			public void processResult(ResultSet result) throws SQLException {
+				setResult(IdValue.fetchValues(result));				
+			}
+			@Override
+			public void handleException(SQLException ex) {
+				setResult(new Vector<IdValue>());
+				ex.printStackTrace();
+			}
+		};
+		q.queryResult("SELECT " + DBSchemaModel.ReleaseId + ", " + DBSchemaModel.ReleaseDescription + " FROM " + DBSchemaModel.FinalReleaseTable);
+		return q.getResult();
+	}
 	
 	/// operation notifier
 	private Operations.ReleaseOperation _operation;
 	/// connection model
-	private ConnectionModel _connectionModel;	
+	private ConnectionModel _connectionModel;
+	
 }
