@@ -150,6 +150,26 @@ public class Util {
 			case SprintBacklog:
 				image = res.get(ResourceModel.Image.SprintBacklog);
 				break;
+			case Metric:
+				image = res.get(ResourceModel.Image.Metric);
+				break;
+			case Release:
+				image = res.get(ResourceModel.Image.Release);
+				break;
+			case MetricReport:
+				image = res.get(ResourceModel.Image.Graph);
+				break;
+			case CustomerPoll:
+			case DeveloperPoll:
+				image = res.get(ResourceModel.Image.Question);
+				break;
+			case SprintBacklogAbsent:
+			case SprintBacklogHurdles:
+			case SprintBacklogMetric:
+			case SprintBacklogTasks:
+			case MetricEdit:
+				image = res.get(ResourceModel.Image.Table);
+				break;
 			}
 			
 			scrummer.ui.Link linkControl = 
