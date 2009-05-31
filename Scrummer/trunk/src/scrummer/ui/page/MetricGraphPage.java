@@ -25,8 +25,11 @@ import scrummer.model.MetricModel;
 import scrummer.model.Models;
 import scrummer.model.MetricModel.MetricEnum;
 import scrummer.model.graph.MetricDataSet;
+import scrummer.model.graph.QuestionDataSet;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
+import scrummer.ui.dialog.measure.GraphCustomerPollDialog;
+import scrummer.ui.dialog.measure.GraphDeveloperPollDialog;
 import scrummer.ui.dialog.measure.GraphEarnedValueDialog;
 import scrummer.ui.dialog.measure.GraphPBICompleteDialog;
 import scrummer.ui.dialog.measure.GraphSPIDialog;
@@ -34,6 +37,7 @@ import scrummer.ui.dialog.measure.GraphSpentWorkDialog;
 import scrummer.ui.dialog.measure.GraphTaskCompleteDialog;
 import scrummer.ui.dialog.measure.GraphWorkEffectivenessDialog;
 import scrummer.uicomponents.StandardButton;
+import sun.io.CharToByteCp1025;
 
 /**
  * Graph display page
@@ -61,14 +65,7 @@ public class MetricGraphPage
 				i18n.tr("Graph"), 
 				i18n.tr("Time"), 
 				"", _metricDataSet, 
-				true, true, true);
-		/*
-			ChartFactory.createXYLineChart(
-				i18n.tr("Graf"), 
-				"1", "10", 
-				_metricDataSet, 
-				PlotOrientation.VERTICAL, true, true, true);
-		*/
+				true, true, true);	
 		
 		chart.setBackgroundPaint(Color.WHITE);
 		chart.getPlot().setOutlinePaint(Color.RED);
@@ -78,8 +75,22 @@ public class MetricGraphPage
 		chart.getXYPlot().addChangeListener(this);
 		_chart = chart;
 		
-		ChartPanel cp = new ChartPanel(chart);
-		cp.setMaximumSize(new Dimension(500,1000));		
+		_timeChart = chart;
+		
+		_questionDataSet = _metricModel.getQuestionDataSet();
+		_pieChart = 
+			ChartFactory.createPieChart(
+				i18n.tr("Graph"), 
+				_questionDataSet, 
+				true, true, true);
+		_pieChart.setBackgroundPaint(Color.WHITE);
+		_pieChart.getPlot().setBackgroundPaint(Color.WHITE);
+		_pieChart.getPlot().addChangeListener(this);
+				
+		// _columnChart = ChartFactory.createBarChart(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+		
+		_chartPanel = new ChartPanel(_pieChart);
+		_chartPanel.setMaximumSize(new Dimension(500,1000));		
 		
 		Box vertBox = new Box(BoxLayout.Y_AXIS);
 		vertBox.setMinimumSize(new Dimension(800, 480));
@@ -101,7 +112,7 @@ public class MetricGraphPage
 		graphSelectionPanel.add(showButton);
 		
 		vertBox.add(graphSelectionPanel);
-		vertBox.add(cp);
+		vertBox.add(_chartPanel);
 		
 		add(vertBox);
 	}
@@ -115,7 +126,21 @@ public class MetricGraphPage
 	
 	@Override
 	public void plotChanged(PlotChangeEvent arg0) {
-		// _chart.getXYPlot()
+		if (_chartPanel != null) {
+			JFreeChart origin = arg0.getChart();
+			// if (origin != _chartPanel.getChart()) {
+			/*
+				if (origin == _columnChart) {
+					_chartPanel.setChart(_columnChart);
+				} else if (origin == _pieChart) {
+					_chartPanel.setChart(_pieChart);
+				} else if (origin == _timeChart) {
+					_chartPanel.setChart(_timeChart);
+				}
+				_chartPanel.revalidate();
+				*/
+			// }
+		}
 	}
 	
 	@Override
@@ -127,18 +152,21 @@ public class MetricGraphPage
 				GraphWorkEffectivenessDialog dialog = new GraphWorkEffectivenessDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
+				_chartPanel.setChart(_timeChart);
 				break;
 			}
 			case EarnedValue: {
 				GraphEarnedValueDialog dialog = new GraphEarnedValueDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
+				_chartPanel.setChart(_timeChart);
 				break;
 			}
 			case SPI: {
 				GraphSPIDialog dialog = new GraphSPIDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
+				_chartPanel.setChart(_timeChart);
 				break;
 			}
 			case CPI: break;
@@ -146,18 +174,35 @@ public class MetricGraphPage
 				GraphSpentWorkDialog dialog = new GraphSpentWorkDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
+				_chartPanel.setChart(_timeChart);
 				break;
 			}
 			case TaskCompleteness: {
 				GraphTaskCompleteDialog dialog = new GraphTaskCompleteDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
+				_chartPanel.setChart(_timeChart);
 				break;
 			}
 			case PBICompleteness: {
 				GraphPBICompleteDialog dialog = new GraphPBICompleteDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
+				_chartPanel.setChart(_timeChart);
+				break;
+			}
+			case CustomerPoll: {
+				GraphCustomerPollDialog dialog = new GraphCustomerPollDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				_chartPanel.setChart(_pieChart);
+				break;
+			}
+			case DeveloperPoll: {
+				GraphDeveloperPollDialog dialog = new GraphDeveloperPollDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				_chartPanel.setChart(_pieChart);
 				break;
 			}
 			}
@@ -173,6 +218,14 @@ public class MetricGraphPage
 		}
 	}
 	
+	/// time chart
+	private JFreeChart _timeChart;
+	/// pie chart
+	private JFreeChart _pieChart;
+	/// column chart
+	private JFreeChart _columnChart;
+	/// panel that contains some chart
+	private ChartPanel _chartPanel;
 	/// combo box for selecting which graph to display
 	private JComboBox _graphSelectionInput;
 	/// selected metric
@@ -181,6 +234,8 @@ public class MetricGraphPage
 	private MetricModel _metricModel;
 	/// metric data set
 	private MetricDataSet _metricDataSet;
+	/// questionaire data set
+	private QuestionDataSet _questionDataSet;
 	/// chart object
 	private JFreeChart _chart;
 	/// translation class field
