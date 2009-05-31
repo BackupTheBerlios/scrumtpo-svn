@@ -34,7 +34,10 @@ public class SprintProjectComboBoxModel extends IdValueComboBoxModel {
 	 */
 	private void refreshRows()
 	{
-		Vector<Integer> sprints = _sprintBacklogModelCommon.fetchSprints(_projectModel.getCurrentProjectId());
+		setValues(_sprintBacklogModelCommon.fetchSprintDescriptions(_projectModel.getCurrentProjectId()));
+		// Vector<Integer> sprints = _sprintBacklogModelCommon.fetchSprints(_projectModel.getCurrentProjectId());
+		// setValues(sprints);
+		/*
 		Vector<IdValue> duplicated = new Vector<IdValue>();
 		for (int i = 0; i < sprints.size(); i++)
 		{
@@ -42,6 +45,7 @@ public class SprintProjectComboBoxModel extends IdValueComboBoxModel {
 			duplicated.add(current);
 		}
 		setValues(duplicated);
+		*/
 	}
 
 	/// project model
