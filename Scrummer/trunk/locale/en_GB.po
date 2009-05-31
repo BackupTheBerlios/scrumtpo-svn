@@ -1,3 +1,22 @@
+# Scrummer - Angleški prevod.
+# Copyright (C) 2009
+# This file is distributed under the same license as the Scrummer package.
+# Simon Mihevc <simonmihevc@volja.net>, 2009.
+#
+#: src/scrummer/model/MetricModelCommon.java:1231
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-31 22:16+0200\n"
+"PO-Revision-Date: 2009-03-17 23:03+0000\n"
+"Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
+"Language-Team: slovenski <not@available>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:26
 #: src/scrummer/ui/dialog/TaskAddDialog.java:35
 #: src/scrummer/ui/dialog/SprintAddDialog.java:48
