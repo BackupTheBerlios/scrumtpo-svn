@@ -29,6 +29,7 @@ public class Models {
 		createProductBacklogModel();
 		
 		createSprintBacklogModel();
+		createReleaseModel();
 		createMetricModel();
 		createImpedimentModel();
 		
@@ -42,7 +43,6 @@ public class Models {
 		createTaskTypeModel();
 		createTaskStatusModel();
 		createTaskModel();
-		createReleaseModel();
 	}
 	
 	/**
@@ -363,7 +363,7 @@ public class Models {
 	
 	public MetricModel createMetricModel() {
 		if (_metricModel == null) {
-			_metricModel = new MetricModel(getConnectionModel(), getProjectModel(), getSprintBacklogModel());
+			_metricModel = new MetricModel(getConnectionModel(), getProjectModel(), getSprintBacklogModel(), getReleaseModel());
 		}
 		return _metricModel;
 	}
