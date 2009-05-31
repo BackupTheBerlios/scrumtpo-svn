@@ -97,7 +97,7 @@ public class CustomerPollDialog
 		
 		bg = new ButtonGroup[10];
 		
-		JLabel q1 = new JLabel(i18n.tr("Sodelovanje z razvojno skupino v ƒçasu razvoja") + ":");
+		JLabel q1 = new JLabel("Sodelovanje z razvojno skupino v Ëasu razvoja:");
 		
 		b11 = new JRadioButton("1", true);
 		b12 = new JRadioButton("2", false);
@@ -125,7 +125,7 @@ public class CustomerPollDialog
 		set_gbc(gbc,2,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b15, gbc);
 		
-		JLabel q2 = new JLabel(i18n.tr("Odzivnost razvijalcev na ≈æelje, spremembe v zahtevah") + ":");
+		JLabel q2 = new JLabel("Odzivnost razvijalcev na ûelje, spremembe v zahtevah:");
 		
 		b21 = new JRadioButton("1", true);
 		b22 = new JRadioButton("2", false);
@@ -153,8 +153,8 @@ public class CustomerPollDialog
 		set_gbc(gbc,4,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b25, gbc);
 		
-		JLabel q3 = new JLabel(i18n.tr("<html> Popolnost izdelane re≈°itve " + newline + "(Ali so bile realizirane vse zahteve, " +
-									   "dogovorjene na Sprint Planning Meetingu?)</html>") + ":");
+		JLabel q3 = new JLabel("<html> Popolnost izdelane reöitve " + newline + "(Ali so bile realizirane vse zahteve, " +
+									   "dogovorjene na Sprint Planning Meetingu?)</html>:");
 
 		b31 = new JRadioButton("1", true);
 		b32 = new JRadioButton("2", false);
@@ -182,8 +182,8 @@ public class CustomerPollDialog
 		set_gbc(gbc,6,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b35, gbc);
 		
-		JLabel q4 = new JLabel(i18n.tr("<html> Skladnost izdelane re≈°itve s priƒáakovanji " + newline + "(Ali se izdelana programska " +
-									   "oprema ujema z va≈°imi priƒçakovanji na zaƒçetku cikla?)</html>") + ":");
+		JLabel q4 = new JLabel("<html> Skladnost izdelane reöitve s priËakovanji " + newline + "(Ali se izdelana programska " +
+									   "oprema ujema z vaöimi priËakovanji na zaËetku cikla?)</html>:");
 
 		b41 = new JRadioButton("1", true);
 		b42 = new JRadioButton("2", false);
@@ -211,8 +211,8 @@ public class CustomerPollDialog
 		set_gbc(gbc,8,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b45, gbc);
 		
-		JLabel q5 = new JLabel(i18n.tr("<html> Intuitivnost uporabni≈°kega vmesnika " + newline + "(Ali je sistem enostaven " +
-									   "za uporabo brez obse≈ænega predhodnega izobra≈æevanja?)</html>)") + ":");
+		JLabel q5 = new JLabel("<html> Intuitivnost uporabniökega vmesnika " + newline + "(Ali je sistem enostaven " +
+									   "za uporabo brez obseûnega predhodnega izobraûevanja?)</html>):");
 
 		b51 = new JRadioButton("1", true);
 		b52 = new JRadioButton("2", false);
@@ -240,7 +240,7 @@ public class CustomerPollDialog
 		set_gbc(gbc,10,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b55, gbc);
 		
-		JLabel q6 = new JLabel(i18n.tr("<html> Uporabnost/Koristnost izdelanih programov " + newline + "(Ali izdelani programi olaj≈°ajo delo uporabniku?)") + ":");
+		JLabel q6 = new JLabel("<html> Uporabnost/Koristnost izdelanih programov " + newline + "(Ali izdelani programi olajöajo delo uporabniku?):");
 
 		b61 = new JRadioButton("1", true);
 		b62 = new JRadioButton("2", false);
@@ -268,8 +268,8 @@ public class CustomerPollDialog
 		set_gbc(gbc,12,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b65, gbc);
 		
-		JLabel q7 = new JLabel(i18n.tr("<html> Odsotnost napak, zanesljivost delovanja, robustnost " + newline +
-									   "(Ali so izdelani programi brez napak? " + newline + "Ali izdelana re≈°itev deluje stabilno, brez prekinitev?))</html>") + ":");
+		JLabel q7 = new JLabel("<html> Odsotnost napak, zanesljivost delovanja, robustnost " + newline +
+									   "(Ali so izdelani programi brez napak? " + newline + "Ali izdelana reöitev deluje stabilno, brez prekinitev?))</html>:");
 
 		b71 = new JRadioButton("1", true);
 		b72 = new JRadioButton("2", false);
@@ -297,7 +297,7 @@ public class CustomerPollDialog
 		set_gbc(gbc,14,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b75, gbc);
 		
-		JLabel q8 = new JLabel(i18n.tr("Kakovost oddanih Sprint Backlog-ov, pravoƒçasnost oddaje") + ":");
+		JLabel q8 = new JLabel("Kakovost oddanih Sprint Backlog-ov, pravoËasnost oddaje:");
 
 		b81 = new JRadioButton("1", true);
 		b82 = new JRadioButton("2", false);
@@ -325,7 +325,7 @@ public class CustomerPollDialog
 		set_gbc(gbc,16,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b85, gbc);
 		
-		JLabel q9 = new JLabel(i18n.tr("Splo≈°na ocena zadovoljstva z delom razvojne skupine") + ":");
+		JLabel q9 = new JLabel("Sploöna ocena zadovoljstva z delom razvojne skupine:");
 
 		b91 = new JRadioButton("1", true);
 		b92 = new JRadioButton("2", false);
@@ -353,7 +353,7 @@ public class CustomerPollDialog
 		set_gbc(gbc,18,4,1,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(b95, gbc);
 		
-		JLabel q10 = new JLabel(i18n.tr("Splo≈°na ocena kakovosti izdelanih programov") + ":");
+		JLabel q10 = new JLabel("Sploöna ocena kakovosti izdelanih programov:");
 
 		b101 = new JRadioButton("1", true);
 		b102 = new JRadioButton("2", false);

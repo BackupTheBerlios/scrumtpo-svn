@@ -254,7 +254,7 @@ msgstr "Graf"
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:53
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:396
 msgid "Customer poll"
-msgstr "Anketa za naroÄnika"
+msgstr "Anketa za naroènika"
 
 #: src/scrummer/model/NavigationModel.java:79
 #: src/scrummer/model/MetricModel.java:79

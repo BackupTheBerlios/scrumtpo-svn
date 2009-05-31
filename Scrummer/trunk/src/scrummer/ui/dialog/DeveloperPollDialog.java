@@ -98,10 +98,10 @@ public class DeveloperPollDialog
 		
 		bg = new ButtonGroup[14];
 		
-		JLabel q1 = new JLabel(i18n.tr("<html> Jasnost zastavljenega Product Backlog-a " + newline +
+		JLabel q1 = new JLabel("<html> Jasnost zastavljenega Product Backlog-a " + newline +
 									   "(Ali je bil Product Backlog za trenutni Sprint " +
 									   "jasno zastavljen? " + newline + "Ali vam je bilo iz kratkega opisa " +
-									   " za vsako zahtevo jasno, kaj Product Owner zahteva?)</html>") + ":");
+									   " za vsako zahtevo jasno, kaj Product Owner zahteva?)</html>:");
 		
 		b11 = new JRadioButton("1", true);
 		b12 = new JRadioButton("2", false);
@@ -133,8 +133,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,2,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t1, gbc);
 		
-		JLabel q2 = new JLabel(i18n.tr("<html> Ocena Äasa za posamezno zahtevo v Product Backlogu " + newline +
-									   "(Ali so bile ocene potrebnega dela ustrezne?)</html>") + ":");
+		JLabel q2 = new JLabel("<html> Ocena èasa za posamezno zahtevo v Product Backlogu " + newline +
+									   "(Ali so bile ocene potrebnega dela ustrezne?)</html>:");
 
 		b21 = new JRadioButton("1", true);
 		b22 = new JRadioButton("2", false);
@@ -166,8 +166,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,4,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t2, gbc);
 		
-		JLabel q3 = new JLabel(i18n.tr("<html> Administracija pri metodologiji Scrum " + newline + "(Ali so bile " + 
-				" preglednice, ki ste jih izpolnjevali, jasne in razumljive?)</html>") + ":");
+		JLabel q3 = new JLabel("<html> Administracija pri metodologiji Scrum " + newline + "(Ali so bile " + 
+				" preglednice, ki ste jih izpolnjevali, jasne in razumljive?)</html>:");
 
 		b31 = new JRadioButton("1", true);
 		b32 = new JRadioButton("2", false);
@@ -199,8 +199,8 @@ public class DeveloperPollDialog
 		innerPanel.add(b35, gbc);
 		set_gbc(gbc,6,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t3, gbc);
-		JLabel q4 = new JLabel(i18n.tr("<html> Obremenjenost z administracijo " + newline + "(5 - vodenje Sprint Backloga " +
-									   " ni obremenjujoÅ¡e, 1 - vodenje Sprint Backloga je zelo obremenjujoÄe)</html>") + ":");
+		JLabel q4 = new JLabel("<html> Obremenjenost z administracijo " + newline + "(5 - vodenje Sprint Backloga " +
+									   " ni obremenjujoèe, 1 - vodenje Sprint Backloga je zelo obremenjujoèe)</html>:");
 
 		b41 = new JRadioButton("1", true);
 		b42 = new JRadioButton("2", false);
@@ -232,8 +232,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,8,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t4, gbc);
 		
-		JLabel q5 = new JLabel(i18n.tr("<html> TehniÄne teÅ¾ave na zaÄetku Sprinta " + newline + "(5 - ni bilo teÅ¾av, " +
-									   "1 - bilo je veliko teÅ¾av </html>)") + ":");
+		JLabel q5 = new JLabel("<html> Tehniène težave na zaèetku Sprinta " + newline + "(5 - ni bilo težav, " +
+									   "1 - bilo je veliko težav </html>):");
 
 		b51 = new JRadioButton("1", true);
 		b52 = new JRadioButton("2", false);
@@ -265,8 +265,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,10,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t5, gbc);
 		
-		JLabel q6 = new JLabel(i18n.tr("<html> Vsebinske teÅ¾ave (razumevanje zahtevane funkcionalnosti) na zaÄetku " +
-									   " Sprinta " + newline + "(5 - ni bilo teÅ¾av, 1 - bilo je veliko teÅ¾av) </html>") + ":");
+		JLabel q6 = new JLabel("<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na zaèetku " +
+									   " Sprinta " + newline + "(5 - ni bilo težav, 1 - bilo je veliko težav) </html>:");
 
 		b61 = new JRadioButton("1", true);
 		b62 = new JRadioButton("2", false);
@@ -298,7 +298,7 @@ public class DeveloperPollDialog
 		set_gbc(gbc,12,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t6, gbc);
 		
-		JLabel q7 = new JLabel(i18n.tr("<html> TehniÄne teÅ¾ave na koncu Sprinta (5 - ni bilo teÅ¾av, 1 - bilo je veliko teÅ¾av)</html>") + ":");
+		JLabel q7 = new JLabel("<html> Tehniène težave na koncu Sprinta (5 - ni bilo težav, 1 - bilo je veliko težav)</html>:");
 
 		b71 = new JRadioButton("1", true);
 		b72 = new JRadioButton("2", false);
@@ -330,8 +330,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,14,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t7, gbc);
 		
-		JLabel q8 = new JLabel(i18n.tr("<html> Vsebinske teÅ¾ave (razumevanje zahtevane funkcionalnosti) na koncu Sprinta " + newline +
-									   "(5 - ni bilo teÅ¾av, 1 - bilo je veliko teÅ¾av)</html>") + ":");
+		JLabel q8 = new JLabel("<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu Sprinta " + newline +
+									   "(5 - ni bilo težav, 1 - bilo je veliko težav)</html>:");
 
 		b81 = new JRadioButton("1", true);
 		b82 = new JRadioButton("2", false);
@@ -363,7 +363,7 @@ public class DeveloperPollDialog
 		set_gbc(gbc,16,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t8, gbc);
 		
-		JLabel q9 = new JLabel(i18n.tr("Sodelovanje s Scrum Masterjem") + ":");
+		JLabel q9 = new JLabel("Sodelovanje s Scrum Masterjem:");
 
 		b91 = new JRadioButton("1", true);
 		b92 = new JRadioButton("2", false);
@@ -395,7 +395,7 @@ public class DeveloperPollDialog
 		set_gbc(gbc,18,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t9, gbc);
 		
-		JLabel q10 = new JLabel(i18n.tr("Sodelovanje s Product Owner-jem") + ":");
+		JLabel q10 = new JLabel("Sodelovanje s Product Owner-jem:");
 
 		b101 = new JRadioButton("1", true);
 		b102 = new JRadioButton("2", false);
@@ -427,7 +427,7 @@ public class DeveloperPollDialog
 		set_gbc(gbc,20,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t10, gbc);
 		
-		JLabel q11 = new JLabel(i18n.tr("Sodelovanje znotraj razvojne skupine") + ":");
+		JLabel q11 = new JLabel("Sodelovanje znotraj razvojne skupine:");
 
 		b111 = new JRadioButton("1", true);
 		b112 = new JRadioButton("2", false);
@@ -459,8 +459,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,22,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t11, gbc);
 		
-		JLabel q12 = new JLabel(i18n.tr("<html> Primernost obsega dela na projektu (Ali je obseg dela " + newline + 
-									    "na projektu primerno izbran?)</html>") + ":");
+		JLabel q12 = new JLabel("<html> Primernost obsega dela na projektu (Ali je obseg dela " + newline + 
+									    "na projektu primerno izbran?)</html>:");
 
 		b121 = new JRadioButton("1", true);
 		b122 = new JRadioButton("2", false);
@@ -492,7 +492,7 @@ public class DeveloperPollDialog
 		set_gbc(gbc,24,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t12, gbc);
 		
-		JLabel q13 = new JLabel(i18n.tr("<html> Splopna ocena vaÅ¡ega zadovoljstva s potekom dela na projektu") + ":");
+		JLabel q13 = new JLabel("Splošna ocena vašega zadovoljstva s potekom dela na projektu:");
 
 		b131 = new JRadioButton("1", true);
 		b132 = new JRadioButton("2", false);
@@ -524,8 +524,8 @@ public class DeveloperPollDialog
 		set_gbc(gbc,26,5,5,1,GridBagConstraints.HORIZONTAL);
 		innerPanel.add(t13, gbc);
 		
-		JLabel q14 = new JLabel(i18n.tr("<html> SploÅ¡na ocena metodologije Scrum (Ali je ta metodologija " + newline +
-									    "koristna za delo razvojne skupine? Ali bi jo priporoÄili drugim razvijalcem?)</html>") + ":");
+		JLabel q14 = new JLabel("<html> Splošna ocena metodologije Scrum (Ali je ta metodologija " + newline +
+									    "koristna za delo razvojne skupine? Ali bi jo priporoèili drugim razvijalcem?)</html>:");
 
 		b141 = new JRadioButton("1", true);
 		b142 = new JRadioButton("2", false);
