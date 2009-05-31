@@ -1,9 +1,11 @@
 package scrummer.ui.dialog;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
@@ -13,9 +15,14 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import org.xnap.commons.i18n.I18n;
+
+import com.sun.org.apache.xerces.internal.impl.RevalidationHandler;
+
 import scrummer.Scrummer;
 import scrummer.enumerator.DataOperation;
 import scrummer.enumerator.DeveloperOperation;
@@ -52,15 +59,22 @@ public class CustomerPollDialog
 		_sbModel.addSprintBacklogListener(this);
 		
 		Panel.resize(new Dimension(700,250));
-		Panel.setLayout(new GridBagLayout());
+		Panel.setLayout(new GridLayout(1,1));
+
+		JPanel innerPanel = new JPanel();
+		innerPanel.setLayout(new GridBagLayout());		
+
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 0, 1, 1);
 		gbc.weightx = 0.8;
-		String newline = System.getProperty("line.separator");
+		String newline = "<br>"; // System.getProperty("line.separator");
 		
 		JLabel userLbl = new JLabel(i18n.tr("Name") + ":");
 		JTextField userInput = new JTextField();
+		userInput.setColumns(10);
 		_userInput = userInput;
 		
 		JLabel sprintLbl = new JLabel(i18n.tr("Choose sprint") + ":");
@@ -68,19 +82,22 @@ public class CustomerPollDialog
 		sprintInput.setIVModel(_sbModel.getSprintProjectComboBoxModel());
 		_sprintInput = sprintInput;
 		
-		set_gbc(gbc,0,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(userLbl, gbc);
-		set_gbc(gbc,0,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(userInput, gbc);
+		// set_gbc(gbc,0,0,1,1,GridBagConstraints.HORIZONTAL);
+		topPanel.add(userLbl); // , gbc);
+		// set_gbc(gbc,0,1,1,1,GridBagConstraints.HORIZONTAL);
+		topPanel.add(userInput); // , gbc);
 		
-		set_gbc(gbc,0,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(sprintLbl, gbc);
-		set_gbc(gbc,0,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(sprintInput, gbc);
+		//set_gbc(gbc,0,3,1,1,GridBagConstraints.HORIZONTAL);
+		topPanel.add(sprintLbl); // , gbc);
+		// set_gbc(gbc,0,4,1,1,GridBagConstraints.HORIZONTAL);
+		topPanel.add(sprintInput); //, gbc);
+		
+		set_gbc(gbc, 0, 0, GridBagConstraints.REMAINDER, 1, GridBagConstraints.HORIZONTAL);
+		innerPanel.add(topPanel, gbc);
 		
 		bg = new ButtonGroup[10];
 		
-		JLabel q1 = new JLabel(i18n.tr("Sodelovanje z razvojno skupino v Ëasu razvoja") + ":");
+		JLabel q1 = new JLabel(i18n.tr("Sodelovanje z razvojno skupino v ƒçasu razvoja") + ":");
 		
 		b11 = new JRadioButton("1", true);
 		b12 = new JRadioButton("2", false);
@@ -96,19 +113,19 @@ public class CustomerPollDialog
 		bg[0].add(b15);
 		
 		set_gbc(gbc,1,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q1, gbc);
+		innerPanel.add(q1, gbc);
 		set_gbc(gbc,2,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b11, gbc);
+		innerPanel.add(b11, gbc);
 		set_gbc(gbc,2,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b12, gbc);
+		innerPanel.add(b12, gbc);
 		set_gbc(gbc,2,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b13, gbc);
+		innerPanel.add(b13, gbc);
 		set_gbc(gbc,2,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b14, gbc);
+		innerPanel.add(b14, gbc);
 		set_gbc(gbc,2,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b15, gbc);
+		innerPanel.add(b15, gbc);
 		
-		JLabel q2 = new JLabel(i18n.tr("Odzivnost razvijalcev na ûelje, spremembe v zahtevah") + ":");
+		JLabel q2 = new JLabel(i18n.tr("Odzivnost razvijalcev na ≈æelje, spremembe v zahtevah") + ":");
 		
 		b21 = new JRadioButton("1", true);
 		b22 = new JRadioButton("2", false);
@@ -124,19 +141,19 @@ public class CustomerPollDialog
 		bg[1].add(b25);
 		
 		set_gbc(gbc,3,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q2, gbc);
+		innerPanel.add(q2, gbc);
 		set_gbc(gbc,4,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b21, gbc);
+		innerPanel.add(b21, gbc);
 		set_gbc(gbc,4,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b22, gbc);
+		innerPanel.add(b22, gbc);
 		set_gbc(gbc,4,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b23, gbc);
+		innerPanel.add(b23, gbc);
 		set_gbc(gbc,4,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b24, gbc);
+		innerPanel.add(b24, gbc);
 		set_gbc(gbc,4,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b25, gbc);
+		innerPanel.add(b25, gbc);
 		
-		JLabel q3 = new JLabel(i18n.tr("<html> Popolnost izdelane reöitve (Ali so bile realizirane vse zahteve, " + newline +
+		JLabel q3 = new JLabel(i18n.tr("<html> Popolnost izdelane re≈°itve " + newline + "(Ali so bile realizirane vse zahteve, " +
 									   "dogovorjene na Sprint Planning Meetingu?)</html>") + ":");
 
 		b31 = new JRadioButton("1", true);
@@ -153,20 +170,20 @@ public class CustomerPollDialog
 		bg[2].add(b35);
 		
 		set_gbc(gbc,5,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q3, gbc);
+		innerPanel.add(q3, gbc);
 		set_gbc(gbc,6,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b31, gbc);
+		innerPanel.add(b31, gbc);
 		set_gbc(gbc,6,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b32, gbc);
+		innerPanel.add(b32, gbc);
 		set_gbc(gbc,6,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b33, gbc);
+		innerPanel.add(b33, gbc);
 		set_gbc(gbc,6,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b34, gbc);
+		innerPanel.add(b34, gbc);
 		set_gbc(gbc,6,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b35, gbc);
+		innerPanel.add(b35, gbc);
 		
-		JLabel q4 = new JLabel(i18n.tr("<html> Skladnost izdelane reöitve s priËakovanji (Ali se izdelana programska " + newline +
-									   "oprema ujema z vaöimi priËakovanji na zaËetku cikla?)</html>") + ":");
+		JLabel q4 = new JLabel(i18n.tr("<html> Skladnost izdelane re≈°itve s priƒáakovanji " + newline + "(Ali se izdelana programska " +
+									   "oprema ujema z va≈°imi priƒçakovanji na zaƒçetku cikla?)</html>") + ":");
 
 		b41 = new JRadioButton("1", true);
 		b42 = new JRadioButton("2", false);
@@ -182,20 +199,20 @@ public class CustomerPollDialog
 		bg[3].add(b45);
 		
 		set_gbc(gbc,7,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q4, gbc);
+		innerPanel.add(q4, gbc);
 		set_gbc(gbc,8,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b41, gbc);
+		innerPanel.add(b41, gbc);
 		set_gbc(gbc,8,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b42, gbc);
+		innerPanel.add(b42, gbc);
 		set_gbc(gbc,8,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b43, gbc);
+		innerPanel.add(b43, gbc);
 		set_gbc(gbc,8,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b44, gbc);
+		innerPanel.add(b44, gbc);
 		set_gbc(gbc,8,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b45, gbc);
+		innerPanel.add(b45, gbc);
 		
-		JLabel q5 = new JLabel(i18n.tr("<html> Intuitivnost uporabniökega vmesnika (Ali je sistem enostaven " + newline +
-									   "za uporabo brez obseûnega predhodnega izobraûevanja?)</html>)") + ":");
+		JLabel q5 = new JLabel(i18n.tr("<html> Intuitivnost uporabni≈°kega vmesnika " + newline + "(Ali je sistem enostaven " +
+									   "za uporabo brez obse≈ænega predhodnega izobra≈æevanja?)</html>)") + ":");
 
 		b51 = new JRadioButton("1", true);
 		b52 = new JRadioButton("2", false);
@@ -211,19 +228,19 @@ public class CustomerPollDialog
 		bg[4].add(b55);
 		
 		set_gbc(gbc,9,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q5, gbc);
+		innerPanel.add(q5, gbc);
 		set_gbc(gbc,10,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b51, gbc);
+		innerPanel.add(b51, gbc);
 		set_gbc(gbc,10,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b52, gbc);
+		innerPanel.add(b52, gbc);
 		set_gbc(gbc,10,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b53, gbc);
+		innerPanel.add(b53, gbc);
 		set_gbc(gbc,10,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b54, gbc);
+		innerPanel.add(b54, gbc);
 		set_gbc(gbc,10,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b55, gbc);
+		innerPanel.add(b55, gbc);
 		
-		JLabel q6 = new JLabel(i18n.tr("<html> Uporabnost/Koristnost izdelanih programov (Ali izdelani programi olajöajo delo uporabniku?)") + ":");
+		JLabel q6 = new JLabel(i18n.tr("<html> Uporabnost/Koristnost izdelanih programov " + newline + "(Ali izdelani programi olaj≈°ajo delo uporabniku?)") + ":");
 
 		b61 = new JRadioButton("1", true);
 		b62 = new JRadioButton("2", false);
@@ -239,20 +256,20 @@ public class CustomerPollDialog
 		bg[5].add(b65);
 		
 		set_gbc(gbc,11,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q6, gbc);
+		innerPanel.add(q6, gbc);
 		set_gbc(gbc,12,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b61, gbc);
+		innerPanel.add(b61, gbc);
 		set_gbc(gbc,12,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b62, gbc);
+		innerPanel.add(b62, gbc);
 		set_gbc(gbc,12,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b63, gbc);
+		innerPanel.add(b63, gbc);
 		set_gbc(gbc,12,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b64, gbc);
+		innerPanel.add(b64, gbc);
 		set_gbc(gbc,12,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b65, gbc);
+		innerPanel.add(b65, gbc);
 		
 		JLabel q7 = new JLabel(i18n.tr("<html> Odsotnost napak, zanesljivost delovanja, robustnost " + newline +
-									   "(Ali so izdelani programi brez napak? Ali izdelana reöitev deluje stabilno, brez prekinitev?))</html>") + ":");
+									   "(Ali so izdelani programi brez napak? " + newline + "Ali izdelana re≈°itev deluje stabilno, brez prekinitev?))</html>") + ":");
 
 		b71 = new JRadioButton("1", true);
 		b72 = new JRadioButton("2", false);
@@ -268,19 +285,19 @@ public class CustomerPollDialog
 		bg[6].add(b75);
 		
 		set_gbc(gbc,13,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q7, gbc);
+		innerPanel.add(q7, gbc);
 		set_gbc(gbc,14,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b71, gbc);
+		innerPanel.add(b71, gbc);
 		set_gbc(gbc,14,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b72, gbc);
+		innerPanel.add(b72, gbc);
 		set_gbc(gbc,14,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b73, gbc);
+		innerPanel.add(b73, gbc);
 		set_gbc(gbc,14,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b74, gbc);
+		innerPanel.add(b74, gbc);
 		set_gbc(gbc,14,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b75, gbc);
+		innerPanel.add(b75, gbc);
 		
-		JLabel q8 = new JLabel(i18n.tr("Kakovost oddanih Sprint Backlog-ov, pravoËasnost oddaje") + ":");
+		JLabel q8 = new JLabel(i18n.tr("Kakovost oddanih Sprint Backlog-ov, pravoƒçasnost oddaje") + ":");
 
 		b81 = new JRadioButton("1", true);
 		b82 = new JRadioButton("2", false);
@@ -296,19 +313,19 @@ public class CustomerPollDialog
 		bg[7].add(b85);
 		
 		set_gbc(gbc,15,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q8, gbc);
+		innerPanel.add(q8, gbc);
 		set_gbc(gbc,16,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b81, gbc);
+		innerPanel.add(b81, gbc);
 		set_gbc(gbc,16,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b82, gbc);
+		innerPanel.add(b82, gbc);
 		set_gbc(gbc,16,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b83, gbc);
+		innerPanel.add(b83, gbc);
 		set_gbc(gbc,16,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b84, gbc);
+		innerPanel.add(b84, gbc);
 		set_gbc(gbc,16,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b85, gbc);
+		innerPanel.add(b85, gbc);
 		
-		JLabel q9 = new JLabel(i18n.tr("Sploöna ocena zadovoljstva z delom razvojne skupine") + ":");
+		JLabel q9 = new JLabel(i18n.tr("Splo≈°na ocena zadovoljstva z delom razvojne skupine") + ":");
 
 		b91 = new JRadioButton("1", true);
 		b92 = new JRadioButton("2", false);
@@ -324,19 +341,19 @@ public class CustomerPollDialog
 		bg[8].add(b95);
 		
 		set_gbc(gbc,17,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q9, gbc);
+		innerPanel.add(q9, gbc);
 		set_gbc(gbc,18,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b91, gbc);
+		innerPanel.add(b91, gbc);
 		set_gbc(gbc,18,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b92, gbc);
+		innerPanel.add(b92, gbc);
 		set_gbc(gbc,18,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b93, gbc);
+		innerPanel.add(b93, gbc);
 		set_gbc(gbc,18,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b94, gbc);
+		innerPanel.add(b94, gbc);
 		set_gbc(gbc,18,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b95, gbc);
+		innerPanel.add(b95, gbc);
 		
-		JLabel q10 = new JLabel(i18n.tr("Sploöna ocena kakovosti izdelanih programov") + ":");
+		JLabel q10 = new JLabel(i18n.tr("Splo≈°na ocena kakovosti izdelanih programov") + ":");
 
 		b101 = new JRadioButton("1", true);
 		b102 = new JRadioButton("2", false);
@@ -354,21 +371,24 @@ public class CustomerPollDialog
 		JTextField comment1 = new JTextField();
 		t1 = comment1;
 		set_gbc(gbc,19,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(q10, gbc);
+		innerPanel.add(q10, gbc);
 		set_gbc(gbc,20,0,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b101, gbc);
+		innerPanel.add(b101, gbc);
 		set_gbc(gbc,20,1,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b102, gbc);
+		innerPanel.add(b102, gbc);
 		set_gbc(gbc,20,2,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b103, gbc);
+		innerPanel.add(b103, gbc);
 		set_gbc(gbc,20,3,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b104, gbc);
+		innerPanel.add(b104, gbc);
 		set_gbc(gbc,20,4,1,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(b105, gbc);
+		innerPanel.add(b105, gbc);
 		set_gbc(gbc,21,0,10,1,GridBagConstraints.HORIZONTAL);
-		Panel.add(t1, gbc);
+		innerPanel.add(t1, gbc);
 		
 
+		JScrollPane innerScroll = new JScrollPane(innerPanel);
+		Panel.add(innerScroll);
+		
 		int topK = 10;
 		Panel.setBorder(
 			Util.createSpacedTitleBorder(
@@ -380,8 +400,10 @@ public class CustomerPollDialog
 		BottomPanel.setBorder(
 			BorderFactory.createEmptyBorder(0, bottomK, bottomK,bottomK));
 		
-		setSize(new Dimension(800, 800));
+		setSize(new Dimension(800, 600));
 		Util.centre(this);
+		innerScroll.revalidate();
+		Panel.revalidate();
 	}
 	
 	private void set_gbc(GridBagConstraints gbc, int row, int column, int width, int height, int fill) 
