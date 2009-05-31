@@ -64,7 +64,6 @@ public class ReleasePage
 		box.add(scrollPane);
 		
 		add(box);
-		
 	}
 
 	@Override
