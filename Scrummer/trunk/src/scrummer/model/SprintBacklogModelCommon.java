@@ -455,7 +455,7 @@ public class SprintBacklogModelCommon
 		};
 		q.queryResult(
 			"SELECT " + DBSchemaModel.SprintId + ", " + DBSchemaModel.SprintDescription + " FROM " + DBSchemaModel.SprintTable + " " +
-			"WHERE " + DBSchemaModel.SprintProjectId + "='" + projectId + "'");
+			"WHERE " + DBSchemaModel.SprintProjectId + "=" + projectId);
 		return q.getResult();
 	}
 	
