@@ -1,31 +1,33 @@
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:26
-#: src/scrummer/ui/dialog/TaskAddDialog.java:34
+#: src/scrummer/ui/dialog/TaskAddDialog.java:35
 #: src/scrummer/ui/dialog/SprintAddDialog.java:48
 #: src/scrummer/ui/dialog/SprintDialog.java:66
 #: src/scrummer/ui/dialog/TeamAddDialog.java:91
 #: src/scrummer/ui/dialog/MetricAddDialog.java:54
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:57
+#: src/scrummer/ui/dialog/ReleaseDialog.java:75
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:30
 #: src/scrummer/ui/MainFrame.java:179 src/scrummer/ui/MainFrame.java:185
-#: src/scrummer/ui/page/PBPage.java:79
+#: src/scrummer/ui/page/PBPage.java:80
 #: src/scrummer/ui/page/SprintBacklogPage.java:79
 msgid "Add"
 msgstr "Add"
 
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:30
-#: src/scrummer/ui/page/PBPage.java:83
+#: src/scrummer/ui/page/PBPage.java:84
 #: src/scrummer/ui/page/SprintBacklogPage.java:83
 msgid "Edit"
 msgstr "Edit"
 
 #: src/scrummer/uicomponents/AddEditRemovePanel.java:34
-#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:47
 #: src/scrummer/ui/dialog/MetricRemoveDialog.java:56
 #: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:120
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:98
-#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:46
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:121
+#: src/scrummer/ui/dialog/ReleaseDialog.java:79
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:47
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:46
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:99
-#: src/scrummer/ui/MainFrame.java:188 src/scrummer/ui/page/PBPage.java:87
+#: src/scrummer/ui/MainFrame.java:188 src/scrummer/ui/page/PBPage.java:88
 #: src/scrummer/ui/page/SprintBacklogPage.java:87
 msgid "Remove"
 msgstr "Remove"
@@ -156,19 +158,25 @@ msgstr "In Progress"
 msgid "Closed"
 msgstr "Closed"
 
-#: src/scrummer/model/MetricModelCommon.java:399
+#: src/scrummer/model/MetricModelCommon.java:676
 msgid "Failed to remove measure"
 msgstr "Failed to remove measure"
 
-#: src/scrummer/model/MetricModelCommon.java:522
+#: src/scrummer/model/MetricModelCommon.java:897
 msgid "Could not update measure."
 msgstr "Could not update measure."
 
-#: src/scrummer/model/MetricModelCommon.java:806
+#: src/scrummer/model/MetricModelCommon.java:1422
+#: src/scrummer/model/MetricModelCommon.java:1445
 msgid "Could not retrieve task measures."
 msgstr "Could not retrieve task measures."
 
-#: src/scrummer/model/MetricModelCommon.java:830
+#: src/scrummer/model/MetricModelCommon.java:1467
+#, fuzzy
+msgid "Could not retrieve pbi measures."
+msgstr "Could not retrieve sprint measures."
+
+#: src/scrummer/model/MetricModelCommon.java:1490
 msgid "Could not retrieve sprint measures."
 msgstr "Could not retrieve sprint measures."
 
@@ -190,19 +198,19 @@ msgstr "Could not set parameter."
 msgid "Could not remove Sprint Backlog item."
 msgstr "Could not remove Sprint Backlog item."
 
-#: src/scrummer/model/SprintBacklogModelCommon.java:933
+#: src/scrummer/model/SprintBacklogModelCommon.java:935
 msgid "Failed to update information in the databse."
 msgstr "Failed to update information in the databse."
 
-#: src/scrummer/model/NavigationModel.java:63
+#: src/scrummer/model/NavigationModel.java:67
 msgid "Blank"
 msgstr "Blank"
 
-#: src/scrummer/model/NavigationModel.java:65
+#: src/scrummer/model/NavigationModel.java:69
 msgid "Overview"
 msgstr "Overview"
 
-#: src/scrummer/model/NavigationModel.java:67
+#: src/scrummer/model/NavigationModel.java:71
 #: src/scrummer/ui/MetricPageToolbar.java:36
 #: src/scrummer/ui/dialog/MetricRemoveDialog.java:45
 #: src/scrummer/ui/dialog/MetricRemoveDialog.java:50
@@ -212,49 +220,72 @@ msgstr "Overview"
 msgid "Metric"
 msgstr "Metric"
 
-#: src/scrummer/model/NavigationModel.java:69
+#: src/scrummer/model/NavigationModel.java:73
 msgid "Input"
 msgstr "Input"
 
-#: src/scrummer/model/NavigationModel.java:71
+#: src/scrummer/model/NavigationModel.java:75
+#: src/scrummer/ui/page/MetricGraphPage.java:65
+#: src/scrummer/ui/page/MetricGraphPage.java:83
 msgid "Graph"
 msgstr "Graph"
 
-#: src/scrummer/model/NavigationModel.java:73
+#: src/scrummer/model/NavigationModel.java:77
+#: src/scrummer/model/MetricModel.java:77
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:53
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:396
+msgid "Customer poll"
+msgstr ""
+
+#: src/scrummer/model/NavigationModel.java:79
+#: src/scrummer/model/MetricModel.java:79
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:49
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:573
+#, fuzzy
+msgid "Developer poll"
+msgstr "Developer"
+
+#: src/scrummer/model/NavigationModel.java:81
 msgid "Product Backlog"
 msgstr "Product Backlog"
 
-#: src/scrummer/model/NavigationModel.java:75
+#: src/scrummer/model/NavigationModel.java:83
 msgid "Product Backlog Items"
 msgstr "Product Backlog Items"
 
-#: src/scrummer/model/NavigationModel.java:77
+#: src/scrummer/model/NavigationModel.java:85
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:56
 msgid "Project"
 msgstr "Project"
 
-#: src/scrummer/model/NavigationModel.java:79
+#: src/scrummer/model/NavigationModel.java:87
 msgid "Sprint Backlog"
 msgstr "Sprint Backlog"
 
-#: src/scrummer/model/NavigationModel.java:81
+#: src/scrummer/model/NavigationModel.java:89
 msgid "Absent"
 msgstr "Absent"
 
-#: src/scrummer/model/NavigationModel.java:83
+#: src/scrummer/model/NavigationModel.java:91
 msgid "Hurdles"
 msgstr "Hurdles"
 
-#: src/scrummer/model/NavigationModel.java:85
+#: src/scrummer/model/NavigationModel.java:93
 msgid "Metrics"
 msgstr "Metrics"
 
-#: src/scrummer/model/NavigationModel.java:87
+#: src/scrummer/model/NavigationModel.java:95
 msgid "Tasks"
 msgstr "Tasks"
 
-#: src/scrummer/model/TaskModelCommon.java:213
-#: src/scrummer/model/TaskModelCommon.java:237
+#: src/scrummer/model/NavigationModel.java:97
+#: src/scrummer/model/swing/ReleaseTableModel.java:32
+#: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:49
+msgid "Release"
+msgstr ""
+
+#: src/scrummer/model/TaskModelCommon.java:211
+#: src/scrummer/model/TaskModelCommon.java:234
 msgid "Could not remove task."
 msgstr "Could not remove task:"
 
@@ -271,6 +302,7 @@ msgid "Could not remove product backlog item."
 msgstr "Could not remove product backlog item."
 
 #: src/scrummer/model/swing/TaskTypeTableModel.java:30
+#: src/scrummer/model/swing/AllTaskTableModel.java:33
 #: src/scrummer/model/swing/AbsenceTypeTableModel.java:30
 #: src/scrummer/model/swing/TaskStatusTableModel.java:30
 #: src/scrummer/model/swing/TaskTableModel.java:30
@@ -278,59 +310,54 @@ msgid "Id"
 msgstr "Id"
 
 #: src/scrummer/model/swing/TaskTypeTableModel.java:31
+#: src/scrummer/model/swing/AllTaskTableModel.java:34
 #: src/scrummer/model/swing/ImpedimentTableModel.java:34
 #: src/scrummer/model/swing/AbsenceTypeTableModel.java:31
 #: src/scrummer/model/swing/TaskStatusTableModel.java:31
 #: src/scrummer/model/swing/ProductBacklogTableModel.java:33
 #: src/scrummer/model/swing/TaskTableModel.java:31
-#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:46
 #: src/scrummer/ui/dialog/SprintDialog.java:52
-#: src/scrummer/ui/dialog/TaskDialog.java:60
-#: src/scrummer/ui/dialog/TaskTypeAddDialog.java:47
+#: src/scrummer/ui/dialog/TaskDialog.java:61
 #: src/scrummer/ui/dialog/MetricChangeDialog.java:57
-#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:46
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:48
-#: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:47
 #: src/scrummer/ui/dialog/MetricAddDialog.java:48
 #: src/scrummer/ui/dialog/ImpedimentDialog.java:72
-#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:47
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:49
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeAdd.java:46
+#: src/scrummer/ui/dialog/codelist/TaskTypeAddDialog.java:47
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusAdd.java:46
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:48
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeAddDialog.java:47
+#: src/scrummer/ui/dialog/codelist/TaskStatusAddDialog.java:47
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:49
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:49
 #: src/scrummer/ui/page/ProjectPage.java:66
 msgid "Description"
 msgstr "Description"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:33
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:31
-msgid "Task id"
-msgstr "Task id"
-
-#: src/scrummer/model/swing/AllTaskTableModel.java:34
-#: src/scrummer/model/swing/SprintBacklogTableModel.java:32
-#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:55
-msgid "Task description"
-msgstr "Task description"
-
 #: src/scrummer/model/swing/AllTaskTableModel.java:35
-#: src/scrummer/ui/dialog/TaskDialog.java:62
+msgid "Engineering rate"
+msgstr ""
+
+#: src/scrummer/model/swing/AllTaskTableModel.java:36
+#: src/scrummer/model/swing/ReleaseTableModel.java:33
+#: src/scrummer/ui/dialog/TaskDialog.java:65
 msgid "PBI"
 msgstr "PBI"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:36
+#: src/scrummer/model/swing/AllTaskTableModel.java:37
 #: src/scrummer/model/swing/ImpedimentTableModel.java:32
-#: src/scrummer/model/swing/AdminDaysTableModel.java:30
+#: src/scrummer/model/swing/AdminDaysTableModel.java:28
 #: src/scrummer/ui/TaskMetricPageToolbar.java:43
-#: src/scrummer/ui/dialog/TaskDialog.java:66
+#: src/scrummer/ui/dialog/TaskDialog.java:69
 #: src/scrummer/ui/dialog/TeamAddDialog.java:73
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:65
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:67
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:73
 msgid "Employee"
 msgstr "Employee"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:37
+#: src/scrummer/model/swing/AllTaskTableModel.java:38
 #: src/scrummer/model/swing/ImpedimentTableModel.java:31
 #: src/scrummer/ui/dialog/SprintDialog.java:54
-#: src/scrummer/ui/dialog/TaskDialog.java:68
+#: src/scrummer/ui/dialog/TaskDialog.java:71
 #: src/scrummer/ui/dialog/TeamRemoveDialog.java:46
 #: src/scrummer/ui/dialog/TeamChangeNameDialog.java:49
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:61
@@ -338,29 +365,29 @@ msgstr "Employee"
 msgid "Team"
 msgstr "Team"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:39
+#: src/scrummer/model/swing/AllTaskTableModel.java:40
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:34
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:53
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:57
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:53
 msgid "Task status"
 msgstr "Task status"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:40
+#: src/scrummer/model/swing/AllTaskTableModel.java:41
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:33
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:47
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:47
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:56
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:53
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:47
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:47
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:53
 msgid "Task type"
 msgstr "Task type"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:42
+#: src/scrummer/model/swing/AllTaskTableModel.java:43
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:35
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:58
 msgid "Task date"
 msgstr "Task date"
 
-#: src/scrummer/model/swing/AllTaskTableModel.java:43
+#: src/scrummer/model/swing/AllTaskTableModel.java:44
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:36
 msgid "Task active"
 msgstr "Task active"
@@ -373,22 +400,22 @@ msgstr "ID"
 
 #: src/scrummer/model/swing/ImpedimentTableModel.java:33
 #: src/scrummer/ui/TaskMetricPageToolbar.java:38
-#: src/scrummer/ui/dialog/TaskDialog.java:53
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:67
+#: src/scrummer/ui/dialog/TaskDialog.java:54
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:69
 msgid "Task"
 msgstr "Task"
 
 #: src/scrummer/model/swing/ImpedimentTableModel.java:35
-#: src/scrummer/ui/dialog/TaskDialog.java:70
+#: src/scrummer/ui/dialog/TaskDialog.java:73
 msgid "Type"
 msgstr "Type"
 
 #: src/scrummer/model/swing/ImpedimentTableModel.java:36
-#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:42
-#: src/scrummer/ui/dialog/TaskDialog.java:72
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:45
-#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:41
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:47
+#: src/scrummer/ui/dialog/TaskDialog.java:75
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:42
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:45
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:41
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:47
 msgid "Status"
 msgstr "Status"
 
@@ -409,37 +436,40 @@ msgstr "End"
 msgid "Age"
 msgstr "Age"
 
-#: src/scrummer/model/swing/MetricTableModel.java:43
-#: src/scrummer/ui/dialog/TaskDialog.java:74
-#: src/scrummer/ui/dialog/MeasureDialog.java:48
+#: src/scrummer/model/swing/MetricTableModel.java:41
+#: src/scrummer/ui/dialog/TaskDialog.java:77
+#: src/scrummer/ui/dialog/MeasureDialog.java:53
+#: src/scrummer/ui/dialog/DateDialog.java:32
 msgid "Date"
 msgstr "Date"
 
-#: src/scrummer/model/swing/MetricTableModel.java:44
+#: src/scrummer/model/swing/MetricTableModel.java:42
 msgid "Measure"
 msgstr "Measure"
 
-#: src/scrummer/model/swing/AdminDaysTableModel.java:31
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:53
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:48
+#: src/scrummer/model/swing/AdminDaysTableModel.java:29
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:53
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:48
 msgid "Absence type"
 msgstr "Absence type"
 
-#: src/scrummer/model/swing/AdminDaysTableModel.java:32
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:79
+#: src/scrummer/model/swing/AdminDaysTableModel.java:30
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:81
 msgid "Hours not worked"
 msgstr "Hours not worked"
 
-#: src/scrummer/model/swing/AdminDaysTableModel.java:33
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:71
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:80
+#: src/scrummer/model/swing/AdminDaysTableModel.java:31
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:73
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:82
 msgid "Measure day"
 msgstr "Measure day"
 
 #: src/scrummer/model/swing/DeveloperTableModel.java:31
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:75
 #: src/scrummer/ui/dialog/MetricChangeDialog.java:55
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:51
 #: src/scrummer/ui/dialog/MetricAddDialog.java:46
+#: src/scrummer/ui/dialog/ReleaseDialog.java:64
 #: src/scrummer/ui/dialog/MetricPlotDialog.java:33
 msgid "Name"
 msgstr "Name"
@@ -474,8 +504,12 @@ msgid "Adjusted estimate"
 msgstr "Adjusted estimate"
 
 #: src/scrummer/model/swing/ProductBacklogTableModel.java:38
+#: src/scrummer/ui/SprintDialog.java:28
 #: src/scrummer/ui/dialog/SprintDialog.java:47
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:63
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:65
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:46
+#: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:47
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:43
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:45
 msgid "Sprint"
 msgstr "Sprint"
@@ -511,6 +545,15 @@ msgstr "PBI id"
 msgid "Sprint id"
 msgstr "Sprint id"
 
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:31
+msgid "Task id"
+msgstr "Task id"
+
+#: src/scrummer/model/swing/SprintBacklogTableModel.java:32
+#: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:55
+msgid "Task description"
+msgstr "Task description"
+
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:37
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:69
 msgid "Employee id"
@@ -528,19 +571,47 @@ msgstr "Hours remaining"
 
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:40
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:72
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:77
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:79
 msgid "Number of open impediments"
 msgstr "Number of open impediments"
 
 #: src/scrummer/model/swing/SprintBacklogTableModel.java:41
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:73
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:79
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:81
 msgid "Number of closed impediments"
 msgstr "Number of closed impediments"
 
 #: src/scrummer/model/TaskTypeModelCommon.java:154
 msgid "Could not remove task type."
 msgstr "Could not remove task type."
+
+#: src/scrummer/model/MetricModel.java:63
+msgid "Work Effectiveness"
+msgstr ""
+
+#: src/scrummer/model/MetricModel.java:65
+msgid "Cost Performance Index"
+msgstr ""
+
+#: src/scrummer/model/MetricModel.java:67
+msgid "Earned Value"
+msgstr ""
+
+#: src/scrummer/model/MetricModel.java:69
+msgid "PBI Completeness"
+msgstr ""
+
+#: src/scrummer/model/MetricModel.java:71
+msgid "Schedule Performance Index"
+msgstr ""
+
+#: src/scrummer/model/MetricModel.java:73
+msgid "Sprint Burndown Chart"
+msgstr ""
+
+#: src/scrummer/model/MetricModel.java:75
+msgid "Task Completeness"
+msgstr ""
 
 #: src/scrummer/model/ImpedimentModelCommon.java:310
 #: src/scrummer/model/ImpedimentModelCommon.java:791
@@ -553,7 +624,7 @@ msgstr "Could not remove impediment."
 msgid "Could not set parameters: "
 msgstr "Could not set parameters: "
 
-#: src/scrummer/model/AdminDaysModelCommon.java:158
+#: src/scrummer/model/AdminDaysModelCommon.java:141
 msgid "Could not remove administrative day."
 msgstr "Could not remove administrative day."
 
@@ -565,16 +636,20 @@ msgstr "Could not set parameter."
 msgid "Could not remove task status."
 msgstr "Could not remove task status."
 
-#: src/scrummer/ui/TitleLink.java:48
+#: src/scrummer/ui/SprintDialog.java:24
+msgid "Sprint Information"
+msgstr ""
+
+#: src/scrummer/ui/TitleLink.java:49
 #: src/scrummer/ui/dialog/DevelopersAddDialog.java:93
 msgid "Back"
 msgstr "Back"
 
-#: src/scrummer/ui/TitleLink.java:50
+#: src/scrummer/ui/TitleLink.java:51
 msgid "Home"
 msgstr "Home"
 
-#: src/scrummer/ui/TitleLink.java:52
+#: src/scrummer/ui/TitleLink.java:53
 msgid "Up"
 msgstr "Up"
 
@@ -590,30 +665,23 @@ msgstr "Add developers"
 msgid "Add row"
 msgstr "Add row"
 
-#: src/scrummer/ui/dialog/TaskAddDialog.java:29
+#: src/scrummer/ui/dialog/TaskAddDialog.java:30
 msgid "Add Task"
 msgstr "Add Task"
 
-#: src/scrummer/ui/dialog/TaskAddDialog.java:43
+#: src/scrummer/ui/dialog/TaskAddDialog.java:44
 msgid "Task description must contain at least one nonempty character."
 msgstr "Task description must contain at least one nonempty character."
 
-#: src/scrummer/ui/dialog/TaskAddDialog.java:49
+#: src/scrummer/ui/dialog/TaskAddDialog.java:50
 msgid "Task date must be a valid date."
 msgstr "Task date must be a valid date."
 
-#: src/scrummer/ui/dialog/TaskAddDialog.java:79
+#: src/scrummer/ui/dialog/TaskAddDialog.java:83
 msgid "Error while adding task: "
 msgstr "Error while adding task: "
 
-#: src/scrummer/ui/dialog/TaskAddDialog.java:79
-#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:70
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:95
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:134
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:80
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:107
-#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:63
-#: src/scrummer/ui/dialog/TaskTypeAddDialog.java:108
+#: src/scrummer/ui/dialog/TaskAddDialog.java:83
 #: src/scrummer/ui/dialog/ProjectNewDialog.java:128
 #: src/scrummer/ui/dialog/LoginDialog.java:282
 #: src/scrummer/ui/dialog/MetricRemoveDialog.java:81
@@ -625,11 +693,7 @@ msgstr "Error while adding task: "
 #: src/scrummer/ui/dialog/TeamRemoveDialog.java:68
 #: src/scrummer/ui/dialog/TeamRemoveDialog.java:103
 #: src/scrummer/ui/dialog/MetricChangeDialog.java:93
-#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:70
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:96
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:134
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:101
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:84
 #: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:152
 #: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:204
 #: src/scrummer/ui/dialog/TeamChangeNameDialog.java:74
@@ -639,34 +703,52 @@ msgstr "Error while adding task: "
 #: src/scrummer/ui/dialog/ProductBacklogAddDialog.java:66
 #: src/scrummer/ui/dialog/AdminDaysViewDialog.java:137
 #: src/scrummer/ui/dialog/AdminDaysViewDialog.java:189
+#: src/scrummer/ui/dialog/ReleaseAddDialog.java:53
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:80
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:106
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:80
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:107
 #: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:126
-#: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:108
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:129
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:180
-#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:63
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:153
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:205
 #: src/scrummer/ui/dialog/MetricAddDialog.java:71
-#: src/scrummer/ui/dialog/MeasureAddDialog.java:101
-#: src/scrummer/ui/dialog/TaskChangeDialog.java:55
-#: src/scrummer/ui/dialog/MeasureChangeDialog.java:88
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:95
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:134
-#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:108
+#: src/scrummer/ui/dialog/MeasureAddDialog.java:113
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:57
+#: src/scrummer/ui/dialog/MeasureChangeDialog.java:96
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:149
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:104
-#: src/scrummer/ui/dialog/ProjectOpenDialog.java:122
-#: src/scrummer/ui/dialog/ProjectOpenDialog.java:185
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:194
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:147
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:80
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:107
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:85
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:77
+#: src/scrummer/ui/dialog/ProjectOpenDialog.java:117
+#: src/scrummer/ui/dialog/ProjectOpenDialog.java:174
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:195
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:143
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:176
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeAdd.java:70
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:95
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:134
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:80
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:107
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:63
+#: src/scrummer/ui/dialog/codelist/TaskTypeAddDialog.java:108
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusAdd.java:70
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:96
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:134
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:84
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:80
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:107
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeAddDialog.java:108
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:63
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:95
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:134
+#: src/scrummer/ui/dialog/codelist/TaskStatusAddDialog.java:108
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:80
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:107
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:85
+#: src/scrummer/ui/dialog/measure/GraphEarnedValueDialog.java:56
+#: src/scrummer/ui/dialog/measure/GraphTaskCompleteDialog.java:56
+#: src/scrummer/ui/dialog/measure/GraphSpentWorkDialog.java:53
+#: src/scrummer/ui/dialog/measure/GraphWorkEffectivenessDialog.java:56
+#: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:85
+#: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:56
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:102
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:133
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:138
@@ -677,50 +759,13 @@ msgstr "Error while adding task: "
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:181
 #: src/scrummer/ui/Validate.java:38 src/scrummer/ui/Validate.java:76
 #: src/scrummer/ui/Validate.java:96 src/scrummer/ui/Validate.java:169
-#: src/scrummer/ui/page/PBPage.java:154
-#: src/scrummer/ui/page/MetricInputPage.java:102
+#: src/scrummer/ui/page/PBPage.java:146
+#: src/scrummer/ui/page/MetricInputPage.java:107
 #: src/scrummer/ui/page/ProductBacklogPage.java:142
-#: src/scrummer/ui/page/SprintBacklogPage.java:164
+#: src/scrummer/ui/page/SprintBacklogPage.java:155
 #: src/scrummer/ui/page/ProjectPage.java:128
 msgid "Error"
 msgstr "Error"
-
-#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:32
-msgid "Add Impediment Type"
-msgstr "Add Impediment Type"
-
-#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:42
-#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:38
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:40
-msgid "Impediment Type"
-msgstr "Impediment Type"
-
-#: src/scrummer/ui/dialog/ImpedimentTypeAdd.java:69
-msgid "Could not add impediment type: "
-msgstr "Could not add impediment type: "
-
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:36
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:37
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:36
-#: src/scrummer/ui/MainFrame.java:142 src/scrummer/ui/MainFrame.java:143
-msgid "Change absence type"
-msgstr "Change absence type"
-
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:55
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:56
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:55
-msgid "New description"
-msgstr "New description"
-
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:95
-msgid "Some task status must be selected to change it's description."
-msgstr "Some task status must be selected to change it's description."
-
-#: src/scrummer/ui/dialog/TaskStatusChangeDialog.java:133
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:133
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:133
-msgid "An error has occurred when setting description"
-msgstr "An error has occurred when setting description"
 
 #: src/scrummer/ui/dialog/SprintAddDialog.java:30
 #: src/scrummer/ui/dialog/SprintDialog.java:35
@@ -735,66 +780,87 @@ msgstr "Estimated"
 msgid "Length"
 msgstr "Length"
 
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:37
-#: src/scrummer/ui/MainFrame.java:144
-msgid "Remove absence type"
-msgstr "Remove absence type"
-
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:49
-msgid "Select absence type"
-msgstr "Select absence type"
-
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:78
-msgid ""
-"Could not delete absence type. Select one absence type first, then click on "
-"Remove button."
-msgstr ""
-"Could not delete absence type. Select one absence type first, then click on "
-"Remove button."
-
-#: src/scrummer/ui/dialog/AbsenceTypeRemoveDialog.java:107
-msgid "Could not remove absence type: "
-msgstr "Could not remove absence type: "
-
-#: src/scrummer/ui/dialog/WorkEffectivenessDialog.java:29
-msgid "Calculate Work Effectiveness"
+#: src/scrummer/ui/dialog/ReleaseEditDialog.java:27
+msgid "Edit Release"
 msgstr ""
 
-#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:28
-msgid "Remove Impediment Type"
-msgstr "Remove Impediment Type"
+#: src/scrummer/ui/dialog/ReleaseEditDialog.java:49
+#, fuzzy
+msgid "Description must not be an empty string."
+msgstr "Task description must contain at least one nonempty character."
 
-#: src/scrummer/ui/dialog/ImpedimentTypeRemove.java:62
-msgid "Could not remove impediment type: "
-msgstr "Could not remove impediment type: "
+#: src/scrummer/ui/dialog/TaskDialog.java:63
+#, fuzzy
+msgid "Engineering hour"
+msgstr "Remaining hours"
 
-#: src/scrummer/ui/dialog/TaskDialog.java:64
+#: src/scrummer/ui/dialog/TaskDialog.java:67
 msgid "Parent"
 msgstr "Parent"
 
-#: src/scrummer/ui/dialog/TaskDialog.java:76
+#: src/scrummer/ui/dialog/TaskDialog.java:79
 msgid "Active"
 msgstr "Active"
 
-#: src/scrummer/ui/dialog/TaskDialog.java:86
+#: src/scrummer/ui/dialog/TaskDialog.java:89
 msgid "Yes"
 msgstr "Yes"
 
-#: src/scrummer/ui/dialog/TaskDialog.java:86
+#: src/scrummer/ui/dialog/TaskDialog.java:89
 msgid "No"
 msgstr "No"
 
-#: src/scrummer/ui/dialog/TaskTypeAddDialog.java:40
-#: src/scrummer/ui/dialog/TaskTypeAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:166
-msgid "Add task type"
-msgstr "Add task type"
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:80
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:79
+#, fuzzy
+msgid "Choose sprint"
+msgstr "New sprint"
 
-#: src/scrummer/ui/dialog/MeasureDialog.java:44
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:100
+msgid "Sodelovanje z razvojno skupino v asu razvoja"
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:128
+msgid "Odzivnost razvijalcev na elje, spremembe v zahtevah"
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:156
+msgid "<html> Popolnost izdelane reitve "
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:185
+msgid "<html> Skladnost izdelane reitve s priakovanji "
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:214
+msgid "<html> Intuitivnost uporabnikega vmesnika "
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:243
+msgid "<html> Uporabnost/Koristnost izdelanih programov "
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:271
+msgid "<html> Odsotnost napak, zanesljivost delovanja, robustnost "
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:300
+msgid "Kakovost oddanih Sprint Backlog-ov, pravoasnost oddaje"
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:328
+msgid "Splona ocena zadovoljstva z delom razvojne skupine"
+msgstr ""
+
+#: src/scrummer/ui/dialog/CustomerPollDialog.java:356
+msgid "Splona ocena kakovosti izdelanih programov"
+msgstr ""
+
+#: src/scrummer/ui/dialog/MeasureDialog.java:49
 msgid "Measurement"
 msgstr "Measurement"
 
-#: src/scrummer/ui/dialog/MeasureDialog.java:49
+#: src/scrummer/ui/dialog/MeasureDialog.java:54
 msgid "Result"
 msgstr "Result"
 
@@ -933,41 +999,10 @@ msgstr "Change Metric"
 msgid "Error while updating measure: "
 msgstr "Error while updating measure: "
 
-#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:32
-msgid "Add Impediment Status"
-msgstr "Add Impediment Status"
-
-#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:42
-#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:37
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:42
-msgid "Impediment Status"
-msgstr "Impediment Status"
-
-#: src/scrummer/ui/dialog/ImpedimentStatusAdd.java:69
-msgid "Could not add new impediment status: "
-msgstr "Could not add new impediment status: "
-
-#: src/scrummer/ui/dialog/AbsenceTypeChangeDialog.java:96
-msgid "Some absence type must be selected to change it's description."
-msgstr "Some absence type must be selected to change it's description."
-
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:44
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:62
 msgid "Add Developer"
 msgstr "Add Developer"
-
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:30
-msgid "Change Impediment Type"
-msgstr "Change Impediment Type"
-
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:53
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:54
-msgid "Change"
-msgstr "Change"
-
-#: src/scrummer/ui/dialog/ImpedimentTypeChange.java:83
-msgid "Could not update impediment status: "
-msgstr "Could not update impediment status: "
 
 #: src/scrummer/ui/dialog/ImpedimentsViewDialog.java:69
 msgid "View impediments"
@@ -1012,7 +1047,7 @@ msgstr "Team must be at least one character long."
 
 #: src/scrummer/ui/dialog/TeamChangeNameDialog.java:116
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:264
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:193
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:194
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:101
 msgid "An error has occurred when setting team name"
 msgstr "An error has occurred when setting team name"
@@ -1066,6 +1101,17 @@ msgstr "New number of closed impediments"
 msgid "Insert into Product Backlog"
 msgstr "Insert into Product Backlog"
 
+#: src/scrummer/ui/dialog/DateDialog.java:26
+#: src/scrummer/ui/dialog/DateRangeDialog.java:33
+msgid "Interval"
+msgstr "Interval"
+
+#: src/scrummer/ui/dialog/DateDialog.java:50
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:136
+#, fuzzy
+msgid "Invalid date format."
+msgstr "Wrong date format."
+
 #: src/scrummer/ui/dialog/AdminDaysViewDialog.java:54
 msgid "View administrative days"
 msgstr "View administrative days"
@@ -1081,6 +1127,20 @@ msgid ""
 msgstr ""
 "Cannot remove administrative day because no administrative day is selected. "
 "Click on a table row and then press remove."
+
+#: src/scrummer/ui/dialog/ReleaseAddDialog.java:23
+#, fuzzy
+msgid "Add Release"
+msgstr "Add developers"
+
+#: src/scrummer/ui/dialog/ReleaseAddDialog.java:32
+msgid "Name cannot be empty."
+msgstr ""
+
+#: src/scrummer/ui/dialog/ReleaseAddDialog.java:52
+#, fuzzy
+msgid "An error has occurred while adding a new release: "
+msgstr "An error has occurred when setting team name"
 
 #: src/scrummer/ui/dialog/ProjectRemoveDialog.java:40
 #: src/scrummer/ui/MainFrame.java:119
@@ -1103,27 +1163,6 @@ msgstr ""
 msgid "Could not remove project: "
 msgstr "Could not remove project:"
 
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:37
-#: src/scrummer/ui/MainFrame.java:174
-msgid "Remove task status"
-msgstr "Remove task status"
-
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:49
-msgid "Select task status"
-msgstr "Select task status"
-
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:78
-msgid ""
-"Could not delete task status. Select one task status first, then click on "
-"Remove button."
-msgstr ""
-"Could not delete task status. Select one task status first, then click on "
-"Remove button."
-
-#: src/scrummer/ui/dialog/TaskStatusRemoveDialog.java:107
-msgid "Could not remove task status: "
-msgstr "Could not remove task status: "
-
 #: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:36
 msgid "Change impediment"
 msgstr "Change Impediment"
@@ -1139,12 +1178,6 @@ msgstr "Wrong ending date."
 #: src/scrummer/ui/dialog/ImpedimentsChangeDialog.java:125
 msgid "An error has occurred when setting updating impediment"
 msgstr "An error has occurred when setting updating impediment"
-
-#: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:40
-#: src/scrummer/ui/dialog/AbsenceTypeAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:141
-msgid "Add absence type"
-msgstr "Add absence type"
 
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:47
 #: src/scrummer/ui/MainFrame.java:131
@@ -1163,13 +1196,74 @@ msgstr ""
 "Cannot remove Sprint Backlog item because no item is selected. Click on a "
 "table row and then press remove."
 
-#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:27
-msgid "Remove Impediment Status"
-msgstr "Remove Impediment Status"
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:74
+#: src/scrummer/ui/dialog/ImpedimentDialog.java:56
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:61
+#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:64
+msgid "Choose employee"
+msgstr "Choose employee"
 
-#: src/scrummer/ui/dialog/ImpedimentStatusRemove.java:62
-msgid "Could not remove impediment status: "
-msgstr "Could not remove impediment status: "
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:101
+msgid "<html> Jasnost zastavljenega Product Backlog-a "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:136
+msgid "<html> Ocena asa za posamezno zahtevo v Product Backlogu "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:169
+msgid "<html> Administracija pri metodologiji Scrum "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:202
+msgid "<html> Obremenjenost z administracijo "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:235
+msgid "<html> Tehnine teave na zaetku Sprinta "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:268
+msgid ""
+"<html> Vsebinske teave (razumevanje zahtevane funkcionalnosti) na zaetku  "
+"Sprinta "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:301
+msgid ""
+"<html> Tehnine teave na koncu Sprinta (5 - ni bilo teav, 1 - bilo je veliko "
+"teav)</html>"
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:333
+msgid ""
+"<html> Vsebinske teave (razumevanje zahtevane funkcionalnosti) na koncu "
+"Sprinta "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:366
+msgid "Sodelovanje s Scrum Masterjem"
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:398
+msgid "Sodelovanje s Product Owner-jem"
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:430
+msgid "Sodelovanje znotraj razvojne skupine"
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:462
+msgid "<html> Primernost obsega dela na projektu (Ali je obseg dela "
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:495
+msgid "<html> Splopna ocena vaega zadovoljstva s potekom dela na projektu"
+msgstr ""
+
+#: src/scrummer/ui/dialog/DeveloperPollDialog.java:527
+msgid "<html> Splona ocena metodologije Scrum (Ali je ta metodologija "
+msgstr ""
 
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:70
 msgid "View Product Backlog"
@@ -1189,7 +1283,7 @@ msgstr ""
 "selected. Click on a table row and then press remove."
 
 #: src/scrummer/ui/dialog/MetricAddDialog.java:70
-#: src/scrummer/ui/dialog/MeasureAddDialog.java:101
+#: src/scrummer/ui/dialog/MeasureAddDialog.java:113
 msgid "Error while adding new measure: "
 msgstr "Error while adding new measure: "
 
@@ -1201,26 +1295,33 @@ msgstr "Add Sprint Measurement"
 msgid "Add Task Measurement"
 msgstr "Add Task Measurement"
 
-#: src/scrummer/ui/dialog/MeasureAddDialog.java:55
+#: src/scrummer/ui/dialog/MeasureAddDialog.java:45
+#, fuzzy
+msgid "Add PBI Measurement"
+msgstr "Add Task Measurement"
+
+#: src/scrummer/ui/dialog/MeasureAddDialog.java:48
+#, fuzzy
+msgid "Add Release Measurement"
+msgstr "Add Task Measurement"
+
+#: src/scrummer/ui/dialog/MeasureAddDialog.java:61
 #: src/scrummer/ui/dialog/MeasureChangeDialog.java:51
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:125
 msgid "Wrong date format."
 msgstr "Wrong date format."
 
-#: src/scrummer/ui/dialog/TaskChangeDialog.java:33
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:34
 msgid "Change Task"
 msgstr "Change Task"
 
-#: src/scrummer/ui/dialog/TaskChangeDialog.java:55
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:57
 msgid "Error while updating task: "
 msgstr "Error while updating task: "
 
-#: src/scrummer/ui/dialog/TaskChangeDialog.java:98
+#: src/scrummer/ui/dialog/TaskChangeDialog.java:96
 msgid "Wrong task end date formatting."
 msgstr "Wrong task end date formatting."
-
-#: src/scrummer/ui/dialog/DateRangeDialog.java:33
-msgid "Interval"
-msgstr "Interval"
 
 #: src/scrummer/ui/dialog/DateRangeDialog.java:39
 #: src/scrummer/ui/dialog/MetricPlotDialog.java:34
@@ -1241,23 +1342,17 @@ msgstr "Invalid from date."
 msgid "Change Measurement"
 msgstr "Change Measurement"
 
-#: src/scrummer/ui/dialog/MeasureChangeDialog.java:88
+#: src/scrummer/ui/dialog/MeasureChangeDialog.java:96
 msgid "Error while updating new measure: "
 msgstr "Error while updating new measure: "
 
-#: src/scrummer/ui/dialog/TaskTypeChangeDialog.java:95
-msgid "Some task type must be selected to change it's description."
-msgstr "Some task type must be selected to change it's description."
+#: src/scrummer/ui/dialog/ReleaseDialog.java:50
+msgid "Release Information"
+msgstr ""
 
 #: src/scrummer/ui/dialog/ImpedimentDialog.java:48
 msgid "Choose team"
 msgstr "Choose team"
-
-#: src/scrummer/ui/dialog/ImpedimentDialog.java:56
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:59
-#: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:64
-msgid "Choose employee"
-msgstr "Choose employee"
 
 #: src/scrummer/ui/dialog/ImpedimentDialog.java:64
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:56
@@ -1273,15 +1368,9 @@ msgid "Choose impediment status"
 msgstr "Choose impediment status"
 
 #: src/scrummer/ui/dialog/ImpedimentDialog.java:99
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:56
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:29
 msgid "Add Impediment"
 msgstr "Add Impediment"
-
-#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:40
-#: src/scrummer/ui/dialog/TaskStatusAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:172
-msgid "Add task status"
-msgstr "Add task status"
 
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:48
 #: src/scrummer/ui/dialog/SprintBacklogAddDialog.java:79
@@ -1296,11 +1385,11 @@ msgstr "Add plot"
 msgid "Plot configuration"
 msgstr "Plot configuration"
 
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:65
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:38
 msgid "Wrong starting date."
 msgstr "Wrong starting date."
 
-#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:66
+#: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:39
 msgid "Wrong end date."
 msgstr "Wrong end date."
 
@@ -1313,7 +1402,7 @@ msgstr "Open Project"
 msgid "Select Project"
 msgstr "Select Project"
 
-#: src/scrummer/ui/dialog/ProjectOpenDialog.java:120
+#: src/scrummer/ui/dialog/ProjectOpenDialog.java:115
 msgid ""
 "Could not open project. First select a project from project list, then click "
 "on Open."
@@ -1321,68 +1410,39 @@ msgstr ""
 "Could not open project. First select a project from project list, then click "
 "on Open."
 
-#: src/scrummer/ui/dialog/ProjectOpenDialog.java:184
+#: src/scrummer/ui/dialog/ProjectOpenDialog.java:173
 msgid "Could not open project"
 msgstr "Could not open project"
 
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:45
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:47
 #: src/scrummer/ui/MainFrame.java:132
 msgid "Daily scrum meeting"
 msgstr "Daily scrum meeting"
 
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:51
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:53
 msgid "Daily Scrum"
 msgstr "Daily Scrum"
 
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:73
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:75
 msgid "Spent hours"
 msgstr "Spent hours"
 
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:75
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:77
 msgid "Remaining hours"
 msgstr "Remaining hours"
 
-#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:117
+#: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:119
 msgid "Sprint day is out sprint days range."
 msgstr ""
 
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:47
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:86
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:49
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:89
 msgid "Add administrative day"
 msgstr "Add administrative day"
 
-#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:69
+#: src/scrummer/ui/dialog/AdminDaysAddDialog.java:71
 msgid "Choose absence type"
 msgstr "Choose absence type"
-
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:37
-#: src/scrummer/ui/MainFrame.java:168
-msgid "Remove task type"
-msgstr "Remove task type"
-
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:49
-msgid "Select task type"
-msgstr "Select task type"
-
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:78
-msgid ""
-"Could not delete task type. Select one task type first, then click on Remove "
-"button."
-msgstr ""
-"Could not delete task type. Select one task type first, then click on Remove "
-"button."
-
-#: src/scrummer/ui/dialog/TaskTypeRemoveDialog.java:107
-msgid "Could not remove task type: "
-msgstr "Could not remove task type: "
-
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:32
-msgid "Change Impediment Status"
-msgstr "Change Impediment Status"
-
-#: src/scrummer/ui/dialog/ImpedimentStatusChange.java:84
-msgid "Could not add or update impediment status: "
-msgstr "Could not add or update impediment status: "
 
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:91
 msgid "Save"
@@ -1391,6 +1451,276 @@ msgstr "Save"
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:175
 msgid "An error has occurred when transferring employee from/to team: "
 msgstr "An error has occurred when transferring employee from/to team: "
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeAdd.java:32
+msgid "Add Impediment Type"
+msgstr "Add Impediment Type"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeAdd.java:42
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:38
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:40
+msgid "Impediment Type"
+msgstr "Impediment Type"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeAdd.java:69
+msgid "Could not add impediment type: "
+msgstr "Could not add impediment type: "
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:36
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:37
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:36
+#: src/scrummer/ui/MainFrame.java:142 src/scrummer/ui/MainFrame.java:143
+msgid "Change absence type"
+msgstr "Change absence type"
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:55
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:56
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:55
+msgid "New description"
+msgstr "New description"
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:95
+msgid "Some task status must be selected to change it's description."
+msgstr "Some task status must be selected to change it's description."
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:133
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:133
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:133
+msgid "An error has occurred when setting description"
+msgstr "An error has occurred when setting description"
+
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:144
+msgid "Remove absence type"
+msgstr "Remove absence type"
+
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:49
+msgid "Select absence type"
+msgstr "Select absence type"
+
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:78
+msgid ""
+"Could not delete absence type. Select one absence type first, then click on "
+"Remove button."
+msgstr ""
+"Could not delete absence type. Select one absence type first, then click on "
+"Remove button."
+
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:107
+msgid "Could not remove absence type: "
+msgstr "Could not remove absence type: "
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:28
+msgid "Remove Impediment Type"
+msgstr "Remove Impediment Type"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:62
+msgid "Could not remove impediment type: "
+msgstr "Could not remove impediment type: "
+
+#: src/scrummer/ui/dialog/codelist/TaskTypeAddDialog.java:40
+#: src/scrummer/ui/dialog/codelist/TaskTypeAddDialog.java:53
+#: src/scrummer/ui/MainFrame.java:166
+msgid "Add task type"
+msgstr "Add task type"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusAdd.java:32
+msgid "Add Impediment Status"
+msgstr "Add Impediment Status"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusAdd.java:42
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:37
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:42
+msgid "Impediment Status"
+msgstr "Impediment Status"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusAdd.java:69
+msgid "Could not add new impediment status: "
+msgstr "Could not add new impediment status: "
+
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:96
+msgid "Some absence type must be selected to change it's description."
+msgstr "Some absence type must be selected to change it's description."
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:30
+msgid "Change Impediment Type"
+msgstr "Change Impediment Type"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:53
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:54
+msgid "Change"
+msgstr "Change"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentTypeChange.java:83
+msgid "Could not update impediment status: "
+msgstr "Could not update impediment status: "
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:174
+msgid "Remove task status"
+msgstr "Remove task status"
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:49
+msgid "Select task status"
+msgstr "Select task status"
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:78
+msgid ""
+"Could not delete task status. Select one task status first, then click on "
+"Remove button."
+msgstr ""
+"Could not delete task status. Select one task status first, then click on "
+"Remove button."
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:107
+msgid "Could not remove task status: "
+msgstr "Could not remove task status: "
+
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeAddDialog.java:40
+#: src/scrummer/ui/dialog/codelist/AbsenceTypeAddDialog.java:53
+#: src/scrummer/ui/MainFrame.java:141
+msgid "Add absence type"
+msgstr "Add absence type"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:27
+msgid "Remove Impediment Status"
+msgstr "Remove Impediment Status"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:62
+msgid "Could not remove impediment status: "
+msgstr "Could not remove impediment status: "
+
+#: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:95
+msgid "Some task type must be selected to change it's description."
+msgstr "Some task type must be selected to change it's description."
+
+#: src/scrummer/ui/dialog/codelist/TaskStatusAddDialog.java:40
+#: src/scrummer/ui/dialog/codelist/TaskStatusAddDialog.java:53
+#: src/scrummer/ui/MainFrame.java:172
+msgid "Add task status"
+msgstr "Add task status"
+
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:37
+#: src/scrummer/ui/MainFrame.java:168
+msgid "Remove task type"
+msgstr "Remove task type"
+
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:49
+msgid "Select task type"
+msgstr "Select task type"
+
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:78
+msgid ""
+"Could not delete task type. Select one task type first, then click on Remove "
+"button."
+msgstr ""
+"Could not delete task type. Select one task type first, then click on Remove "
+"button."
+
+#: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:107
+msgid "Could not remove task type: "
+msgstr "Could not remove task type: "
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:32
+msgid "Change Impediment Status"
+msgstr "Change Impediment Status"
+
+#: src/scrummer/ui/dialog/codelist/ImpedimentStatusChange.java:84
+msgid "Could not add or update impediment status: "
+msgstr "Could not add or update impediment status: "
+
+#: src/scrummer/ui/dialog/measure/WorkEffectivenessDialog.java:30
+msgid "Calculate Work Effectiveness"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:35
+#, fuzzy
+msgid "Developer Poll"
+msgstr "Developer"
+
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:41
+#: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:42
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:38
+#, fuzzy
+msgid "Release/Sprint Information"
+msgstr "Error while saving sprint information"
+
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:48
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:45
+#, fuzzy
+msgid "Question"
+msgstr "Testing"
+
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:56
+msgid "Plot Developer Question Poll"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphEarnedValueDialog.java:30
+msgid "Earned value"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphEarnedValueDialog.java:55
+#, fuzzy
+msgid "An error has occurred while calculating earned value: "
+msgstr "An error has occurred when setting team name"
+
+#: src/scrummer/ui/dialog/measure/GraphTaskCompleteDialog.java:30
+#: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:30
+msgid "Schedule performance index"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphTaskCompleteDialog.java:55
+msgid "Error occurred while calculating tasks completed in sprint: "
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphSpentWorkDialog.java:27
+msgid "Sprint burndown chart"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphSpentWorkDialog.java:52
+#, fuzzy
+msgid "Error occurred while calculating sprint burndown information: "
+msgstr "Error while saving sprint information"
+
+#: src/scrummer/ui/dialog/measure/SPIDialog.java:34
+msgid "Calculate SPI"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphWorkEffectivenessDialog.java:30
+msgid "Work effectiveness"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphWorkEffectivenessDialog.java:55
+msgid "Error occurred while calculating work effectiveness: "
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:36
+msgid "PBI Completion"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:84
+msgid "Error occurred while calculating pbi completed in sprint: "
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:55
+msgid "Error occurred while calculating schedule performance indices: "
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/CPIDialog.java:33
+msgid "Calculate CPI"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/EarnedValueDialog.java:30
+msgid "Calculate Earned Value"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:32
+msgid "Customer Poll"
+msgstr ""
+
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:53
+msgid "Plot Customer Question Poll"
+msgstr ""
 
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:31
 #: src/scrummer/ui/MainFrame.java:127
@@ -1534,13 +1864,13 @@ msgstr "Change Name"
 msgid "Help"
 msgstr "Help"
 
-#: src/scrummer/ui/page/PBPage.java:67
+#: src/scrummer/ui/page/PBPage.java:68
 #: src/scrummer/ui/page/SprintBacklogPage.java:67
 msgid "Sprints"
 msgstr "Sprints"
 
-#: src/scrummer/ui/page/PBPage.java:152
-#: src/scrummer/ui/page/SprintBacklogPage.java:162
+#: src/scrummer/ui/page/PBPage.java:144
+#: src/scrummer/ui/page/SprintBacklogPage.java:153
 msgid ""
 "Cannot display modification dialog. First select a sprint by clicking on it, "
 "then click Edit button."
@@ -1548,7 +1878,7 @@ msgstr ""
 "Cannot display modification dialog. First select a sprint by clicking on it, "
 "then click Edit button."
 
-#: src/scrummer/ui/page/MetricInputPage.java:100
+#: src/scrummer/ui/page/MetricInputPage.java:105
 msgid ""
 "Could not open dialog because a measure is not selected. Please select it "
 "and then click Edit"
@@ -1562,13 +1892,19 @@ msgstr "Project Name:"
 msgid "Error while saving project data"
 msgstr "Error while saving project data"
 
-#: src/scrummer/ui/page/MetricGraphPage.java:70
-msgid "Metric plots"
-msgstr "Metrics plots"
+#: src/scrummer/ui/page/MetricGraphPage.java:66
+msgid "Time"
+msgstr ""
 
-#: src/scrummer/ui/page/MetricGraphPage.java:89
-msgid "Graf"
-msgstr "Graf"
+#: src/scrummer/ui/page/MetricGraphPage.java:106
+msgid "Show"
+msgstr ""
+
+#~ msgid "Metric plots"
+#~ msgstr "Metrics plots"
+
+#~ msgid "Graf"
+#~ msgstr "Graf"
 
 #~ msgid "Naronikove zahteve"
 #~ msgstr "Naronikove zahteve"
@@ -1694,9 +2030,6 @@ msgstr "Graf"
 
 #~ msgid "Add product backlog"
 #~ msgstr "Add Product Backlog"
-
-#~ msgid "Developer"
-#~ msgstr "Developer"
 
 #~ msgid "Add Product Backlog"
 #~ msgstr "Add Product Backlog"
