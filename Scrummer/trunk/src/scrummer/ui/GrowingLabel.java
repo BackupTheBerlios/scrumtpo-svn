@@ -48,20 +48,37 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 		super();
 		_image = image;
 		
-		float d = 1.0f / 273.0f;	
+		// float d = 1.0f / 273.0f;	
+		float d = 1.0f / 9.0f;
+		/*
 		_kernel = new float [] 
- 		{ 1, 4, 7, 4, 1,
+ 		{ 1, 4, 7, 4, 1,				
  		  4, 16, 26, 16, 4,
  		  7, 26, 41, 26, 7,
  		  4, 16, 26, 16, 4,
  		  1, 4, 7, 4, 1
  		};
+ 		*/
+		
+		/*
+		_kernel = new float [] 
+		              		{ 1,1,1,1,1
+				1,1,1,1,1
+				1,1,1,1,1
+				1,1,1,
+		  */            	
+		_kernel = new float [] {
+				1f,1f,1f,
+				1f,1f,1f,
+				1f,1f,1f
+		};
+		              		
 	     
 		for (int i = 0; i < _kernel.length; i++) {
 			_kernel[i] *= d;
 		}
 		
- 		Kernel k = new Kernel(5, 5, _kernel);
+ 		Kernel k = new Kernel(3, 3, _kernel);
  		ConvolveOp cop = new ConvolveOp(k);
  		_copy = cop.filter(_image, null);
 		
@@ -136,7 +153,7 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g.create();		
-		Kernel k = new Kernel(5, 5, _kernel);
+		Kernel k = new Kernel(3, 3, _kernel);
 		ConvolveOp cop = new ConvolveOp(k, ConvolveOp.EDGE_NO_OP, null);
 		cop.filter(_image, _copy);		
 		g.drawImage(_copy, _picside + _currentBorder, _picup + _currentBorder, 
