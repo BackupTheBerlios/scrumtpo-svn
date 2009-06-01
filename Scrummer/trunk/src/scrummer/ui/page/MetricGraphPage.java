@@ -28,6 +28,8 @@ import scrummer.model.graph.MetricDataSet;
 import scrummer.model.graph.QuestionDataSet;
 import scrummer.ui.MainFrame;
 import scrummer.ui.Util;
+import scrummer.ui.dialog.measure.GraphAllCustomerPollDialog;
+import scrummer.ui.dialog.measure.GraphAllDeveloperPollDialog;
 import scrummer.ui.dialog.measure.GraphCustomerPollDialog;
 import scrummer.ui.dialog.measure.GraphDeveloperPollDialog;
 import scrummer.ui.dialog.measure.GraphEarnedValueDialog;
@@ -200,6 +202,20 @@ public class MetricGraphPage
 			}
 			case DeveloperPoll: {
 				GraphDeveloperPollDialog dialog = new GraphDeveloperPollDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				_chartPanel.setChart(_pieChart);
+				break;
+			}
+			case AllCustomerPoll: {
+				GraphAllCustomerPollDialog dialog = new GraphAllCustomerPollDialog(getMainFrame());
+				Util.centre(dialog);
+				dialog.setVisible(true);
+				_chartPanel.setChart(_pieChart);
+				break;
+			}
+			case AllDeveloperPoll: {
+				GraphAllDeveloperPollDialog dialog = new GraphAllDeveloperPollDialog(getMainFrame());
 				Util.centre(dialog);
 				dialog.setVisible(true);
 				_chartPanel.setChart(_pieChart);
