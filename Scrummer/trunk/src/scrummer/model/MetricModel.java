@@ -50,7 +50,11 @@ public class MetricModel {
 		/// customer questioanairre average results
 		CustomerPoll,
 		/// developer questionaire average results
-		DeveloperPoll		
+		DeveloperPoll,
+		/// customer questionaire for all sprints
+		AllCustomerPoll,
+		/// developer questionaire for all sprints
+		AllDeveloperPoll
 		;
 		
 		/**
@@ -78,6 +82,10 @@ public class MetricModel {
 				return i18n.tr("Customer poll");
 			case DeveloperPoll: 
 				return i18n.tr("Developer poll");
+			case AllCustomerPoll:
+				return i18n.tr("All Sprint Customer Poll");
+			case AllDeveloperPoll:
+				return i18n.tr("All Sprint Developer Poll");
 			default: return "";
 			}
 		}
@@ -918,6 +926,26 @@ public class MetricModel {
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
+	/**
+	 * Calculate all sprint developer poll results
+	 * @param questionId question id
+	 */
+	public void calculateAllSprintDeveloperPoll(int questionId) {	
+		HashMap<String, Integer> marks = _metricModelCommon.calculateDeveloperQuestionMark(questionId);		
+		_questionDataSet.setValues(marks);		
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");	
+	}
+	
+	/**
+	 * Calculate all sprint customer poll results
+	 * @param questionId question id
+	 */
+	public void calculateAllSprintCustomerPoll(int questionId) {	
+		HashMap<String, Integer> marks = _metricModelCommon.calculateCustomerQuestionMark(questionId);		
+		_questionDataSet.setValues(marks);		
+		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");	
+	}
+	
 	/// customer questions
 	private QuestionCustomerComboBoxModel _questionCustomerComboBoxModel;
 	/// developer questions
@@ -940,4 +968,5 @@ public class MetricModel {
 	private MetricModelCommon _metricModelCommon;
 	/// project event listeners
 	private Operations.MetricOperation _operation = new Operations.MetricOperation();
+	
 }
