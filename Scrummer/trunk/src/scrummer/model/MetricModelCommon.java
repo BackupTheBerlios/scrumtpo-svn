@@ -1971,7 +1971,7 @@ public class MetricModelCommon {
 			ex.printStackTrace();
 		}
 		};
-		String query = "SELECT COUNT(" + DBSchemaModel.TaskId + ") FROM " + DBSchemaModel.TaskTable +
+		String query = "SELECT COUNT(" + DBSchemaModel.SprintPBITable + "." + DBSchemaModel.TaskId + ") FROM " + DBSchemaModel.TaskTable +
 		" NATURAL JOIN " + DBSchemaModel.TaskStatusTable +
 		" NATURAL JOIN " + DBSchemaModel.SprintPBITable + 
 		" WHERE " + 
@@ -1979,7 +1979,7 @@ public class MetricModelCommon {
 		DBSchemaModel.TaskStatusDesc + "='completed'" + " AND " +
 		DBSchemaModel.TaskStatusDesc + "!='split/divided'" + " AND " +
 		DBSchemaModel.TaskDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'" + 
-		" GROUP BY " + DBSchemaModel.TaskId; 		
+		" GROUP BY " + DBSchemaModel.SprintPBITable + "." + DBSchemaModel.TaskId; 		
 		q.queryResult(query);		
 		
 		return q.getResult();		
@@ -2008,14 +2008,14 @@ public class MetricModelCommon {
 			ex.printStackTrace();
 		}
 		};
-		String query = "SELECT COUNT(" + DBSchemaModel.TaskId + ") FROM " + DBSchemaModel.TaskTable +
+		String query = "SELECT COUNT(" + DBSchemaModel.SprintPBITable + "." + DBSchemaModel.TaskId + ") FROM " + DBSchemaModel.TaskTable +
 		" NATURAL JOIN " + DBSchemaModel.TaskStatusTable +
 		" NATURAL JOIN " + DBSchemaModel.SprintPBITable + 
 		" WHERE " + 
 		DBSchemaModel.SprintId + "=" + sprintId + " AND " +
 		DBSchemaModel.TaskStatusDesc + "!='split/divided'" + " AND " +
 		DBSchemaModel.TaskDate + " BETWEEN '" + startDate + "' AND '" + endDate + "'" +  
-		" GROUP BY " + DBSchemaModel.TaskId; 		
+		" GROUP BY " + DBSchemaModel.SprintPBITable  + "." + DBSchemaModel.TaskId; 		
 		q.queryResult(query);				
 		return q.getResult();		
 	}
