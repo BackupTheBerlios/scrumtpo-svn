@@ -37,7 +37,7 @@ public class GraphCustomerPollDialog
 		Panel.setBorder(
 			Util.createSpacedTitleBorder(
 			k, k, k, k, 
-			i18n.tr("Release/Sprint Information"), 
+			i18n.tr("Question Information"), 
 			2, k, k, k));
 		
 		FormBuilder fb = new FormBuilder(Panel);		
