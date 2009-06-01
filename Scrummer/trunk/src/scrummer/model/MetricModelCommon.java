@@ -1823,7 +1823,11 @@ public class MetricModelCommon {
 			BigDecimal factor = new BigDecimal(diff);
 			factor.divide(new BigDecimal(sprintLength), 3, RoundingMode.DOWN);
 		
-			return topPart.divide(bottomPart).multiply(factor);
+			BigDecimal ret = BigDecimal.ZERO;
+			try {
+				ret = topPart.divide(bottomPart).multiply(factor); 
+			} catch (ArithmeticException ex) {}
+			return ret;
 		} else {
 			return BigDecimal.ZERO;
 		}
