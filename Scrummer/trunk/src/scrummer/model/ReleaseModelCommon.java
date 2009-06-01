@@ -102,7 +102,7 @@ public class ReleaseModelCommon {
 			}
 		};
 		q.queryResult(
-			"SELECT " + DBSchemaModel.ReleaseId + ", " +
+			"SELECT " + DBSchemaModel.FinalReleaseTable  + "." + DBSchemaModel.ReleaseId + ", " +
 			DBSchemaModel.ReleaseDescription + ", " +
 			DBSchemaModel.PBIDesc +
 			" FROM "   + DBSchemaModel.FinalReleaseTable + 
