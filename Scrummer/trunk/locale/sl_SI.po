@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the Scrummer package.
 # Simon Mihevc <simonmihevc@volja.net>, 2009.
 #
-#: src/scrummer/model/MetricModelCommon.java:1231
+#: src/scrummer/model/MetricModelCommon.java:1232
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-31 22:16+0200\n"
+"POT-Creation-Date: 2009-06-01 11:06+0200\n"
 "PO-Revision-Date: 2009-03-17 23:03+0000\n"
 "Last-Translator: Simon Mihevc <simonmihevc@volja.net>\n"
 "Language-Team: slovenski <not@available>\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: src/scrummer/ui/dialog/MetricAddDialog.java:54
 #: src/scrummer/ui/dialog/ReleaseDialog.java:75
 #: src/scrummer/ui/dialog/ImpedimentsAddDialog.java:30
-#: src/scrummer/ui/MainFrame.java:179 src/scrummer/ui/MainFrame.java:185
+#: src/scrummer/ui/MainFrame.java:168 src/scrummer/ui/MainFrame.java:174
 #: src/scrummer/ui/page/PBPage.java:80
 #: src/scrummer/ui/page/SprintBacklogPage.java:79
 msgid "Add"
@@ -46,7 +46,7 @@ msgstr "Uredi"
 #: src/scrummer/ui/dialog/codelist/ImpedimentTypeRemove.java:47
 #: src/scrummer/ui/dialog/codelist/ImpedimentStatusRemove.java:46
 #: src/scrummer/ui/dialog/DevelopersViewDialog.java:99
-#: src/scrummer/ui/MainFrame.java:188 src/scrummer/ui/page/PBPage.java:88
+#: src/scrummer/ui/MainFrame.java:177 src/scrummer/ui/page/PBPage.java:88
 #: src/scrummer/ui/page/SprintBacklogPage.java:87
 msgid "Remove"
 msgstr "Odstrani"
@@ -177,24 +177,24 @@ msgstr "V teku"
 msgid "Closed"
 msgstr "Zaprto"
 
-#: src/scrummer/model/MetricModelCommon.java:676
+#: src/scrummer/model/MetricModelCommon.java:677
 msgid "Failed to remove measure"
 msgstr "Metrike se ni dalo odstraniti."
 
-#: src/scrummer/model/MetricModelCommon.java:897
+#: src/scrummer/model/MetricModelCommon.java:898
 msgid "Could not update measure."
 msgstr "Metrike se ni dalo osvežiti: "
 
-#: src/scrummer/model/MetricModelCommon.java:1422
-#: src/scrummer/model/MetricModelCommon.java:1445
+#: src/scrummer/model/MetricModelCommon.java:1423
+#: src/scrummer/model/MetricModelCommon.java:1446
 msgid "Could not retrieve task measures."
 msgstr "Metrik se ni dalo odstraniti: "
 
-#: src/scrummer/model/MetricModelCommon.java:1467
+#: src/scrummer/model/MetricModelCommon.java:1468
 msgid "Could not retrieve pbi measures."
 msgstr "Metrik se ni dalo odstraniti."
 
-#: src/scrummer/model/MetricModelCommon.java:1490
+#: src/scrummer/model/MetricModelCommon.java:1491
 msgid "Could not retrieve sprint measures."
 msgstr "Metrik se ni dalo odstraniti."
 
@@ -243,20 +243,20 @@ msgid "Input"
 msgstr "Vnos"
 
 #: src/scrummer/model/NavigationModel.java:75
-#: src/scrummer/ui/page/MetricGraphPage.java:65
-#: src/scrummer/ui/page/MetricGraphPage.java:83
+#: src/scrummer/ui/page/MetricGraphPage.java:67
+#: src/scrummer/ui/page/MetricGraphPage.java:85
 msgid "Graph"
 msgstr "Graf"
 
 #: src/scrummer/model/NavigationModel.java:77
-#: src/scrummer/model/MetricModel.java:77
+#: src/scrummer/model/MetricModel.java:82
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:53
 #: src/scrummer/ui/dialog/CustomerPollDialog.java:396
 msgid "Customer poll"
 msgstr "Anketa za naročnika"
 
 #: src/scrummer/model/NavigationModel.java:79
-#: src/scrummer/model/MetricModel.java:79
+#: src/scrummer/model/MetricModel.java:84
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:49
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:573
 msgid "Developer poll"
@@ -378,7 +378,7 @@ msgstr "Zaposleni"
 #: src/scrummer/ui/dialog/TeamRemoveDialog.java:46
 #: src/scrummer/ui/dialog/TeamChangeNameDialog.java:49
 #: src/scrummer/ui/dialog/TeamOverviewDialog.java:61
-#: src/scrummer/ui/MainFrame.java:182
+#: src/scrummer/ui/MainFrame.java:171
 msgid "Team"
 msgstr "Skupina"
 
@@ -487,7 +487,7 @@ msgstr "Merilni dan"
 #: src/scrummer/ui/dialog/AddDeveloperDialog.java:51
 #: src/scrummer/ui/dialog/MetricAddDialog.java:46
 #: src/scrummer/ui/dialog/ReleaseDialog.java:64
-#: src/scrummer/ui/dialog/MetricPlotDialog.java:33
+#: src/scrummer/ui/dialog/MetricPlotDialog.java:32
 msgid "Name"
 msgstr "Ime"
 
@@ -524,9 +524,9 @@ msgstr "Prilagojena ocena"
 #: src/scrummer/ui/SprintDialog.java:28
 #: src/scrummer/ui/dialog/SprintDialog.java:47
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:65
-#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:46
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:43
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:47
-#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:43
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:45
 #: src/scrummer/ui/dialog/ProductBacklogDialog.java:45
 msgid "Sprint"
 msgstr "Iteracija"
@@ -602,33 +602,41 @@ msgstr "Število zaključenih ovir"
 msgid "Could not remove task type."
 msgstr "Vrste naloge se ni dalo odstraniti: "
 
-#: src/scrummer/model/MetricModel.java:63
+#: src/scrummer/model/MetricModel.java:68
 msgid "Work Effectiveness"
 msgstr "Delovno učinkovitost"
 
-#: src/scrummer/model/MetricModel.java:65
+#: src/scrummer/model/MetricModel.java:70
 msgid "Cost Performance Index"
 msgstr "Stroškovni indeks"
 
-#: src/scrummer/model/MetricModel.java:67
+#: src/scrummer/model/MetricModel.java:72
 msgid "Earned Value"
 msgstr "Dodana vrednost"
 
-#: src/scrummer/model/MetricModel.java:69
+#: src/scrummer/model/MetricModel.java:74
 msgid "PBI Completeness"
 msgstr "PBI zaključenost"
 
-#: src/scrummer/model/MetricModel.java:71
+#: src/scrummer/model/MetricModel.java:76
 msgid "Schedule Performance Index"
 msgstr "Skladnost z urnikom"
 
-#: src/scrummer/model/MetricModel.java:73
+#: src/scrummer/model/MetricModel.java:78
 msgid "Sprint Burndown Chart"
 msgstr "Porabljene ure"
 
-#: src/scrummer/model/MetricModel.java:75
+#: src/scrummer/model/MetricModel.java:80
 msgid "Task Completeness"
 msgstr "Zaključenost nalog"
+
+#: src/scrummer/model/MetricModel.java:86
+msgid "All Sprint Customer Poll"
+msgstr "Nariši anketo za naročnika(vse iter.)"
+
+#: src/scrummer/model/MetricModel.java:88
+msgid "All Sprint Developer Poll"
+msgstr "Izris ankete za razvijalce(vse iter.)"
 
 #: src/scrummer/model/ImpedimentModelCommon.java:310
 #: src/scrummer/model/ImpedimentModelCommon.java:791
@@ -764,9 +772,11 @@ msgstr "Napaka pri dodajanju naloge: "
 #: src/scrummer/ui/dialog/measure/GraphTaskCompleteDialog.java:56
 #: src/scrummer/ui/dialog/measure/GraphSpentWorkDialog.java:53
 #: src/scrummer/ui/dialog/measure/GraphWorkEffectivenessDialog.java:56
+#: src/scrummer/ui/dialog/measure/GraphAllCustomerPollDialog.java:70
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:85
+#: src/scrummer/ui/dialog/measure/GraphAllDeveloperPollDialog.java:74
 #: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:56
-#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:102
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:101
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:133
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:138
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:143
@@ -777,7 +787,7 @@ msgstr "Napaka pri dodajanju naloge: "
 #: src/scrummer/ui/Validate.java:38 src/scrummer/ui/Validate.java:76
 #: src/scrummer/ui/Validate.java:96 src/scrummer/ui/Validate.java:169
 #: src/scrummer/ui/page/PBPage.java:146
-#: src/scrummer/ui/page/MetricInputPage.java:107
+#: src/scrummer/ui/page/MetricInputPage.java:109
 #: src/scrummer/ui/page/ProductBacklogPage.java:142
 #: src/scrummer/ui/page/SprintBacklogPage.java:155
 #: src/scrummer/ui/page/ProjectPage.java:128
@@ -829,46 +839,6 @@ msgstr "Ne"
 #: src/scrummer/ui/dialog/DeveloperPollDialog.java:79
 msgid "Choose sprint"
 msgstr "Izberi iteracijo"
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:100
-msgid "Sodelovanje z razvojno skupino v času razvoja"
-msgstr "Sodelovanje z razvojno skupino v času razvoja"
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:128
-msgid "Odzivnost razvijalcev na želje, spremembe v zahtevah"
-msgstr "Odzivnost razvijalcev na želje, spremembe v zahtevah"
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:156
-msgid "<html> Popolnost izdelane rešitve "
-msgstr "<html> Popolnost izdelane rešitve "
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:185
-msgid "<html> Skladnost izdelane rešitve s pričakovanji "
-msgstr "<html> Skladnost izdelane rešitve s pričakovanji "
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:214
-msgid "<html> Intuitivnost uporabniškega vmesnika "
-msgstr "<html> Intuitivnost uporabniškega vmesnika "
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:243
-msgid "<html> Uporabnost/Koristnost izdelanih programov "
-msgstr "<html> Uporabnost/Koristnost izdelanih programov "
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:271
-msgid "<html> Odsotnost napak, zanesljivost delovanja, robustnost "
-msgstr "<html> Odsotnost napak, zanesljivost delovanja, robustnost "
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:300
-msgid "Kakovost oddanih Sprint Backlog-ov, pravočasnost oddaje"
-msgstr "Kakovost oddanih Sprint Backlog-ov, pravočasnost oddaje"
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:328
-msgid "Splošna ocena zadovoljstva z delom razvojne skupine"
-msgstr "Splošna ocena zadovoljstva z delom razvojne skupine"
-
-#: src/scrummer/ui/dialog/CustomerPollDialog.java:356
-msgid "Splošna ocena kakovosti izdelanih programov"
-msgstr "Splošna ocena kakovosti izdelanih programov"
 
 #: src/scrummer/ui/dialog/MeasureDialog.java:49
 msgid "Measurement"
@@ -935,13 +905,13 @@ msgid "Error while connecting to database server"
 msgstr "Napaka pri povezavi na podatkovno zbirko"
 
 #: src/scrummer/ui/dialog/AboutBoxDialog.java:21
-#: src/scrummer/ui/MainFrame.java:197
+#: src/scrummer/ui/MainFrame.java:186
 msgid "About"
 msgstr "O programu"
 
 #: src/scrummer/ui/dialog/MetricRemoveDialog.java:35
 #: src/scrummer/ui/dialog/MetricAddDialog.java:30
-#: src/scrummer/ui/MainFrame.java:160
+#: src/scrummer/ui/MainFrame.java:149
 msgid "Add Metric"
 msgstr "Dodaj metriko"
 
@@ -1005,7 +975,7 @@ msgid "Could not remove team: "
 msgstr "Skupine se ni dalo odstraniti: "
 
 #: src/scrummer/ui/dialog/MetricChangeDialog.java:36
-#: src/scrummer/ui/MainFrame.java:161
+#: src/scrummer/ui/MainFrame.java:150
 msgid "Change Metric"
 msgstr "Uredi metriko"
 
@@ -1062,7 +1032,7 @@ msgstr "Ime skupine mora vsebovati vsaj en znak."
 #: src/scrummer/ui/dialog/TeamChangeNameDialog.java:116
 #: src/scrummer/ui/dialog/SprintBacklogChangeDialog.java:264
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:194
-#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:101
+#: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:100
 msgid "An error has occurred when setting team name"
 msgstr "Med nastavljanjem skupinskega imena je prišlo do napake"
 
@@ -1191,7 +1161,6 @@ msgid "An error has occurred when setting updating impediment"
 msgstr "Med osveževanjem podatkov o oviri je prišlo do napake"
 
 #: src/scrummer/ui/dialog/SprintBacklogViewDialog.java:47
-#: src/scrummer/ui/MainFrame.java:131
 msgid "View Sprint Backlog"
 msgstr "Poglej iteracijski dnevnik"
 
@@ -1213,74 +1182,6 @@ msgstr ""
 #: src/scrummer/ui/dialog/SprintPlanningMeetingDialog.java:64
 msgid "Choose employee"
 msgstr "Izberi zaposlenca"
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:101
-msgid "<html> Jasnost zastavljenega Product Backlog-a "
-msgstr "<html> Jasnost zastavljenega Product Backlog-a "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:136
-msgid "<html> Ocena časa za posamezno zahtevo v Product Backlogu "
-msgstr "<html> Ocena časa za posamezno zahtevo v Product Backlogu "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:169
-msgid "<html> Administracija pri metodologiji Scrum "
-msgstr "<html> Administracija pri metodologiji Scrum "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:202
-msgid "<html> Obremenjenost z administracijo "
-msgstr "<html> Obremenjenost z administracijo "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:235
-msgid "<html> Tehnične težave na začetku Sprinta "
-msgstr "<html> Tehnične težave na začetku Sprinta "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:268
-msgid ""
-"<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na začetku  "
-"Sprinta "
-msgstr ""
-"<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na začetku  "
-"Sprinta "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:301
-msgid ""
-"<html> Tehnične težave na koncu Sprinta (5 - ni bilo težav, 1 - bilo je "
-"veliko težav)</html>"
-msgstr ""
-"<html> Tehnične težave na koncu Sprinta (5 - ni bilo težav, 1 - bilo je "
-"veliko težav)</html>"
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:333
-msgid ""
-"<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu "
-"Sprinta "
-msgstr ""
-"<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu "
-"Sprinta "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:366
-msgid "Sodelovanje s Scrum Masterjem"
-msgstr "Sodelovanje s Scrum Masterjem"
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:398
-msgid "Sodelovanje s Product Owner-jem"
-msgstr "Sodelovanje s Product Owner-jem"
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:430
-msgid "Sodelovanje znotraj razvojne skupine"
-msgstr "Sodelovanje znotraj razvojne skupine"
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:462
-msgid "<html> Primernost obsega dela na projektu (Ali je obseg dela "
-msgstr "<html> Primernost obsega dela na projektu (Ali je obseg dela "
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:495
-msgid "<html> Splopna ocena vašega zadovoljstva s potekom dela na projektu"
-msgstr "<html> Splopna ocena vašega zadovoljstva s potekom dela na projektu"
-
-#: src/scrummer/ui/dialog/DeveloperPollDialog.java:527
-msgid "<html> Splošna ocena metodologije Scrum (Ali je ta metodologija "
-msgstr "<html> Splošna ocena metodologije Scrum (Ali je ta metodologija "
 
 #: src/scrummer/ui/dialog/ProductBacklogViewDialog.java:70
 msgid "View Product Backlog"
@@ -1339,12 +1240,12 @@ msgid "Wrong task end date formatting."
 msgstr "Napačno formatiranje končnega datuma."
 
 #: src/scrummer/ui/dialog/DateRangeDialog.java:39
-#: src/scrummer/ui/dialog/MetricPlotDialog.java:34
+#: src/scrummer/ui/dialog/MetricPlotDialog.java:33
 msgid "From"
 msgstr "Od"
 
 #: src/scrummer/ui/dialog/DateRangeDialog.java:41
-#: src/scrummer/ui/dialog/MetricPlotDialog.java:35
+#: src/scrummer/ui/dialog/MetricPlotDialog.java:34
 msgid "To"
 msgstr "Do"
 
@@ -1396,7 +1297,7 @@ msgstr "Vstavi v iteracijski dnevnik"
 msgid "Add plot"
 msgstr "Dodaj izris"
 
-#: src/scrummer/ui/dialog/MetricPlotDialog.java:29
+#: src/scrummer/ui/dialog/MetricPlotDialog.java:28
 msgid "Plot configuration"
 msgstr "Nastavitev izrisov"
 
@@ -1430,7 +1331,6 @@ msgid "Could not open project"
 msgstr "Projekta se ni dalo odpreti"
 
 #: src/scrummer/ui/dialog/DailyScrumMeetingDialog.java:47
-#: src/scrummer/ui/MainFrame.java:132
 msgid "Daily scrum meeting"
 msgstr "Dnevni sestanek"
 
@@ -1484,7 +1384,7 @@ msgstr "Ovire se ni dalo dodati: "
 #: src/scrummer/ui/dialog/codelist/TaskStatusChangeDialog.java:36
 #: src/scrummer/ui/dialog/codelist/AbsenceTypeChangeDialog.java:37
 #: src/scrummer/ui/dialog/codelist/TaskTypeChangeDialog.java:36
-#: src/scrummer/ui/MainFrame.java:142 src/scrummer/ui/MainFrame.java:143
+#: src/scrummer/ui/MainFrame.java:131 src/scrummer/ui/MainFrame.java:132
 msgid "Change absence type"
 msgstr "Spremeni vrsto odsotnosti"
 
@@ -1505,7 +1405,7 @@ msgid "An error has occurred when setting description"
 msgstr "Med nastavljanjem skupinskega imena je prišlo do napake"
 
 #: src/scrummer/ui/dialog/codelist/AbsenceTypeRemoveDialog.java:37
-#: src/scrummer/ui/MainFrame.java:144
+#: src/scrummer/ui/MainFrame.java:133
 msgid "Remove absence type"
 msgstr "Odstrani vrsto odsotnosti"
 
@@ -1535,7 +1435,7 @@ msgstr "Vrste ovire se ni dalo odstraniti."
 
 #: src/scrummer/ui/dialog/codelist/TaskTypeAddDialog.java:40
 #: src/scrummer/ui/dialog/codelist/TaskTypeAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:166
+#: src/scrummer/ui/MainFrame.java:155
 msgid "Add task type"
 msgstr "Dodaj vrsto naloge"
 
@@ -1571,7 +1471,7 @@ msgid "Could not update impediment status: "
 msgstr "Stanja ovire se ni dalo osvežiti: "
 
 #: src/scrummer/ui/dialog/codelist/TaskStatusRemoveDialog.java:37
-#: src/scrummer/ui/MainFrame.java:174
+#: src/scrummer/ui/MainFrame.java:163
 msgid "Remove task status"
 msgstr "Odstrani stanje naloge"
 
@@ -1593,7 +1493,7 @@ msgstr "Stanja naloge se ni dalo odstraniti: "
 
 #: src/scrummer/ui/dialog/codelist/AbsenceTypeAddDialog.java:40
 #: src/scrummer/ui/dialog/codelist/AbsenceTypeAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:141
+#: src/scrummer/ui/MainFrame.java:130
 msgid "Add absence type"
 msgstr "Dodaj vrsto odsotnosti"
 
@@ -1611,12 +1511,12 @@ msgstr "Naloga mora biti izbrana, da se ji lahko nastavi opis."
 
 #: src/scrummer/ui/dialog/codelist/TaskStatusAddDialog.java:40
 #: src/scrummer/ui/dialog/codelist/TaskStatusAddDialog.java:53
-#: src/scrummer/ui/MainFrame.java:172
+#: src/scrummer/ui/MainFrame.java:161
 msgid "Add task status"
 msgstr "Dodaj stanje naloge"
 
 #: src/scrummer/ui/dialog/codelist/TaskTypeRemoveDialog.java:37
-#: src/scrummer/ui/MainFrame.java:168
+#: src/scrummer/ui/MainFrame.java:157
 msgid "Remove task type"
 msgstr "Odstrani vrsto naloge"
 
@@ -1648,22 +1548,23 @@ msgstr "Stanja ovire se ni dalo dodati ali osvežiti"
 msgid "Calculate Work Effectiveness"
 msgstr "Izračunaj delovno učinkovitost"
 
-#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:35
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:32
 msgid "Developer Poll"
 msgstr "Anketa za razvijalce"
 
-#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:41
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:38
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:42
-#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:38
 msgid "Release/Sprint Information"
 msgstr "Informacije o različici/iteraciji"
 
-#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:48
-#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:45
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:45
+#: src/scrummer/ui/dialog/measure/GraphAllCustomerPollDialog.java:40
+#: src/scrummer/ui/dialog/measure/GraphAllDeveloperPollDialog.java:44
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:47
 msgid "Question"
 msgstr "Vprašanje"
 
-#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:56
+#: src/scrummer/ui/dialog/measure/GraphDeveloperPollDialog.java:53
 msgid "Plot Developer Question Poll"
 msgstr "Izris ankete za razvijalce"
 
@@ -1704,6 +1605,21 @@ msgstr "Delovna učinkovitost"
 msgid "Error occurred while calculating work effectiveness: "
 msgstr "Med računanjem delovne učinkovitosti je prišlo do napake"
 
+#: src/scrummer/ui/dialog/measure/GraphAllCustomerPollDialog.java:33
+#: src/scrummer/ui/dialog/measure/GraphAllDeveloperPollDialog.java:36
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:40
+msgid "Question Information"
+msgstr "Informacije o vprašanju"
+
+#: src/scrummer/ui/dialog/measure/GraphAllCustomerPollDialog.java:47
+msgid "Plot All Sprint Customer Poll"
+msgstr "Nariši anketo za naročnika"
+
+#: src/scrummer/ui/dialog/measure/GraphAllCustomerPollDialog.java:70
+#: src/scrummer/ui/dialog/measure/GraphAllDeveloperPollDialog.java:74
+msgid "Error while calculating all developer marks poll: "
+msgstr "Med računanjem rezultatov razvijalskih anket je prišlo do napake"
+
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:36
 msgid "PBI Completion"
 msgstr "PBI zaključenost"
@@ -1711,6 +1627,10 @@ msgstr "PBI zaključenost"
 #: src/scrummer/ui/dialog/measure/GraphPBICompleteDialog.java:84
 msgid "Error occurred while calculating pbi completed in sprint: "
 msgstr "Med računanjem zaključenih pbi-jev v iteraciji je prišlo do napake: "
+
+#: src/scrummer/ui/dialog/measure/GraphAllDeveloperPollDialog.java:51
+msgid "Plot All Sprint Developer Poll"
+msgstr "Izris ankete za razvijalce(vse iter.)"
 
 #: src/scrummer/ui/dialog/measure/GraphSPIDialog.java:55
 msgid "Error occurred while calculating schedule performance indices: "
@@ -1724,16 +1644,15 @@ msgstr "Izračunaj CPI"
 msgid "Calculate Earned Value"
 msgstr "Izračunaj dodano vrednost"
 
-#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:32
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:34
 msgid "Customer Poll"
 msgstr "Anketa za naročnika"
 
-#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:53
+#: src/scrummer/ui/dialog/measure/GraphCustomerPollDialog.java:55
 msgid "Plot Customer Question Poll"
 msgstr "Nariši anketo za naročnika"
 
 #: src/scrummer/ui/dialog/ProductBacklogChangeDialog.java:31
-#: src/scrummer/ui/MainFrame.java:127
 msgid "Change product backlog item"
 msgstr "Spremeni zahtevo v naročnikovem dnevniku"
 
@@ -1801,74 +1720,62 @@ msgid "Close Project"
 msgstr "Zapri projekt"
 
 #: src/scrummer/ui/MainFrame.java:125
-msgid "Insert into product backlog"
-msgstr "Vstavi v naročnikov dnevnik"
-
-#: src/scrummer/ui/MainFrame.java:126
-msgid "View product backlog"
-msgstr "Poglej naročnikov dnevnik"
-
-#: src/scrummer/ui/MainFrame.java:130
-msgid "Sprint planning meeting"
-msgstr "Iteracijski načrtovalni sestanek"
-
-#: src/scrummer/ui/MainFrame.java:136
 msgid "Exit"
 msgstr "Izhod"
 
-#: src/scrummer/ui/MainFrame.java:138
+#: src/scrummer/ui/MainFrame.java:127
 msgid "Code List"
 msgstr "Šifrant"
 
-#: src/scrummer/ui/MainFrame.java:148
+#: src/scrummer/ui/MainFrame.java:137
 msgid "Add impediment type"
 msgstr "Dodaj vrsto ovire"
 
-#: src/scrummer/ui/MainFrame.java:149
+#: src/scrummer/ui/MainFrame.java:138
 msgid "Change impediment type"
 msgstr "Uredi vrsto ovire"
 
-#: src/scrummer/ui/MainFrame.java:150
+#: src/scrummer/ui/MainFrame.java:139
 msgid "Remove impediment type"
 msgstr "Odstrani vrsto ovire"
 
-#: src/scrummer/ui/MainFrame.java:154
+#: src/scrummer/ui/MainFrame.java:143
 msgid "Add impediment status"
 msgstr "Dodaj stanje naloge"
 
-#: src/scrummer/ui/MainFrame.java:155
+#: src/scrummer/ui/MainFrame.java:144
 msgid "Change impediment status"
 msgstr "Uredi stanje"
 
-#: src/scrummer/ui/MainFrame.java:156
+#: src/scrummer/ui/MainFrame.java:145
 msgid "Remove impediment status"
 msgstr "Odstrani stanje ovire"
 
-#: src/scrummer/ui/MainFrame.java:162
+#: src/scrummer/ui/MainFrame.java:151
 msgid "Remove Metric"
 msgstr "Odstrani metriko"
 
-#: src/scrummer/ui/MainFrame.java:167
+#: src/scrummer/ui/MainFrame.java:156
 msgid "Change task type"
 msgstr "Spremeni vrsto naloge"
 
-#: src/scrummer/ui/MainFrame.java:173
+#: src/scrummer/ui/MainFrame.java:162
 msgid "Change task status"
 msgstr "Spremeni stanje naloge"
 
-#: src/scrummer/ui/MainFrame.java:176
+#: src/scrummer/ui/MainFrame.java:165
 msgid "Employees"
 msgstr "Zaposleni"
 
-#: src/scrummer/ui/MainFrame.java:180 src/scrummer/ui/MainFrame.java:186
+#: src/scrummer/ui/MainFrame.java:169 src/scrummer/ui/MainFrame.java:175
 msgid "View"
 msgstr "Pregled"
 
-#: src/scrummer/ui/MainFrame.java:187
+#: src/scrummer/ui/MainFrame.java:176
 msgid "Change Name"
 msgstr "Spremeni ime"
 
-#: src/scrummer/ui/MainFrame.java:195
+#: src/scrummer/ui/MainFrame.java:184
 msgid "Help"
 msgstr "Pomoč"
 
@@ -1886,13 +1793,13 @@ msgstr ""
 "Ne da se prikazati obrazca, ker iteracija ni izbrana. Najprej izberi "
 "iteracijo, tako da klikneš na tabelo, nato izberi Uredi gumb."
 
-#: src/scrummer/ui/page/MetricInputPage.java:105
+#: src/scrummer/ui/page/MetricInputPage.java:107
 msgid ""
 "Could not open dialog because a measure is not selected. Please select it "
 "and then click Edit"
 msgstr ""
-"Obrazca se ni dalo odpreti, ker mera ni izbrana. Prosim izberi jo in "
-" klikni na Uredi"
+"Obrazca se ni dalo odpreti, ker mera ni izbrana. Prosim izberi jo in  klikni "
+"na Uredi"
 
 #: src/scrummer/ui/page/ProjectPage.java:57
 msgid "Project Name:"
@@ -1902,13 +1809,106 @@ msgstr "Ime projekta:"
 msgid "Error while saving project data"
 msgstr "Napaka pri shranjevanju podatkov o projektu"
 
-#: src/scrummer/ui/page/MetricGraphPage.java:66
+#: src/scrummer/ui/page/MetricGraphPage.java:68
 msgid "Time"
 msgstr "Čas"
 
-#: src/scrummer/ui/page/MetricGraphPage.java:106
+#: src/scrummer/ui/page/MetricGraphPage.java:109
 msgid "Show"
 msgstr "Pokaži"
+
+#~ msgid "Sodelovanje z razvojno skupino v času razvoja"
+#~ msgstr "Sodelovanje z razvojno skupino v času razvoja"
+
+#~ msgid "Odzivnost razvijalcev na želje, spremembe v zahtevah"
+#~ msgstr "Odzivnost razvijalcev na želje, spremembe v zahtevah"
+
+#~ msgid "<html> Popolnost izdelane rešitve "
+#~ msgstr "<html> Popolnost izdelane rešitve "
+
+#~ msgid "<html> Skladnost izdelane rešitve s pričakovanji "
+#~ msgstr "<html> Skladnost izdelane rešitve s pričakovanji "
+
+#~ msgid "<html> Intuitivnost uporabniškega vmesnika "
+#~ msgstr "<html> Intuitivnost uporabniškega vmesnika "
+
+#~ msgid "<html> Uporabnost/Koristnost izdelanih programov "
+#~ msgstr "<html> Uporabnost/Koristnost izdelanih programov "
+
+#~ msgid "<html> Odsotnost napak, zanesljivost delovanja, robustnost "
+#~ msgstr "<html> Odsotnost napak, zanesljivost delovanja, robustnost "
+
+#~ msgid "Kakovost oddanih Sprint Backlog-ov, pravočasnost oddaje"
+#~ msgstr "Kakovost oddanih Sprint Backlog-ov, pravočasnost oddaje"
+
+#~ msgid "Splošna ocena zadovoljstva z delom razvojne skupine"
+#~ msgstr "Splošna ocena zadovoljstva z delom razvojne skupine"
+
+#~ msgid "Splošna ocena kakovosti izdelanih programov"
+#~ msgstr "Splošna ocena kakovosti izdelanih programov"
+
+#~ msgid "<html> Jasnost zastavljenega Product Backlog-a "
+#~ msgstr "<html> Jasnost zastavljenega Product Backlog-a "
+
+#~ msgid "<html> Ocena časa za posamezno zahtevo v Product Backlogu "
+#~ msgstr "<html> Ocena časa za posamezno zahtevo v Product Backlogu "
+
+#~ msgid "<html> Administracija pri metodologiji Scrum "
+#~ msgstr "<html> Administracija pri metodologiji Scrum "
+
+#~ msgid "<html> Obremenjenost z administracijo "
+#~ msgstr "<html> Obremenjenost z administracijo "
+
+#~ msgid "<html> Tehnične težave na začetku Sprinta "
+#~ msgstr "<html> Tehnične težave na začetku Sprinta "
+
+#~ msgid ""
+#~ "<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na "
+#~ "začetku  Sprinta "
+#~ msgstr ""
+#~ "<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na "
+#~ "začetku  Sprinta "
+
+#~ msgid ""
+#~ "<html> Tehnične težave na koncu Sprinta (5 - ni bilo težav, 1 - bilo je "
+#~ "veliko težav)</html>"
+#~ msgstr ""
+#~ "<html> Tehnične težave na koncu Sprinta (5 - ni bilo težav, 1 - bilo je "
+#~ "veliko težav)</html>"
+
+#~ msgid ""
+#~ "<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu "
+#~ "Sprinta "
+#~ msgstr ""
+#~ "<html> Vsebinske težave (razumevanje zahtevane funkcionalnosti) na koncu "
+#~ "Sprinta "
+
+#~ msgid "Sodelovanje s Scrum Masterjem"
+#~ msgstr "Sodelovanje s Scrum Masterjem"
+
+#~ msgid "Sodelovanje s Product Owner-jem"
+#~ msgstr "Sodelovanje s Product Owner-jem"
+
+#~ msgid "Sodelovanje znotraj razvojne skupine"
+#~ msgstr "Sodelovanje znotraj razvojne skupine"
+
+#~ msgid "<html> Primernost obsega dela na projektu (Ali je obseg dela "
+#~ msgstr "<html> Primernost obsega dela na projektu (Ali je obseg dela "
+
+#~ msgid "<html> Splopna ocena vašega zadovoljstva s potekom dela na projektu"
+#~ msgstr "<html> Splopna ocena vašega zadovoljstva s potekom dela na projektu"
+
+#~ msgid "<html> Splošna ocena metodologije Scrum (Ali je ta metodologija "
+#~ msgstr "<html> Splošna ocena metodologije Scrum (Ali je ta metodologija "
+
+#~ msgid "Insert into product backlog"
+#~ msgstr "Vstavi v naročnikov dnevnik"
+
+#~ msgid "View product backlog"
+#~ msgstr "Poglej naročnikov dnevnik"
+
+#~ msgid "Sprint planning meeting"
+#~ msgstr "Iteracijski načrtovalni sestanek"
 
 #~ msgid "Metric plots"
 #~ msgstr "Metrični izris"
