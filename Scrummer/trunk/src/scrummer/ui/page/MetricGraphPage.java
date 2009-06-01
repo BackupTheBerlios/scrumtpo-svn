@@ -22,6 +22,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.event.PlotChangeEvent;
 import org.jfree.chart.event.PlotChangeListener;
+import org.jfree.chart.plot.PlotOrientation;
 import org.xnap.commons.i18n.I18n;
 import scrummer.Scrummer;
 import scrummer.model.MetricModel;
@@ -92,7 +93,12 @@ public class MetricGraphPage
 		_pieChart.getPlot().setBackgroundPaint(Color.WHITE);
 		_pieChart.getPlot().addChangeListener(this);
 		
-		// _columnChart = ChartFactory.createBarChart3D(i18n.tr("Graph"), i18n.tr("Count"), i18n.tr("Mark"),, orientation, legend, tooltips, urls)
+		_columnChart = 
+			ChartFactory.createBarChart3D(
+				i18n.tr("Graph"), 
+				i18n.tr("Count"), 
+				i18n.tr("Mark"), 
+				_metricModel.getQuestionCategoryDataSet(), PlotOrientation.VERTICAL, true, true, true);		
 				
 		// _columnChart = ChartFactory.createBarChart(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 		
@@ -120,6 +126,7 @@ public class MetricGraphPage
 		
 		_pieBarSelectionPanel = new JPanel();		
 		_pieBarSelectionPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		_pieBarSelectionPanel.setBackground(Color.WHITE);
 	
 		_pieSelect = new JRadioButton(i18n.tr("Pie Graph"));
 		_pieSelect.setSelected(true);
@@ -134,7 +141,7 @@ public class MetricGraphPage
 		vertBox.add(graphSelectionPanel);
 		vertBox.add(_chartPanel);
 		vertBox.add(_pieBarSelectionPanel);
-		_pieBarSelectionPanel.setVisible(false);		
+		// _pieBarSelectionPanel.setVisible(false);		
 		
 		add(vertBox);
 	}

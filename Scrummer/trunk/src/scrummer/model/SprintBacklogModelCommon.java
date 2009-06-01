@@ -708,8 +708,6 @@ public class SprintBacklogModelCommon
 		return q.getResult();
 	}
 	
-	
-	
 	/**
 	 * Get tasks table for given project and sprint
 	 * 

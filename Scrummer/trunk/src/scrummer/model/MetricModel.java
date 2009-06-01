@@ -914,6 +914,27 @@ public class MetricModel {
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
+	private HashMap<String, Float> calculateAverage(HashMap<String, Integer> values) {
+		float average = 0.0f;
+		int count = 0;
+		for (String str : values.keySet()) {
+			Integer mark = Integer.parseInt(str);
+			count += values.get(str);
+			average = mark * values.get(str);
+		}
+		
+		if (count > 0) {
+			average /= (float)count;
+		}
+		
+		HashMap<String, Float> averageMark = new HashMap<String, Float>();
+		averageMark.put("min", 0.0f);
+		averageMark.put("Average", average);
+		averageMark.put("Maks", 5.0f);
+		
+		return averageMark;
+	}
+	
 	/**
 	 * Calculate customer question marks
 	 * @param sprintId sprint
@@ -922,7 +943,8 @@ public class MetricModel {
 	public void calculateCustomerQuestionMark(int sprintId, int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateCustomerQuestionMark(sprintId, questionId);		
 		_questionDataSet.setValues(marks);
-		_questionCategoryDataSet.setValues(marks);
+				
+		_questionCategoryDataSet.setValuesF(calculateAverage(marks));
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
@@ -934,7 +956,8 @@ public class MetricModel {
 	public void calculateDeveloperQuestionMark(int sprintId, int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateDeveloperQuestionMark(sprintId, questionId);		
 		_questionDataSet.setValues(marks);
-		_questionCategoryDataSet.setValues(marks);
+		// _questionCategoryDataSet.setValues(marks);
+		_questionCategoryDataSet.setValuesF(calculateAverage(marks));
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
@@ -945,7 +968,8 @@ public class MetricModel {
 	public void calculateAllSprintDeveloperPoll(int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateDeveloperQuestionMark(questionId);		
 		_questionDataSet.setValues(marks);	
-		_questionCategoryDataSet.setValues(marks);
+		// _questionCategoryDataSet.setValues(marks);
+		_questionCategoryDataSet.setValuesF(calculateAverage(marks));
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");	
 	}
 	
@@ -955,8 +979,9 @@ public class MetricModel {
 	 */
 	public void calculateAllSprintCustomerPoll(int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateCustomerQuestionMark(questionId);		
-		_questionDataSet.setValues(marks);	
-		_questionCategoryDataSet.setValues(marks);
+		// _questionDataSet.setValues(marks);	
+		_questionDataSet.setValues(marks);
+		_questionCategoryDataSet.setValuesF(calculateAverage(marks));
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");	
 	}
 	
