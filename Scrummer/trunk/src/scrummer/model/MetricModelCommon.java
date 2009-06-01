@@ -2077,8 +2077,8 @@ public class MetricModelCommon {
         DBSchemaModel.DeveloperPollMeasurementResultTable + 
         " NATURAL JOIN " + DBSchemaModel.MeasureTable + 
         " WHERE " +
-        DBSchemaModel.SprintId + "=" + sprintId + " AND " + 
-        DBSchemaModel.DeveloperPollMeasurementResultId + "=" + questionId + 
+        DBSchemaModel.SprintId + "=" + sprintId + " AND DeveloperPoll_measurement_result.Measure_id" + 
+        "=" + questionId + 
         " GROUP BY " + DBSchemaModel.DeveloperPollMeasurementResultResult);
         return q.getResult();
 	}	
@@ -2114,8 +2114,8 @@ public class MetricModelCommon {
 	        DBSchemaModel.CustomerPollMeasurementResultTable + 
 	        " NATURAL JOIN " + DBSchemaModel.MeasureTable + 
 	        " WHERE " +
-	        DBSchemaModel.SprintId + "=" + sprintId + " AND " + 
-	        DBSchemaModel.CustomerPollMeasurementResultId + "=" + questionId + 
+	        DBSchemaModel.SprintId + "=" + sprintId + " AND CustomerPoll_measurement_result.Measure_id" + 
+	        "=" + questionId + 
 	        " GROUP BY " + DBSchemaModel.CustomerPollMeasurementResultResult);
 	        return q.getResult();
 	}	
@@ -2149,8 +2149,8 @@ public class MetricModelCommon {
         " FROM " + 
         DBSchemaModel.DeveloperPollMeasurementResultTable + 
         " NATURAL JOIN " + DBSchemaModel.MeasureTable + 
-        " WHERE " + 
-        DBSchemaModel.DeveloperPollMeasurementResultId + "=" + questionId + 
+        " WHERE DeveloperPoll_measurement_result.Measure_id" + 
+        "=" + questionId + 
         " GROUP BY " + DBSchemaModel.DeveloperPollMeasurementResultResult);
         return q.getResult();
 	}
@@ -2184,8 +2184,8 @@ public class MetricModelCommon {
         " FROM " + 
         DBSchemaModel.CustomerPollMeasurementResultTable + 
         " NATURAL JOIN " + DBSchemaModel.MeasureTable + 
-        " WHERE " + 
-        DBSchemaModel.CustomerPollMeasurementResultId + "=" + questionId + 
+        " WHERE CustomerPoll_measurement_result.Measure_id" + 
+        "=" + questionId + 
         " GROUP BY " + DBSchemaModel.CustomerPollMeasurementResultResult);
         return q.getResult();
 	}
