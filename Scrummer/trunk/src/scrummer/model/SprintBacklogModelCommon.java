@@ -744,11 +744,11 @@ public class SprintBacklogModelCommon
 			DBSchemaModel.TaskTypeTable + "." + DBSchemaModel.TaskTypeId	 + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskDate + ", " +
 			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskActive + " FROM " + DBSchemaModel.TaskTable +
-			" JOIN " +
+			" LEFT OUTER JOIN " +
 			DBSchemaModel.PBITable + " ON " + 
-			//DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
-			//DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskPBIId + 
-			//" AND " +
+			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIId + "=" +
+			DBSchemaModel.TaskTable + "." + DBSchemaModel.TaskPBIId + 
+			" AND " +
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBIProject + "=" + projectId +
 			" AND " +
 			DBSchemaModel.PBITable + "." + DBSchemaModel.PBISprint + "=" + sprintId +

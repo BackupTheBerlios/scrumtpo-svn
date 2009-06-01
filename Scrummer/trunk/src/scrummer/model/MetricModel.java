@@ -15,6 +15,7 @@ import scrummer.enumerator.MetricOperation;
 import scrummer.listener.MetricListener;
 import scrummer.model.MetricModelCommon.Measurement;
 import scrummer.model.graph.MetricDataSet;
+import scrummer.model.graph.QuestionCategoryDataSet;
 import scrummer.model.graph.QuestionDataSet;
 import scrummer.model.swing.MetricComboBoxModel;
 import scrummer.model.swing.MetricTableModel;
@@ -119,6 +120,8 @@ public class MetricModel {
 			new QuestionCustomerComboBoxModel(_metricModelCommon);
 		_questionDeveloperComboBoxModel =
 			new QuestionDeveloperComboBoxModel(_metricModelCommon);
+		_questionCategoryDataSet =
+			new QuestionCategoryDataSet();
 	}
 	
 	/**
@@ -541,6 +544,13 @@ public class MetricModel {
 	}
 	
 	/**
+	 * @return question category data set
+	 */
+	public QuestionCategoryDataSet getQuestionCategoryDataSet() {
+		return _questionCategoryDataSet;
+	}
+	
+	/**
 	 * @return combo box with all customer questions
 	 */
 	public QuestionCustomerComboBoxModel getQuestionCustomerComboBoxModel() {
@@ -911,7 +921,8 @@ public class MetricModel {
 	 */
 	public void calculateCustomerQuestionMark(int sprintId, int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateCustomerQuestionMark(sprintId, questionId);		
-		_questionDataSet.setValues(marks);		
+		_questionDataSet.setValues(marks);
+		_questionCategoryDataSet.setValues(marks);
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
@@ -922,7 +933,8 @@ public class MetricModel {
 	 */
 	public void calculateDeveloperQuestionMark(int sprintId, int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateDeveloperQuestionMark(sprintId, questionId);		
-		_questionDataSet.setValues(marks);		
+		_questionDataSet.setValues(marks);
+		_questionCategoryDataSet.setValues(marks);
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");
 	}
 	
@@ -932,7 +944,8 @@ public class MetricModel {
 	 */
 	public void calculateAllSprintDeveloperPoll(int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateDeveloperQuestionMark(questionId);		
-		_questionDataSet.setValues(marks);		
+		_questionDataSet.setValues(marks);	
+		_questionCategoryDataSet.setValues(marks);
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");	
 	}
 	
@@ -942,7 +955,8 @@ public class MetricModel {
 	 */
 	public void calculateAllSprintCustomerPoll(int questionId) {	
 		HashMap<String, Integer> marks = _metricModelCommon.calculateCustomerQuestionMark(questionId);		
-		_questionDataSet.setValues(marks);		
+		_questionDataSet.setValues(marks);	
+		_questionCategoryDataSet.setValues(marks);
 		_operation.operationSucceeded(DataOperation.Custom, MetricOperation.Graph, "");	
 	}
 	
@@ -960,6 +974,8 @@ public class MetricModel {
 	private MetricDataSet _metricDataSet;
 	/// question data set
 	private QuestionDataSet _questionDataSet;
+	/// category dataset
+	private QuestionCategoryDataSet _questionCategoryDataSet;
 	/// metric table model
 	private MetricTableModel _metricTableModel;
 	/// metric name combo box

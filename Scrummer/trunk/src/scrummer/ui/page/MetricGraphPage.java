@@ -13,6 +13,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -51,7 +54,7 @@ import sun.io.CharToByteCp1025;
  */
 public class MetricGraphPage 
 	extends BasePage 
-	implements ActionListener, ItemListener, PlotChangeListener {
+	implements ActionListener, ItemListener, PlotChangeListener, ChangeListener {
 
 	public MetricGraphPage(MainFrame mainFrame) {
 		super(mainFrame);
@@ -88,6 +91,8 @@ public class MetricGraphPage
 		_pieChart.setBackgroundPaint(Color.WHITE);
 		_pieChart.getPlot().setBackgroundPaint(Color.WHITE);
 		_pieChart.getPlot().addChangeListener(this);
+		
+		// _columnChart = ChartFactory.createBarChart3D(i18n.tr("Graph"), i18n.tr("Count"), i18n.tr("Mark"),, orientation, legend, tooltips, urls)
 				
 		// _columnChart = ChartFactory.createBarChart(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 		
@@ -113,8 +118,23 @@ public class MetricGraphPage
 		graphSelectionPanel.add(_graphSelectionInput);
 		graphSelectionPanel.add(showButton);
 		
+		_pieBarSelectionPanel = new JPanel();		
+		_pieBarSelectionPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+	
+		_pieSelect = new JRadioButton(i18n.tr("Pie Graph"));
+		_pieSelect.setSelected(true);
+		_barSelect = new JRadioButton(i18n.tr("Bar Graph"));
+		
+		_pieSelect.addChangeListener(this);
+		_barSelect.addChangeListener(this);
+		
+		_pieBarSelectionPanel.add(_pieSelect);
+		_pieBarSelectionPanel.add(_barSelect);
+		
 		vertBox.add(graphSelectionPanel);
 		vertBox.add(_chartPanel);
+		vertBox.add(_pieBarSelectionPanel);
+		_pieBarSelectionPanel.setVisible(false);		
 		
 		add(vertBox);
 	}
@@ -222,7 +242,6 @@ public class MetricGraphPage
 				break;
 			}
 			}
-			
 		} else if (cmd.equals("Add")) {
 			// MetricPlotAddDialog dialog = new MetricPlotAddDialog(getMainFrame());
 			// Util.centre(dialog);
@@ -234,6 +253,19 @@ public class MetricGraphPage
 		}
 	}
 	
+	@Override
+	public void stateChanged(ChangeEvent e) {	
+		if (e.getSource() == _pieSelect) {
+			_chartPanel.setChart(_pieChart);
+		} else if (e.getSource() == _barSelect) {
+			_chartPanel.setChart(_columnChart);
+		}
+	}
+	
+	/// pie and bar graph selection buttons
+	private JRadioButton _pieSelect, _barSelect;
+	/// pie/bar selection panel
+	private JPanel _pieBarSelectionPanel;
 	/// time chart
 	private JFreeChart _timeChart;
 	/// pie chart
@@ -258,4 +290,5 @@ public class MetricGraphPage
 	private I18n i18n = Scrummer.getI18n(getClass());
 	/// serialization id
 	private static final long serialVersionUID = 5832667024364710534L;
+
 }
