@@ -37,7 +37,7 @@ public class ProductBacklogAddDialog
 	
 		if (e.getActionCommand() == "StandardDialog.OK")
 		{			
-			int sprintId = Integer.parseInt(_sprintProjectComboBoxModel.getElementAt(_sprintInput.getSelectedIndex()).toString());
+			int sprintId = _sprintInput.getSelectedId();
 			_productbacklogModel.add( 
 				sprintId,
 				_descriptionTextField.getText(),
