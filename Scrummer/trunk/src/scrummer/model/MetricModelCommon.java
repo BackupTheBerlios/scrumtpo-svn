@@ -1707,7 +1707,7 @@ public class MetricModelCommon {
 		};
 		String query = "SELECT SUM(" + DBSchemaModel.SprintPBIHourseSpent + ") as Hours_spent_sum FROM " +
 		DBSchemaModel.SprintPBITable + " NATURAL JOIN " + DBSchemaModel.SprintTable + " WHERE " +
-		DBSchemaModel.SprintId + "=" + sprintId + " AND " +
+		DBSchemaModel.SprintPBITable + "." + DBSchemaModel.SprintId + "=" + sprintId + " AND " +
 		DBSchemaModel.SprintPBIMeasureDay + "='" + date + "'"; 		
 		q.queryResult(query);
 		return q.getResult();
@@ -1781,7 +1781,7 @@ public class MetricModelCommon {
 			"SELECT " +  
 			"SUM(Hours_spent_until_d / (Hours_spent_until_d + Hours_remaining_d)) as Earned_value FROM " +
 				"(SELECT " + 
-				DBSchemaModel.TaskId + ", " +
+				DBSchemaModel.SprintPBITable + "." + DBSchemaModel.TaskId + ", " +
 				"SUM(" + DBSchemaModel.SprintPBIHoursRemaining + ") as Hours_remaining_d" + ", " +
 				"Hours_spent_until_d  FROM " + DBSchemaModel.SprintPBITable + " NATURAL JOIN  (" +
 					"SELECT " + 
@@ -1794,7 +1794,7 @@ public class MetricModelCommon {
 					" GROUP BY " + DBSchemaModel.TaskId + ") as Hours_remaining_table " +
 					" NATURAL JOIN " + DBSchemaModel.SprintTable + 
 					" WHERE " + DBSchemaModel.SprintProjectId + "=" + projectId + " " +
-					" AND " + DBSchemaModel.SprintId + "=" + sprintId +
+					" AND " + DBSchemaModel.SprintTable + "." + DBSchemaModel.SprintId + "=" + sprintId +
 				" AND " + 
 				DBSchemaModel.SprintPBIMeasureDay + "='" + date.toString() + "'" + 
 				" GROUP BY " + DBSchemaModel.TaskId + ") as Calculation_table GROUP BY " + DBSchemaModel.TaskId;
