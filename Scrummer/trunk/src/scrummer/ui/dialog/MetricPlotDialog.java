@@ -21,7 +21,6 @@ public class MetricPlotDialog extends TwoButtonDialog {
 	public MetricPlotDialog(JFrame parent) {
 		super(parent, ModalityType.APPLICATION_MODAL);
 		setTitle(i18n.tr("Add plot"));
-		System.out.println("AA");
 		int k = 10;
 		Panel.setBorder(
 			Util.createSpacedTitleBorder(

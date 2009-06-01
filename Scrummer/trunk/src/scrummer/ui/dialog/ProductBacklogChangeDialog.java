@@ -35,9 +35,8 @@ public class ProductBacklogChangeDialog
 		_descriptionTextField.selectAll();
 		_descriptionTextField.setText(_productbacklogModel.getDescription(pbiId));
 		int sprintIndex = _productbacklogModel.getSprint(pbiId);
-		for (int i = 0; i < _sprintInput.getModel().getSize(); i++)
-		{
-			if (Integer.parseInt(_sprintProjectComboBoxModel.getValue(i)) == sprintIndex)
+		for (int i = 0; i < _sprintInput.getModel().getSize(); i++) {
+			if (_sprintProjectComboBoxModel.getId(i) == sprintIndex)
 			{
 				_sprintInput.setSelectedIndex(i);
 			}

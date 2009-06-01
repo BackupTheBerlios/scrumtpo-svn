@@ -1,7 +1,7 @@
 package scrummer.uicomponents;
 
+import java.awt.Dimension;
 import java.awt.event.FocusEvent;
-
 import javax.swing.JTextField;
 import javax.swing.text.Document;
 
@@ -10,14 +10,18 @@ import javax.swing.text.Document;
  */
 public class SelectedTextField extends JTextField 
 {
-	public SelectedTextField() {}
+	public SelectedTextField() {
+		init();
+	}
 
 	public SelectedTextField(String text) {
 		super(text);
+		init();
 	}
 
 	public SelectedTextField(int columns) {
 		super(columns);
+		init();
 	}
 
 	public SelectedTextField(String text, int columns) {
@@ -26,6 +30,7 @@ public class SelectedTextField extends JTextField
 
 	public SelectedTextField(Document doc, String text, int columns) {
 		super(doc, text, columns);
+		init();
 	}
 	
 	@Override
@@ -36,6 +41,11 @@ public class SelectedTextField extends JTextField
 		} else {
 			select(0, 0);
 		}
+	}
+	
+	private void init() {
+		setMinimumSize(new Dimension(1, 20));
+		setMaximumSize(new Dimension(1, 22));
 	}
 	
 	/// translation class

@@ -216,6 +216,7 @@ public class GrowingLabel extends JLabel  implements ActionListener, MouseListen
 	public void mouseEntered(MouseEvent e) {
 		if (isEnabled()) {
 			_mouseIn = true;
+			setCursor(new Cursor(Cursor.HAND_CURSOR));
 			_state = BorderState.DOWN;
 			if (!_timer.isRunning()) {
 				_timer.start();

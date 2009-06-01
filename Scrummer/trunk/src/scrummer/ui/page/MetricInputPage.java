@@ -19,6 +19,7 @@ import scrummer.model.Models;
 import scrummer.model.ProductBacklogModel;
 import scrummer.model.swing.MetricTableModel;
 import scrummer.model.swing.ProjectPBIComboBoxModel;
+import scrummer.model.swing.ReleaseComboBoxModel;
 import scrummer.model.swing.SprintProjectComboBoxModel;
 import scrummer.model.swing.TaskComboBoxModel;
 import scrummer.ui.MainFrame;
@@ -45,6 +46,7 @@ public class MetricInputPage
 		_metricTableModel = _metricModel.getMetricTableModel();
 		_taskComboBoxModel = m.getTaskModel().getTaskComboBoxModel();
 		_sprintProjectComboBoxModel = m.getSprintBacklogModel().getSprintProjectComboBoxModel();
+		_releaseComboBoxModel = m.getReleaseModel().getReleaseComboBoxModel();
 		
 		ProductBacklogModel pm = m.getProductBacklogModel();
 		_pbiComboBoxModel = pm.getProjectPBIComboBoxModel();
@@ -145,7 +147,7 @@ public class MetricInputPage
 			toolbar.updateObjectBox(_pbiComboBoxModel);
 			break;
 		case Release:
-			System.out.println("TODO");
+			toolbar.updateObjectBox(_releaseComboBoxModel);
 			break;
 		}	
 	}
@@ -177,6 +179,8 @@ public class MetricInputPage
 	private TaskComboBoxModel _taskComboBoxModel;
 	/// all pbi's on current project
 	private ProjectPBIComboBoxModel _pbiComboBoxModel;
+	/// all releases
+	private ReleaseComboBoxModel _releaseComboBoxModel;
 	/// metric model
 	private MetricModel _metricModel;
 	/// metric table model
